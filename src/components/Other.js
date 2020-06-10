@@ -1,7 +1,9 @@
 import React from "react";
 
+import OtherH1 from "./Other.styles";
+
 function Other() {
-    return <h1>Another page inside the application</h1>;
+    return <OtherH1>Another page inside the application</OtherH1>;
 }
 
 export default Other;

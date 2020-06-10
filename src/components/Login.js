@@ -23,13 +23,11 @@ function Login() {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*",
                 },
                 body: JSON.stringify(query),
             })
-                .then((res) => {
-                    console.log(res)
-                })
+                .then((res) => res.json())
+                .then((data) => console.log(data))
                 .catch((err) => {
                     console.log(err);
                 });
