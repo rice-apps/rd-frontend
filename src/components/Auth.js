@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 
-import { useFetch } from "react-async";
+import { useFetch, IfFulfilled, IfRejected } from "react-async";
 
 import { BACKEND_AUTH_URL } from "../config";
 
@@ -12,15 +12,37 @@ const Auth = (successPath, errPath) => {
         ticket: ticket,
     };
 
-    const { isPending, error, run } = useFetch(BACKEND_AUTH_URL, {
-        method: "POST",
-        body: JSON.stringify(query),
-    });
+    const state = useFetch(
+        BACKEND_AUTH_URL,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(query),
+        },
+        {
+            defer: false,
+            onResolve: (data) => {
+                console.log("This is data");
+                console.log(data);
+            },
+            onReject: (error) => {
+                console.log("This is error");
+                console.log(error);
+            },
+        },
+    );
 
-    return err ? (
-        <Redirect to={`/${errPath}`} />
-    ) : (
-        <Redirect to={`/${successPath}`} />
+    return (
+        <div>
+            <IfFulfilled state={state}>
+                <Redirect to={`/${successPath}`} />
+            </IfFulfilled>
+            <IfRejected state={state}>
+                <Redirect to={`/${errPath}`} />
+            </IfRejected>
+        </div>
     );
 };
 
