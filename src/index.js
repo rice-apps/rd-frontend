@@ -5,18 +5,44 @@ import { ApolloProvider } from "@apollo/react-hooks";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { createHttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
+import { WebSocketLink } from "apollo-link-ws";
+import { split } from "apollo-link";
+import { getMainDefinition } from "apollo-utilities";
 
 import GlobalStyle from "./index.styles";
 
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-import { GQL_URL } from "./config";
+import { GQL_URL, WS_URL } from "./config";
 
 const httpLink = createHttpLink({
     uri: GQL_URL,
     credentials: "same-origin",
 });
+
+const wsLink = new WebSocketLink({
+    uri: WS_URL,
+    options: {
+        reconnect: true,
+        connectionParams: {
+            authToken: localStorage.getItem("RD_TOKEN"),
+        },
+    },
+});
+
+const link = split(
+    // split based on operation type
+    ({ query }) => {
+        const definition = getMainDefinition(query);
+        return (
+            definition.kind === "OperationDefinition" &&
+            definition.operation === "subscription"
+        );
+    },
+    wsLink,
+    httpLink,
+);
 
 const authLink = setContext((_, { headers }) => {
     const token = localStorage.getItem("RD_TOKEN");
@@ -31,7 +57,7 @@ const authLink = setContext((_, { headers }) => {
 
 const client = new ApolloClient({
     cache: new InMemoryCache(),
-    link: authLink.concat(httpLink),
+    link: authLink.concat(link),
 });
 
 ReactDOM.render(
