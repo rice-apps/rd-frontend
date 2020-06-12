@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 
 import { useFetch, IfFulfilled, IfRejected } from "react-async";
 
-import { BACKEND_AUTH_URL } from "../config";
+import { BACKEND_AUTH_URL, TOKEN_NAME } from "../config";
 
 const Auth = (successPath, errPath) => {
     const ticket = new URLSearchParams(window.location.search).get("ticket");
@@ -24,7 +24,7 @@ const Auth = (successPath, errPath) => {
         {
             defer: false,
             onResolve: (data) => {
-                localStorage.setItem("RD_TOKEN", data.user.token);
+                localStorage.setItem(TOKEN_NAME, data.user.token);
             },
             onReject: (error) => {
                 console.log("This is error");

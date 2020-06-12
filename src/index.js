@@ -14,7 +14,7 @@ import GlobalStyle from "./index.styles";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-import { GQL_URL, WS_URL } from "./config";
+import { GQL_URL, WS_URL, TOKEN_NAME } from "./config";
 
 const httpLink = createHttpLink({
     uri: GQL_URL,
@@ -26,7 +26,7 @@ const wsLink = new WebSocketLink({
     options: {
         reconnect: true,
         connectionParams: {
-            authToken: localStorage.getItem("RD_TOKEN"),
+            authToken: localStorage.getItem(TOKEN_NAME),
         },
     },
 });
@@ -45,7 +45,7 @@ const link = split(
 );
 
 const authLink = setContext((_, { headers }) => {
-    const token = localStorage.getItem("RD_TOKEN");
+    const token = localStorage.getItem(TOKEN_NAME);
 
     return {
         headers: {

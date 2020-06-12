@@ -3,7 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Login from "./components/Login";
-import Other from "./components/Other";
+import Discussions from "./components/Discussions";
 
 // TODO: find a way to fix Login being blank after error ticket
 // without forcing a refresh on page navigation
@@ -15,8 +15,8 @@ function App() {
                 <Route path="/login">
                     <Login />
                 </Route>
-                <Route path="/other">
-                    <Other />
+                <Route path="/discussions">
+                    <Discussions />
                 </Route>
             </Switch>
         </Router>

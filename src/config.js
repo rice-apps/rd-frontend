@@ -4,6 +4,7 @@ const FRONTEND_AUTH_URL = CAS_AUTH_URL + "?service=" + SERVICE_URL;
 const BACKEND_AUTH_URL = "http://localhost:3001/login";
 const GQL_URL = "http://localhost:3001/graphql";
 const WS_URL = "ws://localhost:3001/graphql";
+const TOKEN_NAME = "RD_TOKEN";
 
 export {
     CAS_AUTH_URL,
@@ -12,4 +13,5 @@ export {
     BACKEND_AUTH_URL,
     GQL_URL,
     WS_URL,
+    TOKEN_NAME,
 };

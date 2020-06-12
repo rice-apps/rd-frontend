@@ -10,7 +10,7 @@ function Login() {
     );
 
     return hasTicket ? (
-        Auth("other", "login")
+        Auth("discussions", "login")
     ) : (
         <div style={{ height: "100vh", width: "100vw", textAlign: "center" }}>
             <LoginButton
