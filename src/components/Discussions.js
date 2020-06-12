@@ -1,25 +1,64 @@
 import React from "react";
-import { useSubscription } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
+import { useQuery } from "@apollo/react-hooks";
 
-import OtherH1 from "./Discussions.styles";
+import Discussion from "./Discussion";
 
-const SUB_USERNAME = gql`
+const DISCUSSION_QUERY = gql`
+    query {
+        discussionMany {
+            title
+            body
+            creator {
+                username
+            }
+            date_created
+        }
+    }
+`;
+
+const DISCUSSION_SUBSCRIPTION = gql`
     subscription {
-        profileUpdated {
-            username
+        discussionCreated {
+            title
+            body
+            creator {
+                username
+            }
+            date_created
         }
     }
 `;
 
 function Discussions() {
-    const { data, loading, error } = useSubscription(SUB_USERNAME);
+    const { subscribeToMore, ...result } = useQuery(DISCUSSION_QUERY);
+    return (
+        <Discussion
+            {...result}
+            subscribeToNewDiscussion={() => {
+                subscribeToMore({
+                    document: DISCUSSION_SUBSCRIPTION,
+                    updateQuery: (prev, { subscriptionData }) => {
+                        if (!subscriptionData.data) {
+                            return prev;
+                        }
 
-    if (loading) return <h1>Loading...</h1>;
-    console.log(error);
-    if (error) return <h1>Something is wrong...</h1>
+                        const newFeedItem =
+                            subscriptionData.data.discussionCreated;
 
-    return <OtherH1>{!loading && data.profileUpdated.username}</OtherH1>;
+                        return Object.assign({}, prev, {
+                            entry: {
+                                discussions: [
+                                    newFeedItem,
+                                    ...prev.entry.discussions,
+                                ],
+                            },
+                        });
+                    },
+                });
+            }}
+        />
+    );
 }
 
 export default Discussions;
