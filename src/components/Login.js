@@ -1,31 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Auth from "./Auth";
 import { FRONTEND_AUTH_URL } from "../config";
 import LoginButton from "./Login.styles";
 
 function Login() {
-    let res = null;
+    let [hasTicket] = useState(
+        new URLSearchParams(window.location.search).has("ticket"),
+    );
 
-    if (new URLSearchParams(window.location.search).has("ticket")) {
-        res = Auth("other", "login");
-    } else {
-        res = (
-            <div
-                style={{ height: "100vh", width: "100vw", textAlign: "center" }}
+    return hasTicket ? (
+        Auth("other", "login")
+    ) : (
+        <div style={{ height: "100vh", width: "100vw", textAlign: "center" }}>
+            <LoginButton
+                onClick={() => {
+                    window.open(FRONTEND_AUTH_URL, "_self");
+                }}
             >
-                <LoginButton
-                    onClick={() => {
-                        window.open(FRONTEND_AUTH_URL, "_self");
-                    }}
-                >
-                    Login
-                </LoginButton>
-            </div>
-        );
-    }
-
-    return res;
+                Login
+            </LoginButton>
+        </div>
+    );
 }
 
 export default Login;

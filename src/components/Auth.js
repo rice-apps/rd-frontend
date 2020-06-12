@@ -24,13 +24,13 @@ const Auth = (successPath, errPath) => {
         {
             defer: false,
             onResolve: (data) => {
-                console.log("This is data");
-                console.log(data);
+                localStorage.setItem("RD_TOKEN", data.user.token);
             },
             onReject: (error) => {
                 console.log("This is error");
                 console.log(error);
             },
+            json: true,
         },
     );
 
