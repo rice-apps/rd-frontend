@@ -1,12 +1,12 @@
 import React from "react";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
-
 import Discussion from "./Discussion";
 
 const DISCUSSION_QUERY = gql`
     query {
         discussionMany {
+            _id
             title
             body
             creator {
@@ -20,6 +20,7 @@ const DISCUSSION_QUERY = gql`
 const DISCUSSION_SUBSCRIPTION = gql`
     subscription {
         discussionCreated {
+            _id
             title
             body
             creator {
@@ -43,17 +44,28 @@ function Discussions() {
                             return prev;
                         }
 
-                        const newFeedItem =
+                        const newDiscussion =
                             subscriptionData.data.discussionCreated;
 
-                        return Object.assign({}, prev, {
-                            entry: {
-                                discussions: [
-                                    newFeedItem,
-                                    ...prev.entry.discussions,
-                                ],
-                            },
+                        // TODO: find a less kludgy way to prevent duplicate store updates
+
+                        const idAlreadyExists =
+                            prev.discussionMany.filter((item) => {
+                                return item._id === newDiscussion._id;
+                            }).length > 0;
+
+                        if (idAlreadyExists) {
+                            return prev;
+                        }
+
+                        const final = Object.assign({}, prev, {
+                            discussionMany: [
+                                ...prev.discussionMany,
+                                newDiscussion,
+                            ],
                         });
+
+                        return final;
                     },
                 });
             }}
