@@ -10,6 +10,7 @@ import {
 } from "../server/Mutations";
 
 import { TOKEN_NAME } from "../config";
+import { Redirect } from "react-router-dom";
 
 function WritePost() {
     const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));
@@ -27,6 +28,10 @@ function WritePost() {
     const [addEvent] = useMutation(CREATE_EVENT);
     const [addJob] = useMutation(CREATE_JOB);
     const [addNotice] = useMutation(CREATE_NOTICE);
+
+    if (!localStorage.getItem(TOKEN_NAME)) {
+        return <Redirect to="/login" />;
+    }
 
     let form = <div></div>;
 
