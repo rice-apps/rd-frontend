@@ -23,10 +23,10 @@ function MakePost() {
     const [deadline, setDeadline] = useState(new Date().getTime());
     const [postType, setPostType] = useState("Discussion");
 
-    const [addDiscussion, { discussionData }] = useMutation(CREATE_DISCUSSION);
-    const [addEvent, { eventData }] = useMutation(CREATE_EVENT);
-    const [addJob, { jobData }] = useMutation(CREATE_JOB);
-    const [addNotice, { noticeData }] = useMutation(CREATE_NOTICE);
+    const [addDiscussion] = useMutation(CREATE_DISCUSSION);
+    const [addEvent] = useMutation(CREATE_EVENT);
+    const [addJob] = useMutation(CREATE_JOB);
+    const [addNotice] = useMutation(CREATE_NOTICE);
 
     let form = <div></div>;
 
