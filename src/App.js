@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Login from "./components/Login";
 import Discussions from "./components/Discussions";
-import MakePost from "./components/MakePost";
+import WritePost from "./components/WritePost";
 
 // TODO: find a way to fix Login being blank after error ticket
 // without forcing a refresh on page navigation
@@ -20,7 +20,7 @@ function App() {
                     <Discussions />
                 </Route>
                 <Route path="/post">
-                    <MakePost />
+                    <WritePost />
                 </Route>
             </Switch>
         </Router>

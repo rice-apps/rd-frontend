@@ -11,7 +11,7 @@ import {
 
 import { TOKEN_NAME } from "../config";
 
-function MakePost() {
+function WritePost() {
     const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
@@ -239,4 +239,4 @@ function MakePost() {
     );
 }
 
-export default MakePost;
+export default WritePost;
