@@ -16,6 +16,12 @@ import * as serviceWorker from "./serviceWorker";
 
 import { GQL_URL, WS_URL, TOKEN_NAME } from "./config";
 
+let authToken = null;
+
+if (localStorage.getItem(TOKEN_NAME)) {
+    authToken = JSON.parse(localStorage.getItem(TOKEN_NAME)).token;
+}
+
 const httpLink = createHttpLink({
     uri: GQL_URL,
     credentials: "same-origin",
@@ -26,7 +32,7 @@ const wsLink = new WebSocketLink({
     options: {
         reconnect: true,
         connectionParams: {
-            authToken: localStorage.getItem(TOKEN_NAME),
+            authToken: authToken,
         },
     },
 });
@@ -45,12 +51,10 @@ const link = split(
 );
 
 const authLink = setContext((_, { headers }) => {
-    const token = localStorage.getItem(TOKEN_NAME);
-
     return {
         headers: {
             ...headers,
-            authorization: token ? token : "",
+            authorization: authToken ? authToken : "",
         },
     };
 });

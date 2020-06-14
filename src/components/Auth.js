@@ -24,7 +24,7 @@ const Auth = (successPath, errPath) => {
         {
             defer: false,
             onResolve: (data) => {
-                localStorage.setItem(TOKEN_NAME, data.user.token);
+                localStorage.setItem(TOKEN_NAME, JSON.stringify(data.user));
             },
             onReject: (error) => {
                 console.log("This is error");
