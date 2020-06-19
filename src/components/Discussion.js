@@ -10,11 +10,11 @@ function Discussion(props) {
     if (props.loading) return <h1>Loading...</h1>;
     if (props.error) return <h1>Something went wrong...</h1>;
 
-    const discussions = props.data.discussionMany.map((post) => {
+    const discussions = props.data.discussionMany.map((post, i) => {
         return (
-            <div key={Math.random() * 100}>
+            <div key={i}>
                 <DiscussionTitle>{post.title}</DiscussionTitle>
-                <DiscussionBody>{post.body}</DiscussionBody>
+                <div dangerouslySetInnerHTML={{__html: post.body}}/>
             </div>
         );
     });

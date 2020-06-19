@@ -5,7 +5,8 @@ const DiscussionTitle = styled.h1`
     font-size: 4vh;
 `;
 
-const DiscussionBody = styled.p`
-    font-family: "Ubuntu";
+const DiscussionBody = styled.pre`
+    font-family: "Times New Roman";
+    word-wrap: break-word;
 `;
 export { DiscussionTitle, DiscussionBody };

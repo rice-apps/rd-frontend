@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useMutation } from "@apollo/react-hooks";
 
@@ -13,6 +13,20 @@ import { TOKEN_NAME } from "../config";
 import { Redirect } from "react-router-dom";
 
 function WritePost() {
+    const changeTitle = (e) => {
+        e.preventDefault();
+        setTitle(title + e.data);
+    }
+
+    const changeBody = (e) => {
+        e.preventDefault();
+        setBody(body + e.data);
+    }
+
+    useEffect(() => {
+        console.log("event happened");
+    })
+
     const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
@@ -39,25 +53,15 @@ function WritePost() {
         case "Discussion":
             form = (
                 <form>
-                    <input
-                        type="text"
-                        name="Post Title"
-                        placeholder="Title"
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        name="Post Body"
-                        placeholder="Content"
-                        onChange={(e) => setBody(e.target.value)}
-                    />
+                    <div id="title" style={{width: '20vw'}} contentEditable={true} />
+                    <div id="body" contentEditable={true} />
                     <button
                         onClick={(e) => {
                             e.preventDefault();
                             addDiscussion({
                                 variables: {
-                                    title: title,
-                                    body: body,
+                                    title: document.getElementById("title").innerHTML,
+                                    body: document.getElementById("body").innerHTML,
                                     creator: userInfo.netID,
                                 },
                             });
