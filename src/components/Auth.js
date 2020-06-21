@@ -35,14 +35,14 @@ const Auth = (successPath, errPath) => {
     );
 
     return (
-        <div>
+        <React.Fragment>
             <IfFulfilled state={state}>
                 <Redirect to={`/${successPath}`} />
             </IfFulfilled>
             <IfRejected state={state}>
                 <Redirect to={`/${errPath}`} />
             </IfRejected>
-        </div>
+        </React.Fragment>
     );
 };
 
