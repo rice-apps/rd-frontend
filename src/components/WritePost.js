@@ -13,16 +13,6 @@ import { TOKEN_NAME } from "../config";
 import { Redirect } from "react-router-dom";
 
 function WritePost() {
-    const changeTitle = (e) => {
-        e.preventDefault();
-        setTitle(title + e.data);
-    };
-
-    const changeBody = (e) => {
-        e.preventDefault();
-        setBody(body + e.data);
-    };
-
     useEffect(() => {
         console.log("event happened");
     });
@@ -242,7 +232,7 @@ function WritePost() {
     }
 
     return (
-        <div>
+        <React.Fragment>
             <select onChange={(e) => setPostType(e.target.value)}>
                 <option value="Discussion">Discussion</option>
                 <option value="Notice">Notice</option>
@@ -250,7 +240,7 @@ function WritePost() {
                 <option value="Job">Job</option>
             </select>
             {form}
-        </div>
+        </React.Fragment>
     );
 }
 

@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 
+import ReactHtmlParser from "react-html-parser";
+
 import { DiscussionTitle } from "./Discussion.styles";
 
 function Discussion(props) {
     const [page, setPage] = useState(2);
+
     useEffect(() => {
         props.subscribeToNewDiscussions();
     });
@@ -15,7 +18,7 @@ function Discussion(props) {
         return (
             <React.Fragment key={i}>
                 <DiscussionTitle>{post.title}</DiscussionTitle>
-                <div dangerouslySetInnerHTML={{ __html: post.body }} />
+                <div>{ReactHtmlParser(post.body)}</div>
             </React.Fragment>
         );
     });
