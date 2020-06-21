@@ -7,10 +7,12 @@ function Discussion(props) {
         props.subscribeToNewDiscussion();
     });
 
+    console.log(props.data);
+
     if (props.loading) return <h1>Loading...</h1>;
     if (props.error) return <h1>Something went wrong...</h1>;
 
-    const discussions = props.data.discussionMany.map((post, i) => {
+    const discussions = props.data.postPagination.map((post, i) => {
         return (
             <div key={i}>
                 <DiscussionTitle>{post.title}</DiscussionTitle>

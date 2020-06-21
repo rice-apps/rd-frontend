@@ -1,8 +1,8 @@
 import { gql } from "apollo-boost";
 
 const DISCUSSION_QUERY = gql`
-    query {
-        discussionMany {
+    query PostPage($page: Int $perPage: Int) {
+        postPagination(filter: { kind: Discussion } page: $page perPage: $perPage) {
             _id
             title
             body
