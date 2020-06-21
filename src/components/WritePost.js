@@ -16,16 +16,16 @@ function WritePost() {
     const changeTitle = (e) => {
         e.preventDefault();
         setTitle(title + e.data);
-    }
+    };
 
     const changeBody = (e) => {
         e.preventDefault();
         setBody(body + e.data);
-    }
+    };
 
     useEffect(() => {
         console.log("event happened");
-    })
+    });
 
     const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));
     const [title, setTitle] = useState("");
@@ -53,15 +53,21 @@ function WritePost() {
         case "Discussion":
             form = (
                 <form>
-                    <div id="title" style={{width: '20vw'}} contentEditable={true} />
+                    <div
+                        id="title"
+                        style={{ width: "20vw" }}
+                        contentEditable={true}
+                    />
                     <div id="body" contentEditable={true} />
                     <button
                         onClick={(e) => {
                             e.preventDefault();
                             addDiscussion({
                                 variables: {
-                                    title: document.getElementById("title").innerHTML,
-                                    body: document.getElementById("body").innerHTML,
+                                    title: document.getElementById("title")
+                                        .innerHTML,
+                                    body: document.getElementById("body")
+                                        .innerHTML,
                                     creator: userInfo.netID,
                                 },
                             });

@@ -1,27 +1,38 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-import { DiscussionTitle, DiscussionBody } from "./Discussion.styles";
+import { DiscussionTitle } from "./Discussion.styles";
 
 function Discussion(props) {
+    const [page, setPage] = useState(2);
     useEffect(() => {
-        props.subscribeToNewDiscussion();
+        props.subscribeToNewDiscussions();
     });
-
-    console.log(props.data);
 
     if (props.loading) return <h1>Loading...</h1>;
     if (props.error) return <h1>Something went wrong...</h1>;
 
-    const discussions = props.data.postPagination.map((post, i) => {
+    const discussions = props.data.postPagination.items.map((post, i) => {
         return (
-            <div key={i}>
+            <React.Fragment key={i}>
                 <DiscussionTitle>{post.title}</DiscussionTitle>
-                <div dangerouslySetInnerHTML={{__html: post.body}}/>
-            </div>
+                <div dangerouslySetInnerHTML={{ __html: post.body }} />
+            </React.Fragment>
         );
     });
 
-    return <div>{discussions}</div>;
+    return (
+        <React.Fragment>
+            {discussions}
+            <button
+                onClick={() => {
+                    setPage(page + 1);
+                    props.onLoadMore(page);
+                }}
+            >
+                Load More
+            </button>
+        </React.Fragment>
+    );
 }
 
 export default Discussion;

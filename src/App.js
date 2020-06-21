@@ -3,7 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Login from "./components/Login";
-import Discussions from "./components/Discussions";
+import Discussions from "./components/DiscussionsWithData";
 import WritePost from "./components/WritePost";
 import Home from "./components/Home";
 
