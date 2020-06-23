@@ -2,10 +2,25 @@ import React, { useEffect, useState } from "react";
 
 import ReactHtmlParser from "react-html-parser";
 
-import { DiscussionTitle } from "./Discussion.styles";
+import { makeStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
+
+import { DiscussionBoxSection, DiscussionBox, Icons, DiscussionTitle, DiscussionBody } from "./Discussion.styles";
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+      },
+    },
+  }));
 
 function Discussion(props) {
     const [page, setPage] = useState(2);
+
+    const classes = useStyles();
 
     useEffect(() => {
         props.subscribeToNewDiscussions();
@@ -17,8 +32,20 @@ function Discussion(props) {
     const discussions = props.data.postPagination.items.map((post, i) => {
         return (
             <React.Fragment key={i}>
-                <DiscussionTitle>{post.title}</DiscussionTitle>
-                <div>{ReactHtmlParser(post.body)}</div>
+                <DiscussionBoxSection>
+                    <DiscussionBox>
+                        <Icons className={classes.root}>
+                            <IconButton>
+                               <ArrowDropUp />
+                            </IconButton>
+                            <IconButton>
+                                <ArrowDropDown />
+                            </IconButton>
+                        </Icons>
+                        <DiscussionTitle>{post.title}</DiscussionTitle>
+                        <DiscussionBody>{ReactHtmlParser(post.body)}</DiscussionBody>
+                    </DiscussionBox>
+                </DiscussionBoxSection>
             </React.Fragment>
         );
     });
