@@ -7,7 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 
-import { DiscussionBoxSection, DiscussionBox, Icons, DiscussionTitle, DiscussionBody } from "./Discussion.styles";
+import { DiscussionBoxSection, DiscussionBox, LeftComponent, Likes, Upvote, 
+        Downvote, Dislikes, MiddleComponent, DiscussionTitle, DiscussionBody, BottomComponent } from "./Discussion.styles";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,20 +31,39 @@ function Discussion(props) {
     if (props.error) return <h1>Something went wrong...</h1>;
 
     const discussions = props.data.postPagination.items.map((post, i) => {
+        console.log(post)
         return (
             <React.Fragment key={i}>
                 <DiscussionBoxSection>
+                    {post.creator.username}
                     <DiscussionBox>
-                        <Icons className={classes.root}>
-                            <IconButton>
-                               <ArrowDropUp />
-                            </IconButton>
-                            <IconButton>
-                                <ArrowDropDown />
-                            </IconButton>
-                        </Icons>
-                        <DiscussionTitle>{post.title}</DiscussionTitle>
-                        <DiscussionBody>{ReactHtmlParser(post.body)}</DiscussionBody>
+
+                        <LeftComponent>
+                            <Likes>15</Likes>
+                            <Upvote className={classes.root}>
+                                <IconButton>
+                                    <ArrowDropUp />
+                                </IconButton>
+                            </Upvote>
+                            <Downvote className={classes.root}>
+                                <IconButton>
+                                    <ArrowDropDown />
+                                </IconButton>
+                            </Downvote>
+                            <Dislikes>3</Dislikes>
+                        </LeftComponent>
+
+                        <MiddleComponent>
+                            <DiscussionTitle>
+                                {post.title}
+                            </DiscussionTitle>
+                            <DiscussionBody>
+                                {ReactHtmlParser(post.body)}
+                            </DiscussionBody>
+                        </MiddleComponent>
+
+                        <BottomComponent></BottomComponent>
+
                     </DiscussionBox>
                 </DiscussionBoxSection>
             </React.Fragment>
