@@ -29,7 +29,7 @@ fetch("http://localhost:3001/graphql", {
         );
         result.data.__schema.types = filteredData;
         fs.writeFile(
-            "./src/fragmentTypes.json",
+            "./src/utils/fragmentTypes.json",
             JSON.stringify(result.data),
             (err) => {
                 if (err) {

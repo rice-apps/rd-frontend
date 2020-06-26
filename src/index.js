@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 import { ApolloProvider } from "@apollo/react-hooks";
 
-import client from "./apollo";
+import client from "./utils/apollo";
 
 import App from "./App";
 import GlobalStyle from "./index.styles";
