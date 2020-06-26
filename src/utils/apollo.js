@@ -8,7 +8,7 @@ import { getMainDefinition } from "apollo-utilities";
 import { IntrospectionFragmentMatcher } from "apollo-cache-inmemory";
 import introspectionQueryResultData from "./fragmentTypes.json";
 
-import { GQL_URL, WS_URL, TOKEN_NAME } from "../config";
+import { GQL_URL, WS_URL, TOKEN_NAME } from "./config";
 
 const user = localStorage.getItem(TOKEN_NAME);
 const token = user ? JSON.parse(user).token : "";

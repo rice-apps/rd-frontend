@@ -22,11 +22,12 @@
     "typescript": "^3.9.5"
   },
   "scripts": {
-    "start": "BROWSER=none && node src/utils/introspection.js && react-scripts start",
-    "build": "node src/utils/introspection.js && react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "format": "npx prettier --write \"src/**/*.{js,html,css,scss,json}\""
+    "format": "npx prettier --write \"src/**/*.{js,html,css,scss,json}\"",
+    "intro": "node src/utils/introspection.js"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -1,7 +1,9 @@
 const fetch = require("node-fetch");
 const fs = require("fs");
 
-fetch("http://localhost:3001/graphql", {
+const GQL_URL = "http://localhost:3001/graphql";
+
+fetch(GQL_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

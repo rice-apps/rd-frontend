@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import Auth from "../components/Auth";
-import { FRONTEND_AUTH_URL } from "../config";
+import { FRONTEND_AUTH_URL } from "../utils/config";
 import LoginButton from "./Login.styles";
 
 function Login() {

@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 
 import { LOGIN } from "../graphql/Mutations";
-import { TOKEN_NAME } from "../config";
+import { TOKEN_NAME } from "../utils/config";
 
 const Auth = (successPath, errPath) => {
     const ticket = new URLSearchParams(window.location.search).get("ticket");
