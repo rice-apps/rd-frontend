@@ -1,49 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
-import { useFetch, IfFulfilled, IfRejected } from "react-async";
+import { useMutation } from "@apollo/react-hooks";
 
-import { BACKEND_AUTH_URL, TOKEN_NAME } from "../config";
+import { LOGIN } from "../graphql/Mutations";
+import { TOKEN_NAME } from "../config";
 
 const Auth = (successPath, errPath) => {
     const ticket = new URLSearchParams(window.location.search).get("ticket");
 
-    const query = {
-        ticket: ticket,
-    };
-
-    const state = useFetch(
-        BACKEND_AUTH_URL,
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(query),
+    const [login, { data, loading, error }] = useMutation(LOGIN, {
+        variables: {
+            ticket: ticket,
         },
-        {
-            defer: false,
-            onResolve: (data) => {
-                localStorage.setItem(TOKEN_NAME, JSON.stringify(data.user));
-            },
-            onReject: (error) => {
-                console.log("This is error");
-                console.log(error);
-            },
-            json: true,
-        },
-    );
+    });
 
-    return (
-        <React.Fragment>
-            <IfFulfilled state={state}>
-                <Redirect to={`/${successPath}`} />
-            </IfFulfilled>
-            <IfRejected state={state}>
-                <Redirect to={`/${errPath}`} />
-            </IfRejected>
-        </React.Fragment>
-    );
+    useEffect(() => {
+        login().catch(() => <Redirect to={`/${errPath}`} />);
+        // eslint-disable-next-line
+    }, []);
+
+    if (error) return <Redirect to={`/${errPath}`} />;
+
+    if (loading) return <div>Loading...</div>;
+
+    if (!data) return <div>Login went wrong</div>;
+
+    localStorage.setItem(TOKEN_NAME, JSON.stringify(data.userAuthentication));
+
+    return <Redirect to={`/${successPath}`} />;
 };
 
 export default Auth;

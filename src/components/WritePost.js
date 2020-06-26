@@ -7,7 +7,7 @@ import {
     CREATE_EVENT,
     CREATE_JOB,
     CREATE_NOTICE,
-} from "../server/Mutations";
+} from "../graphql/Mutations";
 
 import { TOKEN_NAME } from "../config";
 import { Redirect } from "react-router-dom";

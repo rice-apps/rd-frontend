@@ -4,21 +4,20 @@ import { useQuery } from "@apollo/react-hooks";
 
 import Discussion from "./Discussion";
 
-import { DISCUSSION_PAGE } from "../server/Queries";
-import { DISCUSSION_SUBSCRIPTION } from "../server/Subscriptions";
+import { POST_PAGE } from "../graphql/Queries";
+import { DISCUSSION_SUBSCRIPTION } from "../graphql/Subscriptions";
 
 function DiscussionsWithData() {
-    const { subscribeToMore, fetchMore, ...result } = useQuery(
-        DISCUSSION_PAGE,
-        {
-            variables: {
-                page: 1,
-                perPage: 10,
-            },
-
-            fetchPolicy: "cache-and-network",
+    const { subscribeToMore, fetchMore, ...result } = useQuery(POST_PAGE, {
+        variables: {
+            page: 1,
+            perPage: 10,
         },
-    );
+
+        fetchPolicy: "cache-and-network",
+    });
+
+    console.log(localStorage.getItem("RD_TOKEN"));
 
     return (
         <Discussion
