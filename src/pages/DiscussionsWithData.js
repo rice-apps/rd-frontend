@@ -17,8 +17,6 @@ function DiscussionsWithData() {
         fetchPolicy: "cache-and-network",
     });
 
-    console.log(localStorage.getItem("RD_TOKEN"));
-
     return (
         <Discussion
             {...result}
