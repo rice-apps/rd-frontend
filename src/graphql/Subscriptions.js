@@ -10,6 +10,7 @@ const DISCUSSION_SUBSCRIPTION = gql`
                 username
             }
             date_created
+            __typename
         }
     }
 `;
