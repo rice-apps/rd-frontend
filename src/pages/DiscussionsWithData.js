@@ -2,7 +2,7 @@ import React from "react";
 
 import { useQuery } from "@apollo/react-hooks";
 
-import Discussion from "./Discussion";
+import Discussion from "../components/Discussion";
 
 import { POST_PAGE } from "../graphql/Queries";
 import { DISCUSSION_SUBSCRIPTION } from "../graphql/Subscriptions";

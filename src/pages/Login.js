@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import Auth from "./Auth";
+import Auth from "../components/Auth";
 import { FRONTEND_AUTH_URL } from "../config";
 import LoginButton from "./Login.styles";
 

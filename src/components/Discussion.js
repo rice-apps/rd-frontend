@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import ReactHtmlParser from "react-html-parser";
 
-import { DiscussionTitle } from "./Discussion.styles";
+import { DiscussionTitle } from "../pages/Discussion.styles";
 
 function Discussion(props) {
     const [page, setPage] = useState(2);
