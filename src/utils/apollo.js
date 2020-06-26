@@ -5,8 +5,8 @@ import { setContext } from "apollo-link-context";
 import { WebSocketLink } from "apollo-link-ws";
 import { split } from "apollo-link";
 import { getMainDefinition } from "apollo-utilities";
-import { IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
-import introspectionQueryResultData from './fragmentTypes.json';
+import { IntrospectionFragmentMatcher } from "apollo-cache-inmemory";
+import introspectionQueryResultData from "./fragmentTypes.json";
 
 import { GQL_URL, WS_URL, TOKEN_NAME } from "../config";
 
@@ -14,7 +14,7 @@ const user = localStorage.getItem(TOKEN_NAME);
 const token = user ? JSON.parse(user).token : "";
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
-    introspectionQueryResultData
+    introspectionQueryResultData,
 });
 
 const httpLink = createHttpLink({
