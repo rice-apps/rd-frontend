@@ -22,6 +22,12 @@ const POST_PAGE = gql`
                 creator {
                     username
                 }
+                upvotes {
+                    netID
+                }
+                downvotes {
+                    netID
+                }
                 date_created
 
                 ... on Notice {

@@ -32,12 +32,19 @@ function WritePost() {
     const [addEvent] = useMutation(CREATE_EVENT);
     const [addJob] = useMutation(CREATE_JOB);
     const [addNotice] = useMutation(CREATE_NOTICE);
-    
 
     if (!localStorage.getItem(TOKEN_NAME)) {
         return <Redirect to="/login" />;
     }
 
+    function uploadImage(e) {
+        e.preventDefault();
+        const files = document.getElementById("images").files;
+        const form_data = new FormData();
+        const strings = files.map(file=>{
+            const name = file.name;
+        });
+    }
 
     let form = <div></div>;
 
@@ -67,6 +74,7 @@ function WritePost() {
                     >
                         Post
                     </button>
+                    <input type="file" id="images" name="filename" accept=".png,.jpeg,.jpg" onChange={(e)=>{return upload(e);}} multiple></input>
                 </form>
             );
             break;
