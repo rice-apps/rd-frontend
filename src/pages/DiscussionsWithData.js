@@ -5,7 +5,7 @@ import { useQuery } from "@apollo/react-hooks";
 import Discussion from "../components/Discussion";
 
 import { POST_PAGE } from "../graphql/Queries";
-import { DISCUSSION_SUBSCRIPTION } from "../graphql/Subscriptions";
+import { DISCUSSION_CREATED } from "../graphql/Subscriptions";
 
 function DiscussionsWithData() {
     const { subscribeToMore, fetchMore, ...result } = useQuery(POST_PAGE, {
@@ -48,7 +48,7 @@ function DiscussionsWithData() {
             }
             subscribeToNewDiscussions={() => {
                 subscribeToMore({
-                    document: DISCUSSION_SUBSCRIPTION,
+                    document: DISCUSSION_CREATED,
                     updateQuery: (prev, { subscriptionData }) => {
                         if (!subscriptionData) {
                             return prev;

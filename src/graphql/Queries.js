@@ -23,6 +23,7 @@ const POST_PAGE = gql`
                     username
                 }
                 date_created
+                reports
 
                 ... on Notice {
                     deadline
@@ -43,6 +44,10 @@ const POST_PAGE = gql`
                 }
 
                 __typename
+            }
+
+            pageInfo {
+                hasNextPage
             }
         }
     }

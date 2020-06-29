@@ -1,68 +1,54 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# RiceDiscuss Frontend
 
-## Available Scripts
+This is the frontend for RiceDiscuss. It interfaces with the [backend](https://github.com/rice-apps/RiceDiscuss-backend) to provide a wonderful user experience.
 
-In the project directory, you can run:
+## Tech to be familiar with
 
-### `npm start`
+- [Apollo GraphQL](https://www.apollographql.com/docs/react/)
+- [React](https://reactjs.org/)
+    - In particular, be familiar with the particuliarities of [Create React App](https://create-react-app.dev/)
+    - Also, learn a little bit about [React Hooks](https://reactjs.org/docs/hooks-intro.html), especially if you're more used to traditional React classes.
+- [Styled Components](https://styled-components.com/)
+- [Material UI](https://material-ui.com/)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Furthermore, the RiceApps leadership team has a list of tutorials you can ask them for.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Getting started
 
-### `npm test`
+Before starting, ask a RiceApps team lead for edit access to this repository.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+First, clone this repository. Open your terminal and run
 
-### `npm run build`
+```bash
+$ git clone https://github.com/rice-apps/rd-frontend.git
+```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Create a new branch, preferably naming it after yourself or the feature you're working on.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```bash
+$ git checkout -b <your branch name>
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+To install dependencies into a local `node_modules` folder, run
 
-### `npm run eject`
+```bash
+$ npm install
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+If you do not have node and npm installed, install them from [the NodeJS website](https://nodejs.org/en/).
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Finally, create a remote for your branch on github by running
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```
+$ git push -u origin <your branch name>
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Setting up the backend
 
-## Learn More
+Checkout the backend from [here](https://github.com/rice-apps/RiceDiscuss-backend). Follow the instructions for setting up the `.env` file. Then, run `npm install` and `npm start` to make the backend ready for testing.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Submitting changes
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Once you're done with your feature, create a pull request on GitHub with an informative title and description.
 
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+After a team lead merges your branch, delete both your remote and local copy.

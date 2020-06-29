@@ -1,12 +1,19 @@
 import styled from "styled-components";
+<<<<<<< HEAD
 import LoginBackground from "../images/backgroundLogin.svg";
 
 const DiscussionBoxSection = styled.section` // contains DiscussionBox
+=======
+
+const DiscussionBoxSection = styled.section`
+    // contains DiscussionBox
+>>>>>>> 10f14530606824a3b773b203e1d0d223ea346d3f
     padding: 10px 100px;
     background: papayawhip;
 `;
 
-const DiscussionBox = styled.section` // contains LeftComponent, MiddleComponent, BottomComponent
+const DiscussionBox = styled.section`
+    // contains LeftComponent, MiddleComponent, BottomComponent
     padding: 5px;
     background: white;
     border-radius: 10px;
@@ -18,8 +25,9 @@ const DiscussionBox = styled.section` // contains LeftComponent, MiddleComponent
         "Left Bottom";
 `;
 
-const LeftComponent = styled.div` // contains Upvote, Downvote, Likes, Dislikes
-    
+const LeftComponent = styled.div`
+    // contains Upvote, Downvote, Likes, Dislikes
+
     display: grid;
     grid-template-rows: 1fr 20px 30px 30px 20px 1fr;
     grid-area: Left;
@@ -28,22 +36,23 @@ const LeftComponent = styled.div` // contains Upvote, Downvote, Likes, Dislikes
 `;
 
 const Likes = styled.div`
-    grid-row: 2/3
+    grid-row: 2/3;
 `;
 
 const Upvote = styled.div`
-    grid-row: 3/4
+    grid-row: 3/4;
 `;
 
 const Downvote = styled.div`
-    grid-row: 4/5
+    grid-row: 4/5;
 `;
 
 const Dislikes = styled.div`
-    grid-row: 5/6
+    grid-row: 5/6;
 `;
 
-const MiddleComponent = styled.div` // contains DiscussionTitle, DiscussionBody
+const MiddleComponent = styled.div`
+    // contains DiscussionTitle, DiscussionBody
     display: grid;
     justify-items: start;
     grid-area: Middle;
@@ -64,13 +73,15 @@ const DiscussionBody = styled.text`
     word-wrap: break-word;
 `;
 
-const BottomComponent = styled.div` // contains Save, AddTo, OP, Time, Date, Share
+const BottomComponent = styled.div`
+    // contains Save, AddTo, OP, Time, Date, Share
     grid-area: Bottom;
     display: grid;
     grid-template-columns: 80px 80px 1fr 80px 80px 80px;
     grid-template-areas: "save add . op time date share";
 `;
 
+<<<<<<< HEAD
 const OP = styled.div`
     grid-area: op;
 `;
@@ -79,3 +90,18 @@ const OP = styled.div`
 
 export { DiscussionBoxSection, DiscussionBox, LeftComponent, Likes, Upvote, 
         Downvote, Dislikes, MiddleComponent, DiscussionTitle, DiscussionBody, BottomComponent, OP };
+=======
+export {
+    DiscussionBoxSection,
+    DiscussionBox,
+    LeftComponent,
+    Likes,
+    Upvote,
+    Downvote,
+    Dislikes,
+    MiddleComponent,
+    DiscussionTitle,
+    DiscussionBody,
+    BottomComponent,
+};
+>>>>>>> 10f14530606824a3b773b203e1d0d223ea346d3f

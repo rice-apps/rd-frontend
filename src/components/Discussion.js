@@ -2,23 +2,39 @@ import React, { useEffect, useState } from "react";
 
 import ReactHtmlParser from "react-html-parser";
 
-import { makeStyles } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
-import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
+import { makeStyles } from "@material-ui/core/styles";
+import IconButton from "@material-ui/core/IconButton";
+import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
+import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 
+<<<<<<< HEAD
 import { DiscussionBoxSection, DiscussionBox, LeftComponent, Likes, Upvote, 
         Downvote, Dislikes, MiddleComponent, DiscussionTitle, DiscussionBody, BottomComponent, OP } from "./Discussion.styles";
+=======
+import {
+    DiscussionBoxSection,
+    DiscussionBox,
+    LeftComponent,
+    Likes,
+    Upvote,
+    Downvote,
+    Dislikes,
+    MiddleComponent,
+    DiscussionTitle,
+    DiscussionBody,
+    BottomComponent,
+} from "./Discussion.styles";
+>>>>>>> 10f14530606824a3b773b203e1d0d223ea346d3f
 
 
         
 const useStyles = makeStyles((theme) => ({
     root: {
-      '& > *': {
-        margin: theme.spacing(1),
-      },
+        "& > *": {
+            margin: theme.spacing(1),
+        },
     },
-  }));
+}));
 
 function Discussion(props) {
     const [page, setPage] = useState(2);
@@ -34,7 +50,7 @@ function Discussion(props) {
 
 
     const discussions = props.data.postPagination.items.map((post, i) => {
-        console.log(post)
+        console.log(post);
         return (
             <DiscussionBoxSection>
                 <React.Fragment key={i}>
@@ -55,20 +71,22 @@ function Discussion(props) {
                         </LeftComponent>
 
                         <MiddleComponent>
-                            <DiscussionTitle>
-                                {post.title}
-                            </DiscussionTitle>
+                            <DiscussionTitle>{post.title}</DiscussionTitle>
                             <DiscussionBody>
                                 {ReactHtmlParser(post.body)}
                             </DiscussionBody>
                         </MiddleComponent>
 
+<<<<<<< HEAD
                         <BottomComponent>
                             <OP>
                                 {post.creator.username}
                             </OP>
                         </BottomComponent>
 
+=======
+                        <BottomComponent></BottomComponent>
+>>>>>>> 10f14530606824a3b773b203e1d0d223ea346d3f
                     </DiscussionBox>
                 </React.Fragment>
             </DiscussionBoxSection>
