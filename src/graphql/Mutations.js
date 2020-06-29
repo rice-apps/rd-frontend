@@ -18,6 +18,7 @@ const CREATE_DISCUSSION = gql`
                 }
                 body
                 date_created
+                __typename
             }
         }
     }
@@ -54,6 +55,7 @@ const CREATE_EVENT = gql`
                 start
                 end
                 place
+                __typename
             }
         }
     }
@@ -96,6 +98,7 @@ const CREATE_JOB = gql`
                 place
                 isPaid
                 isClosed
+                __typename
             }
         }
     }
@@ -126,9 +129,22 @@ const CREATE_NOTICE = gql`
                 body
                 date_created
                 deadline
+                __typename
             }
         }
     }
 `;
 
-export { CREATE_DISCUSSION, CREATE_EVENT, CREATE_JOB, CREATE_NOTICE };
+const LOGIN = gql`
+    mutation Login($ticket: String!) {
+        userAuthentication(ticket: $ticket) {
+            username
+            netID
+            isNewUser
+            token
+            __typename
+        }
+    }
+`;
+
+export { CREATE_DISCUSSION, CREATE_EVENT, CREATE_JOB, CREATE_NOTICE, LOGIN };
