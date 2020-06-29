@@ -147,4 +147,34 @@ const LOGIN = gql`
     }
 `;
 
-export { CREATE_DISCUSSION, CREATE_EVENT, CREATE_JOB, CREATE_NOTICE, LOGIN };
+//maybe switch to user update one 
+const SET_INFO = gql`
+    mutation SetInfo(
+        $username: String!
+        $college: String!
+        $major: [String]!
+        $minor: [String]!
+    ) {
+        userUpdateOne(
+            record: {
+                username: $username
+                college: $college
+                major: $major
+                minor: $minor
+            },
+            filter: {
+                netID: $netID
+            }
+        ) {
+            record {
+                _id
+                username
+                college
+                major
+                minor
+            }
+        }
+    }
+`
+
+export { CREATE_DISCUSSION, CREATE_EVENT, CREATE_JOB, CREATE_NOTICE, LOGIN, SET_INFO };

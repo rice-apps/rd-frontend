@@ -1,0 +1,53 @@
+.hex-grid__list {
+    --amount: 3;
+    --counter: 1;
+    display: grid;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    grid-template-columns: repeat(var(--amount), 4fr, 8fr) 3fr;
+   /* grid-gap: 1rem 2rem; */
+}
+
+.hex-grid__item {
+    position: relative;
+    grid-column: 1 / span 3;
+    grid-row: calc(var(--counter) + var(--counter)) / span 2;
+    height: 0;
+    padding-bottom: 90%;
+    z-index: 5;
+}
+
+/*Change clip path so that we get a round*/
+.hex-grid__content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: red;
+    opacity: 0.5;
+    /* clip-path: polygon(75% 10%, 100% 30%, 75% 100%, 25% 100%, 0 50%, 25% 0); */
+    clip-path: polygon(60% 10%, 100% 40%, 50% 100%, 5% 65%);
+    /* clip-path: ellipse(70px 140px at 50% 60%); */
+    /* padding: 2rem 25%; */
+    border-style: solid;
+    border-color: black;
+}
+
+.hex-grid__item:nth-of-type(n + 4) {
+    --counter: 2;
+}
+
+.hex-grid__item:nth-of-type(n + 7) {
+    --counter: 3;
+
+}
+
+.hex-grid__item:nth-of-type(3n + 2) {
+    grid-column: 3 / span 3;
+}
+
+.hex-grid__item:nth-of-type(3n + 3) {
+    grid-column: 5 / span 3;
+}
