@@ -6,6 +6,8 @@ This is the frontend for RiceDiscuss. It interfaces with the [backend](https://g
 
 - [Apollo GraphQL](https://www.apollographql.com/docs/react/)
 - [React](https://reactjs.org/)
+    - In particular, be familiar with the particuliarities of [Create React App](https://create-react-app.dev/)
+    - Also, learn a little bit about [React Hooks](https://reactjs.org/docs/hooks-intro.html), especially if you're more used to traditional React classes.
 - [Styled Components](https://styled-components.com/)
 - [Material UI](https://material-ui.com/)
 
