@@ -8,8 +8,10 @@ import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 
 import { DiscussionBoxSection, DiscussionBox, LeftComponent, Likes, Upvote, 
-        Downvote, Dislikes, MiddleComponent, DiscussionTitle, DiscussionBody, BottomComponent } from "./Discussion.styles";
+        Downvote, Dislikes, MiddleComponent, DiscussionTitle, DiscussionBody, BottomComponent, OP } from "./Discussion.styles";
 
+
+        
 const useStyles = makeStyles((theme) => ({
     root: {
       '& > *': {
@@ -30,14 +32,13 @@ function Discussion(props) {
     if (props.loading) return <h1>Loading...</h1>;
     if (props.error) return <h1>Something went wrong...</h1>;
 
+
     const discussions = props.data.postPagination.items.map((post, i) => {
         console.log(post)
         return (
-            <React.Fragment key={i}>
-                <DiscussionBoxSection>
-                    {post.creator.username}
+            <DiscussionBoxSection>
+                <React.Fragment key={i}>
                     <DiscussionBox>
-
                         <LeftComponent>
                             <Likes>15</Likes>
                             <Upvote className={classes.root}>
@@ -62,11 +63,16 @@ function Discussion(props) {
                             </DiscussionBody>
                         </MiddleComponent>
 
-                        <BottomComponent></BottomComponent>
+                        <BottomComponent>
+                            <OP>
+                                {post.creator.username}
+                            </OP>
+                        </BottomComponent>
 
                     </DiscussionBox>
-                </DiscussionBoxSection>
-            </React.Fragment>
+                </React.Fragment>
+            </DiscussionBoxSection>
+            
         );
     });
 

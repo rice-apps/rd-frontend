@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import LoginBackground from "../images/backgroundLogin.svg";
 
 const DiscussionBoxSection = styled.section` // contains DiscussionBox
     padding: 10px 100px;
@@ -15,7 +15,7 @@ const DiscussionBox = styled.section` // contains LeftComponent, MiddleComponent
     grid-template-columns: 65px 1fr;
     grid-template-areas:
         "Left Middle"
-        "Left Bottom"
+        "Left Bottom";
 `;
 
 const LeftComponent = styled.div` // contains Upvote, Downvote, Likes, Dislikes
@@ -66,8 +66,16 @@ const DiscussionBody = styled.text`
 
 const BottomComponent = styled.div` // contains Save, AddTo, OP, Time, Date, Share
     grid-area: Bottom;
+    display: grid;
+    grid-template-columns: 80px 80px 1fr 80px 80px 80px;
+    grid-template-areas: "save add . op time date share";
+`;
+
+const OP = styled.div`
+    grid-area: op;
 `;
 
 
+
 export { DiscussionBoxSection, DiscussionBox, LeftComponent, Likes, Upvote, 
-        Downvote, Dislikes, MiddleComponent, DiscussionTitle, DiscussionBody, BottomComponent };
+        Downvote, Dislikes, MiddleComponent, DiscussionTitle, DiscussionBody, BottomComponent, OP };
