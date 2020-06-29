@@ -11,6 +11,8 @@ This is the frontend for RiceDiscuss. It interfaces with the [backend](https://g
 - [Styled Components](https://styled-components.com/)
 - [Material UI](https://material-ui.com/)
 
+Furthermore, the RiceApps leadership team has a list of tutorials you can ask them for.
+
 ## Getting started
 
 Before starting, ask a RiceApps team lead for edit access to this repository.
