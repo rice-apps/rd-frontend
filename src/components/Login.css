@@ -1,0 +1,83 @@
+.login-image{
+  width: 100vw;
+  padding-top: 23.33%;
+  background-image: url('./backgroundLogin.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  /* align-self: center; */
+  /* grid-area: content;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-area: 
+  'header'
+  'footer'; */
+}
+
+.container{
+  width : 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-button{
+  /* background-color: tomato; */
+  /* justify-self: center;
+  grid-area: 'footer';
+  align-self: flex-end; */
+  background: white;
+  color: palevioletred;
+  font-size: 1vw;
+  padding: 0.25vw 1vw;
+  border: 0.1vw solid palevioletred;
+  border-radius: 0.3vw;
+}
+
+
+/* #treeBackground {
+    height: 100vh;
+    width: 100vw;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url('./backgroundLogin.svg');
+  
+  
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  
+    z-index: -99;
+  
+    background-size: 100%;
+  } */
+
+/*
+@media only screen and (max-width:1680px) {
+  #treeBackground {
+    background-attachment: inherit;
+    height: 80vh;
+  }
+}
+
+@media only screen and (max-width:1200px) {
+  #treeBackground {
+    background-attachment: inherit;
+    height: 80vh;
+  }
+
+}
+
+@media only screen and (max-width:749px) {
+
+  #treeBackground {
+    background-attachment: inherit;
+    background-size: 110%;
+    height: 35vh;
+  }
+}
+*/
