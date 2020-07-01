@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
 import Auth from "../components/Auth";
+import { LoginButton, LoginContainer, LoginImage } from "./Login.styles";
+
 import { FRONTEND_AUTH_URL } from "../utils/config";
-import LoginButton from "./Login.styles";
 
 function Login() {
     let [hasTicket] = useState(
@@ -12,7 +13,8 @@ function Login() {
     return hasTicket ? (
         Auth("discussions", "login")
     ) : (
-        <div style={{ height: "100vh", width: "100vw", textAlign: "center" }}>
+        <LoginContainer>
+            <LoginImage />
             <LoginButton
                 onClick={() => {
                     window.open(FRONTEND_AUTH_URL, "_self");
@@ -20,7 +22,7 @@ function Login() {
             >
                 Login
             </LoginButton>
-        </div>
+        </LoginContainer>
     );
 }
 
