@@ -24,6 +24,12 @@ const POST_PAGE = gql`
                 }
                 date_created
                 reports
+                upvotes {
+                    username
+                }
+                downvotes {
+                    username
+                }
 
                 ... on Notice {
                     deadline
