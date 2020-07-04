@@ -24,6 +24,20 @@ const CREATE_DISCUSSION = gql`
     }
 `;
 
+const UPVOTE_POST = gql`
+    mutation UpvotePost(
+        $netID: String!
+    ) {
+        upvotePostById(
+            record: { netID: $netID }
+        ) {
+            record {
+                upvotes
+            }
+        }
+    }
+`;
+
 const CREATE_EVENT = gql`
     mutation CreateEvent(
         $title: String!

@@ -6,25 +6,38 @@ import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
+import FacebookIcon from '@material-ui/icons/Facebook';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import ShareIcon from '@material-ui/icons/Share';
 
-<<<<<<< HEAD
-import { DiscussionBoxSection, DiscussionBox, LeftComponent, Likes, Upvote, 
-        Downvote, Dislikes, MiddleComponent, DiscussionTitle, DiscussionBody, BottomComponent, OP } from "./Discussion.styles";
-=======
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+
 import {
+    Banner,
     DiscussionBoxSection,
     DiscussionBox,
     LeftComponent,
     Likes,
     Upvote,
     Downvote,
-    Dislikes,
-    MiddleComponent,
+    TopComponent,
     DiscussionTitle,
+    TagOne,
+    TagTwo,
+    TagThree,
+    MiddleComponent,
     DiscussionBody,
     BottomComponent,
+    Save,
+    AddTo,
+    OP,
+    Time,
+    Date,
+    ShareFacebook,
+    ShareTwitter,
+    Share
 } from "./Discussion.styles";
->>>>>>> 10f14530606824a3b773b203e1d0d223ea346d3f
 
 
         
@@ -48,54 +61,78 @@ function Discussion(props) {
     if (props.loading) return <h1>Loading...</h1>;
     if (props.error) return <h1>Something went wrong...</h1>;
 
-
     const discussions = props.data.postPagination.items.map((post, i) => {
-        console.log(post);
         return (
-            <DiscussionBoxSection>
-                <React.Fragment key={i}>
+            <React.Fragment key={i}>
+                <DiscussionBoxSection>
                     <DiscussionBox>
                         <LeftComponent>
-                            <Likes>15</Likes>
                             <Upvote className={classes.root}>
                                 <IconButton>
                                     <ArrowDropUp />
                                 </IconButton>
                             </Upvote>
+                            <Likes>{post.upvotes.length}</Likes>
                             <Downvote className={classes.root}>
                                 <IconButton>
                                     <ArrowDropDown />
                                 </IconButton>
                             </Downvote>
-                            <Dislikes>3</Dislikes>
                         </LeftComponent>
 
-                        <MiddleComponent>
+                        <TopComponent>
                             <DiscussionTitle>{post.title}</DiscussionTitle>
+                            <TagOne>Tag 1</TagOne>
+                            <TagTwo>Tag 2</TagTwo>
+                            <TagThree>Tag 3</TagThree>
+                        </TopComponent>
+
+                        <MiddleComponent>
                             <DiscussionBody>
                                 {ReactHtmlParser(post.body)}
                             </DiscussionBody>
                         </MiddleComponent>
 
-<<<<<<< HEAD
                         <BottomComponent>
+                            <Save>Save</Save>
+                            <AddTo>+ Add to...</AddTo>
                             <OP>
                                 {post.creator.username}
                             </OP>
+                            <Time>{post.date_created.substring(11, 16)}</Time>
+                            <Date>
+                                {post.date_created.substring(5, 7) + '/' + 
+                                post.date_created.substring(8, 10) + '/' + 
+                                post.date_created.substring(0, 4)}
+                            </Date>
+                            <ShareFacebook>
+                                <IconButton>
+                                    <FacebookIcon />
+                                </IconButton>
+                            </ShareFacebook>
+                            <ShareTwitter>
+                                <IconButton>
+                                    <TwitterIcon />
+                                </IconButton>
+                            </ShareTwitter>
+                            <Share>
+                                <IconButton>
+                                    <ShareIcon />
+                                </IconButton>
+                            </Share>
                         </BottomComponent>
 
-=======
-                        <BottomComponent></BottomComponent>
->>>>>>> 10f14530606824a3b773b203e1d0d223ea346d3f
                     </DiscussionBox>
-                </React.Fragment>
-            </DiscussionBoxSection>
+                </DiscussionBoxSection>
+            </React.Fragment>
+            
             
         );
     });
 
     return (
         <React.Fragment>
+            <Banner />
             {discussions}
             <button
                 onClick={() => {
