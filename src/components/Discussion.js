@@ -72,7 +72,7 @@ function Discussion(props) {
                                     <ArrowDropUp />
                                 </IconButton>
                             </Upvote>
-                            <Likes>{post.upvotes.length}</Likes>
+                            <Likes>{post.upvotes.length - post.downvotes.length}</Likes>
                             <Downvote className={classes.root}>
                                 <IconButton>
                                     <ArrowDropDown />
