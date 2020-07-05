@@ -57,9 +57,9 @@ function DiscussionsWithData() {
                         const newItem = subscriptionData.data.postCreated;
 
                         const alreadyExists =
-                            prev.postPagination.items.filter((item) => {
+                            prev.postPagination.items.any((item) => {
                                 return item._id === newItem._id;
-                            }).length > 0;
+                            });
 
                         if (alreadyExists) {
                             return prev;
