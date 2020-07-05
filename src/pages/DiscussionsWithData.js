@@ -27,8 +27,6 @@ function DiscussionsWithData() {
                             return prev;
                         }
 
-                        console.log(prev);
-
                         const final = Object.assign({}, prev, {
                             postPagination: {
                                 items: [
