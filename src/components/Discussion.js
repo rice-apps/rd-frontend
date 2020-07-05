@@ -35,7 +35,7 @@ function Discussion(props) {
     const classes = useStyles();
 
     useEffect(() => {
-        props.subscribeToNewDiscussions();
+        props.subscribeToNewPosts();
     });
 
     if (props.loading) return <h1>Loading...</h1>;
