@@ -2,7 +2,7 @@ import React, {useState, useCallback} from 'react';
 import { BrowserRouter as Router, Redirect } from "react-router-dom";
 import { useMutation } from "@apollo/react-hooks";
 import { TOKEN_NAME } from "../utils/config";
-import { SET_INFO, REMOVE_USER } from "../graphql/Mutations";
+import { SET_INFO} from "../graphql/Mutations";
 import laptop_girl from "../images/Page 2.svg"
 import './MoreInfo.styles.css';
 
@@ -33,14 +33,9 @@ const MoreInfo = () => {
         (e) => setCollege(e.target.value), []
     )
 
-    const handleGradChange = useCallback(
-        (e) => setGrad(e.target.value), []
-    )
-
-    if (!data.isNewUser){
+    if (!data?.isNewUser){
       console.log("Redirecting....")
-      return ( <Redirect to={"/discussions"} />
-      );
+      return ( <Redirect to={"/discussions"} />);
     }
 
     //we have to post stuff to backend.  We're not doing a handle submit until all
@@ -57,22 +52,22 @@ const MoreInfo = () => {
             "major": majorArray,
             "minor": minorArray,
             "college": college,
-            "netID": data.user.netID,
+            "netID": data.netID,
             "username": username,
           })
 
-          // await addInfo({
-          // variables: {
-          //     netID: data.user.netID,
-          //     college: college,
-          //     major: major,
-          //     minor: minor,
-          //     username: username,
-          //     isNewUser: false,
-          // },
-          // });
+          await addInfo({
+          variables: {
+              username: username,
+              college: college,
+              major: major,
+              minor: minor,
+              netID: data.netID,
+              isNewUser: false,
+          },
+          });
 
-           // Router.push("/");
+          window.location.assign("/discussions");
           
         } catch (error){
             console.log(error)
@@ -83,79 +78,21 @@ const MoreInfo = () => {
     };
 
     //have to manually push newUser
-
-    // mutation {
-    //   userUpdateOne(record: {college: Sid_Richardson}, filter: {netID: "vms2"}) {
-    //     record {
-    //       username
-    //       netID
-    //       college
-    //       major
-    //       minor
-    //     }
-    //   }
-    // }
-    
-
     return(
-    <>
+    <div className="stable">
+    <div className = "full_grid">
+      <div className = "pink_shape">
+        <div >
+          <p className = "about_myself">A little about myself...</p>
+          <img src={laptop_girl} className = "laptop_girl" />
+        </div>
 
-    <ul className="hex-grid__list">
-        <li className="hex-grid__item">
-            <div class="hex-grid__content">
-                1
-            </div>
-        </li>
-        <li class="hex-grid__item">
-            <div class="hex-grid__content">
-                2
-            </div>
-        </li>
-        <li class="hex-grid__item">
-            <div class="hex-grid__content">
-                3
-            </div>
-        </li>
-        <li class="hex-grid__item">
-            <div class="hex-grid__content">
-                4
-            </div>
-        </li>
-        <li class="hex-grid__item">
-            <div class="hex-grid__content">
-                5
-            </div>
-        </li>
-        <li class="hex-grid__item">
-            <div class="hex-grid__content">
-                6
-            </div>
-        </li>
-        <li class="hex-grid__item">
-            <div class="hex-grid__content">
-                7
-            </div>
-        </li>
-        <li class="hex-grid__item">
-            <div class="hex-grid__content">
-                8
-            </div>
-        </li>
-        <li class="hex-grid__item">
-            <div class="hex-grid__content">
-                9
-            </div>
-        </li>
-    </ul>
-
-    <img src={laptop_girl} />
-    <p>You honestly can go fuck yourself</p>
-    <form onSubmit={handleSubmit}>
-        <fieldset>
-          <fieldset className="">
+        <form onSubmit={handleSubmit} className = "margins">
+        <fieldset className ="totalform">
+          <fieldset className="textfield">
             <label for="uname">Username</label> <br/>
             <input
-              className=""
+              className="textfield"
               type="text"
               placeholder="username"
               value={username}
@@ -163,10 +100,10 @@ const MoreInfo = () => {
             />
           </fieldset>
 
-          <fieldset className="">
+          <fieldset className="textfield">
             <label for="major">Major</label> <br/>
             <input
-              className=""
+              className="textfield"
               type="text"
               placeholder="major"
               value={major}
@@ -174,10 +111,10 @@ const MoreInfo = () => {
             />
           </fieldset>
 
-          <fieldset className="">
+          <fieldset className="textfield">
             <label for="major">Minor</label> <br/>
             <input
-              className=""
+              className="textfield"
               type="text"
               placeholder="minor"
               value={minor}
@@ -185,51 +122,30 @@ const MoreInfo = () => {
             />
           </fieldset>
 
-
-          <fieldset className="">
+          <fieldset className="textfield">
             <label for="college">College</label> <br/>
             <input
-              className=""
+              className="textfield"
               type="text"
               placeholder="college"
               value={college}
               onChange={handleCollegeChange}
             />
           </fieldset>
-
-          {/* <Dropdown>
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
-              Dropdown Button
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-              <Dropdown.Item href="#/action-1" onclick = "">Action</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown> */}
-
-          {/* <fieldset className="">
-            <label for="gradyr">Grad</label> <br/>
-            <input
-              className=""
-              type="text"
-              placeholder="graduation year"
-              value={grad}
-              onChange={handleGradChange}
-            />
-          </fieldset> */}
-
           <button
-            className=""
+            className="submitbutton"
             type="submit"
             disabled={loading}
           >
-            Send me to discussions
+            &rarr;
           </button>
         </fieldset>
-      </form>
-    </>);
+        </form>
+        
+      </div>
+    </div>
+ 
+    </div>);
 }
 
 export default MoreInfo

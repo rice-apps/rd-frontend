@@ -1,53 +1,85 @@
-.hex-grid__list {
-    --amount: 3;
-    --counter: 1;
+.full_grid {
     display: grid;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    grid-template-columns: repeat(var(--amount), 4fr, 8fr) 3fr;
-   /* grid-gap: 1rem 2rem; */
-}
 
-.hex-grid__item {
+    grid-template-columns: 1.2fr 1.75fr 2.25fr 1fr 1fr 1fr 0.5fr;
+    grid-template-rows: 12fr 12fr 1fr 1fr;
+
+    height: calc(100vh - 50px);
+
     position: relative;
-    grid-column: 1 / span 3;
-    grid-row: calc(var(--counter) + var(--counter)) / span 2;
-    height: 0;
-    padding-bottom: 90%;
-    z-index: 5;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
-/*Change clip path so that we get a round*/
-.hex-grid__content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    background-color: red;
-    opacity: 0.5;
-    /* clip-path: polygon(75% 10%, 100% 30%, 75% 100%, 25% 100%, 0 50%, 25% 0); */
-    clip-path: polygon(60% 10%, 100% 40%, 50% 100%, 5% 65%);
-    /* clip-path: ellipse(70px 140px at 50% 60%); */
-    /* padding: 2rem 25%; */
-    border-style: solid;
-    border-color: black;
+/* use border radius */
+.pink_shape{
+    position: relative;
+    top: 30px;
+    transform: rotate(-38deg);
+    
+    background-color: pink;
+
+    grid-row: 1/3;
+    grid-column: 2/4;
+
+    border-top-right-radius: 350px;
+    border-bottom-right-radius: 450px;
+    border-bottom-left-radius: 400px;
+    border-top-left-radius: 320px;
 }
 
-.hex-grid__item:nth-of-type(n + 4) {
-    --counter: 2;
+.laptop_girl{
+    position: relative;
+    top: -20px;
+    left: 60px;
+
+    width: 225px;
+    height: 225px;  
+
+    transform: rotate(38deg);
 }
 
-.hex-grid__item:nth-of-type(n + 7) {
-    --counter: 3;
-
+.about_myself{
+    transform: rotate(38deg);
+    position: relative;
+    top: 160px;
+    left: 120px;
 }
 
-.hex-grid__item:nth-of-type(3n + 2) {
-    grid-column: 3 / span 3;
+.textfield  {
+    padding: 5px;
+    width: 150px;
+    margin:5px 0;
+    border:0;
+    border-radius:10px;
 }
 
-.hex-grid__item:nth-of-type(3n + 3) {
-    grid-column: 5 / span 3;
+.totalform{
+    width: 100px;
+    height: auto;
+    /* background-color: green; */
+    transform: rotate(38deg);
+    position: relative;
+    top: -200px;
+    left: -60px;
+    border-color: transparent;
+}
+
+.margins{
+    margin: 0px 300px;
+}
+
+.submitbutton{
+    padding: 10px;
+    width: 50px;
+    margin:10px 5px;
+    border:0;
+    background-color: rgb(129, 212, 45);
+    opacity: 100%;
+    box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+    border-radius:10px;
+}
+
+.submitbutton:hover{
+    background-color: rgb(141, 250, 33);
 }

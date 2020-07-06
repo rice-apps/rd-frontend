@@ -151,9 +151,11 @@ const LOGIN = gql`
 const SET_INFO = gql`
     mutation SetInfo(
         $username: String!
-        $college: String!
+        $college: EnumUserCollege!
         $major: [String]!
         $minor: [String]!
+        $netID: String!
+        $isNewUser: Boolean!
     ) {
         userUpdateOne(
             record: {
@@ -161,6 +163,7 @@ const SET_INFO = gql`
                 college: $college
                 major: $major
                 minor: $minor
+                isNewUser: $isNewUser
             },
             filter: {
                 netID: $netID
@@ -172,8 +175,9 @@ const SET_INFO = gql`
                 college
                 major
                 minor
+                isNewUser
             }
-        }
+        }       
     }
 `
 
