@@ -77,7 +77,6 @@ function Discussion(props) {
     if (props.error) return <h1>Something went wrong...</h1>;
 
     const discussions = props.data.postPagination.items.map((post, i) => {
-        console.log(post.upvotes.length)
         return (
             <React.Fragment key={i}>
                 <DiscussionBoxSection>
