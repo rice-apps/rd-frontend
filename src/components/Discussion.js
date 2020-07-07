@@ -12,6 +12,13 @@ import ShareIcon from '@material-ui/icons/Share';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { useMutation } from "@apollo/react-hooks";
+
+import {
+    UPVOTE_POST
+} from "../graphql/Mutations";
+
+import { TOKEN_NAME } from "../utils/config";
 
 import {
     Banner,
@@ -54,21 +61,36 @@ function Discussion(props) {
 
     const classes = useStyles();
 
+    const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));
+
+    const [upvotePost] = useMutation(UPVOTE_POST);
+
     useEffect(() => {
         props.subscribeToNewDiscussions();
+        props.subscribeToNewVotes();
     });
 
     if (props.loading) return <h1>Loading...</h1>;
     if (props.error) return <h1>Something went wrong...</h1>;
 
     const discussions = props.data.postPagination.items.map((post, i) => {
+        console.log(post.upvotes.length)
         return (
             <React.Fragment key={i}>
                 <DiscussionBoxSection>
                     <DiscussionBox>
                         <LeftComponent>
                             <Upvote className={classes.root}>
-                                <IconButton>
+                                <IconButton onClick={(e) => {
+                                    e.preventDefault();
+                                    upvotePost({
+                                        variables: {
+                                            netID: userInfo.netID,
+                                            _id: post._id,
+                                        },
+                                    });
+                                }}>
+                                    
                                     <ArrowDropUp />
                                 </IconButton>
                             </Upvote>

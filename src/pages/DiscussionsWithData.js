@@ -5,7 +5,7 @@ import { useQuery } from "@apollo/react-hooks";
 import Discussion from "../components/Discussion";
 
 import { POST_PAGE } from "../graphql/Queries";
-import { DISCUSSION_CREATED } from "../graphql/Subscriptions";
+import { DISCUSSION_CREATED, POST_VOTE_CHANGED } from "../graphql/Subscriptions";
 
 function DiscussionsWithData() {
     const { subscribeToMore, fetchMore, ...result } = useQuery(POST_PAGE, {
@@ -55,6 +55,34 @@ function DiscussionsWithData() {
                         }
 
                         const newItem = subscriptionData.data.discussionCreated;
+
+                        const alreadyExists =
+                            prev.postPagination.items.filter((item) => {
+                                return item._id === newItem._id;
+                            }).length > 0;
+
+                        if (alreadyExists) {
+                            return prev;
+                        }
+
+                        return Object.assign({}, prev, {
+                            postPagination: {
+                                items: [newItem, ...prev.postPagination.items],
+                                __typename: "PostPagination",
+                            },
+                        });
+                    },
+                });
+            }}
+            subscribeToNewVotes={() => {
+                subscribeToMore({
+                    document: POST_VOTE_CHANGED,
+                    updateQuery: (prev, { subscriptionData }) => {
+                        if (!subscriptionData) {
+                            return prev;
+                        }
+
+                        const newItem = subscriptionData.data.postVoteChanged;
 
                         const alreadyExists =
                             prev.postPagination.items.filter((item) => {

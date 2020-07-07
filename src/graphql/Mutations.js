@@ -24,20 +24,6 @@ const CREATE_DISCUSSION = gql`
     }
 `;
 
-const UPVOTE_POST = gql`
-    mutation UpvotePost(
-        $netID: String!
-    ) {
-        upvotePostById(
-            record: { netID: $netID }
-        ) {
-            record {
-                upvotes
-            }
-        }
-    }
-`;
-
 const CREATE_EVENT = gql`
     mutation CreateEvent(
         $title: String!
@@ -161,4 +147,18 @@ const LOGIN = gql`
     }
 `;
 
-export { CREATE_DISCUSSION, CREATE_EVENT, CREATE_JOB, CREATE_NOTICE, LOGIN };
+const UPVOTE_POST = gql`
+    mutation UpvotePost(
+        $netID: String!
+        $_id: ID!
+    ) {
+        upvotePostById(netID: $netID, _id: $_id) {
+            creator {
+                netID
+            }
+            _id
+        }
+    }
+`;
+
+export { CREATE_DISCUSSION, CREATE_EVENT, CREATE_JOB, CREATE_NOTICE, LOGIN, UPVOTE_POST };
