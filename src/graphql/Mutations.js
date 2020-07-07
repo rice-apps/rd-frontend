@@ -161,4 +161,18 @@ const UPVOTE_POST = gql`
     }
 `;
 
-export { CREATE_DISCUSSION, CREATE_EVENT, CREATE_JOB, CREATE_NOTICE, LOGIN, UPVOTE_POST };
+const DOWNVOTE_POST = gql`
+    mutation DownvotePost(
+        $netID: String!
+        $_id: ID!
+    ) {
+        downvotePostById(netID: $netID, _id: $_id) {
+            creator {
+                netID
+            }
+            _id
+        }
+    }
+`;
+
+export { CREATE_DISCUSSION, CREATE_EVENT, CREATE_JOB, CREATE_NOTICE, LOGIN, UPVOTE_POST, DOWNVOTE_POST };

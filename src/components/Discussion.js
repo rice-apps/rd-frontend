@@ -15,7 +15,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useMutation } from "@apollo/react-hooks";
 
 import {
-    UPVOTE_POST
+    UPVOTE_POST,
+    DOWNVOTE_POST
 } from "../graphql/Mutations";
 
 import { TOKEN_NAME } from "../utils/config";
@@ -65,6 +66,8 @@ function Discussion(props) {
 
     const [upvotePost] = useMutation(UPVOTE_POST);
 
+    const [downvotePost] = useMutation(DOWNVOTE_POST);
+
     useEffect(() => {
         props.subscribeToNewDiscussions();
         props.subscribeToNewVotes();
@@ -96,7 +99,15 @@ function Discussion(props) {
                             </Upvote>
                             <Likes>{post.upvotes.length - post.downvotes.length}</Likes>
                             <Downvote className={classes.root}>
-                                <IconButton>
+                                <IconButton onClick={(e) => {
+                                    e.preventDefault();
+                                    downvotePost({
+                                        variables: {
+                                            netID: userInfo.netID,
+                                            _id: post._id,
+                                        },
+                                    });
+                                }}>
                                     <ArrowDropDown />
                                 </IconButton>
                             </Downvote>
