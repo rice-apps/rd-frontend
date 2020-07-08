@@ -50,6 +50,7 @@
         ]
     },
     "devDependencies": {
+        "graphql-tag.macro": "^2.0.1",
         "node-fetch": "^2.6.0"
     }
 }

@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import gql from "graphql-tag.macro";
 
 const CREATE_DISCUSSION = gql`
     mutation CreateDiscussion(

@@ -69,7 +69,7 @@ function Discussion(props) {
     const [downvotePost] = useMutation(DOWNVOTE_POST);
 
     useEffect(() => {
-        props.subscribeToNewDiscussions();
+        props.subscribeToNewPosts();
         props.subscribeToNewVotes();
     });
 
