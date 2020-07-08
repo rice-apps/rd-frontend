@@ -38,6 +38,8 @@ function Discussion(props) {
         props.subscribeToNewPosts();
     });
 
+    console.log(props.error)
+
     if (props.loading) return <h1>Loading...</h1>;
     if (props.error) return <h1>Something went wrong...</h1>;
 
