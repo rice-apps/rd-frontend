@@ -36,7 +36,7 @@ function Discussion(props) {
 
     useEffect(() => {
         props.subscribeToNewPosts();
-    });
+    }, []);
 
     console.log(props.error)
 
