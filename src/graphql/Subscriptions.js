@@ -3,17 +3,25 @@ import  gql  from "graphql-tag.macro";
 const POST_CREATED = gql`
     subscription {
         postCreated {
+            _id
             title
             creator {
                 username
             }
             body
             date_created
+            reports
             tags
+            upvotes {
+                username
+            }
+            downvotes {
+                username
+            }
             ... on Event {
                 start
                 end
-                EventPlace: place
+                location: place
             }
 
             ... on Job {
@@ -21,7 +29,7 @@ const POST_CREATED = gql`
                 end
                 isPaid
                 isClosed
-                JobPlace: place
+                workplace: place
             }
             ... on Notice {
                 deadline

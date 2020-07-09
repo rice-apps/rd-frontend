@@ -1,4 +1,4 @@
-import  gql  from "graphql-tag.macro";
+import gql from "graphql-tag.macro";
 
 const POST_PAGE = gql`
     query PostPage($page: Int, $perPage: Int) {

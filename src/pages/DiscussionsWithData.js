@@ -54,14 +54,7 @@ function DiscussionsWithData() {
 
                         const newItem = subscriptionData.data.postCreated;
 
-                        const alreadyExists =
-                            prev.postPagination.items.any((item) => {
-                                return item._id === newItem._id;
-                            });
-
-                        if (alreadyExists) {
-                            return prev;
-                        }
+                        console.log(newItem)
 
                         return Object.assign({}, prev, {
                             postPagination: {

@@ -71,7 +71,7 @@ function Discussion(props) {
     useEffect(() => {
         props.subscribeToNewPosts();
         props.subscribeToNewVotes();
-    });
+    }, []);
 
     if (props.loading) return <h1>Loading...</h1>;
     if (props.error) return <h1>Something went wrong...</h1>;
