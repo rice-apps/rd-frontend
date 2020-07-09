@@ -80,12 +80,18 @@ function DiscussionsWithData() {
                             return prev;
                         }
 
+
                         const newItem = subscriptionData.data.postVoteChanged;
 
-                        const alreadyExists =
-                            prev.postPagination.items.filter((item) => {
+
+                        const newItemIdx =
+                            prev.postPagination.items.indexOf(prev.postPagination.items.filter((item) => {
                                 return item._id === newItem._id;
-                            }).length > 0;
+                            })[0]);
+                    
+
+                        const alreadyExists = 
+                            prev.postPagination.items[newItemIdx].upvotes.length === newItem.upvotes.length;
 
                         if (alreadyExists) {
                             return prev;
@@ -93,7 +99,7 @@ function DiscussionsWithData() {
 
                         return Object.assign({}, prev, {
                             postPagination: {
-                                items: [newItem, ...prev.postPagination.items],
+                                items: [...prev.postPagination.items].splice(newItemIdx, 1, newItem),
                                 __typename: "PostPagination",
                             },
                         });
