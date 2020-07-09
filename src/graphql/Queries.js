@@ -22,11 +22,9 @@ const POST_PAGE = gql`
                 downvotes {
                     username
                 }
-
                 ... on Notice {
                     deadline
                 }
-
                 ... on Job {
                     start
                     end
@@ -34,16 +32,13 @@ const POST_PAGE = gql`
                     isPaid
                     isClosed
                 }
-
                 ... on Event {
                     start
                     end
                     location: place
                 }
-
                 __typename
             }
-
             pageInfo {
                 hasNextPage
             }
