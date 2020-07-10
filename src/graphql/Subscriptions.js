@@ -1,4 +1,4 @@
-import  gql  from "graphql-tag.macro";
+import gql from "graphql-tag.macro";
 
 const POST_CREATED = gql`
     subscription {
@@ -60,8 +60,4 @@ const POST_REMOVED = gql`
     }
 `;
 
-export {
-    POST_CREATED,
-    POST_VOTE_CHANGED,
-    POST_REMOVED,
-};
+export { POST_CREATED, POST_VOTE_CHANGED, POST_REMOVED };

@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 import LoginBackground from "../images/backgroundLogin.svg";
 
-
 const Banner = styled.div`
     // Image at the top
     padding: 100px 100px;
@@ -67,17 +66,11 @@ const DiscussionTitle = styled.text`
     font-weight: bold;
 `;
 
-const TagOne = styled.div`
+const TagOne = styled.div``;
 
-`;
+const TagTwo = styled.div``;
 
-const TagTwo = styled.div`
-  
-`;
-
-const TagThree = styled.div`
-
-`;
+const TagThree = styled.div``;
 
 const MiddleComponent = styled.div`
     // contains DiscussionBody
@@ -92,7 +85,6 @@ const DiscussionBody = styled.text`
     font-size: 2vh;
     word-wrap: break-word;
 `;
-
 
 const BottomComponent = styled.div`
     // contains Save, AddTo, OP, Time, Date, ShareFacebook, ShareTwitter, Share
@@ -148,8 +140,6 @@ const Share = styled.div`
     grid-area: share;
 `;
 
-
-
 export {
     Banner,
     DiscussionBoxSection,
@@ -173,5 +163,5 @@ export {
     Date,
     ShareFacebook,
     ShareTwitter,
-    Share
+    Share,
 };

@@ -33,6 +33,7 @@ function DiscussionsWithData() {
                                     ...prev.postPagination.items,
                                     ...fetchMoreResult.postPagination.items,
                                 ],
+                                pageInfo: prev.postPagination.pageInfo,
                                 __typename: "PostPagination",
                             },
                         });
@@ -52,13 +53,12 @@ function DiscussionsWithData() {
                             return prev;
                         }
 
-                        const newItem = subscriptionData.data.postCreated;
-
-                        console.log(newItem)
-
                         return Object.assign({}, prev, {
                             postPagination: {
-                                items: [newItem, ...prev.postPagination.items],
+                                items: [
+                                    subscriptionData.data.postCreated,
+                                    ...prev.postPagination.items,
+                                ],
                                 __typename: "PostPagination",
                             },
                         });
@@ -73,26 +73,39 @@ function DiscussionsWithData() {
                             return prev;
                         }
 
+                        const {
+                            _id,
+                            upvotes,
+                            downvotes,
+                        } = subscriptionData.data.postVoteChanged;
 
-                        const newItem = subscriptionData.data.postVoteChanged;
+                        const index = prev.postPagination.items.indexOf(
+                            prev.postPagination.items.filter((item) => {
+                                return item._id === _id;
+                            })[0],
+                        );
 
+                        const updatedItem = Object.assign(
+                            {},
+                            prev.postPagination.items[index],
+                        );
 
-                        const newItemIdx =
-                            prev.postPagination.items.indexOf(prev.postPagination.items.filter((item) => {
-                                return item._id === newItem._id;
-                            })[0]);
-                    
-
-                        const alreadyExists = 
-                            prev.postPagination.items[newItemIdx].upvotes.length === newItem.upvotes.length;
-
-                        if (alreadyExists) {
-                            return prev;
-                        }
+                        updatedItem.upvotes = upvotes;
+                        updatedItem.downvotes = downvotes;
 
                         return Object.assign({}, prev, {
                             postPagination: {
-                                items: [...prev.postPagination.items].splice(newItemIdx, 1, newItem),
+                                items: [
+                                    ...prev.postPagination.items.slice(
+                                        0,
+                                        index,
+                                    ),
+                                    ...[updatedItem],
+                                    ...prev.postPagination.items.slice(
+                                        index + 1,
+                                    ),
+                                ],
+                                pageInfo: prev.postPagination.pageInfo,
                                 __typename: "PostPagination",
                             },
                         });

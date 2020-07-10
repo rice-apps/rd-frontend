@@ -1,1 +1,16 @@
-{"__schema":{"types":[{"kind":"INTERFACE","name":"PostInterface","possibleTypes":[{"name":"Discussion"},{"name":"Event"},{"name":"Job"},{"name":"Notice"}]}]}}
+{
+    "__schema": {
+        "types": [
+            {
+                "kind": "INTERFACE",
+                "name": "PostInterface",
+                "possibleTypes": [
+                    { "name": "Discussion" },
+                    { "name": "Event" },
+                    { "name": "Job" },
+                    { "name": "Notice" }
+                ]
+            }
+        ]
+    }
+}
