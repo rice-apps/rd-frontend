@@ -3,10 +3,11 @@ import React, { useState, useEffect } from "react";
 import { useMutation } from "@apollo/react-hooks";
 
 import {
-    CREATE_DISCUSSION,
-    CREATE_EVENT,
-    CREATE_JOB,
-    CREATE_NOTICE,
+    // CREATE_DISCUSSION,
+    // CREATE_EVENT,
+    // CREATE_JOB,
+    // CREATE_NOTICE,
+    POST_CREATE,
 } from "../graphql/Mutations";
 
 import { TOKEN_NAME } from "../utils/config";
@@ -28,16 +29,30 @@ function WritePost() {
     const [deadline, setDeadline] = useState(new Date().getTime());
     const [postType, setPostType] = useState("Discussion");
 
-    const [addDiscussion] = useMutation(CREATE_DISCUSSION);
-    const [addEvent] = useMutation(CREATE_EVENT);
-    const [addJob] = useMutation(CREATE_JOB);
-    const [addNotice] = useMutation(CREATE_NOTICE);
+    const [postCreate] = useMutation(POST_CREATE);
+    // const [addDiscussion] = useMutation(CREATE_DISCUSSION);
+    // const [addEvent] = useMutation(CREATE_EVENT);
+    // const [addJob] = useMutation(CREATE_JOB);
+    // const [addNotice] = useMutation(CREATE_NOTICE);
 
     if (!localStorage.getItem(TOKEN_NAME)) {
         return <Redirect to="/login" />;
     }
 
     let form = <div></div>;
+
+    const submit = async () => {
+        const res = await props.s3Sign({
+            variables : {
+                filename: formatFilename(file.name),
+                filetype: file.type
+            }
+        });
+
+        const {signedRequest, url} = res.data.signS3;
+        await uploadToS3(file, signedRequest);
+
+    }
 
     switch (postType) {
         case "Discussion":
@@ -52,7 +67,7 @@ function WritePost() {
                     <button
                         onClick={(e) => {
                             e.preventDefault();
-                            addDiscussion({
+                            postCreate({
                                 variables: {
                                     title: document.getElementById("title")
                                         .innerHTML,
@@ -104,7 +119,7 @@ function WritePost() {
                     <button
                         onClick={(e) => {
                             e.preventDefault();
-                            addEvent({
+                            postCreate({
                                 variables: {
                                     title: title,
                                     body: body,
@@ -169,7 +184,7 @@ function WritePost() {
                     <button
                         onClick={(e) => {
                             e.preventDefault();
-                            addJob({
+                            postCreate({
                                 variables: {
                                     title: title,
                                     body: body,
@@ -179,7 +194,7 @@ function WritePost() {
                                     place: place,
                                     isPaid: isPaid,
                                     isClosed: isClosed,
-                                },
+                                }
                             });
                         }}
                     >
@@ -212,13 +227,13 @@ function WritePost() {
                     <button
                         onClick={(e) => {
                             e.preventDefault();
-                            addNotice({
+                            postCreate({
                                 variables: {
                                     title: title,
                                     body: body,
                                     creator: userInfo.netID,
                                     deadline: deadline,
-                                },
+                                }
                             });
                         }}
                     >

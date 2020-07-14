@@ -135,6 +135,12 @@ const CREATE_NOTICE = gql`
     }
 `;
 
+const POST_CREATE = gql`
+    mutation postCreateOne(){
+        
+    }
+`;
+
 const LOGIN = gql`
     mutation Login($ticket: String!) {
         userAuthentication(ticket: $ticket) {
