@@ -66,7 +66,7 @@ function Discussion(props) {
     useEffect(() => {
         subscribeToNewPosts();
         subscribeToNewVotes();
-    // eslint-disable-next-line
+        // eslint-disable-next-line
     }, []);
 
     if (props.loading) return <h1>Loading...</h1>;

@@ -1,29 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 const DropDownItem = (props) => {
     const [selected, setSelected] = useState(false);
 
     useEffect(() => {
         const data = props.selectedItems;
-        if (data.includes(props.name)){
+        if (data.includes(props.name)) {
             setSelected(true);
-        }
-        else{
+        } else {
             setSelected(false);
         }
-    }, [props.selectedItems])
+    }, [props.selectedItems]);
 
     const toggleSelected = () => {
         setSelected(!selected);
-        props.setInfo(props.name)
-    }
+        props.setInfo(props.name);
+    };
 
     return (
-        <div onClick = {toggleSelected}>
+        <div onClick={toggleSelected}>
             {props.name}
-            {selected && '✔'}
+            {selected && "✔"}
         </div>
     );
-}
+};
 
 export default DropDownItem;

@@ -12,7 +12,7 @@ const POST_CREATE = gql`
         $place: String
         $isPaid: Boolean
         $isClosed: Boolean
-    ){
+    ) {
         postCreateOne(
             record: {
                 kind: $kind
@@ -26,14 +26,14 @@ const POST_CREATE = gql`
                 isPaid: $isPaid
                 isClosed: $isClosed
             }
-        ){
-            record{
+        ) {
+            record {
                 _id
                 kind
                 __typename
                 title
                 body
-                creator{
+                creator {
                     netID
                 }
             }
@@ -91,10 +91,8 @@ const SET_INFO = gql`
                 major: $major
                 minor: $minor
                 isNewUser: $isNewUser
-            },
-            filter: {
-                netID: $netID
             }
+            filter: { netID: $netID }
         ) {
             record {
                 _id
@@ -104,14 +102,8 @@ const SET_INFO = gql`
                 minor
                 isNewUser
             }
-        }       
+        }
     }
-`
+`;
 
-export {
-    SET_INFO,
-    POST_CREATE,
-    LOGIN,
-    UPVOTE_POST,
-    DOWNVOTE_POST,
-};
+export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST };
