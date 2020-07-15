@@ -4,7 +4,10 @@ import { createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { split } from "@apollo/client";
-import { getMainDefinition } from "@apollo/client/utilities";
+import {
+    getMainDefinition,
+    relayStylePagination,
+} from "@apollo/client/utilities";
 import possibleTypes from "./possibleTypes.json";
 
 import { GQL_URL, WS_URL, TOKEN_NAME } from "./config";
@@ -49,6 +52,71 @@ const authLink = setContext((_, { headers }) => {
 });
 
 export default new ApolloClient({
-    cache: new InMemoryCache({ possibleTypes }),
+    cache: new InMemoryCache({
+        possibleTypes,
+        typePolicies: {
+            Query: {
+                fields: {
+                    postConnection: relayStylePagination(),
+                },
+            },
+            Discussion: {
+                fields: {
+                    upvotes: {
+                        merge(_ignored, incoming) {
+                            return incoming;
+                        },
+                    },
+                    downvotes: {
+                        merge(_ignored, incoming) {
+                            return incoming;
+                        },
+                    },
+                },
+            },
+            Event: {
+                fields: {
+                    upvotes: {
+                        merge(_ignored, incoming) {
+                            return incoming;
+                        },
+                    },
+                    downvotes: {
+                        merge(_ignored, incoming) {
+                            return incoming;
+                        },
+                    },
+                },
+            },
+            Job: {
+                fields: {
+                    upvotes: {
+                        merge(_ignored, incoming) {
+                            return incoming;
+                        },
+                    },
+                    downvotes: {
+                        merge(_ignored, incoming) {
+                            return incoming;
+                        },
+                    },
+                },
+            },
+            Notice: {
+                fields: {
+                    upvotes: {
+                        merge(_ignored, incoming) {
+                            return incoming;
+                        },
+                    },
+                    downvotes: {
+                        merge(_ignored, incoming) {
+                            return incoming;
+                        },
+                    },
+                },
+            },
+        },
+    }),
     link: authLink.concat(link),
 });

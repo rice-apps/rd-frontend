@@ -57,7 +57,8 @@ const UPVOTE_POST = gql`
     mutation UpvotePost($netID: String!, $_id: ID!) {
         upvotePostById(netID: $netID, _id: $_id) {
             creator {
-                netID
+                _id
+                username
             }
             _id
         }
@@ -68,6 +69,7 @@ const DOWNVOTE_POST = gql`
     mutation DownvotePost($netID: String!, $_id: ID!) {
         downvotePostById(netID: $netID, _id: $_id) {
             creator {
+                _id
                 netID
             }
             _id

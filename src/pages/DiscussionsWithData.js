@@ -7,11 +7,12 @@ import Discussion from "../components/Discussion";
 import { POST_PAGE } from "../graphql/Queries";
 import { POST_CREATED, POST_VOTE_CHANGED } from "../graphql/Subscriptions";
 
+import uuid from "uuid/v1";
+
 function DiscussionsWithData() {
     const { subscribeToMore, fetchMore, ...result } = useQuery(POST_PAGE, {
         variables: {
-            page: 1,
-            perPage: 10,
+            after: "",
         },
 
         fetchPolicy: "cache-and-network",
@@ -20,28 +21,10 @@ function DiscussionsWithData() {
     return (
         <Discussion
             {...result}
-            onLoadMore={(newPage) =>
+            onLoadMore={() =>
                 fetchMore({
-                    updateQuery: (prev, { fetchMoreResult }) => {
-                        if (!fetchMoreResult) {
-                            return prev;
-                        }
-
-                        const final = Object.assign({}, prev, {
-                            postPagination: {
-                                items: [
-                                    ...prev.postPagination.items,
-                                    ...fetchMoreResult.postPagination.items,
-                                ],
-                                pageInfo: prev.postPagination.pageInfo,
-                                __typename: "PostPagination",
-                            },
-                        });
-
-                        return final;
-                    },
                     variables: {
-                        page: newPage,
+                        after: result.data.postConnection.pageInfo.endCursor,
                     },
                 })
             }
@@ -54,12 +37,17 @@ function DiscussionsWithData() {
                         }
 
                         return Object.assign({}, prev, {
-                            postPagination: {
-                                items: [
-                                    subscriptionData.data.postCreated,
-                                    ...prev.postPagination.items,
+                            postConnection: {
+                                count: prev.postConnection.count + 1,
+                                edges: [
+                                    {
+                                        cursor: uuid(),
+                                        node: subscriptionData.data.postCreated,
+                                    },
+                                    ...prev.postConnection.edges,
                                 ],
-                                __typename: "PostPagination",
+                                pageInfo: prev.postConnection.pageInfo,
+                                __typename: "PostConnections",
                             },
                         });
                     },
@@ -79,34 +67,38 @@ function DiscussionsWithData() {
                             downvotes,
                         } = subscriptionData.data.postVoteChanged;
 
-                        const index = prev.postPagination.items.indexOf(
-                            prev.postPagination.items.filter((item) => {
-                                return item._id === _id;
+                        const index = prev.postConnection.edges.indexOf(
+                            prev.postConnection.edges.filter((item) => {
+                                return item.node._id === _id;
                             })[0],
                         );
 
-                        const updatedItem = Object.assign(
-                            {},
-                            prev.postPagination.items[index],
-                        );
-
-                        updatedItem.upvotes = upvotes;
-                        updatedItem.downvotes = downvotes;
-
                         return Object.assign({}, prev, {
-                            postPagination: {
-                                items: [
-                                    ...prev.postPagination.items.slice(
+                            postConnection: {
+                                count: prev.postConnection.count,
+                                edges: [
+                                    ...prev.postConnection.edges.slice(
                                         0,
                                         index,
                                     ),
-                                    ...[updatedItem],
-                                    ...prev.postPagination.items.slice(
+                                    ...[
+                                        {
+                                            ...prev.postConnection.edges[index],
+                                            node: {
+                                                ...prev.postConnection.edges[
+                                                    index
+                                                ].node,
+                                                upvotes: upvotes,
+                                                downvotes: downvotes,
+                                            },
+                                        },
+                                    ],
+                                    ...prev.postConnection.edges.slice(
                                         index + 1,
                                     ),
                                 ],
-                                pageInfo: prev.postPagination.pageInfo,
-                                __typename: "PostPagination",
+                                pageInfo: prev.postConnection.pageInfo,
+                                __typename: "PostConnection",
                             },
                         });
                     },

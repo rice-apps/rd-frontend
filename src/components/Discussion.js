@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import ReactHtmlParser from "react-html-parser";
 
@@ -51,8 +51,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Discussion(props) {
-    const [page, setPage] = useState(2);
-
     const classes = useStyles();
 
     const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));
@@ -61,7 +59,7 @@ function Discussion(props) {
 
     const [downvotePost] = useMutation(DOWNVOTE_POST);
 
-    const { subscribeToNewPosts, subscribeToNewVotes } = props;
+    const { onLoadMore, subscribeToNewPosts, subscribeToNewVotes } = props;
 
     useEffect(() => {
         subscribeToNewPosts();
@@ -72,7 +70,7 @@ function Discussion(props) {
     if (props.loading) return <h1>Loading...</h1>;
     if (props.error) return <h1>Something went wrong...</h1>;
 
-    const discussions = props.data.postPagination.items.map((post, i) => {
+    const discussions = props.data.postConnection.edges.map((post, i) => {
         return (
             <React.Fragment key={i}>
                 <DiscussionBoxSection>
@@ -85,7 +83,7 @@ function Discussion(props) {
                                         upvotePost({
                                             variables: {
                                                 netID: userInfo.netID,
-                                                _id: post._id,
+                                                _id: post.node._id,
                                             },
                                         });
                                     }}
@@ -94,7 +92,8 @@ function Discussion(props) {
                                 </IconButton>
                             </Upvote>
                             <Likes>
-                                {post.upvotes.length - post.downvotes.length}
+                                {post.node.upvotes.length -
+                                    post.node.downvotes.length}
                             </Likes>
                             <Downvote className={classes.root}>
                                 <IconButton
@@ -103,7 +102,7 @@ function Discussion(props) {
                                         downvotePost({
                                             variables: {
                                                 netID: userInfo.netID,
-                                                _id: post._id,
+                                                _id: post.node._id,
                                             },
                                         });
                                     }}
@@ -114,7 +113,7 @@ function Discussion(props) {
                         </LeftComponent>
 
                         <TopComponent>
-                            <DiscussionTitle>{post.title}</DiscussionTitle>
+                            <DiscussionTitle>{post.node.title}</DiscussionTitle>
                             <TagOne>Tag 1</TagOne>
                             <TagTwo>Tag 2</TagTwo>
                             <TagThree>Tag 3</TagThree>
@@ -122,21 +121,23 @@ function Discussion(props) {
 
                         <MiddleComponent>
                             <DiscussionBody>
-                                {ReactHtmlParser(post.body)}
+                                {ReactHtmlParser(post.node.body)}
                             </DiscussionBody>
                         </MiddleComponent>
 
                         <BottomComponent>
                             <Save>Save</Save>
                             <AddTo>+ Add to...</AddTo>
-                            <OP>{post.creator.username}</OP>
-                            <Time>{post.date_created.substring(11, 16)}</Time>
+                            <OP>{post.node.creator.username}</OP>
+                            <Time>
+                                {post.node.date_created.substring(11, 16)}
+                            </Time>
                             <Date>
-                                {post.date_created.substring(5, 7) +
+                                {post.node.date_created.substring(5, 7) +
                                     "/" +
-                                    post.date_created.substring(8, 10) +
+                                    post.node.date_created.substring(8, 10) +
                                     "/" +
-                                    post.date_created.substring(0, 4)}
+                                    post.node.date_created.substring(0, 4)}
                             </Date>
                             <ShareFacebook>
                                 <IconButton>
@@ -166,8 +167,7 @@ function Discussion(props) {
             {discussions}
             <button
                 onClick={() => {
-                    setPage(page + 1);
-                    props.onLoadMore(page);
+                    onLoadMore();
                 }}
             >
                 Load More
