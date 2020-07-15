@@ -23,8 +23,9 @@ const POST_PAGE = gql`
                     username
                 }
                 date_created
-                reports
-
+                reports{
+                    username
+                }
                 ... on Notice {
                     deadline
                 }

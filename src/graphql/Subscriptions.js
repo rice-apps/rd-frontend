@@ -21,7 +21,9 @@ const DISCUSSION_UPDATED = gql`
             _id
             title
             body
-            reports
+            reports{
+                username
+            }
         }
     }
 `;
@@ -53,7 +55,9 @@ const EVENT_UPDATED = gql`
             start
             end
             place
-            reports
+            reports{
+                username
+            }
         }
     }
 `;
@@ -89,7 +93,9 @@ const JOB_UPDATED = gql`
             place
             isPaid
             isClosed
-            reports
+            reports{
+                username
+            }
         }
     }
 `;
@@ -117,7 +123,9 @@ const NOTICE_UPDATED = gql`
             title
             body
             deadline
-            reports
+            reports{
+                username
+            }
         }
     }
 `;
