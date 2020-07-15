@@ -11,7 +11,7 @@ function Login() {
     );
 
     return hasTicket ? (
-        Auth("discussions", "login")
+        Auth("more_info", "login")
     ) : (
         <LoginContainer>
             <LoginImage />

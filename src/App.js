@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Discussions from "./pages/DiscussionsWithData";
 import WritePost from "./pages/WritePost";
 import Home from "./pages/Home";
+import MoreInfo from "./pages/MoreInfo";
 
 // TODO: find a way to fix Login being blank after error ticket
 // without forcing a refresh on page navigation
@@ -23,9 +24,13 @@ function App() {
                 <Route path="/post">
                     <WritePost />
                 </Route>
+                <Route exact path="/more_info">
+                    <MoreInfo />
+                </Route>
                 <Route path="/">
                     <Home />
                 </Route>
+                
             </Switch>
         </Router>
     );

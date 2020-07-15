@@ -2,13 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { useMutation } from "@apollo/react-hooks";
 
-import {
-    // CREATE_DISCUSSION,
-    // CREATE_EVENT,
-    // CREATE_JOB,
-    // CREATE_NOTICE,
-    POST_CREATE,
-} from "../graphql/Mutations";
+import { POST_CREATE } from "../graphql/Mutations";
 
 import { TOKEN_NAME } from "../utils/config";
 import { Redirect } from "react-router-dom";
@@ -30,35 +24,31 @@ function WritePost() {
     const [postType, setPostType] = useState("Discussion");
 
     const [postCreate] = useMutation(POST_CREATE);
-    // const [addDiscussion] = useMutation(CREATE_DISCUSSION);
-    // const [addEvent] = useMutation(CREATE_EVENT);
-    // const [addJob] = useMutation(CREATE_JOB);
-    // const [addNotice] = useMutation(CREATE_NOTICE);
 
     if (!localStorage.getItem(TOKEN_NAME)) {
         return <Redirect to="/login" />;
     }
 
-    let form = <div></div>;
+    let form = <div>Something went wrong! Please report to riceapps.</div>;
 
-    const submit = async () => {
-        const res = await props.s3Sign({
-            variables : {
-                filename: formatFilename(file.name),
-                filetype: file.type
-            }
-        });
+    // const submit = async () => {
+    //     const res = await props.s3Sign({
+    //         variables : {
+    //             filename: formatFilename(file.name),
+    //             filetype: file.type
+    //         }
+    //     });
 
-        const {signedRequest, url} = res.data.signS3;
-        await uploadToS3(file, signedRequest);
+    //     const {signedRequest, url} = res.data.signS3;
+    //     await uploadToS3(file, signedRequest);
 
-    }
+    // }
 
     switch (postType) {
         case "Discussion":
             form = (
                 <form>
-                    <div
+                     <div
                         id="title"
                         style={{ width: "20vw" }}
                         contentEditable={true}
@@ -69,10 +59,9 @@ function WritePost() {
                             e.preventDefault();
                             postCreate({
                                 variables: {
-                                    title: document.getElementById("title")
-                                        .innerHTML,
-                                    body: document.getElementById("body")
-                                        .innerHTML,
+                                    kind: postType,
+                                    title: title,
+                                    body: body,
                                     creator: userInfo.netID,
                                 },
                             });
@@ -121,6 +110,7 @@ function WritePost() {
                             e.preventDefault();
                             postCreate({
                                 variables: {
+                                    kind: postType,
                                     title: title,
                                     body: body,
                                     creator: userInfo.netID,
@@ -186,6 +176,7 @@ function WritePost() {
                             e.preventDefault();
                             postCreate({
                                 variables: {
+                                    kind: postType,
                                     title: title,
                                     body: body,
                                     creator: userInfo.netID,
@@ -229,6 +220,7 @@ function WritePost() {
                             e.preventDefault();
                             postCreate({
                                 variables: {
+                                    kind: postType  ,
                                     title: title,
                                     body: body,
                                     creator: userInfo.netID,
@@ -242,8 +234,6 @@ function WritePost() {
                 </form>
             );
             break;
-        default:
-            form = <div>Something went wrong! Please report to riceapps.</div>;
     }
 
     return (
