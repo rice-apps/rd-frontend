@@ -115,7 +115,11 @@ const MoreInfo = () => {
                 <div className="pink_shape">
                     <div>
                         <p className="about_myself">A little about myself...</p>
-                        <img src={laptop_girl} className="laptop_girl" />
+                        <img
+                            src={laptop_girl}
+                            className="laptop_girl"
+                            alt="Girl with laptop"
+                        />
                     </div>
 
                     <form onSubmit={handleSubmit} className="margins">

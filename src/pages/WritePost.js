@@ -234,6 +234,9 @@ function WritePost() {
                 </form>
             );
             break;
+
+        default:
+            throw new Error("something went horribly wrong!");
     }
 
     return (

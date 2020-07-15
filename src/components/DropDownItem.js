@@ -10,6 +10,7 @@ const DropDownItem = (props) => {
         } else {
             setSelected(false);
         }
+        // eslint-disable-next-line
     }, [props.selectedItems]);
 
     const toggleSelected = () => {
