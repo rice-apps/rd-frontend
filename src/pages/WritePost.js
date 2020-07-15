@@ -48,18 +48,12 @@ function WritePost() {
         case "Discussion":
             form = (
                 <form>
-                    <input
-                        type="text"
-                        name="Post Title"
-                        placeholder="Title"
-                        onChange={(e) => setTitle(e.target.value)}
+                     <div
+                        id="title"
+                        style={{ width: "20vw" }}
+                        contentEditable={true}
                     />
-                    <input
-                        type="text"
-                        name="Post Body"
-                        placeholder="Content"
-                        onChange={(e) => setBody(e.target.value)}
-                    />
+                    <div id="body" contentEditable={true} />
                     <button
                         onClick={(e) => {
                             e.preventDefault();
