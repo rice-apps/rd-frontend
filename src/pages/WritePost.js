@@ -2,12 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { useMutation } from "@apollo/react-hooks";
 
-import {
-    CREATE_DISCUSSION,
-    CREATE_EVENT,
-    CREATE_JOB,
-    CREATE_NOTICE,
-} from "../graphql/Mutations";
+import { POST_CREATE } from "../graphql/Mutations";
 
 import { TOKEN_NAME } from "../utils/config";
 import { Redirect } from "react-router-dom";
@@ -28,36 +23,51 @@ function WritePost() {
     const [deadline, setDeadline] = useState(new Date().getTime());
     const [postType, setPostType] = useState("Discussion");
 
-    const [addDiscussion] = useMutation(CREATE_DISCUSSION);
-    const [addEvent] = useMutation(CREATE_EVENT);
-    const [addJob] = useMutation(CREATE_JOB);
-    const [addNotice] = useMutation(CREATE_NOTICE);
+    const [postCreate] = useMutation(POST_CREATE);
 
     if (!localStorage.getItem(TOKEN_NAME)) {
         return <Redirect to="/login" />;
     }
 
-    let form = <div></div>;
+    let form = <div>Something went wrong! Please report to riceapps.</div>;
+
+    // const submit = async () => {
+    //     const res = await props.s3Sign({
+    //         variables : {
+    //             filename: formatFilename(file.name),
+    //             filetype: file.type
+    //         }
+    //     });
+
+    //     const {signedRequest, url} = res.data.signS3;
+    //     await uploadToS3(file, signedRequest);
+
+    // }
 
     switch (postType) {
         case "Discussion":
             form = (
                 <form>
-                    <div
-                        id="title"
-                        style={{ width: "20vw" }}
-                        contentEditable={true}
+                    <input
+                        type="text"
+                        name="Post Title"
+                        placeholder="Title"
+                        onChange={(e) => setTitle(e.target.value)}
                     />
-                    <div id="body" contentEditable={true} />
+                    <input
+                        type="text"
+                        name="Post Body"
+                        placeholder="Content"
+                        onChange={(e) => setBody(e.target.value)}
+                    />
                     <button
                         onClick={(e) => {
                             e.preventDefault();
-                            addDiscussion({
+                            postCreate({
                                 variables: {
-                                    title: document.getElementById("title")
-                                        .innerHTML,
-                                    body: document.getElementById("body")
-                                        .innerHTML,
+                                    kind: postType,
+                                    title: title,
+                                    body: body,
                                     creator: userInfo.netID,
                                 },
                             });
@@ -104,8 +114,9 @@ function WritePost() {
                     <button
                         onClick={(e) => {
                             e.preventDefault();
-                            addEvent({
+                            postCreate({
                                 variables: {
+                                    kind: postType,
                                     title: title,
                                     body: body,
                                     creator: userInfo.netID,
@@ -169,8 +180,9 @@ function WritePost() {
                     <button
                         onClick={(e) => {
                             e.preventDefault();
-                            addJob({
+                            postCreate({
                                 variables: {
+                                    kind: postType,
                                     title: title,
                                     body: body,
                                     creator: userInfo.netID,
@@ -179,7 +191,7 @@ function WritePost() {
                                     place: place,
                                     isPaid: isPaid,
                                     isClosed: isClosed,
-                                },
+                                }
                             });
                         }}
                     >
@@ -212,13 +224,14 @@ function WritePost() {
                     <button
                         onClick={(e) => {
                             e.preventDefault();
-                            addNotice({
+                            postCreate({
                                 variables: {
+                                    kind: postType  ,
                                     title: title,
                                     body: body,
                                     creator: userInfo.netID,
                                     deadline: deadline,
-                                },
+                                }
                             });
                         }}
                     >
@@ -227,8 +240,6 @@ function WritePost() {
                 </form>
             );
             break;
-        default:
-            form = <div>Something went wrong! Please report to riceapps.</div>;
     }
 
     return (
