@@ -10,7 +10,7 @@ import FacebookIcon from "@material-ui/icons/Facebook";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import ShareIcon from "@material-ui/icons/Share";
 
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 
 import { UPVOTE_POST, DOWNVOTE_POST } from "../graphql/Mutations";
 

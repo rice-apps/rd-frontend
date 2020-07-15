@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
-import { BrowserRouter as Router, Redirect } from "react-router-dom";
-import { useMutation } from "@apollo/react-hooks";
+import { Redirect } from "react-router-dom";
+import { useMutation } from "@apollo/client";
 import { TOKEN_NAME } from "../utils/config";
 import { SET_INFO } from "../graphql/Mutations";
 import laptop_girl from "../images/Page 2.svg";
@@ -18,7 +18,7 @@ const MoreInfo = () => {
     const [isMinorOpen, setMinorOpen] = useState(false);
     const [isCollegeOpen, setCollegeOpen] = useState(false);
 
-    const [addInfo, { response }] = useMutation(SET_INFO);
+    const [addInfo] = useMutation(SET_INFO);
     const data = JSON.parse(localStorage.getItem(TOKEN_NAME));
 
     const majors = major_minor_json.majors.split(";").map((major) => {
