@@ -7,15 +7,24 @@ const POST_CREATE = gql`
         $body: String!
         $creator: String!
         $deadline: String
-        
+        $start: String
+        $end: String
+        $place: String
+        $isPaid: Boolean
+        $isClosed: Boolean
     ){
         postCreateOne(
-            record{
+            record: {
                 kind: $kind
                 title: $title
                 body: $body
                 creator: $creator
                 deadline: $deadline
+                start: $start
+                end: $end
+                place: $place
+                isPaid: $isPaid
+                isClosed: $isClosed
             }
         ){
             record{
