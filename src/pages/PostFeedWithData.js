@@ -3,7 +3,6 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 
 import PostFeed from "../components/PostFeed";
-
 import { POST_PAGE } from "../graphql/Queries";
 import { POST_CREATED, POST_VOTE_CHANGED } from "../graphql/Subscriptions";
 
