@@ -64,14 +64,14 @@ export default new ApolloClient({
                 fields: {
                     postCreated: {
                         merge(_ignored, incoming) {
-                            return incoming
-                        }
+                            return incoming;
+                        },
                     },
                     postVoteChanged: {
                         merge(_ignored, incoming) {
-                            return incoming
-                        }
-                    }
+                            return incoming;
+                        },
+                    },
                 },
             },
             Discussion: {
