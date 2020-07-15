@@ -6,7 +6,8 @@ const POST_CREATE = gql`
         $title: String!
         $body: String!
         $creator: String!
-        $deadline: String!
+        $deadline: String
+        
     ){
         postCreateOne(
             record{
@@ -28,12 +29,6 @@ const POST_CREATE = gql`
                 }
             }
         }
-    }
-`;
-
-const POST_CREATE = gql`
-    mutation postCreateOne(){
-        
     }
 `;
 
@@ -71,11 +66,42 @@ const DOWNVOTE_POST = gql`
     }
 `;
 
+const SET_INFO = gql`
+    mutation SetInfo(
+        $username: String!
+        $college: EnumUserCollege!
+        $major: [String]!
+        $minor: [String]!
+        $netID: String!
+        $isNewUser: Boolean!
+    ) {
+        userUpdateOne(
+            record: {
+                username: $username
+                college: $college
+                major: $major
+                minor: $minor
+                isNewUser: $isNewUser
+            },
+            filter: {
+                netID: $netID
+            }
+        ) {
+            record {
+                _id
+                username
+                college
+                major
+                minor
+                isNewUser
+            }
+        }       
+    }
+`
+
 export {
-    CREATE_DISCUSSION,
-    CREATE_EVENT,
-    CREATE_JOB,
-    CREATE_NOTICE,
+    SET_INFO,
+    POST_CREATE,
     LOGIN,
     UPVOTE_POST,
     DOWNVOTE_POST,
