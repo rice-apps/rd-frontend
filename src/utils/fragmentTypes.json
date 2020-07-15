@@ -5,11 +5,10 @@
                 "kind": "INTERFACE",
                 "name": "PostInterface",
                 "possibleTypes": [
-                    { "name": "Post" },
                     { "name": "Discussion" },
                     { "name": "Event" },
-                    { "name": "Notice" },
-                    { "name": "Job" }
+                    { "name": "Job" },
+                    { "name": "Notice" }
                 ]
             }
         ]

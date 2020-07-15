@@ -5,7 +5,7 @@ import { useQuery } from "@apollo/react-hooks";
 import Discussion from "../components/Discussion";
 
 import { POST_PAGE } from "../graphql/Queries";
-import { DISCUSSION_CREATED } from "../graphql/Subscriptions";
+import { POST_CREATED, POST_VOTE_CHANGED } from "../graphql/Subscriptions";
 
 function DiscussionsWithData() {
     const { subscribeToMore, fetchMore, ...result } = useQuery(POST_PAGE, {
@@ -27,14 +27,13 @@ function DiscussionsWithData() {
                             return prev;
                         }
 
-                        console.log(prev);
-
                         const final = Object.assign({}, prev, {
                             postPagination: {
                                 items: [
                                     ...prev.postPagination.items,
                                     ...fetchMoreResult.postPagination.items,
                                 ],
+                                pageInfo: prev.postPagination.pageInfo,
                                 __typename: "PostPagination",
                             },
                         });
@@ -46,28 +45,67 @@ function DiscussionsWithData() {
                     },
                 })
             }
-            subscribeToNewDiscussions={() => {
+            subscribeToNewPosts={() => {
                 subscribeToMore({
-                    document: DISCUSSION_CREATED,
+                    document: POST_CREATED,
                     updateQuery: (prev, { subscriptionData }) => {
                         if (!subscriptionData) {
                             return prev;
                         }
 
-                        const newItem = subscriptionData.data.discussionCreated;
-
-                        const alreadyExists =
-                            prev.postPagination.items.filter((item) => {
-                                return item._id === newItem._id;
-                            }).length > 0;
-
-                        if (alreadyExists) {
+                        return Object.assign({}, prev, {
+                            postPagination: {
+                                items: [
+                                    subscriptionData.data.postCreated,
+                                    ...prev.postPagination.items,
+                                ],
+                                __typename: "PostPagination",
+                            },
+                        });
+                    },
+                });
+            }}
+            subscribeToNewVotes={() => {
+                subscribeToMore({
+                    document: POST_VOTE_CHANGED,
+                    updateQuery: (prev, { subscriptionData }) => {
+                        if (!subscriptionData) {
                             return prev;
                         }
 
+                        const {
+                            _id,
+                            upvotes,
+                            downvotes,
+                        } = subscriptionData.data.postVoteChanged;
+
+                        const index = prev.postPagination.items.indexOf(
+                            prev.postPagination.items.filter((item) => {
+                                return item._id === _id;
+                            })[0],
+                        );
+
+                        const updatedItem = Object.assign(
+                            {},
+                            prev.postPagination.items[index],
+                        );
+
+                        updatedItem.upvotes = upvotes;
+                        updatedItem.downvotes = downvotes;
+
                         return Object.assign({}, prev, {
                             postPagination: {
-                                items: [newItem, ...prev.postPagination.items],
+                                items: [
+                                    ...prev.postPagination.items.slice(
+                                        0,
+                                        index,
+                                    ),
+                                    ...[updatedItem],
+                                    ...prev.postPagination.items.slice(
+                                        index + 1,
+                                    ),
+                                ],
+                                pageInfo: prev.postPagination.pageInfo,
                                 __typename: "PostPagination",
                             },
                         });

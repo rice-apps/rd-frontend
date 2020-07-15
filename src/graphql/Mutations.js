@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import gql from "graphql-tag.macro";
 
 const POST_CREATE = gql`
     mutation CreatePost(
@@ -31,6 +31,12 @@ const POST_CREATE = gql`
     }
 `;
 
+const POST_CREATE = gql`
+    mutation postCreateOne(){
+        
+    }
+`;
+
 const LOGIN = gql`
     mutation Login($ticket: String!) {
         userAuthentication(ticket: $ticket) {
@@ -43,38 +49,34 @@ const LOGIN = gql`
     }
 `;
 
-//maybe switch to user update one 
-const SET_INFO = gql`
-    mutation SetInfo(
-        $username: String!
-        $college: EnumUserCollege!
-        $major: [String]!
-        $minor: [String]!
-        $netID: String!
-        $isNewUser: Boolean!
-    ) {
-        userUpdateOne(
-            record: {
-                username: $username
-                college: $college
-                major: $major
-                minor: $minor
-                isNewUser: $isNewUser
-            },
-            filter: {
-                netID: $netID
+const UPVOTE_POST = gql`
+    mutation UpvotePost($netID: String!, $_id: ID!) {
+        upvotePostById(netID: $netID, _id: $_id) {
+            creator {
+                netID
             }
-        ) {
-            record {
-                _id
-                username
-                college
-                major
-                minor
-                isNewUser
-            }
-        }       
+            _id
+        }
     }
-`
+`;
 
-export {POST_CREATE, LOGIN, SET_INFO };
+const DOWNVOTE_POST = gql`
+    mutation DownvotePost($netID: String!, $_id: ID!) {
+        downvotePostById(netID: $netID, _id: $_id) {
+            creator {
+                netID
+            }
+            _id
+        }
+    }
+`;
+
+export {
+    CREATE_DISCUSSION,
+    CREATE_EVENT,
+    CREATE_JOB,
+    CREATE_NOTICE,
+    LOGIN,
+    UPVOTE_POST,
+    DOWNVOTE_POST,
+};

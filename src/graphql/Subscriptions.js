@@ -1,130 +1,40 @@
-import { gql } from "apollo-boost";
+import gql from "graphql-tag.macro";
 
-const DISCUSSION_CREATED = gql`
+const POST_CREATED = gql`
     subscription {
-        discussionCreated {
+        postCreated {
             _id
             title
-            body
             creator {
                 username
             }
+            body
             date_created
-            __typename
-        }
-    }
-`;
-
-const DISCUSSION_UPDATED = gql`
-    subscription {
-        discussionUpdated {
-            _id
-            title
-            body
-            reports{
+            reports {
                 username
             }
-        }
-    }
-`;
-
-const EVENT_CREATED = gql`
-    subscription {
-        eventCreated {
-            _id
-            title
-            body
-            creator {
+            tags
+            upvotes {
                 username
             }
-            date_created
-            start
-            end
-            place
-            __typename
-        }
-    }
-`;
-
-const EVENT_UPDATED = gql`
-    subscription {
-        eventUpdated {
-            _id
-            title
-            body
-            start
-            end
-            place
-            reports{
+            downvotes {
                 username
             }
-        }
-    }
-`;
-
-const JOB_CREATED = gql`
-    subscription {
-        jobCreated {
-            _id
-            title
-            body
-            creator {
-                username
+            ... on Event {
+                start
+                end
+                location: place
             }
-            date_created
-            start
-            end
-            place
-            isPaid
-            isClosed
-            __typename
-        }
-    }
-`;
 
-const JOB_UPDATED = gql`
-    subscription {
-        jobUpdated {
-            _id
-            title
-            body
-            start
-            end
-            place
-            isPaid
-            isClosed
-            reports{
-                username
+            ... on Job {
+                start
+                end
+                isPaid
+                isClosed
+                workplace: place
             }
-        }
-    }
-`;
-
-const NOTICE_CREATED = gql`
-    subscription {
-        noticeCreated {
-            _id
-            title
-            body
-            creator {
-                username
-            }
-            date_created
-            deadline
-            __typename
-        }
-    }
-`;
-
-const NOTICE_UPDATED = gql`
-    subscription {
-        noticeUpdated {
-            _id
-            title
-            body
-            deadline
-            reports{
-                username
+            ... on Notice {
+                deadline
             }
         }
     }
@@ -152,15 +62,4 @@ const POST_REMOVED = gql`
     }
 `;
 
-export {
-    DISCUSSION_CREATED,
-    DISCUSSION_UPDATED,
-    EVENT_CREATED,
-    EVENT_UPDATED,
-    JOB_CREATED,
-    JOB_UPDATED,
-    NOTICE_CREATED,
-    NOTICE_UPDATED,
-    POST_VOTE_CHANGED,
-    POST_REMOVED,
-};
+export { POST_CREATED, POST_VOTE_CHANGED, POST_REMOVED };

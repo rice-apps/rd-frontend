@@ -2,7 +2,17 @@ import React, { useState, useEffect } from "react";
 
 import { useMutation } from "@apollo/react-hooks";
 
+<<<<<<< HEAD
 import { POST_CREATE } from "../graphql/Mutations";
+=======
+import {
+    // CREATE_DISCUSSION,
+    // CREATE_EVENT,
+    // CREATE_JOB,
+    // CREATE_NOTICE,
+    POST_CREATE,
+} from "../graphql/Mutations";
+>>>>>>> 17ccb0c8d25490725e52aa55f63b3beffbc71c23
 
 import { TOKEN_NAME } from "../utils/config";
 import { Redirect } from "react-router-dom";
