@@ -60,6 +60,20 @@ export default new ApolloClient({
                     postConnection: relayStylePagination(),
                 },
             },
+            Subscription: {
+                fields: {
+                    postCreated: {
+                        merge(_ignored, incoming) {
+                            return incoming
+                        }
+                    },
+                    postVoteChanged: {
+                        merge(_ignored, incoming) {
+                            return incoming
+                        }
+                    }
+                },
+            },
             Discussion: {
                 fields: {
                     upvotes: {
