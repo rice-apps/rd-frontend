@@ -10,7 +10,9 @@ const POST_CREATED = gql`
             }
             body
             date_created
-            reports
+            reports {
+                username
+            }
             tags
             upvotes {
                 username
