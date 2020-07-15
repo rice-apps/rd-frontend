@@ -2,14 +2,14 @@ import React from "react";
 
 import { useQuery } from "@apollo/client";
 
-import Discussion from "../components/Discussion";
+import PostFeed from "../components/PostFeed";
 
 import { POST_PAGE } from "../graphql/Queries";
 import { POST_CREATED, POST_VOTE_CHANGED } from "../graphql/Subscriptions";
 
 import uuid from "uuid/v4";
 
-function DiscussionsWithData() {
+function PostFeedWithData() {
     const { subscribeToMore, fetchMore, ...result } = useQuery(POST_PAGE, {
         variables: {
             after: "",
@@ -19,7 +19,7 @@ function DiscussionsWithData() {
     });
 
     return (
-        <Discussion
+        <PostFeed
             {...result}
             onLoadMore={() =>
                 fetchMore({
@@ -62,4 +62,4 @@ function DiscussionsWithData() {
     );
 }
 
-export default DiscussionsWithData;
+export default PostFeedWithData;

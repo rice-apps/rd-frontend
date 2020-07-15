@@ -3,7 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Login from "./pages/Login";
-import Discussions from "./pages/DiscussionsWithData";
+import Feed from "./pages/PostFeedWithData";
 import WritePost from "./pages/WritePost";
 import Home from "./pages/Home";
 import MoreInfo from "./pages/MoreInfo";
@@ -18,8 +18,8 @@ function App() {
                 <Route path="/login">
                     <Login />
                 </Route>
-                <Route path="/discussions">
-                    <Discussions />
+                <Route path="/feed">
+                    <Feed />
                 </Route>
                 <Route path="/post">
                     <WritePost />

@@ -8,9 +8,11 @@ import { TOKEN_NAME } from "../utils/config";
 
 import PostChunk from "./PostChunk";
 
-import { Banner } from "./Discussion.styles";
+import { Banner } from "./PostFeed.styles";
 
-function Discussion(props) {
+import InfiniteScroll from "react-infinite-scroller";
+
+function PostFeed(props) {
     const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));
 
     const [upvotePost] = useMutation(UPVOTE_POST);
@@ -28,7 +30,7 @@ function Discussion(props) {
     if (props.loading) return <h1>Loading...</h1>;
     if (props.error) return <h1>Something went wrong...</h1>;
 
-    const discussions = props.data.postConnection.edges.map((post, i) => {
+    const posts = props.data.postConnection.edges.map((post, i) => {
         return (
             <PostChunk
                 userInfo={userInfo}
@@ -43,16 +45,16 @@ function Discussion(props) {
     return (
         <React.Fragment>
             <Banner />
-            {discussions}
-            <button
-                onClick={() => {
-                    onLoadMore();
-                }}
+            <InfiniteScroll
+                pageStart={0}
+                loadMore={() => onLoadMore()}
+                hasMore={props.data.postConnection.pageInfo.hasNextPage}
+                loader={<div>Loading...</div>}
             >
-                Load More
-            </button>
+                {posts}
+            </InfiniteScroll>
         </React.Fragment>
     );
 }
 
-export default Discussion;
+export default PostFeed;
