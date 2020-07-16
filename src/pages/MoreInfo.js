@@ -128,10 +128,7 @@ const MoreInfo = () => {
                 <PinkShape>
                     <div>
                         <AboutMyself>A little about myself...</AboutMyself>
-                        <LaptopGirl
-                            src={laptop_girl}
-                            alt="Girl with laptop"
-                        />
+                        <LaptopGirl src={laptop_girl} alt="Girl with laptop" />
                     </div>
 
                     <MarginsForm onSubmit={handleSubmit}>
