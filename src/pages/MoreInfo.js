@@ -6,7 +6,23 @@ import { SET_INFO } from "../graphql/Mutations";
 import laptop_girl from "../images/Page 2.svg";
 import major_minor_json from "./MajorMinor.json";
 import DropDownItem from "../components/DropDownItem.js";
-import "./MoreInfo.styles.css";
+import {
+    FullGrid,
+    PinkShape,
+    LaptopGirl,
+    AboutMyself,
+    TextField,
+    FieldSetStyle,
+    TotalForm,
+    MarginsForm,
+    SubmitButton,
+    DDWrapper,
+    DDHeader,
+    DDHeaderTitle,
+    DDList,
+    DDListItem,
+    ArrowI,
+} from "./MoreInfo.styles";
 
 const MoreInfo = () => {
     const [loading, setLoading] = useState(false);
@@ -68,9 +84,6 @@ const MoreInfo = () => {
     const toggleMajor = () => setMajorOpen(!isMajorOpen);
     const toggleMinor = () => setMinorOpen(!isMinorOpen);
     const toggleCollege = () => setCollegeOpen(!isCollegeOpen);
-    const majorArrow = isMajorOpen ? "arrow up" : "arrow down";
-    const minorArrow = isMinorOpen ? "arrow up" : "arrow down";
-    const collegeArrow = isCollegeOpen ? "arrow up" : "arrow down";
 
     if (!data?.isNewUser) {
         console.log("Redirecting....");
@@ -110,103 +123,85 @@ const MoreInfo = () => {
 
     //have to manually push newUser
     return (
-        <div className="stable">
-            <div className="full_grid">
-                <div className="pink_shape">
+        <div>
+            <FullGrid>
+                <PinkShape>
                     <div>
-                        <p className="about_myself">A little about myself...</p>
-                        <img
+                        <AboutMyself>A little about myself...</AboutMyself>
+                        <LaptopGirl
                             src={laptop_girl}
                             className="laptop_girl"
                             alt="Girl with laptop"
                         />
                     </div>
 
-                    <form onSubmit={handleSubmit} className="margins">
-                        <fieldset className="totalform">
-                            <fieldset className="fieldsetstyle">
-                                <input
+                    <MarginsForm onSubmit={handleSubmit}>
+                        <TotalForm>
+                            <FieldSetStyle>
+                                <TextField
                                     className="textfield"
                                     type="text"
                                     placeholder="username"
                                     value={username}
                                     onChange={handleUserChange}
                                 />
-                            </fieldset>
+                            </FieldSetStyle>
 
-                            <div className="dd-wrapper">
-                                <div
-                                    className="dd-header"
-                                    onClick={toggleMajor}
-                                >
-                                    <div className="dd-header-title">
+                            <DDWrapper>
+                                <DDHeader onClick={toggleMajor}>
+                                    <DDHeaderTitle>
                                         Majors
-                                        <i className={majorArrow} />
-                                    </div>
-                                </div>
+                                        <ArrowI open={isMajorOpen} />
+                                    </DDHeaderTitle>
+                                </DDHeader>
                                 {isMajorOpen && (
-                                    <ul className="dd-list">
+                                    <DDList>
                                         {majors.map((item) => (
-                                            <li
-                                                className="dd-list-item"
-                                                key={item.name}
-                                            >
+                                            <DDListItem key={item.name}>
                                                 <DropDownItem
                                                     name={item.name}
                                                     setInfo={handleMajorChange}
                                                     selectedItems={major}
                                                 />
-                                            </li>
+                                            </DDListItem>
                                         ))}
-                                    </ul>
+                                    </DDList>
                                 )}
-                            </div>
+                            </DDWrapper>
 
-                            <div className="dd-wrapper">
-                                <div
-                                    className="dd-header"
-                                    onClick={toggleMinor}
-                                >
-                                    <div className="dd-header-title">
+                            <DDWrapper>
+                                <DDHeader onClick={toggleMinor}>
+                                    <DDHeaderTitle>
                                         Minors
-                                        <i className={minorArrow} />
-                                    </div>
-                                </div>
+                                        <ArrowI open={isMinorOpen} />
+                                    </DDHeaderTitle>
+                                </DDHeader>
                                 {isMinorOpen && (
-                                    <ul className="dd-list">
+                                    <DDList>
                                         {minors.map((item) => (
-                                            <li
-                                                className="dd-list-item"
-                                                key={item.name}
-                                            >
+                                            <DDListItem key={item.name}>
                                                 <DropDownItem
                                                     name={item.name}
                                                     setInfo={handleMinorChange}
                                                     selectedItems={minor}
                                                 />
-                                            </li>
+                                            </DDListItem>
                                         ))}
-                                    </ul>
+                                    </DDList>
                                 )}
-                            </div>
+                            </DDWrapper>
 
-                            <div className="dd-wrapper">
-                                <div
-                                    className="dd-header"
-                                    onClick={toggleCollege}
-                                >
-                                    <div className="dd-header-title">
+                            <DDWrapper>
+                                <DDHeader onClick={toggleCollege}>
+                                    <DDHeaderTitle>
                                         {college === "" ? "College" : college}
-                                        <i className={collegeArrow} />
-                                    </div>
-                                </div>
+                                        <ArrowI open={isCollegeOpen} />
+                                    </DDHeaderTitle>
+                                </DDHeader>
                                 {isCollegeOpen && (
-                                    <ul className="dd-list">
+                                    <DDList>
                                         {colleges.map((item) => (
-                                            <li
-                                                className="dd-list-item"
-                                                key={item}
-                                            >
+                                            <DDListItem key={item}>
                                                 <DropDownItem
                                                     name={item}
                                                     setInfo={
@@ -214,22 +209,18 @@ const MoreInfo = () => {
                                                     }
                                                     selectedItems={college}
                                                 />
-                                            </li>
+                                            </DDListItem>
                                         ))}
-                                    </ul>
+                                    </DDList>
                                 )}
-                            </div>
-                            <button
-                                className="submitbutton"
-                                type="submit"
-                                disabled={loading}
-                            >
+                            </DDWrapper>
+                            <SubmitButton type="submit" disabled={loading}>
                                 &rarr;
-                            </button>
-                        </fieldset>
-                    </form>
-                </div>
-            </div>
+                            </SubmitButton>
+                        </TotalForm>
+                    </MarginsForm>
+                </PinkShape>
+            </FullGrid>
         </div>
     );
 };
