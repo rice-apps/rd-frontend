@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./DropDownItem.styles.css"
 
 const DropDownItem = (props) => {
     const [selected, setSelected] = useState(false);
@@ -21,7 +20,9 @@ const DropDownItem = (props) => {
     };
 
     return (
-        <div onClick={toggleSelected} style = {{background: color}}>
+        <div onClick={toggleSelected} style = {{background: color,
+                                                width: "300px",
+                                                }}>
             {props.name}
             {selected && "✔"}
         </div>

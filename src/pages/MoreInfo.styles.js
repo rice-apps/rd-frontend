@@ -126,9 +126,10 @@ const DDHeaderTitle = styled.div`
 `;
 
 const DDList = styled.ul`
-    position: relative;
+    position: absolute;
     z-index: 10;
     overflow-y: scroll;
+    overflow-x: auto;
     width: 100%;
     max-height: 215px;
     border: 1px solid rgb(223, 223, 223);
@@ -143,14 +144,12 @@ const DDList = styled.ul`
 `;
 
 const DDListItem = styled.li`
-    display: inline-block;
-    overflow: hidden;
+    display: inline;
     width: 100%;
     font-size: 0.8rem;
     line-height: 1.4rem;
     white-space: nowrap;
     text-overflow: ellipsis;
-    cursor: default;
     cursor: pointer;
 `;
 
