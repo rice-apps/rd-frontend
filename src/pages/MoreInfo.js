@@ -111,11 +111,11 @@ const MoreInfo = () => {
                     major: major,
                     minor: minor,
                     netID: data.netID,
-                    isNewUser: false,
+                    isNewUser: true,
                 },
             });
 
-            history.push("/feed");
+            history.push("/feed");  
         } catch (error) {
             console.log(error);
         } finally {
