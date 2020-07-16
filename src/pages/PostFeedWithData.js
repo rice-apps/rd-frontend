@@ -46,7 +46,7 @@ function PostFeedWithData() {
                                     ...prev.postConnection.edges,
                                 ],
                                 pageInfo: prev.postConnection.pageInfo,
-                                __typename: "PostConnections",
+                                __typename: "PostConnection",
                             },
                         });
                     },
