@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 
 import { POST_CREATE } from "../graphql/Mutations";
 
@@ -48,7 +48,7 @@ function WritePost() {
         case "Discussion":
             form = (
                 <form>
-                     <div
+                    <div
                         id="title"
                         style={{ width: "20vw" }}
                         contentEditable={true}
@@ -176,7 +176,7 @@ function WritePost() {
                                     place: place,
                                     isPaid: isPaid,
                                     isClosed: isClosed,
-                                }
+                                },
                             });
                         }}
                     >
@@ -205,12 +205,12 @@ function WritePost() {
                             e.preventDefault();
                             postCreate({
                                 variables: {
-                                    kind: postType  ,
+                                    kind: postType,
                                     title: title,
                                     body: body,
                                     creator: userInfo.netID,
                                     deadline: deadline,
-                                }
+                                },
                             });
                         }}
                     >
@@ -219,6 +219,9 @@ function WritePost() {
                 </form>
             );
             break;
+
+        default:
+            throw new Error("something went horribly wrong!");
     }
 
     return (

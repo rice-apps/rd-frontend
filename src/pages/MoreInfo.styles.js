@@ -1,4 +1,6 @@
-.full_grid {
+import styled from "styled-components";
+
+const FullGrid = styled.div`
     display: grid;
 
     grid-template-columns: 1.2fr 1.75fr 2.25fr 1fr 1fr 1fr 0.5fr;
@@ -9,103 +11,99 @@
     position: relative;
     margin-top: 2%;
     margin-bottom: 2%;
-}
+`;
 
-/* use border radius */
-.pink_shape{
+const PinkShape = styled.div`
     position: relative;
     top: 5%;
     transform: rotate(-38deg);
-    
+
     background-color: pink;
 
     grid-row: 1/3;
     grid-column: 2/4;
 
-    border-top-right-radius: 30vw; 
+    border-top-right-radius: 30vw;
     border-bottom-right-radius: 33vw;
     border-bottom-left-radius: 35vw;
     border-top-left-radius: 26vw;
-}
+`;
 
-.laptop_girl{
+const LaptopGirl = styled.img`
     position: relative;
     top: -0.5vh;
     left: 6vw;
 
     width: 40%;
-    height: 18vw;  
+    height: 18vw;
 
     transform: rotate(38deg);
-}
+`;
 
-.about_myself{
+const AboutMyself = styled.p`
     transform: rotate(38deg);
     position: relative;
     top: 32vh;
     left: 11vw;
-}
+`;
 
-/* Describes each individual form slot */
-.textfield{
+const TextField = styled.input`
     padding: 5px;
     width: 150px;
-    margin:5px 0;
-    border:0;
+    margin: 5px 0;
+    border: 0;
     border-radius: 6vw;
     border: 1px solid rgb(223, 223, 223);
     background-color: white;
     line-height: 19px;
-    /* background-color: blue; */
-}
+`;
 
-.fieldsetstyle{
+const FieldSetStyle = styled.fieldset`
     position: relative;
     bottom: 0px;
     border: 0;
     left: 0px;
-}
+`;
 
-.totalform{
+const TotalForm = styled.fieldset`
     width: 9vw;
     height: 75vh;
-    /* background-color: green; */
     transform: rotate(38deg);
     position: relative;
     top: -26vh;
     left: -8vw;
     border-color: transparent;
-}
+`;
 
-.margins{
+const MarginsForm = styled.form`
     margin: 0px 25.5vw;
-}
+`;
 
-.submitbutton{
+const SubmitButton = styled.button`
     padding: 10px;
     width: 50px;
-    margin:10px 5px;
-    border:0;
+    margin: 10px 5px;
+    border: 0;
     background-color: rgb(129, 212, 45);
     opacity: 100%;
-    box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
-    border-radius:10px;
+    box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+    border-radius: 10px;
     margin-left: 14px;
-}
 
-.submitbutton:hover{
-    background-color: rgb(141, 250, 33);
-}
+    &:hover {
+        background-color: rgb(141, 250, 33);
+    }
+`;
 
-.dd-wrapper{
+const DDWrapper = styled.div`
     position: relative;
     width: 222px;
     font-size: 1rem;
     user-select: none;
     margin-bottom: 15px;
-}
+`;
 
-.dd-header{
+const DDHeader = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -115,19 +113,19 @@
     line-height: 38px;
     cursor: default;
     cursor: pointer;
-    border-radius:20px;
+    border-radius: 20px;
     margin-left: 14px;
     width: 11vw;
     height: 5vh;
-}
+`;
 
-.dd-header-title{
+const DDHeaderTitle = styled.div`
     margin: 0px 20px;
     margin-right: 10px;
     font-weight: 600;
-}
+`;
 
-.dd-list{
+const DDList = styled.ul`
     position: relative;
     z-index: 10;
     overflow-y: scroll;
@@ -142,37 +140,47 @@
     font-weight: 700;
     text-align: left;
     -webkit-overflow-scrolling: touch;
-}
+`;
 
-.dd-list-item{
+const DDListItem = styled.li`
     display: inline-block;
     overflow: hidden;
     width: 100%;
-    /* padding: 4px 5px; */
     font-size: 0.8rem;
     line-height: 1.4rem;
     white-space: nowrap;
     text-overflow: ellipsis;
     cursor: default;
     cursor: pointer;
-}
+`;
 
-
-.arrow{
+const ArrowI = styled.i`
     border: solid black;
     border-width: 0 3px 3px 0;
     display: inline-block;
     padding: 2.5px;
     margin: 2.5px;
     margin-left: 13px;
-}
 
-.up {
-    transform: rotate(-135deg);
-    -webkit-transform: rotate(-135deg);
-  }
-  
-  .down {
-    transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-  }
+    transform: ${(props) => (props.open ? "rotate(-135deg)" : "rotate(45deg)")};
+    -webkit-transform: ${(props) =>
+        props.open ? "rotate(-135deg)" : "rotate(45deg)"};
+`;
+
+export {
+    FullGrid,
+    PinkShape,
+    LaptopGirl,
+    AboutMyself,
+    TextField,
+    FieldSetStyle,
+    TotalForm,
+    MarginsForm,
+    SubmitButton,
+    DDWrapper,
+    DDHeader,
+    DDHeaderTitle,
+    DDList,
+    DDListItem,
+    ArrowI,
+};

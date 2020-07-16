@@ -28,14 +28,14 @@ const POST_CREATE = gql`
                 isClosed: $isClosed
                 tags: $tags
             }
-        ){
-            record{
+        ) {
+            record {
                 _id
                 kind
                 __typename
                 title
                 body
-                creator{
+                creator {
                     netID
                 }
             }
@@ -59,7 +59,8 @@ const UPVOTE_POST = gql`
     mutation UpvotePost($netID: String!, $_id: ID!) {
         upvotePostById(netID: $netID, _id: $_id) {
             creator {
-                netID
+                _id
+                username
             }
             _id
         }
@@ -70,6 +71,7 @@ const DOWNVOTE_POST = gql`
     mutation DownvotePost($netID: String!, $_id: ID!) {
         downvotePostById(netID: $netID, _id: $_id) {
             creator {
+                _id
                 netID
             }
             _id
@@ -93,10 +95,8 @@ const SET_INFO = gql`
                 major: $major
                 minor: $minor
                 isNewUser: $isNewUser
-            },
-            filter: {
-                netID: $netID
             }
+            filter: { netID: $netID }
         ) {
             record {
                 _id
@@ -106,14 +106,8 @@ const SET_INFO = gql`
                 minor
                 isNewUser
             }
-        }       
+        }
     }
-`
+`;
 
-export {
-    SET_INFO,
-    POST_CREATE,
-    LOGIN,
-    UPVOTE_POST,
-    DOWNVOTE_POST,
-};
+export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST };
