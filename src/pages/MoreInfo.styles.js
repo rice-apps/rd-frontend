@@ -162,8 +162,8 @@ const ArrowI = styled.i`
     margin: 2.5px;
     margin-left: 13px;
 
-    transform: ${props.open ? "rotate(-135deg)" : "rotate(45deg)"};
-    -webkit-transform: ${props.open ? "rotate(-135deg)" : "rotate(45deg)"};
+    transform: ${props => props.open ? "rotate(-135deg)" : "rotate(45deg)"};
+    -webkit-transform: ${props => props.open ? "rotate(-135deg)" : "rotate(45deg)"};
 `;
 
 export {
