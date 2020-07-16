@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { TOKEN_NAME } from "../utils/config";
 import { SET_INFO } from "../graphql/Mutations";
@@ -25,6 +25,8 @@ import {
 } from "./MoreInfo.styles";
 
 const MoreInfo = () => {
+    let history = useHistory();
+
     const [loading, setLoading] = useState(false);
     const [username, setUsername] = useState("");
     const [major, setMajor] = useState([]);
@@ -113,7 +115,7 @@ const MoreInfo = () => {
                 },
             });
 
-            window.location.assign("/feed");
+            history.push("/feed");
         } catch (error) {
             console.log(error);
         } finally {
