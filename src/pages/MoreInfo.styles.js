@@ -31,8 +31,8 @@ const PinkShape = styled.div`
 
 const LaptopGirl = styled.img`
     position: relative;
-    top: -0.5vh;
-    left: 6vw;
+    top: -6%;
+    left: 14%;
 
     width: 40%;
     height: 18vw;
