@@ -114,8 +114,8 @@ const DDHeader = styled.div`
     cursor: default;
     cursor: pointer;
     border-radius: 20px;
-    margin-left: 14px;
-    width: 11vw;
+    margin-left: 12px;
+    width: 16vw;
     height: 5vh;
 `;
 
