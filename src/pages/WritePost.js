@@ -75,29 +75,23 @@ function WritePost() {
         case "Event":
             form = (
                 <form>
-                    <input
-                        type="text"
-                        name="Post Title"
-                        placeholder="Title"
-                        onChange={(e) => setTitle(e.target.value)}
+                    <div
+                        id="title"
+                        style={{ width: "20vw" }}
+                        contentEditable={true}
                     />
-                    <input
-                        type="text"
-                        name="Post Body"
-                        placeholder="Content"
-                        onChange={(e) => setBody(e.target.value)}
-                    />
+                    <div id="body" contentEditable={true} />
                     <input
                         type="text"
                         name="Event Start Date"
                         placeholder={new Date().getUTCDay().toString()}
-                        onChange={(e) => setStart(e.target.valueAsDate())}
+                        onChange={(e) => setStart(e.target.value)}
                     />
                     <input
                         type="text"
                         name="Event End Date"
                         placeholder={new Date().getUTCDay().toString()}
-                        onChange={(e) => setEnd(e.target.valueAsDate())}
+                        onChange={(e) => setEnd(e.target.value)}
                     />
                     <input
                         type="text"
@@ -129,29 +123,23 @@ function WritePost() {
         case "Job":
             form = (
                 <form>
-                    <input
-                        type="text"
-                        name="Post Title"
-                        placeholder="Title"
-                        onChange={(e) => setTitle(e.target.value)}
+                    <div
+                        id="title"
+                        style={{ width: "20vw" }}
+                        contentEditable={true}
                     />
-                    <input
-                        type="text"
-                        name="Post Body"
-                        placeholder="Content"
-                        onChange={(e) => setBody(e.target.value)}
-                    />
+                    <div id="body" contentEditable={true} />
                     <input
                         type="text"
                         name="Job Start Date"
                         placeholder={new Date().getUTCDate.toString()}
-                        onChange={(e) => setStart(e.target.valueAsDate())}
+                        onChange={(e) => setStart(e.target.value)}
                     />
                     <input
                         type="text"
                         name="Job End Date"
                         placeholder={new Date().getUTCDate.toString()}
-                        onChange={(e) => setEnd(e.target.valueAsDate())}
+                        onChange={(e) => setEnd(e.target.value)}
                     />
                     <input
                         type="text"
@@ -174,14 +162,17 @@ function WritePost() {
                     <button
                         onClick={(e) => {
                             e.preventDefault();
+                            const startDateFormatted = new Date(2020, 8, 1);
+                            const endDateFormatted = new Date(2021, 11, 20);
+
                             postCreate({
                                 variables: {
                                     kind: postType,
                                     title: title,
                                     body: body,
                                     creator: userInfo.netID,
-                                    start: startDate,
-                                    end: endDate,
+                                    start: startDateFormatted,
+                                    end: endDateFormatted,
                                     place: place,
                                     isPaid: isPaid,
                                     isClosed: isClosed,
@@ -197,18 +188,12 @@ function WritePost() {
         case "Notice":
             form = (
                 <form>
-                    <input
-                        type="text"
-                        name="Post Title"
-                        placeholder="Title"
-                        onChange={(e) => setTitle(e.target.value)}
+                   <div
+                        id="title"
+                        style={{ width: "20vw" }}
+                        contentEditable={true}
                     />
-                    <input
-                        type="text"
-                        name="Post Body"
-                        placeholder="Content"
-                        onChange={(e) => setBody(e.target.value)}
-                    />
+                    <div id="body" contentEditable={true} />
                     <input
                         type="text"
                         name="Deadline"
