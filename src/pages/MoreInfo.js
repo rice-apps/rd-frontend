@@ -87,7 +87,7 @@ const MoreInfo = () => {
 
     if (!data?.isNewUser) {
         console.log("Redirecting....");
-        return <Redirect to={"/discussions"} />;
+        return <Redirect to={"/feed"} />;
     }
 
     const handleSubmit = async (e) => {
@@ -130,7 +130,6 @@ const MoreInfo = () => {
                         <AboutMyself>A little about myself...</AboutMyself>
                         <LaptopGirl
                             src={laptop_girl}
-                            className="laptop_girl"
                             alt="Girl with laptop"
                         />
                     </div>
@@ -139,7 +138,6 @@ const MoreInfo = () => {
                         <TotalForm>
                             <FieldSetStyle>
                                 <TextField
-                                    className="textfield"
                                     type="text"
                                     placeholder="username"
                                     value={username}
