@@ -113,7 +113,7 @@ const MoreInfo = () => {
                 },
             });
 
-            window.location.assign("/discussions");
+            window.location.assign("/feed");
         } catch (error) {
             console.log(error);
         } finally {
