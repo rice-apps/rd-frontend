@@ -234,11 +234,10 @@ function WritePost() {
                             contentEditable={true}
                         />
                     </BodyWrapper>
-                    <input
-                        type="text"
-                        name="Deadline"
-                        placeholder={new Date().getUTCDay().toString}
-                        onChange={(e) => setDeadline(e.target.valueAsDate())}
+                    Deadline Date
+                    <DatePicker selected={endDate} 
+                        onChange = {changeEndDate}
+                        style = {{ width: "inherit"}}
                     />
                     <PostingButton
                         onClick={(e) => {
@@ -251,7 +250,7 @@ function WritePost() {
                                     body: document.getElementById("body")
                                         .innerHTML,
                                     creator: userInfo.netID,
-                                    deadline: deadline,
+                                    deadline: endDate,
                                 },
                             });
                             history.push("/feed");
