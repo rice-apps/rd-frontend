@@ -25,7 +25,7 @@ function PostFeed(props) {
     if (props.loading) return <h1>Loading...</h1>;
     if (props.error) return <h1>Something went wrong...</h1>;
 
-    const posts = props.data.postConnection.edges.map((post, i) => {
+    const posts = props.data.postConnection.edges.map((post, _i) => {
         return (
             <PostChunk
                 userInfo={userInfo}
