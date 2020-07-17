@@ -32,13 +32,13 @@ function PostFeed(props) {
                 upvotePost={upvotePost}
                 downvotePost={downvotePost}
                 post={post}
-                key={i}
+                key={post._id}
             />
         );
     });
 
     return (
-        <React.Fragment>
+        <>
             <Banner />
             <InfiniteScroll
                 pageStart={0}
@@ -48,7 +48,7 @@ function PostFeed(props) {
             >
                 {posts}
             </InfiniteScroll>
-        </React.Fragment>
+        </>
     );
 }
 

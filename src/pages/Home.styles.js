@@ -1,18 +1,12 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const GoToPost = styled.div`
-    width: 20vh;
-    font-family: "Ubuntu";
-    font-size: 5vh;
-    background-color: black;
-    border-radius: 0.2vw;
-`;
-
 const PostLink = styled(Link)`
-    width: 100%;
+    margin: 5vh 5vw 5vh 5vw;
+    width: 80vh;
+    height: 20vh;
     text-decoration: none;
-    color: white;
+    color: black;
 
     &:hover {
         color: cornflowerblue;
@@ -20,4 +14,4 @@ const PostLink = styled(Link)`
     }
 `;
 
-export { GoToPost, PostLink };
+export { PostLink };

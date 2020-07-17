@@ -48,7 +48,7 @@ function PostChunk(props) {
     const classes = useStyles();
 
     return (
-        <React.Fragment key={props.key}>
+        <>
             <DiscussionBoxSection>
                 <DiscussionBox>
                     <LeftComponent>
@@ -135,7 +135,7 @@ function PostChunk(props) {
                     </BottomComponent>
                 </DiscussionBox>
             </DiscussionBoxSection>
-        </React.Fragment>
+        </>
     );
 }
 

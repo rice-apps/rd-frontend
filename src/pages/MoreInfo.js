@@ -23,6 +23,7 @@ import {
     DDListItem,
     ArrowI,
 } from "./MoreInfo.styles";
+import { Helmet } from "react-helmet";
 
 const MoreInfo = () => {
     let history = useHistory();
@@ -125,13 +126,16 @@ const MoreInfo = () => {
 
     //have to manually push newUser
     return (
-        <div>
+        <>
+            <Helmet>
+                <title>RiceDiscuss &middot; More Info</title>
+            </Helmet>
             <FullGrid>
                 <PinkShape>
-                    <div>
+                    <>
                         <AboutMyself>A little about myself...</AboutMyself>
                         <LaptopGirl src={laptop_girl} alt="Girl with laptop" />
-                    </div>
+                    </>
 
                     <MarginsForm onSubmit={handleSubmit}>
                         <TotalForm>
@@ -218,7 +222,7 @@ const MoreInfo = () => {
                     </MarginsForm>
                 </PinkShape>
             </FullGrid>
-        </div>
+        </>
     );
 };
 

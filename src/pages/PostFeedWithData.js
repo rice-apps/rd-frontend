@@ -7,6 +7,7 @@ import { POST_PAGE } from "../graphql/Queries";
 import { POST_CREATED, POST_VOTE_CHANGED } from "../graphql/Subscriptions";
 
 import uuid from "uuid/v4";
+import { Helmet } from "react-helmet";
 
 function PostFeedWithData() {
     const { subscribeToMore, fetchMore, ...result } = useQuery(POST_PAGE, {
@@ -18,6 +19,10 @@ function PostFeedWithData() {
     });
 
     return (
+        <>
+        <Helmet>
+            <title>RiceDiscuss &middot; Your Feed</title>
+        </Helmet>
         <PostFeed
             {...result}
             onLoadMore={() =>
@@ -58,6 +63,7 @@ function PostFeedWithData() {
                 });
             }}
         />
+        </>
     );
 }
 

@@ -6,6 +6,7 @@ import { POST_CREATE } from "../graphql/Mutations";
 
 import { TOKEN_NAME } from "../utils/config";
 import { Redirect } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 function WritePost() {
     useEffect(() => {
@@ -240,7 +241,10 @@ function WritePost() {
     }
 
     return (
-        <React.Fragment>
+        <>
+            <Helmet>
+                <title>RiceDiscuss &middot; Compose post</title>
+            </Helmet>
             <select onChange={(e) => setPostType(e.target.value)}>
                 <option value="Discussion">Discussion</option>
                 <option value="Notice">Notice</option>
@@ -248,7 +252,7 @@ function WritePost() {
                 <option value="Job">Job</option>
             </select>
             {form}
-        </React.Fragment>
+        </>
     );
 }
 
