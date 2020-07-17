@@ -122,7 +122,7 @@ const MoreInfo = () => {
                     major: major,
                     minor: minor,
                     netID: data.netID,
-                    isNewUser: true,
+                    isNewUser: false,
                 },
             });
 
