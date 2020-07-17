@@ -14,7 +14,13 @@ function PostFeed(props) {
 
     const [downvotePost] = useMutation(DOWNVOTE_POST);
 
-    const { onLoadMore, subscribeToNewPosts, subscribeToNewVotes } = props;
+    const {
+        onLoadMore,
+        subscribeToNewPosts,
+        subscribeToNewVotes,
+        loading,
+        error,
+    } = props;
 
     useEffect(() => {
         subscribeToNewPosts();
@@ -22,10 +28,19 @@ function PostFeed(props) {
         // eslint-disable-next-line
     }, []);
 
-    if (props.loading) return <h1>Loading...</h1>;
-    if (props.error) return <h1>Something went wrong...</h1>;
+    if (loading) return <h1>Loading...</h1>;
+    if (error) return <h1>Something went wrong...</h1>;
 
-    const posts = props.data.postConnection.edges.map((post, _i) => {
+    const {
+        data: {
+            postConnection: {
+                edges,
+                pageInfo: { hasNextPage },
+            },
+        },
+    } = props;
+
+    const posts = edges.map((post, _i) => {
         return (
             <PostChunk
                 userInfo={userInfo}
@@ -43,7 +58,7 @@ function PostFeed(props) {
             <InfiniteScroll
                 pageStart={0}
                 loadMore={() => onLoadMore()}
-                hasMore={props.data.postConnection.pageInfo.hasNextPage}
+                hasMore={hasNextPage}
                 loader={<div>Loading...</div>}
             >
                 {posts}
