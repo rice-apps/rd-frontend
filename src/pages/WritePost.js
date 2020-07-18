@@ -20,7 +20,7 @@ import {
     BodyWrapper,
     PostingButton,
     BodyBox,
-} from "./WritePost.styles.js";
+} from "./WritePost.styles";
 
 function WritePost() {
     useEffect(() => {
