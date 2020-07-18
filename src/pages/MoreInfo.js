@@ -83,10 +83,21 @@ const MoreInfo = () => {
         const index_of_college = college.indexOf(newValue);
         setCollege(index_of_college >= 0 ? "" : newValue);
     };
-
-    const toggleMajor = () => setMajorOpen(!isMajorOpen);
-    const toggleMinor = () => setMinorOpen(!isMinorOpen);
-    const toggleCollege = () => setCollegeOpen(!isCollegeOpen);
+    const toggleMajor = () => {
+      setMajorOpen(!isMajorOpen);
+      setMinorOpen(false);
+      setCollegeOpen(false)
+    }
+    const toggleMinor = () =>  {
+      setMinorOpen(!isMinorOpen);
+      setMajorOpen(false);
+      setCollegeOpen(false);
+    }
+    const toggleCollege = () => {
+      setCollegeOpen(!isCollegeOpen);
+      setMajorOpen(false);
+      setMinorOpen(false);
+    }
 
     if (!data?.isNewUser) {
         console.log("Redirecting....");
@@ -116,7 +127,7 @@ const MoreInfo = () => {
                 },
             });
 
-            history.push("/feed");
+            history.push("/feed");  
         } catch (error) {
             console.log(error);
         } finally {

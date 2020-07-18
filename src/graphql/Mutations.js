@@ -6,13 +6,14 @@ const POST_CREATE = gql`
         $title: String!
         $body: String!
         $creator: String!
-        $deadline: String
-        $start: String
-        $end: String
+        $deadline: Date
+        $start: Date
+        $end: Date
         $place: String
         $isPaid: Boolean
         $isClosed: Boolean
-    ) {
+        $tags: [String]
+    ){
         postCreateOne(
             record: {
                 kind: $kind
@@ -25,6 +26,7 @@ const POST_CREATE = gql`
                 place: $place
                 isPaid: $isPaid
                 isClosed: $isClosed
+                tags: $tags
             }
         ) {
             record {
@@ -39,7 +41,7 @@ const POST_CREATE = gql`
             }
         }
     }
-`;
+`;  
 
 const LOGIN = gql`
     mutation Login($ticket: String!) {
