@@ -8,10 +8,13 @@ import { POST_CREATE } from "../graphql/Mutations";
 
 import { TOKEN_NAME } from "../utils/config";
 import { Redirect, useHistory } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import { PostWrapper, 
     Button, ButtonWrapper, PostHeaderType, Form,
     TitleDescriptor, TitleWrapper, TitleBox, BodyWrapper,
     PostingButton, BodyBox } from "./WritePost.styles.js"
+import { Redirect } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 function WritePost() {
     useEffect(() => {
@@ -268,6 +271,9 @@ function WritePost() {
 
     return (
         <>
+        <Helmet>
+                <title>RiceDiscuss &middot; Compose post</title>
+        </Helmet>
         <ButtonWrapper>
             <Button id="Discussion" onClick = {changePostType}>Discussion</Button>
             <Button id="Notice" onClick = {changePostType}>Notice</Button>
