@@ -12,12 +12,12 @@ const PostWrapper = styled.div`
     border-color: green;
 
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     align-items: center;
 `;
 
 const Button = styled.button`
-    background-color: #4CAF50; /* Green */
+    background-color: #4caf50; /* Green */
     border: none;
     color: white;
     padding: 15px 32px;
@@ -36,7 +36,7 @@ const Button = styled.button`
 
 const PostingButton = styled.button`
     position: relative;
-    background-color: #4CAF50; /* Green */
+    background-color: #4caf50; /* Green */
     border: none;
     color: white;
     padding: 15px 32px;
@@ -116,19 +116,30 @@ const TitleBox = styled.div`
     border: solid;
     position: relative;
     height: 5vh;
-    flex: 0 0 100% 
+    flex: 0 0 100%;
 `;
 
 const BodyBox = styled.div`
     border: solid;
     position: relative;
     height: 10vh;
-`
+`;
 
 const BodyWrapper = styled.div`
     position: relative;
     top: -60px;
 `;
 
-export { PostWrapper, Button, ButtonWrapper, PostHeaderType, Form, TitleDescriptor,
-        TitleWrapper, TitleBox, BodyWrapper, PostingButton, BodyBox } 
+export {
+    PostWrapper,
+    Button,
+    ButtonWrapper,
+    PostHeaderType,
+    Form,
+    TitleDescriptor,
+    TitleWrapper,
+    TitleBox,
+    BodyWrapper,
+    PostingButton,
+    BodyBox,
+};

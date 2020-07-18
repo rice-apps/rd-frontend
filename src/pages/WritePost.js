@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 
-
 import { useMutation } from "@apollo/client";
 
 import { POST_CREATE } from "../graphql/Mutations";
@@ -9,12 +8,19 @@ import { POST_CREATE } from "../graphql/Mutations";
 import { TOKEN_NAME } from "../utils/config";
 import { Redirect, useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { PostWrapper, 
-    Button, ButtonWrapper, PostHeaderType, Form,
-    TitleDescriptor, TitleWrapper, TitleBox, BodyWrapper,
-    PostingButton, BodyBox } from "./WritePost.styles.js"
-import { Redirect } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import {
+    PostWrapper,
+    Button,
+    ButtonWrapper,
+    PostHeaderType,
+    Form,
+    TitleDescriptor,
+    TitleWrapper,
+    TitleBox,
+    BodyWrapper,
+    PostingButton,
+    BodyBox,
+} from "./WritePost.styles.js";
 
 function WritePost() {
     useEffect(() => {
@@ -24,14 +30,11 @@ function WritePost() {
     const history = useHistory();
 
     const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));
-    const [title, setTitle] = useState("");
-    const [body, setBody] = useState("");
     const [startDate, setStart] = useState(new Date().getTime());
     const [endDate, setEnd] = useState(new Date().getTime());
     const [place, setPlace] = useState("");
-    const [isPaid, setPaid] = useState(false);
-    const [isClosed, setClosed] = useState(false);
-    const [deadline, setDeadline] = useState(new Date().getTime());
+    const [, setPaid] = useState(false);
+    const [, setClosed] = useState(false);
     const [postType, setPostType] = useState("Discussion");
 
     const [postCreate] = useMutation(POST_CREATE);
@@ -55,9 +58,9 @@ function WritePost() {
 
     // }
 
-    const changeStartDate = date => setStart(date);
-    const changeEndDate = date => setEnd(date);
-    const changePostType = e => setPostType(e.target.id);
+    const changeStartDate = (date) => setStart(date);
+    const changeEndDate = (date) => setEnd(date);
+    const changePostType = (e) => setPostType(e.target.id);
 
     switch (postType) {
         case "Discussion":
@@ -65,17 +68,11 @@ function WritePost() {
                 <Form>
                     <TitleWrapper>
                         <TitleDescriptor>Title</TitleDescriptor>
-                        <TitleBox
-                            id="title"
-                            contentEditable={true}
-                        />
+                        <TitleBox id="title" contentEditable={true} />
                     </TitleWrapper>
                     <BodyWrapper>
                         <TitleDescriptor>Body</TitleDescriptor>
-                        <BodyBox
-                            id="body"
-                            contentEditable={true}
-                        />
+                        <BodyBox id="body" contentEditable={true} />
                     </BodyWrapper>
                     <PostingButton
                         onClick={(e) => {
@@ -103,22 +100,19 @@ function WritePost() {
                 <Form>
                     <TitleWrapper>
                         <TitleDescriptor>Title</TitleDescriptor>
-                        <TitleBox
-                            id="title"
-                            contentEditable={true}
-                        />
+                        <TitleBox id="title" contentEditable={true} />
                     </TitleWrapper>
                     <BodyWrapper>
                         <TitleDescriptor>Body</TitleDescriptor>
-                        <BodyBox
-                            id="body"
-                            contentEditable={true}
-                        />
+                        <BodyBox id="body" contentEditable={true} />
                     </BodyWrapper>
                     Start Date
-                    <DatePicker selected={startDate} onChange = {changeStartDate}/>
+                    <DatePicker
+                        selected={startDate}
+                        onChange={changeStartDate}
+                    />
                     End Date
-                    <DatePicker selected={endDate} onChange = {changeEndDate}/>
+                    <DatePicker selected={endDate} onChange={changeEndDate} />
                     <input
                         type="text"
                         name="Place of Event"
@@ -152,71 +146,69 @@ function WritePost() {
             break;
         case "Job":
             form = (
-                <>  
-                <Form>
-                    <TitleWrapper>
-                        <TitleDescriptor>Title</TitleDescriptor>
-                        <TitleBox
-                            id="body"
-                            contentEditable={true}
+                <>
+                    <Form>
+                        <TitleWrapper>
+                            <TitleDescriptor>Title</TitleDescriptor>
+                            <TitleBox id="body" contentEditable={true} />
+                        </TitleWrapper>
+                        <BodyWrapper>
+                            <TitleDescriptor>Body</TitleDescriptor>
+                            <BodyBox id="body" contentEditable={true} />
+                        </BodyWrapper>
+                        <input
+                            type="text"
+                            name="Place of Job"
+                            placeholder="Event Location"
+                            onChange={(e) => setPlace(e.target.value)}
                         />
-                    </TitleWrapper>
-                    <BodyWrapper>
-                        <TitleDescriptor>Body</TitleDescriptor>
-                        <BodyBox
-                            id="body"
-                            contentEditable={true}
+                        Start Date
+                        <DatePicker
+                            selected={startDate}
+                            onChange={changeStartDate}
+                            style={{ width: "inherit" }}
                         />
-                    </BodyWrapper>
-                    <input
-                        type="text"
-                        name="Place of Job"
-                        placeholder="Event Location"
-                        onChange={(e) => setPlace(e.target.value)}
-                    />
-                    Start Date
-                    <DatePicker selected={startDate} 
-                    onChange = {changeStartDate}
-                    style = {{ width: "inherit"}}
-                    />
-                    End Date
-                    <DatePicker selected={endDate} onChange = {changeEndDate}/>
-                    <input
-                        type="text"
-                        name="Is the job paid?"
-                        placeholder="Unpaid"
-                        onChange={(e) => setPaid(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        name="Is the job closed?"
-                        placeholder="Job open"
-                        onChange={(e) => setClosed(e.target.value)}
-                    />
-                    <PostingButton
-                        onClick={(e) => {
-                            e.preventDefault();
-                            postCreate({
-                                variables: {
-                                    kind: postType,
-                                    title: document.getElementById("title")
-                                        .innerHTML,
-                                    body: document.getElementById("body")
-                                        .innerHTML,
-                                    creator: userInfo.netID,
-                                    start: startDate,
-                                    end: endDate,
-                                    place: place,
-                                    isPaid: true,
-                                    isClosed: true,
-                                },
-                            });
-                            history.push("/feed");
-                        }}
-                    >
-                        Post
-                    </PostingButton>
-                </Form>
+                        End Date
+                        <DatePicker
+                            selected={endDate}
+                            onChange={changeEndDate}
+                        />
+                        <input
+                            type="text"
+                            name="Is the job paid?"
+                            placeholder="Unpaid"
+                            onChange={(e) => setPaid(e.target.value)}
+                        />
+                        <input
+                            type="text"
+                            name="Is the job closed?"
+                            placeholder="Job open"
+                            onChange={(e) => setClosed(e.target.value)}
+                        />
+                        <PostingButton
+                            onClick={(e) => {
+                                e.preventDefault();
+                                postCreate({
+                                    variables: {
+                                        kind: postType,
+                                        title: document.getElementById("title")
+                                            .innerHTML,
+                                        body: document.getElementById("body")
+                                            .innerHTML,
+                                        creator: userInfo.netID,
+                                        start: startDate,
+                                        end: endDate,
+                                        place: place,
+                                        isPaid: true,
+                                        isClosed: true,
+                                    },
+                                });
+                                history.push("/feed");
+                            }}
+                        >
+                            Post
+                        </PostingButton>
+                    </Form>
                 </>
             );
             break;
@@ -225,22 +217,17 @@ function WritePost() {
                 <Form>
                     <TitleWrapper>
                         <TitleDescriptor>Title</TitleDescriptor>
-                        <TitleBox
-                            id="title"
-                            contentEditable={true}
-                        />
+                        <TitleBox id="title" contentEditable={true} />
                     </TitleWrapper>
                     <BodyWrapper>
                         <TitleDescriptor>Body</TitleDescriptor>
-                        <BodyBox
-                            id="body"
-                            contentEditable={true}
-                        />
+                        <BodyBox id="body" contentEditable={true} />
                     </BodyWrapper>
                     Deadline Date
-                    <DatePicker selected={endDate} 
-                        onChange = {changeEndDate}
-                        style = {{ width: "inherit"}}
+                    <DatePicker
+                        selected={endDate}
+                        onChange={changeEndDate}
+                        style={{ width: "inherit" }}
                     />
                     <PostingButton
                         onClick={(e) => {
@@ -271,19 +258,27 @@ function WritePost() {
 
     return (
         <>
-        <Helmet>
+            <Helmet>
                 <title>RiceDiscuss &middot; Compose post</title>
-        </Helmet>
-        <ButtonWrapper>
-            <Button id="Discussion" onClick = {changePostType}>Discussion</Button>
-            <Button id="Notice" onClick = {changePostType}>Notice</Button>
-            <Button id="Event" onClick = {changePostType}>Event</Button>
-            <Button id="Job" onClick = {changePostType}>Job</Button>
-        </ButtonWrapper>
-        <PostWrapper>
-            <PostHeaderType>{postType}</PostHeaderType>
-            {form}
-        </PostWrapper>
+            </Helmet>
+            <ButtonWrapper>
+                <Button id="Discussion" onClick={changePostType}>
+                    Discussion
+                </Button>
+                <Button id="Notice" onClick={changePostType}>
+                    Notice
+                </Button>
+                <Button id="Event" onClick={changePostType}>
+                    Event
+                </Button>
+                <Button id="Job" onClick={changePostType}>
+                    Job
+                </Button>
+            </ButtonWrapper>
+            <PostWrapper>
+                <PostHeaderType>{postType}</PostHeaderType>
+                {form}
+            </PostWrapper>
         </>
     );
 }

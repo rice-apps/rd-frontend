@@ -6,6 +6,7 @@ import PostChunk from "./PostChunk";
 import { Banner } from "./PostFeed.styles";
 import { TOKEN_NAME } from "../utils/config";
 import { UPVOTE_POST, DOWNVOTE_POST } from "../graphql/Mutations";
+import uuid from "uuid/v4";
 
 function PostFeed(props) {
     const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));
@@ -47,7 +48,7 @@ function PostFeed(props) {
                 upvotePost={upvotePost}
                 downvotePost={downvotePost}
                 post={post}
-                key={post._id}
+                key={post.node._id}
             />
         );
     });
@@ -59,7 +60,7 @@ function PostFeed(props) {
                 pageStart={0}
                 loadMore={() => onLoadMore()}
                 hasMore={hasNextPage}
-                loader={<div>Loading...</div>}
+                loader={<div key={uuid()}>Loading...</div>}
             >
                 {posts}
             </InfiniteScroll>
