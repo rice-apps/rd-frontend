@@ -26,9 +26,7 @@ import {
     Downvote,
     TopComponent,
     DiscussionTitle,
-    TagOne,
-    TagTwo,
-    TagThree,
+    Tags,
     MiddleComponent,
     DiscussionBody,
     BottomComponent,
@@ -115,9 +113,9 @@ function Discussion(props) {
 
                         <TopComponent>
                             <DiscussionTitle>{post.title}</DiscussionTitle>
-                            <TagOne>Tag 1</TagOne>
-                            <TagTwo>Tag 2</TagTwo>
-                            <TagThree>Tag 3</TagThree>
+                            <Tags>
+                                Tags: {post.tags}
+                            </Tags>
                         </TopComponent>
 
                         <MiddleComponent>

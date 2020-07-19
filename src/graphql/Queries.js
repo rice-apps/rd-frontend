@@ -11,6 +11,7 @@ const POST_PAGE = gql`
                 _id
                 title
                 body
+                tags
                 creator {
                     username
                 }

@@ -41,6 +41,7 @@ function WritePost() {
 
     let form = <div></div>;
 
+    /*
     const submit = async () => {
         const res = await props.s3Sign({
             variables : {
@@ -53,6 +54,8 @@ function WritePost() {
         await uploadToS3(file, signedRequest);
 
     }
+    */
+
 
     switch (postType) {
         case "Discussion":

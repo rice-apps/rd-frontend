@@ -51,32 +51,36 @@ const Downvote = styled.div`
 `;
 
 const TopComponent = styled.div`
-    // contains DiscussionTitle, TagOne, TagTwo, TagThree
+    // contains DiscussionTitle, Tags
     display: grid;
-    justify-items: start;
-    align-items: center;
     grid-area: top;
-    grid-template-columns: 1fr 60px 60px 60px;
+    grid-template-columns: 2fr 1fr;
+    overflow: hidden;
 `;
 
 const DiscussionTitle = styled.text`
     padding: 10px 0px;
+    justify-self: start;
+    align-self: start;
     font-family: "Avenir";
     font-size: 3vh;
     font-weight: bold;
 `;
 
-const TagOne = styled.div``;
-
-const TagTwo = styled.div``;
-
-const TagThree = styled.div``;
+const Tags = styled.text`
+    justify-self: end;
+    align-self: center;
+    font-family: "Avenir";
+    font-size: 2vh;
+    word-wrap: break-word;
+`;
 
 const MiddleComponent = styled.div`
     // contains DiscussionBody
     display: grid;
     justify-items: start;
     grid-area: middle;
+    overflow: hidden;
 `;
 
 const DiscussionBody = styled.text`
@@ -150,9 +154,7 @@ export {
     Downvote,
     TopComponent,
     DiscussionTitle,
-    TagOne,
-    TagTwo,
-    TagThree,
+    Tags,
     MiddleComponent,
     DiscussionBody,
     BottomComponent,

@@ -135,11 +135,50 @@ const CREATE_NOTICE = gql`
     }
 `;
 
+
 const POST_CREATE = gql`
-    mutation postCreateOne(){
-        
+    mutation CreatePost(
+        $kind: EnumDKeyPostKind!
+        $title: String!
+        $body: String!
+        $tags: [String]
+        $creator: String!
+        $deadline: String
+        $start: Date
+        $end: Date
+        $place: String
+        $isPaid: Boolean
+        $isClosed: Boolean
+    ){
+        postCreateOne(
+            record: {
+                kind: $kind
+                title: $title
+                body: $body
+                tags: $tags
+                creator: $creator
+                deadline: $deadline
+                start: $start
+                end: $end
+                place: $place
+                isPaid: $isPaid
+                isClosed: $isClosed
+            }
+        ){
+            record{
+                _id
+                kind
+                __typename
+                title
+                body
+                creator{
+                    netID
+                }
+            }
+        }
     }
 `;
+
 
 const LOGIN = gql`
     mutation Login($ticket: String!) {
@@ -180,6 +219,7 @@ export {
     CREATE_EVENT,
     CREATE_JOB,
     CREATE_NOTICE,
+    POST_CREATE,
     LOGIN,
     UPVOTE_POST,
     DOWNVOTE_POST,
