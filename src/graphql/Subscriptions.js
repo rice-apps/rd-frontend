@@ -4,20 +4,26 @@ const POST_CREATED = gql`
     subscription {
         postCreated {
             _id
+            kind
+            __typename
             title
             creator {
+                _id
                 username
             }
             body
             date_created
             reports {
+                _id
                 username
             }
             tags
             upvotes {
+                _id
                 username
             }
             downvotes {
+                _id
                 username
             }
             ... on Event {
@@ -44,10 +50,15 @@ const POST_VOTE_CHANGED = gql`
     subscription {
         postVoteChanged {
             _id
+            creator {
+                _id
+            }
             upvotes {
+                _id
                 username
             }
             downvotes {
+                _id
                 username
             }
         }

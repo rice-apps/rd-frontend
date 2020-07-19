@@ -4,6 +4,7 @@ import Auth from "../components/Auth";
 import { LoginButton, LoginContainer, LoginImage } from "./Login.styles";
 
 import { FRONTEND_AUTH_URL } from "../utils/config";
+import { Helmet } from "react-helmet";
 
 function Login() {
     let [hasTicket] = useState(
@@ -11,9 +12,12 @@ function Login() {
     );
 
     return hasTicket ? (
-        Auth("discussions", "login")
+        Auth("more_info", "login")
     ) : (
         <LoginContainer>
+            <Helmet>
+                <title>RiceDiscuss &middot; Login</title>
+            </Helmet>
             <LoginImage />
             <LoginButton
                 onClick={() => {

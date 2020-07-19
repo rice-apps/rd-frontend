@@ -1,46 +1,51 @@
 import React, { useState, useEffect } from "react";
+import DatePicker from "react-datepicker";
 
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 
-import {
-    // CREATE_DISCUSSION,
-    // CREATE_EVENT,
-    // CREATE_JOB,
-    // CREATE_NOTICE,
-    POST_CREATE,
-} from "../graphql/Mutations";
+import { POST_CREATE } from "../graphql/Mutations";
 
 import { TOKEN_NAME } from "../utils/config";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import {
+    PostWrapper,
+    Button,
+    ButtonWrapper,
+    PostHeaderType,
+    Form,
+    TitleDescriptor,
+    TitleWrapper,
+    TitleBox,
+    BodyWrapper,
+    PostingButton,
+    BodyBox,
+} from "./WritePost.styles";
 
 function WritePost() {
     useEffect(() => {
         console.log("event happened");
     });
 
+    const history = useHistory();
+
     const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));
-    const [title, setTitle] = useState("");
-    const [body, setBody] = useState("");
     const [startDate, setStart] = useState(new Date().getTime());
     const [endDate, setEnd] = useState(new Date().getTime());
     const [place, setPlace] = useState("");
-    const [isPaid, setPaid] = useState(false);
-    const [isClosed, setClosed] = useState(false);
-    const [deadline, setDeadline] = useState(new Date().getTime());
+    const [, setPaid] = useState(false);
+    const [, setClosed] = useState(false);
     const [postType, setPostType] = useState("Discussion");
 
     const [postCreate] = useMutation(POST_CREATE);
-    // const [addDiscussion] = useMutation(CREATE_DISCUSSION);
-    // const [addEvent] = useMutation(CREATE_EVENT);
-    // const [addJob] = useMutation(CREATE_JOB);
-    // const [addNotice] = useMutation(CREATE_NOTICE);
 
     if (!localStorage.getItem(TOKEN_NAME)) {
         return <Redirect to="/login" />;
     }
 
-    let form = <div></div>;
+    let form = <div>Something went wrong! Please report to riceapps.</div>;
 
+<<<<<<< HEAD
     /*
     const submit = async () => {
         const res = await props.s3Sign({
@@ -49,29 +54,49 @@ function WritePost() {
                 filetype: file.type
             }
         });
+=======
+    // const submit = async () => {
+    //     const res = await props.s3Sign({
+    //         variables : {
+    //             filename: formatFilename(file.name),
+    //             filetype: file.type
+    //         }
+    //     });
+>>>>>>> ec01bf017393b49ed545bdaf6ce67f1a4118436a
 
-        const {signedRequest, url} = res.data.signS3;
-        await uploadToS3(file, signedRequest);
+    //     const {signedRequest, url} = res.data.signS3;
+    //     await uploadToS3(file, signedRequest);
 
+<<<<<<< HEAD
     }
     */
 
+=======
+    // }
+
+    const changeStartDate = (date) => setStart(date);
+    const changeEndDate = (date) => setEnd(date);
+    const changePostType = (e) => setPostType(e.target.id);
+>>>>>>> ec01bf017393b49ed545bdaf6ce67f1a4118436a
 
     switch (postType) {
         case "Discussion":
             form = (
-                <form>
-                    <div
-                        id="title"
-                        style={{ width: "20vw" }}
-                        contentEditable={true}
-                    />
-                    <div id="body" contentEditable={true} />
-                    <button
+                <Form>
+                    <TitleWrapper>
+                        <TitleDescriptor>Title</TitleDescriptor>
+                        <TitleBox id="title" contentEditable={true} />
+                    </TitleWrapper>
+                    <BodyWrapper>
+                        <TitleDescriptor>Body</TitleDescriptor>
+                        <BodyBox id="body" contentEditable={true} />
+                    </BodyWrapper>
+                    <PostingButton
                         onClick={(e) => {
                             e.preventDefault();
                             postCreate({
                                 variables: {
+                                    kind: postType,
                                     title: document.getElementById("title")
                                         .innerHTML,
                                     body: document.getElementById("body")
@@ -79,186 +104,199 @@ function WritePost() {
                                     creator: userInfo.netID,
                                 },
                             });
+                            history.push("/feed");
                         }}
                     >
                         Post
-                    </button>
-                </form>
+                    </PostingButton>
+                </Form>
             );
             break;
         case "Event":
             form = (
-                <form>
-                    <input
-                        type="text"
-                        name="Post Title"
-                        placeholder="Title"
-                        onChange={(e) => setTitle(e.target.value)}
+                <Form>
+                    <TitleWrapper>
+                        <TitleDescriptor>Title</TitleDescriptor>
+                        <TitleBox id="title" contentEditable={true} />
+                    </TitleWrapper>
+                    <BodyWrapper>
+                        <TitleDescriptor>Body</TitleDescriptor>
+                        <BodyBox id="body" contentEditable={true} />
+                    </BodyWrapper>
+                    Start Date
+                    <DatePicker
+                        selected={startDate}
+                        onChange={changeStartDate}
                     />
-                    <input
-                        type="text"
-                        name="Post Body"
-                        placeholder="Content"
-                        onChange={(e) => setBody(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        name="Event Start Date"
-                        placeholder={new Date().getUTCDay().toString()}
-                        onChange={(e) => setStart(e.target.valueAsDate())}
-                    />
-                    <input
-                        type="text"
-                        name="Event End Date"
-                        placeholder={new Date().getUTCDay().toString()}
-                        onChange={(e) => setEnd(e.target.valueAsDate())}
-                    />
+                    End Date
+                    <DatePicker selected={endDate} onChange={changeEndDate} />
                     <input
                         type="text"
                         name="Place of Event"
                         placeholder="Event Location"
                         onChange={(e) => setPlace(e.target.value)}
                     />
-                    <button
+                    <PostingButton
                         onClick={(e) => {
                             e.preventDefault();
                             postCreate({
                                 variables: {
-                                    title: title,
-                                    body: body,
+                                    kind: postType,
+                                    title: document.getElementById("title")
+                                        .innerHTML,
+                                    body: document.getElementById("body")
+                                        .innerHTML,
                                     creator: userInfo.netID,
                                     start: startDate,
                                     end: endDate,
                                     place: place,
                                 },
                             });
+
+                            history.push("/feed");
                         }}
                     >
                         Post
-                    </button>
-                </form>
+                    </PostingButton>
+                </Form>
             );
             break;
         case "Job":
             form = (
-                <form>
-                    <input
-                        type="text"
-                        name="Post Title"
-                        placeholder="Title"
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        name="Post Body"
-                        placeholder="Content"
-                        onChange={(e) => setBody(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        name="Job Start Date"
-                        placeholder={new Date().getUTCDate.toString()}
-                        onChange={(e) => setStart(e.target.valueAsDate())}
-                    />
-                    <input
-                        type="text"
-                        name="Job End Date"
-                        placeholder={new Date().getUTCDate.toString()}
-                        onChange={(e) => setEnd(e.target.valueAsDate())}
-                    />
-                    <input
-                        type="text"
-                        name="Place of Job"
-                        placeholder="Event Location"
-                        onChange={(e) => setPlace(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        name="Is the job paid?"
-                        placeholder="Unpaid"
-                        onChange={(e) => setPaid(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        name="Is the job closed?"
-                        placeholder="Job open"
-                        onChange={(e) => setClosed(e.target.value)}
-                    />
-                    <button
-                        onClick={(e) => {
-                            e.preventDefault();
-                            postCreate({
-                                variables: {
-                                    title: title,
-                                    body: body,
-                                    creator: userInfo.netID,
-                                    start: startDate,
-                                    end: endDate,
-                                    place: place,
-                                    isPaid: isPaid,
-                                    isClosed: isClosed,
-                                }
-                            });
-                        }}
-                    >
-                        Post
-                    </button>
-                </form>
+                <>
+                    <Form>
+                        <TitleWrapper>
+                            <TitleDescriptor>Title</TitleDescriptor>
+                            <TitleBox id="body" contentEditable={true} />
+                        </TitleWrapper>
+                        <BodyWrapper>
+                            <TitleDescriptor>Body</TitleDescriptor>
+                            <BodyBox id="body" contentEditable={true} />
+                        </BodyWrapper>
+                        <input
+                            type="text"
+                            name="Place of Job"
+                            placeholder="Event Location"
+                            onChange={(e) => setPlace(e.target.value)}
+                        />
+                        Start Date
+                        <DatePicker
+                            selected={startDate}
+                            onChange={changeStartDate}
+                            style={{ width: "inherit" }}
+                        />
+                        End Date
+                        <DatePicker
+                            selected={endDate}
+                            onChange={changeEndDate}
+                        />
+                        <input
+                            type="text"
+                            name="Is the job paid?"
+                            placeholder="Unpaid"
+                            onChange={(e) => setPaid(e.target.value)}
+                        />
+                        <input
+                            type="text"
+                            name="Is the job closed?"
+                            placeholder="Job open"
+                            onChange={(e) => setClosed(e.target.value)}
+                        />
+                        <PostingButton
+                            onClick={(e) => {
+                                e.preventDefault();
+                                postCreate({
+                                    variables: {
+                                        kind: postType,
+                                        title: document.getElementById("title")
+                                            .innerHTML,
+                                        body: document.getElementById("body")
+                                            .innerHTML,
+                                        creator: userInfo.netID,
+                                        start: startDate,
+                                        end: endDate,
+                                        place: place,
+                                        isPaid: true,
+                                        isClosed: true,
+                                    },
+                                });
+                                history.push("/feed");
+                            }}
+                        >
+                            Post
+                        </PostingButton>
+                    </Form>
+                </>
             );
             break;
         case "Notice":
             form = (
-                <form>
-                    <input
-                        type="text"
-                        name="Post Title"
-                        placeholder="Title"
-                        onChange={(e) => setTitle(e.target.value)}
+                <Form>
+                    <TitleWrapper>
+                        <TitleDescriptor>Title</TitleDescriptor>
+                        <TitleBox id="title" contentEditable={true} />
+                    </TitleWrapper>
+                    <BodyWrapper>
+                        <TitleDescriptor>Body</TitleDescriptor>
+                        <BodyBox id="body" contentEditable={true} />
+                    </BodyWrapper>
+                    Deadline Date
+                    <DatePicker
+                        selected={endDate}
+                        onChange={changeEndDate}
+                        style={{ width: "inherit" }}
                     />
-                    <input
-                        type="text"
-                        name="Post Body"
-                        placeholder="Content"
-                        onChange={(e) => setBody(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        name="Deadline"
-                        placeholder={new Date().getUTCDay().toString}
-                        onChange={(e) => setDeadline(e.target.valueAsDate())}
-                    />
-                    <button
+                    <PostingButton
                         onClick={(e) => {
                             e.preventDefault();
                             postCreate({
                                 variables: {
-                                    title: title,
-                                    body: body,
+                                    kind: postType,
+                                    title: document.getElementById("title")
+                                        .innerHTML,
+                                    body: document.getElementById("body")
+                                        .innerHTML,
                                     creator: userInfo.netID,
-                                    deadline: deadline,
-                                }
+                                    deadline: endDate,
+                                },
                             });
+                            history.push("/feed");
                         }}
                     >
                         Post
-                    </button>
-                </form>
+                    </PostingButton>
+                </Form>
             );
             break;
+
         default:
-            form = <div>Something went wrong! Please report to riceapps.</div>;
+            throw new Error("something went horribly wrong!");
     }
 
     return (
-        <React.Fragment>
-            <select onChange={(e) => setPostType(e.target.value)}>
-                <option value="Discussion">Discussion</option>
-                <option value="Notice">Notice</option>
-                <option value="Event">Event</option>
-                <option value="Job">Job</option>
-            </select>
-            {form}
-        </React.Fragment>
+        <>
+            <Helmet>
+                <title>RiceDiscuss &middot; Compose post</title>
+            </Helmet>
+            <ButtonWrapper>
+                <Button id="Discussion" onClick={changePostType}>
+                    Discussion
+                </Button>
+                <Button id="Notice" onClick={changePostType}>
+                    Notice
+                </Button>
+                <Button id="Event" onClick={changePostType}>
+                    Event
+                </Button>
+                <Button id="Job" onClick={changePostType}>
+                    Job
+                </Button>
+            </ButtonWrapper>
+            <PostWrapper>
+                <PostHeaderType>{postType}</PostHeaderType>
+                {form}
+            </PostWrapper>
+        </>
     );
 }
 

@@ -1,140 +1,49 @@
 import gql from "graphql-tag.macro";
 
-const CREATE_DISCUSSION = gql`
-    mutation CreateDiscussion(
+const POST_CREATE = gql`
+    mutation CreatePost(
+        $kind: EnumDKeyPostKind!
         $title: String!
         $body: String!
         $creator: String!
+        $deadline: Date
+        $start: Date
+        $end: Date
+        $place: String
+        $isPaid: Boolean
+        $isClosed: Boolean
+        $tags: [String]
     ) {
-        discussionCreateOne(
-            record: { title: $title, body: $body, creator: $creator }
-        ) {
-            record {
-                _id
-                title
-                creator {
-                    _id
-                    username
-                }
-                body
-                date_created
-                __typename
-            }
-        }
-    }
-`;
-
-const CREATE_EVENT = gql`
-    mutation CreateEvent(
-        $title: String!
-        $body: String!
-        $creator: String!
-        $start: Date!
-        $end: Date!
-        $place: String!
-    ) {
-        eventCreateOne(
+        postCreateOne(
             record: {
+                kind: $kind
                 title: $title
                 body: $body
                 creator: $creator
-                start: $start
-                end: $end
-                place: $place
-            }
-        ) {
-            record {
-                _id
-                title
-                creator {
-                    _id
-                    username
-                }
-                body
-                date_created
-                start
-                end
-                place
-                __typename
-            }
-        }
-    }
-`;
-
-const CREATE_JOB = gql`
-    mutation CreateJob(
-        $title: String!
-        $body: String!
-        $creator: String!
-        $start: Date!
-        $end: Date!
-        $place: String!
-        $isPaid: Boolean!
-        $isClosed: Boolean!
-    ) {
-        jobCreateOne(
-            record: {
-                title: $title
-                body: $body
-                creator: $creator
+                deadline: $deadline
                 start: $start
                 end: $end
                 place: $place
                 isPaid: $isPaid
                 isClosed: $isClosed
+                tags: $tags
             }
         ) {
             record {
                 _id
-                title
-                creator {
-                    _id
-                    username
-                }
-                body
-                date_created
-                start
-                end
-                place
-                isPaid
-                isClosed
+                kind
                 __typename
+                title
+                body
+                creator {
+                    netID
+                }
             }
         }
     }
 `;
 
-const CREATE_NOTICE = gql`
-    mutation CreateJob(
-        $title: String!
-        $body: String!
-        $creator: String!
-        $deadline: Date!
-    ) {
-        noticeCreateOne(
-            record: {
-                title: $title
-                body: $body
-                creator: $creator
-                deadline: $deadline
-            }
-        ) {
-            record {
-                _id
-                title
-                creator {
-                    _id
-                    username
-                }
-                body
-                date_created
-                deadline
-                __typename
-            }
-        }
-    }
-`;
-
+<<<<<<< HEAD
 
 const POST_CREATE = gql`
     mutation CreatePost(
@@ -180,6 +89,8 @@ const POST_CREATE = gql`
 `;
 
 
+=======
+>>>>>>> ec01bf017393b49ed545bdaf6ce67f1a4118436a
 const LOGIN = gql`
     mutation Login($ticket: String!) {
         userAuthentication(ticket: $ticket) {
@@ -196,7 +107,8 @@ const UPVOTE_POST = gql`
     mutation UpvotePost($netID: String!, $_id: ID!) {
         upvotePostById(netID: $netID, _id: $_id) {
             creator {
-                netID
+                _id
+                username
             }
             _id
         }
@@ -207,6 +119,7 @@ const DOWNVOTE_POST = gql`
     mutation DownvotePost($netID: String!, $_id: ID!) {
         downvotePostById(netID: $netID, _id: $_id) {
             creator {
+                _id
                 netID
             }
             _id
@@ -214,6 +127,7 @@ const DOWNVOTE_POST = gql`
     }
 `;
 
+<<<<<<< HEAD
 export {
     CREATE_DISCUSSION,
     CREATE_EVENT,
@@ -224,3 +138,37 @@ export {
     UPVOTE_POST,
     DOWNVOTE_POST,
 };
+=======
+const SET_INFO = gql`
+    mutation SetInfo(
+        $username: String!
+        $college: EnumUserCollege!
+        $major: [String]!
+        $minor: [String]!
+        $netID: String!
+        $isNewUser: Boolean!
+    ) {
+        userUpdateOne(
+            record: {
+                username: $username
+                college: $college
+                major: $major
+                minor: $minor
+                isNewUser: $isNewUser
+            }
+            filter: { netID: $netID }
+        ) {
+            record {
+                _id
+                username
+                college
+                major
+                minor
+                isNewUser
+            }
+        }
+    }
+`;
+
+export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST };
+>>>>>>> ec01bf017393b49ed545bdaf6ce67f1a4118436a
