@@ -14,9 +14,7 @@ import { PostWrapper,
     PostingButton, BodyBox } from "./WritePost.styles.js"
 
 function WritePost() {
-    useEffect(() => {
-        console.log("event happened");
-    });
+    useEffect(() => console.log("event happened"));
 
     const history = useHistory();
 
@@ -28,6 +26,7 @@ function WritePost() {
     const [place, setPlace] = useState("");
     const [isPaid, setPaid] = useState(false);
     const [isClosed, setClosed] = useState(false);
+    const [tags, setTags] = useState([]);
     const [deadline, setDeadline] = useState(new Date().getTime());
     const [postType, setPostType] = useState("Discussion");
 
