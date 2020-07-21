@@ -43,54 +43,6 @@ const POST_CREATE = gql`
     }
 `;
 
-<<<<<<< HEAD
-
-const POST_CREATE = gql`
-    mutation CreatePost(
-        $kind: EnumDKeyPostKind!
-        $title: String!
-        $body: String!
-        $tags: [String]
-        $creator: String!
-        $deadline: String
-        $start: Date
-        $end: Date
-        $place: String
-        $isPaid: Boolean
-        $isClosed: Boolean
-    ){
-        postCreateOne(
-            record: {
-                kind: $kind
-                title: $title
-                body: $body
-                tags: $tags
-                creator: $creator
-                deadline: $deadline
-                start: $start
-                end: $end
-                place: $place
-                isPaid: $isPaid
-                isClosed: $isClosed
-            }
-        ){
-            record{
-                _id
-                kind
-                __typename
-                title
-                body
-                creator{
-                    netID
-                }
-            }
-        }
-    }
-`;
-
-
-=======
->>>>>>> ec01bf017393b49ed545bdaf6ce67f1a4118436a
 const LOGIN = gql`
     mutation Login($ticket: String!) {
         userAuthentication(ticket: $ticket) {
@@ -99,6 +51,7 @@ const LOGIN = gql`
             isNewUser
             token
             __typename
+            savedPosts
         }
     }
 `;
@@ -127,18 +80,23 @@ const DOWNVOTE_POST = gql`
     }
 `;
 
-<<<<<<< HEAD
-export {
-    CREATE_DISCUSSION,
-    CREATE_EVENT,
-    CREATE_JOB,
-    CREATE_NOTICE,
-    POST_CREATE,
-    LOGIN,
-    UPVOTE_POST,
-    DOWNVOTE_POST,
-};
-=======
+const SAVE_POST = gql`
+    mutation SavePost($netID: String!, $savedPosts: [String]) {
+        userUpdateOne(
+            record: {
+                savedPosts: $savedPosts
+            }
+            filter: { netID: $netID }
+        ) {
+            record {
+                netID
+                _id
+            }
+        }
+    }
+
+`;
+
 const SET_INFO = gql`
     mutation SetInfo(
         $username: String!
@@ -170,5 +128,4 @@ const SET_INFO = gql`
     }
 `;
 
-export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST };
->>>>>>> ec01bf017393b49ed545bdaf6ce67f1a4118436a
+export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST, SAVE_POST };

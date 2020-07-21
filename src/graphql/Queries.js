@@ -1,21 +1,6 @@
 import gql from "graphql-tag.macro";
 
 const POST_PAGE = gql`
-<<<<<<< HEAD
-    query PostPage($page: Int, $perPage: Int) {
-        postPagination(
-            page: $page
-            perPage: $perPage
-            sort: DATE_CREATED_DESC
-        ) {
-            items {
-                _id
-                title
-                body
-                tags
-                creator {
-                    username
-=======
     query PostPage($after: String!) {
         postConnection(after: $after) {
             count
@@ -60,7 +45,6 @@ const POST_PAGE = gql`
                     ... on Notice {
                         deadline
                     }
->>>>>>> ec01bf017393b49ed545bdaf6ce67f1a4118436a
                 }
             }
             pageInfo {

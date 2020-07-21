@@ -45,16 +45,6 @@ function WritePost() {
 
     let form = <div>Something went wrong! Please report to riceapps.</div>;
 
-<<<<<<< HEAD
-    /*
-    const submit = async () => {
-        const res = await props.s3Sign({
-            variables : {
-                filename: formatFilename(file.name),
-                filetype: file.type
-            }
-        });
-=======
     // const submit = async () => {
     //     const res = await props.s3Sign({
     //         variables : {
@@ -62,22 +52,15 @@ function WritePost() {
     //             filetype: file.type
     //         }
     //     });
->>>>>>> ec01bf017393b49ed545bdaf6ce67f1a4118436a
 
     //     const {signedRequest, url} = res.data.signS3;
     //     await uploadToS3(file, signedRequest);
 
-<<<<<<< HEAD
-    }
-    */
-
-=======
     // }
 
     const changeStartDate = (date) => setStart(date);
     const changeEndDate = (date) => setEnd(date);
     const changePostType = (e) => setPostType(e.target.id);
->>>>>>> ec01bf017393b49ed545bdaf6ce67f1a4118436a
 
     switch (postType) {
         case "Discussion":
