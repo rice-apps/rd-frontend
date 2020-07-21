@@ -51,6 +51,7 @@ const LOGIN = gql`
             isNewUser
             token
             __typename
+            savedPosts
         }
     }
 `;
@@ -77,6 +78,23 @@ const DOWNVOTE_POST = gql`
             _id
         }
     }
+`;
+
+const SAVE_POST = gql`
+    mutation SavePost($netID: String!, $savedPosts: [String]) {
+        userUpdateOne(
+            record: {
+                savedPosts: $savedPosts
+            }
+            filter: { netID: $netID }
+        ) {
+            record {
+                netID
+                _id
+            }
+        }
+    }
+
 `;
 
 const SET_INFO = gql`
@@ -110,4 +128,4 @@ const SET_INFO = gql`
     }
 `;
 
-export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST };
+export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST, SAVE_POST };
