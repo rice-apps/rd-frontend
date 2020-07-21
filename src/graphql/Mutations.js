@@ -81,10 +81,10 @@ const DOWNVOTE_POST = gql`
 
 const SET_INFO = gql`
     mutation SetInfo(
-        $username: String!
-        $college: EnumUserCollege!
-        $major: [String]!
-        $minor: [String]!
+        $username: String
+        $college: EnumUserCollege
+        $major: [String]
+        $minor: [String]
         $netID: String!
         $isNewUser: Boolean!
     ) {

@@ -61,38 +61,42 @@ const MoreInfo = () => {
         [],
     );
 
-    const handleMajorChange = (newValue) => {
+    // push probably works here as well since we're only pushing one new value
+    const handleMajorChange = useCallback((newValue) => {
         const index_of_major = major.indexOf(newValue);
         setMajor(
             index_of_major >= 0
                 ? major.filter((maj) => newValue !== maj)
                 : [...major, newValue],
         );
-    };
+    }, []);
 
-    const handleMinorChange = (newValue) => {
+    const handleMinorChange = useCallback((newValue) => {
         const index_of_minor = minor.indexOf(newValue);
         setMinor(
             index_of_minor >= 0
                 ? minor.filter((maj) => newValue !== maj)
                 : [...minor, newValue],
         );
-    };
+    }, []);
 
-    const handleCollegeChange = (newValue) => {
+    const handleCollegeChange = useCallback((newValue) => {
         const index_of_college = college.indexOf(newValue);
         setCollege(index_of_college >= 0 ? "" : newValue);
-    };
+        }, []);
+
     const toggleMajor = () => {
       setMajorOpen(!isMajorOpen);
       setMinorOpen(false);
       setCollegeOpen(false)
     }
+
     const toggleMinor = () =>  {
       setMinorOpen(!isMinorOpen);
       setMajorOpen(false);
       setCollegeOpen(false);
     }
+    
     const toggleCollege = () => {
       setCollegeOpen(!isCollegeOpen);
       setMajorOpen(false);
