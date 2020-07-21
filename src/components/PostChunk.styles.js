@@ -3,13 +3,12 @@ import styled from "styled-components";
 const DiscussionBoxSection = styled.section`
     // contains DiscussionBox
     padding: 20px 350px;
-    background: papayawhip;
 `;
 
 const DiscussionBox = styled.section`
     // contains LeftComponent, MiddleComponent, TopRightComponent, BottomComponent
     padding: 5px;
-    background: white;
+    background: #FFFFFF;
     border-radius: 10px;
     display: grid;
     grid-template-rows: 40px 1fr 50px;
