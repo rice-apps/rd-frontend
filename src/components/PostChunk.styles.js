@@ -8,7 +8,7 @@ const DiscussionBoxSection = styled.section`
 const DiscussionBox = styled.section`
     // contains LeftComponent, MiddleComponent, TopRightComponent, BottomComponent
     padding: 5px;
-    background: #FFFFFF;
+    background: #ffffff;
     border-radius: 10px;
     display: grid;
     grid-template-rows: 40px 1fr 50px;

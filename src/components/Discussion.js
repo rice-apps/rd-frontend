@@ -64,7 +64,7 @@ function Discussion(props) {
     useEffect(() => {
         subscribeToNewPosts();
         subscribeToNewVotes();
-    // eslint-disable-next-line
+        // eslint-disable-next-line
     }, []);
 
     if (props.loading) return <h1>Loading...</h1>;
@@ -113,9 +113,7 @@ function Discussion(props) {
 
                         <TopComponent>
                             <DiscussionTitle>{post.title}</DiscussionTitle>
-                            <Tags>
-                                Tags: {post.tags}
-                            </Tags>
+                            <Tags>Tags: {post.tags}</Tags>
                         </TopComponent>
 
                         <MiddleComponent>

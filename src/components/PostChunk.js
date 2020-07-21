@@ -100,16 +100,20 @@ function PostChunk(props) {
                     </MiddleComponent>
 
                     <BottomComponent>
-                        <Save 
-                        onClick={(e) => {
-                            e.preventDefault();
-                            props.savePost({
-                                variables: {
-                                    netID: props.userInfo.netID,
-                                    savedPosts: [...props.userInfo.savedPosts, props.post.node._id],
-                                },
-                            });
-                        }}>
+                        <Save
+                            onClick={(e) => {
+                                e.preventDefault();
+                                props.savePost({
+                                    variables: {
+                                        netID: props.userInfo.netID,
+                                        savedPosts: [
+                                            ...props.userInfo.savedPosts,
+                                            props.post.node._id,
+                                        ],
+                                    },
+                                });
+                            }}
+                        >
                             Save
                         </Save>
                         <AddTo>+ Add to...</AddTo>

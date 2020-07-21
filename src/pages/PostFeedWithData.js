@@ -88,9 +88,7 @@ function PostFeedWithData() {
                         }}
                     />
                 </PostFeedContainer>
-                <RightSidebarContainer>
-
-                </RightSidebarContainer>
+                <RightSidebarContainer></RightSidebarContainer>
             </Background>
         </>
     );

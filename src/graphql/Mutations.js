@@ -51,7 +51,9 @@ const LOGIN = gql`
             isNewUser
             token
             __typename
-            savedPosts
+            savedPosts {
+                _id
+            }
         }
     }
 `;
@@ -81,11 +83,9 @@ const DOWNVOTE_POST = gql`
 `;
 
 const SAVE_POST = gql`
-    mutation SavePost($netID: String!, $savedPosts: [String]) {
+    mutation SavePost($netID: String!, $savedPosts: [MongoID]) {
         userUpdateOne(
-            record: {
-                savedPosts: $savedPosts
-            }
+            record: { savedPosts: $savedPosts }
             filter: { netID: $netID }
         ) {
             record {
@@ -94,7 +94,6 @@ const SAVE_POST = gql`
             }
         }
     }
-
 `;
 
 const SET_INFO = gql`
