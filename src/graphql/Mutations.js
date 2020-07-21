@@ -13,7 +13,7 @@ const POST_CREATE = gql`
         $isPaid: Boolean
         $isClosed: Boolean
         $tags: [String]
-    ){
+    ) {
         postCreateOne(
             record: {
                 kind: $kind
@@ -41,7 +41,7 @@ const POST_CREATE = gql`
             }
         }
     }
-`;  
+`;
 
 const LOGIN = gql`
     mutation Login($ticket: String!) {

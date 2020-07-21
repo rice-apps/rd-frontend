@@ -3,9 +3,9 @@ import React, { useEffect } from "react";
 import { useMutation } from "@apollo/client";
 
 import PostChunk from "./PostChunk";
-import { Banner } from "./PostFeed.styles";
 import { TOKEN_NAME } from "../utils/config";
 import { UPVOTE_POST, DOWNVOTE_POST } from "../graphql/Mutations";
+import uuid from "uuid/v4";
 
 function PostFeed(props) {
     const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));
@@ -14,7 +14,13 @@ function PostFeed(props) {
 
     const [downvotePost] = useMutation(DOWNVOTE_POST);
 
-    const { onLoadMore, subscribeToNewPosts, subscribeToNewVotes } = props;
+    const {
+        onLoadMore,
+        subscribeToNewPosts,
+        subscribeToNewVotes,
+        loading,
+        error,
+    } = props;
 
     useEffect(() => {
         subscribeToNewPosts();
@@ -22,29 +28,38 @@ function PostFeed(props) {
         // eslint-disable-next-line
     }, []);
 
-    if (props.loading) return <h1>Loading...</h1>;
-    if (props.error) return <h1>Something went wrong...</h1>;
+    if (loading) return <h1>Loading...</h1>;
+    if (error) return <h1>Something went wrong...</h1>;
 
-    const posts = props.data.postConnection.edges.map((post, i) => {
+    const {
+        data: {
+            postConnection: {
+                edges,
+                pageInfo: { hasNextPage },
+            },
+        },
+    } = props;
+
+    const posts = edges.map((post, _i) => {
         return (
             <PostChunk
                 userInfo={userInfo}
                 upvotePost={upvotePost}
                 downvotePost={downvotePost}
                 post={post}
-                key={post._id}
+                key={post.node._id}
             />
         );
     });
 
     return (
         <>
-            <Banner />
+            {/* <Banner /> */}
             <InfiniteScroll
                 pageStart={0}
                 loadMore={() => onLoadMore()}
-                hasMore={props.data.postConnection.pageInfo.hasNextPage}
-                loader={<div>Loading...</div>}
+                hasMore={hasNextPage}
+                loader={<div key={uuid()}>Loading...</div>}
             >
                 {posts}
             </InfiniteScroll>
