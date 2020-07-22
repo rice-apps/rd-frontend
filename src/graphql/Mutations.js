@@ -108,4 +108,31 @@ const SET_INFO = gql`
     }
 `;
 
-export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST };
+const COMMENT_CREATE = gql`
+    mutation CreateComment(
+        $body: String!
+        $creator: String!
+        $post: MongoID!
+        $depth: Float!
+    ) {
+        commentCreateOne(
+            record: {
+                body: $body
+                creator: $creator
+                post: $post
+                depth: $depth
+            }
+        ) {
+            record {
+                _id
+                __typename
+                body
+                creator {
+                    netID
+                }
+            }
+        }
+    }
+`;
+
+export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST, COMMENT_CREATE };

@@ -14,6 +14,7 @@ function PostFeed(props) {
 
     const [downvotePost] = useMutation(DOWNVOTE_POST);
 
+
     const {
         onLoadMore,
         subscribeToNewPosts,
@@ -41,16 +42,17 @@ function PostFeed(props) {
     } = props;
 
     const posts = edges.map((post, _i) => {
+        console.log(post.node._id)
+        console.log(userInfo.netID)
         return (
             <PostChunk
                 userInfo={userInfo}
                 upvotePost={upvotePost}
                 downvotePost={downvotePost}
                 post={post}
-                key={post._id}
+                key={post.node._id}
             />
-        );
-    });
+    )});
 
     return (
         <>

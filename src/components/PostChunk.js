@@ -1,5 +1,6 @@
-import React from "react";
-
+import React, {useState} from "react";
+import { COMMENT_CREATE } from "../graphql/Mutations";
+import { useMutation } from "@apollo/client";
 import { makeStyles } from "@material-ui/core/styles";
 
 import IconButton from "@material-ui/core/IconButton";
@@ -10,6 +11,8 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import ShareIcon from "@material-ui/icons/Share";
 
 import ReactHtmlParser from "react-html-parser";
+
+
 
 import {
     DiscussionBoxSection,
@@ -36,6 +39,9 @@ import {
     Share,
 } from "./PostChunk.styles";
 
+
+
+
 const useStyles = makeStyles((theme) => ({
     root: {
         "& > *": {
@@ -46,6 +52,10 @@ const useStyles = makeStyles((theme) => ({
 
 function PostChunk(props) {
     const classes = useStyles();
+    const [body, setBody] = useState("");
+
+    const [commentCreate] = useMutation(COMMENT_CREATE);
+
 
     return (
         <>
@@ -133,6 +143,27 @@ function PostChunk(props) {
                             </IconButton>
                         </Share>
                     </BottomComponent>
+                    <input
+                        type="text"
+                        name="body"
+                        placeholder="Comment"
+                        onChange={(e) => setBody(e.target.value)}
+                    />
+                    <Save
+                        onClick={(e) => {
+                            e.preventDefault();
+                            commentCreate({
+                                variables: {
+                                    body: body,
+                                    creator: props.userInfo.netID,
+                                    post: props.post.node._id,
+                                    depth: 0
+                                },
+                            });
+                        }}
+                    >
+                        Comment
+                    </Save>
                 </DiscussionBox>
             </DiscussionBoxSection>
         </>
