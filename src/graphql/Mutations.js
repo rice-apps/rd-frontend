@@ -6,12 +6,13 @@ const POST_CREATE = gql`
         $title: String!
         $body: String!
         $creator: String!
-        $deadline: String
-        $start: String
-        $end: String
+        $deadline: Date
+        $start: Date
+        $end: Date
         $place: String
         $isPaid: Boolean
         $isClosed: Boolean
+        $tags: [String]
     ) {
         postCreateOne(
             record: {
@@ -25,6 +26,7 @@ const POST_CREATE = gql`
                 place: $place
                 isPaid: $isPaid
                 isClosed: $isClosed
+                tags: $tags
             }
         ) {
             record {
@@ -49,6 +51,9 @@ const LOGIN = gql`
             isNewUser
             token
             __typename
+            savedPosts {
+                _id
+            }
         }
     }
 `;
@@ -73,6 +78,20 @@ const DOWNVOTE_POST = gql`
                 netID
             }
             _id
+        }
+    }
+`;
+
+const SAVE_POST = gql`
+    mutation SavePost($netID: String!, $savedPosts: [MongoID]) {
+        userUpdateOne(
+            record: { savedPosts: $savedPosts }
+            filter: { netID: $netID }
+        ) {
+            record {
+                netID
+                _id
+            }
         }
     }
 `;
@@ -108,6 +127,7 @@ const SET_INFO = gql`
     }
 `;
 
+<<<<<<< HEAD
 const COMMENT_CREATE = gql`
     mutation CreateComment(
         $body: String!
@@ -136,3 +156,6 @@ const COMMENT_CREATE = gql`
 `;
 
 export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST, COMMENT_CREATE };
+=======
+export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST, SAVE_POST };
+>>>>>>> ee055456ccaec88095ad188bff4111cf9aa184c8

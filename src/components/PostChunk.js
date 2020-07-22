@@ -23,9 +23,7 @@ import {
     Downvote,
     TopComponent,
     DiscussionTitle,
-    TagOne,
-    TagTwo,
-    TagThree,
+    Tags,
     MiddleComponent,
     DiscussionBody,
     BottomComponent,
@@ -102,9 +100,7 @@ function PostChunk(props) {
                         <DiscussionTitle>
                             {props.post.node.title}
                         </DiscussionTitle>
-                        <TagOne>Tag 1</TagOne>
-                        <TagTwo>Tag 2</TagTwo>
-                        <TagThree>Tag 3</TagThree>
+                        <Tags>Tags</Tags>
                     </TopComponent>
 
                     <MiddleComponent>
@@ -114,7 +110,22 @@ function PostChunk(props) {
                     </MiddleComponent>
 
                     <BottomComponent>
-                        <Save>Save</Save>
+                        <Save
+                            onClick={(e) => {
+                                e.preventDefault();
+                                props.savePost({
+                                    variables: {
+                                        netID: props.userInfo.netID,
+                                        savedPosts: [
+                                            ...props.userInfo.savedPosts,
+                                            props.post.node._id,
+                                        ],
+                                    },
+                                });
+                            }}
+                        >
+                            Save
+                        </Save>
                         <AddTo>+ Add to...</AddTo>
                         <OP>{props.post.node.creator.username}</OP>
                         <Time>

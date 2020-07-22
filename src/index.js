@@ -7,6 +7,7 @@ import client from "./utils/apollo";
 
 import App from "./App";
 import GlobalStyle from "./index.styles";
+import "react-datepicker/dist/react-datepicker.css";
 
 import * as serviceWorker from "./serviceWorker";
 

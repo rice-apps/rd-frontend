@@ -3,9 +3,9 @@ import React, { useEffect } from "react";
 import { useMutation } from "@apollo/client";
 
 import PostChunk from "./PostChunk";
-import { Banner } from "./PostFeed.styles";
 import { TOKEN_NAME } from "../utils/config";
-import { UPVOTE_POST, DOWNVOTE_POST } from "../graphql/Mutations";
+import { UPVOTE_POST, DOWNVOTE_POST, SAVE_POST } from "../graphql/Mutations";
+import uuid from "uuid/v4";
 
 function PostFeed(props) {
     const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));
@@ -14,6 +14,10 @@ function PostFeed(props) {
 
     const [downvotePost] = useMutation(DOWNVOTE_POST);
 
+<<<<<<< HEAD
+=======
+    const [savePost] = useMutation(SAVE_POST);
+>>>>>>> ee055456ccaec88095ad188bff4111cf9aa184c8
 
     const {
         onLoadMore,
@@ -49,6 +53,7 @@ function PostFeed(props) {
                 userInfo={userInfo}
                 upvotePost={upvotePost}
                 downvotePost={downvotePost}
+                savePost={savePost}
                 post={post}
                 key={post.node._id}
             />
@@ -56,12 +61,12 @@ function PostFeed(props) {
 
     return (
         <>
-            <Banner />
+            {/* <Banner /> */}
             <InfiniteScroll
                 pageStart={0}
                 loadMore={() => onLoadMore()}
                 hasMore={hasNextPage}
-                loader={<div>Loading...</div>}
+                loader={<div key={uuid()}>Loading...</div>}
             >
                 {posts}
             </InfiniteScroll>

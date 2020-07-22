@@ -31,8 +31,8 @@ const PinkShape = styled.div`
 
 const LaptopGirl = styled.img`
     position: relative;
-    top: -0.5vh;
-    left: 6vw;
+    top: -6%;
+    left: 14%;
 
     width: 40%;
     height: 18vw;
@@ -114,8 +114,8 @@ const DDHeader = styled.div`
     cursor: default;
     cursor: pointer;
     border-radius: 20px;
-    margin-left: 14px;
-    width: 11vw;
+    margin-left: 12px;
+    width: 16vw;
     height: 5vh;
 `;
 
@@ -126,9 +126,10 @@ const DDHeaderTitle = styled.div`
 `;
 
 const DDList = styled.ul`
-    position: relative;
+    position: absolute;
     z-index: 10;
     overflow-y: scroll;
+    overflow-x: auto;
     width: 100%;
     max-height: 215px;
     border: 1px solid rgb(223, 223, 223);
@@ -143,14 +144,12 @@ const DDList = styled.ul`
 `;
 
 const DDListItem = styled.li`
-    display: inline-block;
-    overflow: hidden;
+    display: inline;
     width: 100%;
     font-size: 0.8rem;
     line-height: 1.4rem;
     white-space: nowrap;
     text-overflow: ellipsis;
-    cursor: default;
     cursor: pointer;
 `;
 
