@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 
+import UploadToPost from './UploadToPost'
+
 import { useMutation } from "@apollo/client";
 
 import { POST_CREATE } from "../graphql/Mutations";
@@ -70,6 +72,7 @@ function WritePost() {
                         <TitleDescriptor>Title</TitleDescriptor>
                         <TitleBox id="title" contentEditable={true} />
                     </TitleWrapper>
+                    <UploadToPost></UploadToPost>
                     <BodyWrapper>
                         <TitleDescriptor>Body</TitleDescriptor>
                         <BodyBox id="body" contentEditable={true} />

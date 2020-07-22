@@ -77,6 +77,7 @@ function UploadToPost(props) {
 
     return (
         <div>
+            <p>The Image Upload Section</p>
             <input name="name" onChange={onChange} value={name} />
             <Dropzone onDrop={onDrop}>
                 <p>
