@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/client";
 
 import PostChunk from "./PostChunk";
 import { TOKEN_NAME } from "../utils/config";
-import { UPVOTE_POST, DOWNVOTE_POST } from "../graphql/Mutations";
+import { UPVOTE_POST, DOWNVOTE_POST, SAVE_POST } from "../graphql/Mutations";
 import uuid from "uuid/v4";
 
 function PostFeed(props) {
@@ -13,6 +13,8 @@ function PostFeed(props) {
     const [upvotePost] = useMutation(UPVOTE_POST);
 
     const [downvotePost] = useMutation(DOWNVOTE_POST);
+
+    const [savePost] = useMutation(SAVE_POST);
 
     const {
         onLoadMore,
@@ -46,6 +48,7 @@ function PostFeed(props) {
                 userInfo={userInfo}
                 upvotePost={upvotePost}
                 downvotePost={downvotePost}
+                savePost={savePost}
                 post={post}
                 key={post.node._id}
             />
