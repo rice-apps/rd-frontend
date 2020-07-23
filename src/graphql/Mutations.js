@@ -127,4 +127,22 @@ const SET_INFO = gql`
     }
 `;
 
-export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST, SAVE_POST };
+
+const CreateDisplayMutation = gql`
+    mutation($name: String!, $pictureUrl: String!) {
+        createDisplay(name: $name, pictureUrl: $pictureUrl) {
+            id
+        }
+    }
+`;
+
+const s3SignMutation = gql`
+    mutation($filename: String!, $filetype: String!) {
+        signS3(filename: $filename, filetype: $filetype) {
+            url
+            signedRequest
+        }
+    }
+`;
+
+export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST, SAVE_POST , s3SignMutation, CreateDisplayMutation};

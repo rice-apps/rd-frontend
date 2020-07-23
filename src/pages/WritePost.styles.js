@@ -130,6 +130,14 @@ const BodyWrapper = styled.div`
     top: -60px;
 `;
 
+const ImageWrapper = styled.div`
+    background-color: white;
+    width: 50%;
+    height: 50%;
+    border-style: solid;
+    border-color: blue;
+`;
+
 export {
     PostWrapper,
     Button,
@@ -142,4 +150,5 @@ export {
     BodyWrapper,
     PostingButton,
     BodyBox,
+    ImageWrapper,
 };

@@ -22,6 +22,7 @@ import {
     BodyWrapper,
     PostingButton,
     BodyBox,
+    ImageWrapper
 } from "./WritePost.styles";
 
 function WritePost() {
@@ -72,11 +73,14 @@ function WritePost() {
                         <TitleDescriptor>Title</TitleDescriptor>
                         <TitleBox id="title" contentEditable={true} />
                     </TitleWrapper>
-                    <UploadToPost></UploadToPost>
                     <BodyWrapper>
                         <TitleDescriptor>Body</TitleDescriptor>
                         <BodyBox id="body" contentEditable={true} />
                     </BodyWrapper>
+                    <ImageWrapper>
+                        image area
+                        <UploadToPost>drop file</UploadToPost>
+                    </ImageWrapper>
                     <PostingButton
                         onClick={(e) => {
                             e.preventDefault();
