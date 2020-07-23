@@ -43,6 +43,7 @@
     },
     "devDependencies": {
         "@types/react": "^16.9.36",
+        "@types/uuid": "^8.0.0",
         "cross-fetch": "^3.0.5",
         "graphql-tag.macro": "^2.0.1",
         "typescript": "^3.9.5"
