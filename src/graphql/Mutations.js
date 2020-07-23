@@ -128,9 +128,9 @@ const SET_INFO = gql`
 `;
 
 
-const CreateDisplayMutation = gql`
+const DisplayImageMutation = gql`
     mutation($name: String!, $pictureUrl: String!) {
-        createDisplay(name: $name, pictureUrl: $pictureUrl) {
+        displayImage(name: $name, pictureUrl: $pictureUrl) {
             id
         }
     }
@@ -145,4 +145,4 @@ const s3SignMutation = gql`
     }
 `;
 
-export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST, SAVE_POST , s3SignMutation, CreateDisplayMutation};
+export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST, SAVE_POST , s3SignMutation, DisplayImageMutation};

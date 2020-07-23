@@ -6,17 +6,18 @@ import {flowRight as compose} from 'lodash';
 import { useHistory } from "react-router-dom";
 import {gql, useMutation} from '@apollo/client'
 
-import {s3SignMutation, CreateDisplayMutation} from '../graphql/Mutations'
+import {s3SignMutation, DisplayImageMutation} from '../graphql/Mutations'
 
 function UploadToPost(props) {
-    const history = useHistory();
+    // const history = useHistory();
 
-    const [name, setName] = useState("");
     const [file, setFile] = useState(null);
     const [url, setUrl] = useState("");
 
+    const sendData = (url) => props.parentUrlCallback(url);
+
     const [s3Sign, { data: s3Data }] = useMutation(s3SignMutation);
-    const [createDisplay, { data: displayData }] = useMutation(CreateDisplayMutation);
+    const [createDisplay, { data: displayData }] = useMutation(DisplayImageMutation);
     // first one to execute
     // second one (data) to __
     // also available: loading and error states
@@ -62,8 +63,8 @@ function UploadToPost(props) {
         return newFilename.substring(0, 60);
     };
     
-    const submit = async () => {
-        const response = await s3Sign({
+    const submit = () => {
+        const response = s3Sign({
             variables: {
                 filename: formatFilename(file.name),
                 filetype: file.type
@@ -71,11 +72,13 @@ function UploadToPost(props) {
         });
     
         const { signedRequest, url } = response.data.signS3; 
-        await uploadToS3(file, signedRequest);
+        console.log(signedRequest);
+        console.log(url);
+        uploadToS3(file, signedRequest);
 
         //return url; // to parent
-        console.log(url);
-        const sendData = () => props.parentUrlCallback(url);
+        // console.log(url);
+        sendData(url);
 
     
         // const graphqlResponse = await createDisplay({
@@ -132,25 +135,7 @@ function UploadToPost(props) {
 //upload button
 
 
-
-// const CreateDisplayMutation = gql`
-//     mutation($name: String!, $pictureUrl: String!) {
-//         createDisplay(name: $name, pictureUrl: $pictureUrl) {
-//             id
-//         }
-//     }
-// `;
-
-// const s3SignMutation = gql`
-//     mutation($filename: String!, $filetype: String!) {
-//         signS3(filename: $filename, filetype: $filetype) {
-//             url
-//             signedRequest
-//         }
-//     }
-// `;
-
 export default compose(
-    graphql(CreateDisplayMutation, { name: "createDisplay" }),
+    graphql(DisplayImageMutation, { name: "createDisplay" }),
     graphql(s3SignMutation, { name: "s3Sign" })
 )(UploadToPost);
