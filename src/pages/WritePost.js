@@ -22,10 +22,21 @@ import {
     BodyWrapper,
     PostingButton,
     BodyBox,
-    ImageWrapper
+    ImageWrapper,
+    ImageBox
 } from "./WritePost.styles";
 
 function WritePost() {
+    const [url, setUrl] = useState("");
+
+    const callbackURL = (childData) => {
+        setUrl(childData)
+    }
+
+
+
+
+
     useEffect(() => {
         console.log("event happened");
     });
@@ -78,8 +89,11 @@ function WritePost() {
                         <BodyBox id="body" contentEditable={true} />
                     </BodyWrapper>
                     <ImageWrapper>
-                        image area
-                        <UploadToPost>drop file</UploadToPost>
+                        <TitleDescriptor>Images</TitleDescriptor>
+                        <ImageBox id="image">
+                            <UploadToPost parentUrlCallback = {callbackURL}>drop file</UploadToPost>
+                        </ImageBox>
+                        
                     </ImageWrapper>
                     <PostingButton
                         onClick={(e) => {

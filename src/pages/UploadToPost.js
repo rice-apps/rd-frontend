@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import Dropzone from "react-dropzone";
 import moment from "moment";
-// import { graphql } from "react-apollo"; //deprecated??
-import { graphql } from '@apollo/react-hoc'
-// import gql from "graphql-tag.macro"; //??
+import { graphql } from '@apollo/client/react/hoc'
 import {flowRight as compose} from 'lodash';
 import { useHistory } from "react-router-dom";
 import {gql, useMutation} from '@apollo/client'
@@ -29,23 +27,13 @@ function UploadToPost(props) {
 
     const onDrop2 = event => {
         console.log("DROP event logging");
-        console.log(event);
-        console.log(event.target);
 
-        const etf = event.target.files;
-        console.log(etf);
-        setFile(etf[0]); // chooses first file, would need to modify (and check aws) to drop multiple at once
-    };
-    
-    const onChange = e => {
-        //CHECK
-        // this.setState({
-        //     [e.target.name]: e.target.value
-        // });
-
-        console.log(e.target.name);
-        console.log(e.target.value);
-        setName(e.target.value); //no longer a dynamic key name? not sure what the purpose was
+        const fileList = event.target.files;
+        // console.log(etf); //file list
+        console.log(fileList[0]); //the file itself
+        // console.log(etf[0].name); //filename on my computer
+        // const fileName = fileList[0].name;
+        setFile(fileList[0]); // chooses first file, would need to modify (and check aws) to drop multiple at once
     };
 
     const uploadToS3 = async (file, signedRequest) => {
@@ -85,7 +73,10 @@ function UploadToPost(props) {
         const { signedRequest, url } = response.data.signS3; 
         await uploadToS3(file, signedRequest);
 
-        return url; // to parent
+        //return url; // to parent
+        console.log(url);
+        const sendData = () => props.parentUrlCallback(url);
+
     
         // const graphqlResponse = await createDisplay({
         //     variables: {
@@ -124,9 +115,13 @@ function UploadToPost(props) {
         //     <button onClick={submit}>Submit</button>
         // </div>
         <div>
-            <p>The Image Upload Section</p>
-            <input name="name" onChange={onChange} value={name} />
-            <input type="file" onChange={onDrop2} value={file} />
+            {/* <p>The Image Upload Section</p> */}
+            {/* <input type="file" onChange={onDrop2} value={file} /> */}
+            <label for="img">Choose an image: </label>
+            <input type="file"
+                onChange={onDrop2}
+                id="img" name="imgFile"
+                accept="image/*"></input>
             <button onClick={submit}>Submit</button>
         </div>
     )

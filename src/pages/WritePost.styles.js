@@ -131,11 +131,15 @@ const BodyWrapper = styled.div`
 `;
 
 const ImageWrapper = styled.div`
-    background-color: white;
-    width: 50%;
-    height: 50%;
-    border-style: solid;
-    border-color: blue;
+    position: relative;
+    top: -90px;
+`;
+
+const ImageBox = styled.div`
+    border: solid;
+    position: relative;
+    height: 10vh;
+    padding: 10px;
 `;
 
 export {
@@ -151,4 +155,5 @@ export {
     PostingButton,
     BodyBox,
     ImageWrapper,
+    ImageBox,
 };
