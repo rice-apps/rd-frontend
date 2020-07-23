@@ -45,6 +45,8 @@ const useStyles = makeStyles((theme) => ({
 function PostChunk(props) {
     const classes = useStyles();
 
+    console.log(props.userInfo.savedPosts)
+
     return (
         <>
             <DiscussionBoxSection>
