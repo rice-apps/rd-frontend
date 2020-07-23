@@ -21,6 +21,7 @@ function UploadToPost(props) {
         // this.setState({
         //     [e.target.name]: e.target.value
         // });
+
         console.log(e.target.name);
         console.log(e.target.value);
         setName(e.target.value); //no longer a dynamic key name? not sure what the purpose was
@@ -71,7 +72,7 @@ function UploadToPost(props) {
         });
     
         history.push(
-          `/champion/${graphqlResponse.data.createChampion.id}` //changes routes with new data
+          `/theimage/${graphqlResponse.data.createChampion.id}` //changes routes with new data
         );
     };
 
@@ -84,10 +85,15 @@ function UploadToPost(props) {
                     Try dropping some files here, or click to select files to upload.
                 </p>
             </Dropzone>
+            {/* <input type="file" onChange={onDrop} value={name} /> */}
             <button onClick={submit}>Submit</button>
         </div>
     )
 }
+
+// use mutation
+
+//upload button
 
 const CreateChampionMutation = gql`
     mutation($name: String!, $pictureUrl: String!) {
