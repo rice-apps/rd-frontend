@@ -103,11 +103,15 @@ function PostChunk(props) {
                         <Save
                             onClick={(e) => {
                                 e.preventDefault();
+
+                                const currentSavedPosts = props.userInfo.savedPosts.map(
+                                    (tup) => tup._id,
+                                );
                                 props.savePost({
                                     variables: {
                                         netID: props.userInfo.netID,
                                         savedPosts: [
-                                            ...props.userInfo.savedPosts,
+                                            ...currentSavedPosts,
                                             props.post.node._id,
                                         ],
                                     },

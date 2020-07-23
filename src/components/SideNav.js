@@ -22,7 +22,6 @@ export const SideNav = () => {
     return (
         <NavList>
             {pages.map((page, i) => {
-                console.log(pages[page]);
                 return (
                     <NavElement
                         first={i === 0 ? true : false}
