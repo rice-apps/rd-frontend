@@ -61,24 +61,23 @@ const MoreInfo = () => {
         [],
     );
 
-    // push probably works here as well since we're only pushing one new value
-    const handleMajorChange = useCallback((newValue) => {
+    const handleMajorChange = (newValue) => {
         const index_of_major = major.indexOf(newValue);
         setMajor(
             index_of_major >= 0
                 ? major.filter((maj) => newValue !== maj)
                 : [...major, newValue],
         );
-    }, []);
+    };
 
-    const handleMinorChange = useCallback((newValue) => {
+    const handleMinorChange = (newValue) => {
         const index_of_minor = minor.indexOf(newValue);
         setMinor(
             index_of_minor >= 0
                 ? minor.filter((maj) => newValue !== maj)
                 : [...minor, newValue],
         );
-    }, []);
+    };
 
     const handleCollegeChange = useCallback((newValue) => {
         const index_of_college = college.indexOf(newValue);
@@ -101,6 +100,10 @@ const MoreInfo = () => {
         setMinorOpen(false);
     };
 
+    // if (!localStorage.getItem(TOKEN_NAME)) {
+    //     return <Redirect to="/login" />;
+    // }
+    
     if (!data?.isNewUser) {
         console.log("Redirecting....");
         return <Redirect to={"/feed"} />;

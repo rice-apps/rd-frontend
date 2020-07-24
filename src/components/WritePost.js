@@ -20,9 +20,11 @@ import {
     BodyWrapper,
     PostingButton,
     BodyBox,
+    ExitButton,
+    TitleFlex
 } from "./WritePost.styles";
 
-function WritePost() {
+function WritePost(props) {
     useEffect(() => console.log("event happened"));
 
     const history = useHistory();
@@ -31,18 +33,15 @@ function WritePost() {
     const [startDate, setStart] = useState(new Date().getTime());
     const [endDate, setEnd] = useState(new Date().getTime());
     const [place, setPlace] = useState("");
-<<<<<<< HEAD
-    const [isPaid, setPaid] = useState(false);
-    const [isClosed, setClosed] = useState(false);
-    const [tags, setTags] = useState([]);
-    const [deadline, setDeadline] = useState(new Date().getTime());
-=======
     const [, setPaid] = useState(false);
     const [, setClosed] = useState(false);
->>>>>>> eae41ff29bde79405e52b465d34d8a9f84b19269
     const [postType, setPostType] = useState("Discussion");
 
-    const [postCreate] = useMutation(POST_CREATE);
+    const [postCreate, {error}] = useMutation(POST_CREATE);
+
+    if(!props.show){
+        return null;
+    }
 
     if (!localStorage.getItem(TOKEN_NAME)) {
         return <Redirect to="/login" />;
@@ -67,6 +66,12 @@ function WritePost() {
     const changeEndDate = (date) => setEnd(date);
     const changePostType = (e) => setPostType(e.target.id);
 
+    const closeModal = () => {
+        props.switchVisibility(false);
+    }
+
+    const checkTitleAndBody = (title, body) => title.length <= 0 || body.length <= 0;
+
     switch (postType) {
         case "Discussion":
             form = (
@@ -82,17 +87,25 @@ function WritePost() {
                     <PostingButton
                         onClick={(e) => {
                             e.preventDefault();
+                            const title = document.getElementById("title")
+                                        .innerHTML;
+                            const body = document.getElementById("body")
+                                    .innerHTML;
+                            if (checkTitleAndBody(title, body)) return;
+                            try{
                             postCreate({
                                 variables: {
                                     kind: postType,
-                                    title: document.getElementById("title")
-                                        .innerHTML,
-                                    body: document.getElementById("body")
-                                        .innerHTML,
+                                    title: title,
+                                    body: body,
                                     creator: userInfo.netID,
                                 },
                             });
+                            props.switchVisibility(false);
                             history.push("/feed");
+                        }catch(error){
+                            console.log("error", error);
+                        }
                         }}
                     >
                         Post
@@ -127,21 +140,28 @@ function WritePost() {
                     <PostingButton
                         onClick={(e) => {
                             e.preventDefault();
+                            try{
+                            const title = document.getElementById("title")
+                                        .innerHTML;
+                            const body = document.getElementById("body")
+                                    .innerHTML;
+                            if (checkTitleAndBody(title, body)) return;
                             postCreate({
                                 variables: {
                                     kind: postType,
-                                    title: document.getElementById("title")
-                                        .innerHTML,
-                                    body: document.getElementById("body")
-                                        .innerHTML,
+                                    title: title,
+                                    body: body,
                                     creator: userInfo.netID,
                                     start: startDate,
                                     end: endDate,
                                     place: place,
                                 },
                             });
-
+                            props.switchVisibility(false);
                             history.push("/feed");
+                        }catch(error){
+                            console.log("error",error);
+                        }
                         }}
                     >
                         Post
@@ -193,22 +213,31 @@ function WritePost() {
                         <PostingButton
                             onClick={(e) => {
                                 e.preventDefault();
-                                postCreate({
-                                    variables: {
-                                        kind: postType,
-                                        title: document.getElementById("title")
-                                            .innerHTML,
-                                        body: document.getElementById("body")
-                                            .innerHTML,
-                                        creator: userInfo.netID,
-                                        start: startDate,
-                                        end: endDate,
-                                        place: place,
-                                        isPaid: true,
-                                        isClosed: true,
-                                    },
-                                });
+                                try{
+                                    const title = document.getElementById("title")
+                                                .innerHTML;
+                                    const body = document.getElementById("body")
+                                            .innerHTML;
+                                    if (checkTitleAndBody(title, body)) return;
+                                    postCreate({
+                                        variables: {
+                                            kind: postType,
+                                            title: title,
+                                            body: body,
+                                            creator: userInfo.netID,
+                                            start: startDate,
+                                            end: endDate,
+                                            place: place,
+                                            isPaid: true,
+                                            isClosed: true,
+                                        },
+                                    });
+                                props.switchVisibility(false);
                                 history.push("/feed");
+                                }
+                                catch (error){
+                                    console.log("error",error);
+                                }   
                             }}
                         >
                             Post
@@ -237,19 +266,28 @@ function WritePost() {
                     <PostingButton
                         onClick={(e) => {
                             e.preventDefault();
+                            try{
+                            const title = document.getElementById("title")
+                                        .innerHTML;
+                            const body = document.getElementById("body")
+                                    .innerHTML;
+                            if (checkTitleAndBody(title, body)) return;
                             postCreate({
                                 variables: {
                                     kind: postType,
-                                    title: document.getElementById("title")
-                                        .innerHTML,
-                                    body: document.getElementById("body")
-                                        .innerHTML,
+                                    title: title,
+                                    body: body,
                                     creator: userInfo.netID,
                                     deadline: endDate,
                                 },
                             });
+                            props.switchVisibility(false);
                             history.push("/feed");
+                            }catch(error){
+                                console.log("error",error);
+                            }   
                         }}
+                        
                     >
                         Post
                     </PostingButton>
@@ -262,7 +300,7 @@ function WritePost() {
     }
 
     return (
-        <>
+        <div>
             <Helmet>
                 <title>RiceDiscuss &middot; Compose post</title>
             </Helmet>
@@ -281,10 +319,13 @@ function WritePost() {
                 </Button>
             </ButtonWrapper>
             <PostWrapper>
-                <PostHeaderType>{postType}</PostHeaderType>
+                <TitleFlex>
+                    <PostHeaderType>{postType}</PostHeaderType>
+                    <ExitButton onClick = {closeModal}>X</ExitButton>
+                </TitleFlex>
                 {form}
             </PostWrapper>
-        </>
+        </div>
     );
 }
 
