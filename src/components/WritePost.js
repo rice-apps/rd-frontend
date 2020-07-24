@@ -175,7 +175,7 @@ function WritePost(props) {
                     <Form>
                         <TitleWrapper>
                             <TitleDescriptor>Title</TitleDescriptor>
-                            <TitleBox id="body" contentEditable={true} />
+                            <TitleBox id="title" contentEditable={true} />
                         </TitleWrapper>
                         <BodyWrapper>
                             <TitleDescriptor>Body</TitleDescriptor>
@@ -232,8 +232,9 @@ function WritePost(props) {
                                             isClosed: true,
                                         },
                                     });
-                                props.switchVisibility(false);
-                                history.push("/feed");
+                                    console.log("Submitted and push!")
+                                    props.switchVisibility(false);
+                                    history.push("/feed");
                                 }
                                 catch (error){
                                     console.log("error",error);
