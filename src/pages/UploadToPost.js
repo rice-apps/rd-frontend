@@ -12,7 +12,7 @@ function UploadToPost(props) {
     // const history = useHistory();
 
     const [file, setFile] = useState(null);
-    const [url, setUrl] = useState("");
+    // const [url, setUrl] = useState("");
 
     const sendData = (url) => props.parentUrlCallback(url);
 
@@ -81,12 +81,15 @@ function UploadToPost(props) {
         sendData(url);
 
     
-        // const graphqlResponse = await createDisplay({
+        // const graphqlResponse = createDisplay({
         //     variables: {
-        //         name,
         //         pictureUrl: url
         //     }
         // });
+
+        
+
+
     
         // history.push(
         //   `/theimage/${graphqlResponse.data.createDisplay.id}` //changes routes with new data
