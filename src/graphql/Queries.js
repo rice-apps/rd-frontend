@@ -57,4 +57,24 @@ const POST_PAGE = gql`
     }
 `;
 
-export { POST_PAGE };
+
+const GET_USER_DATA = gql`
+    query GetData($netID: String!) {
+        userOne(filter: {netID: $netID}) {
+            username
+            major
+            minor
+            college
+        }
+    }
+`;
+
+const USER_EXISTS = gql`
+    query GetData($username: String!) {
+        doesUsernameExist(username: $username) {
+            usernameExists
+        }
+    }
+`;
+
+export { POST_PAGE,  GET_USER_DATA, USER_EXISTS};
