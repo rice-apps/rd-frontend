@@ -9,7 +9,8 @@ function Home() {
             <Helmet>
                 <title>RiceDiscuss &middot; Home</title>
             </Helmet>
-            <PostLink to="/post">Write a post</PostLink>
+            {/* WritePost migrated to feed */}
+            {/* <PostLink to="/post">Write a post</PostLink> */}
             <PostLink to="/feed">Go to feed</PostLink>
         </>
     );

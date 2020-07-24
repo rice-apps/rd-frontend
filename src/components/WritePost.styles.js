@@ -1,5 +1,19 @@
 import styled from "styled-components";
 
+const TitleFlex = styled.div`
+    display: flex;
+    width: inherit;
+    justify-content: space-between;
+`;
+
+const ExitButton = styled.div`
+    align-self: end;
+    cursor: pointer;
+    &:hover {
+        background-color: red;
+    }
+`;
+
 const PostWrapper = styled.div`
     position: absolute;
     left: 50%;
@@ -17,9 +31,9 @@ const PostWrapper = styled.div`
 `;
 
 const Button = styled.button`
-    background-color: #4caf50; /* Green */
+    background-color: lightpink; /* Green */
     border: none;
-    color: white;
+    color: black;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -27,28 +41,30 @@ const Button = styled.button`
     font-size: 16px;
     z-index: 5;
     margin: 5px;
+    cursor: pointer;
 
     &:hover {
-        background-color: rgb(50, 200, 50);
+        background-color: #de4783;
         opacity: 50%;
     }
 `;
 
 const PostingButton = styled.button`
     position: relative;
-    background-color: #4caf50; /* Green */
+    background-color: #fabed6; /* Light pink */
     border: none;
-    color: white;
+    color: black;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    cursor: pointer;
     z-index: 5;
     margin: 5px;
 
     &:hover {
-        background-color: rgb(50, 200, 50);
+        background-color: #de4783;
         opacity: 50%;
     }
 `;
@@ -77,7 +93,7 @@ const PostHeaderType = styled.p`
     text-align: center;
     text-color: blue;
     font-size: 2em;
-    background-color: lightgreen;
+    background-color: #fabed6;
     width: 100%;
 
     font-family: Impact, Charcoal, sans-serif;
@@ -142,4 +158,6 @@ export {
     BodyWrapper,
     PostingButton,
     BodyBox,
+    ExitButton,
+    TitleFlex
 };
