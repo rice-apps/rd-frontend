@@ -61,19 +61,6 @@ function WritePost(props) {
 
     let form = <div>Something went wrong! Please report to riceapps.</div>;
 
-    // const submit = async () => {
-    //     const res = await props.s3Sign({
-    //         variables : {
-    //             filename: formatFilename(file.name),
-    //             filetype: file.type
-    //         }
-    //     });
-
-    //     const {signedRequest, url} = res.data.signS3;
-    //     await uploadToS3(file, signedRequest);
-
-    // }
-
     const changeStartDate = (date) => setStart(date);
     const changeEndDate = (date) => setEnd(date);
     const changePostType = (e) => setPostType(e.target.id);
@@ -99,10 +86,9 @@ function WritePost(props) {
                     <ImageWrapper>
                         <TitleDescriptor>Images</TitleDescriptor>
                         <ImageBox id="image">
-                            <UploadToPost parentUrlCallback = {callbackURL}>drop file</UploadToPost>
-                            <p>{url}</p>
+                            <UploadToPost parentUrlCallback = {callbackURL} />
+                            {/* <p>{url}</p> */}
                         </ImageBox>
-                        
                     </ImageWrapper>
                     <PostingButton
                         onClick={(e) => {
@@ -145,6 +131,12 @@ function WritePost(props) {
                         <TitleDescriptor>Body</TitleDescriptor>
                         <BodyBox id="body" contentEditable={true} />
                     </BodyWrapper>
+                    <ImageWrapper>
+                        <TitleDescriptor>Images</TitleDescriptor>
+                        <ImageBox id="image">
+                            <UploadToPost parentUrlCallback = {callbackURL} />
+                        </ImageBox>
+                    </ImageWrapper>
                     Start Date
                     <DatePicker
                         selected={startDate}
@@ -176,6 +168,7 @@ function WritePost(props) {
                                     start: startDate,
                                     end: endDate,
                                     place: place,
+                                    imageUrl: url
                                 },
                             });
                             props.switchVisibility(false);
@@ -202,6 +195,12 @@ function WritePost(props) {
                             <TitleDescriptor>Body</TitleDescriptor>
                             <BodyBox id="body" contentEditable={true} />
                         </BodyWrapper>
+                        <ImageWrapper>
+                            <TitleDescriptor>Images</TitleDescriptor>
+                            <ImageBox id="image">
+                                <UploadToPost parentUrlCallback = {callbackURL} />
+                            </ImageBox>
+                        </ImageWrapper>
                         <input
                             type="text"
                             name="Place of Job"
@@ -279,6 +278,12 @@ function WritePost(props) {
                         <TitleDescriptor>Body</TitleDescriptor>
                         <BodyBox id="body" contentEditable={true} />
                     </BodyWrapper>
+                    <ImageWrapper>
+                        <TitleDescriptor>Images</TitleDescriptor>
+                        <ImageBox id="image">
+                            <UploadToPost parentUrlCallback = {callbackURL} />
+                        </ImageBox>
+                    </ImageWrapper>
                     Deadline Date
                     <DatePicker
                         selected={endDate}

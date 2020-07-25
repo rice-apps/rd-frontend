@@ -3,26 +3,16 @@ import Dropzone from "react-dropzone";
 import moment from "moment";
 import { useMutation } from '@apollo/client'
 
-import {S3_SIGN } from '../graphql/Mutations'
+import { S3_SIGN } from '../graphql/Mutations'
 
 function UploadToPost(props) {
-    // const history = useHistory();
 
     const [file, setFile] = useState(null);
-    // const [url, setUrl] = useState("");
+    const [ s3Sign ] = useMutation(S3_SIGN);
 
     const sendData = (url) => props.parentUrlCallback(url);
 
-    const [ s3Sign ] = useMutation(S3_SIGN);
-    // first one to execute
-    // second one (data) to __
-    // also available: loading and error states
-
-    // const onDrop = async files => {
-    //     setFile(files[0]); // chooses first file, would need to modify (and check aws) to drop multiple at once
-    // };
-
-    const onDrop2 = event => {
+    const onDrop = event => {
         const fileList = event.target.files;
         // console.log(fileList[0]); //the file itself
         setFile(fileList[0]); // chooses first file, would need to modify (and check aws) to drop multiple at once
@@ -60,16 +50,12 @@ function UploadToPost(props) {
             }
         });
 
-        console.log(response); //works, "pending promise"
-        console.log(response.data);
-        // console.log(s3Data);
+        // console.log(response); //works, "pending promise"
+        // console.log(response.data);
     
         const { signedRequest, url } = response.data.signS3Url; 
-        console.log(signedRequest);
-        console.log(url);
         uploadToS3(file, signedRequest);
-
-        sendData(url);
+        sendData(url); // make accessible to WritePost
     };
 
     return (
@@ -89,22 +75,12 @@ function UploadToPost(props) {
             {/* <input type="file" onChange={onDrop2} value={file} /> */}
             <label for="img">Choose an image: </label>
             <input type="file"
-                onChange={onDrop2}
+                onChange={onDrop}
                 id="img" name="imgFile"
                 accept="image/*"></input>
-            <button onClick={e => submit(e)}>Submit</button>
+            <button onClick={e => submit(e)}>Confirm Image</button>
         </div>
     )
 }
-
-// use mutation
-
-//upload button
-
-
-// export default compose(
-//     graphql(DisplayImageMutation, { name: "createDisplay" }),
-//     graphql(s3SignMutation, { name: "s3Sign" })
-// )(UploadToPost);
 
 export default UploadToPost;
