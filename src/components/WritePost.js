@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 
-import UploadToPost from '../pages/UploadToPost'
+import UploadToPost from './UploadToPost'
 
 import { useMutation } from "@apollo/client";
 

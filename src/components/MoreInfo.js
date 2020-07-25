@@ -5,7 +5,7 @@ import { TOKEN_NAME } from "../utils/config";
 import { SET_INFO } from "../graphql/Mutations";
 import laptop_girl from "../images/Page 2.svg";
 import major_minor_json from "../utils/MajorMinor.json";
-import DropDownItem from "../components/DropDownItem.js";
+import DropDownItem from "./DropDownItem.js";
 import {
     FullGrid,
     PinkShape,

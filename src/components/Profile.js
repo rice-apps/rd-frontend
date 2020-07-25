@@ -4,7 +4,7 @@ import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { SET_INFO } from "../graphql/Mutations";
 import { GET_USER_DATA } from "../graphql/Queries";
 import { TOKEN_NAME } from "../utils/config";
-import DropDownItem from "../components/DropDownItem.js";
+import DropDownItem from "./DropDownItem.js";
 import major_minor_json from "../utils/MajorMinor.json";
 import {
     DDWrapper,
@@ -20,7 +20,7 @@ import {
     TitleWrapper,
     TitleBox,
     PostingButton,
-} from "../components/WritePost.styles";
+} from "./WritePost.styles";
 
 const ProfilePage  = () => {
     const [username, setUsername] = useState("");
