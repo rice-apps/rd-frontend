@@ -25,7 +25,7 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "format": "npx prettier --write \"src/**/*.{js,html,css,scss,json}\"",
+        "format": "prettier --write .",
         "intro": "node src/utils/introspection.js"
     },
     "eslintConfig": {
@@ -50,6 +50,7 @@
         "@types/uuid": "^8.0.0",
         "cross-fetch": "^3.0.5",
         "graphql-tag.macro": "^2.0.1",
+        "prettier": "2.0.5",
         "typescript": "^3.9.5"
     }
 }
