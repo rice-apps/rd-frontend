@@ -146,6 +146,18 @@ const BodyWrapper = styled.div`
     top: -60px;
 `;
 
+const ImageWrapper = styled.div`
+    position: relative;
+    top: -90px;
+`;
+
+const ImageBox = styled.div`
+    border: solid;
+    position: relative;
+    height: 10vh;
+    padding: 10px;
+`;
+
 export {
     PostWrapper,
     Button,
@@ -158,6 +170,8 @@ export {
     BodyWrapper,
     PostingButton,
     BodyBox,
+    ImageWrapper,
+    ImageBox,
     ExitButton,
     TitleFlex
 };

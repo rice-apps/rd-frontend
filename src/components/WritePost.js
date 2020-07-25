@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 
+import UploadToPost from './UploadToPost'
+
 import { useMutation } from "@apollo/client";
 
 import { POST_CREATE } from "../graphql/Mutations";
@@ -20,12 +22,22 @@ import {
     BodyWrapper,
     PostingButton,
     BodyBox,
+    ImageWrapper,
+    ImageBox,
     ExitButton,
     TitleFlex
 } from "./WritePost.styles";
 
 function WritePost(props) {
-    useEffect(() => console.log("event happened"));
+    const [url, setUrl] = useState("");
+
+    const callbackURL = (childData) => {
+        setUrl(childData)
+    }
+
+    useEffect(() => {
+        console.log("event happened");
+    });
 
     const history = useHistory();
 
@@ -49,19 +61,6 @@ function WritePost(props) {
 
     let form = <div>Something went wrong! Please report to riceapps.</div>;
 
-    // const submit = async () => {
-    //     const res = await props.s3Sign({
-    //         variables : {
-    //             filename: formatFilename(file.name),
-    //             filetype: file.type
-    //         }
-    //     });
-
-    //     const {signedRequest, url} = res.data.signS3;
-    //     await uploadToS3(file, signedRequest);
-
-    // }
-
     const changeStartDate = (date) => setStart(date);
     const changeEndDate = (date) => setEnd(date);
     const changePostType = (e) => setPostType(e.target.id);
@@ -84,6 +83,13 @@ function WritePost(props) {
                         <TitleDescriptor>Body</TitleDescriptor>
                         <BodyBox id="body" contentEditable={true} />
                     </BodyWrapper>
+                    <ImageWrapper>
+                        <TitleDescriptor>Images</TitleDescriptor>
+                        <ImageBox id="image">
+                            <UploadToPost parentUrlCallback = {callbackURL} />
+                            {/* <p>{url}</p> */}
+                        </ImageBox>
+                    </ImageWrapper>
                     <PostingButton
                         onClick={(e) => {
                             e.preventDefault();
@@ -99,6 +105,7 @@ function WritePost(props) {
                                     title: title,
                                     body: body,
                                     creator: userInfo.netID,
+                                    imageUrl: url,
                                 },
                             });
                             props.switchVisibility(false);
@@ -124,6 +131,12 @@ function WritePost(props) {
                         <TitleDescriptor>Body</TitleDescriptor>
                         <BodyBox id="body" contentEditable={true} />
                     </BodyWrapper>
+                    <ImageWrapper>
+                        <TitleDescriptor>Images</TitleDescriptor>
+                        <ImageBox id="image">
+                            <UploadToPost parentUrlCallback = {callbackURL} />
+                        </ImageBox>
+                    </ImageWrapper>
                     Start Date
                     <DatePicker
                         selected={startDate}
@@ -155,6 +168,7 @@ function WritePost(props) {
                                     start: startDate,
                                     end: endDate,
                                     place: place,
+                                    imageUrl: url
                                 },
                             });
                             props.switchVisibility(false);
@@ -181,6 +195,12 @@ function WritePost(props) {
                             <TitleDescriptor>Body</TitleDescriptor>
                             <BodyBox id="body" contentEditable={true} />
                         </BodyWrapper>
+                        <ImageWrapper>
+                            <TitleDescriptor>Images</TitleDescriptor>
+                            <ImageBox id="image">
+                                <UploadToPost parentUrlCallback = {callbackURL} />
+                            </ImageBox>
+                        </ImageWrapper>
                         <input
                             type="text"
                             name="Place of Job"
@@ -258,6 +278,12 @@ function WritePost(props) {
                         <TitleDescriptor>Body</TitleDescriptor>
                         <BodyBox id="body" contentEditable={true} />
                     </BodyWrapper>
+                    <ImageWrapper>
+                        <TitleDescriptor>Images</TitleDescriptor>
+                        <ImageBox id="image">
+                            <UploadToPost parentUrlCallback = {callbackURL} />
+                        </ImageBox>
+                    </ImageWrapper>
                     Deadline Date
                     <DatePicker
                         selected={endDate}

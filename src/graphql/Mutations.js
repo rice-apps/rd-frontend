@@ -13,6 +13,7 @@ const POST_CREATE = gql`
         $isPaid: Boolean
         $isClosed: Boolean
         $tags: [String]
+        $imageUrl: URL
     ) {
         postCreateOne(
             record: {
@@ -27,6 +28,7 @@ const POST_CREATE = gql`
                 isPaid: $isPaid
                 isClosed: $isClosed
                 tags: $tags
+                imageUrl: $imageUrl
             }
         ) {
             record {
@@ -127,4 +129,15 @@ const SET_INFO = gql`
     }
 `;
 
-export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST, SAVE_POST };
+const S3_SIGN = gql`
+    mutation GetS3Info (
+        $filename: String!, $filetype: String!
+        ) {
+            signS3Url(filename: $filename, filetype: $filetype) {
+                url
+                signedRequest
+            }
+    }
+`;
+
+export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST, SAVE_POST , S3_SIGN};
