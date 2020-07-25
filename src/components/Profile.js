@@ -1,6 +1,6 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { Redirect, useHistory } from "react-router-dom";
-import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
+import React, { useState, useCallback, useEffect } from "react";
+import { Redirect } from "react-router-dom";
+import { useMutation, useLazyQuery } from "@apollo/client";
 import { SET_INFO } from "../graphql/Mutations";
 import { GET_USER_DATA } from "../graphql/Queries";
 import { TOKEN_NAME } from "../utils/config";
@@ -22,7 +22,7 @@ import {
     PostingButton,
 } from "./WritePost.styles";
 
-const ProfilePage  = () => {
+const ProfilePage = () => {
     const [username, setUsername] = useState("");
     const [major, setMajor] = useState([]);
     const [minor, setMinor] = useState([]);
@@ -32,21 +32,21 @@ const ProfilePage  = () => {
     const [isCollegeOpen, setCollegeOpen] = useState(false);
 
     const netID = JSON.parse(localStorage.getItem(TOKEN_NAME)).netID;
-    const [addInfo, {response}] = useMutation(SET_INFO);
+    const [addInfo] = useMutation(SET_INFO);
     // const { data, loading, error } = useQuery(GET_USER_DATA, {
     //     variables: { netID: netID },
     // });
 
-    const [getUser, { loading, data }] = useLazyQuery(GET_USER_DATA);
+    const [getUser, { data }] = useLazyQuery(GET_USER_DATA);
 
     const fill_state = () => {
-        console.log("using await...")
+        console.log("using await...");
         getUser({
             variables: {
-                netID: netID
-            }
+                netID: netID,
+            },
         });
-    }  
+    };
     console.log("data", data);
     console.log("major", major);
     console.log("username", username);
@@ -54,7 +54,7 @@ const ProfilePage  = () => {
     useEffect(() => {
         console.log("fired");
         fill_state();
-        if (data){
+        if (data) {
             setUsername(data.userOne.username);
             setMajor(data.userOne.major);
             setMinor(data.userOne.minor);
@@ -96,11 +96,6 @@ const ProfilePage  = () => {
         setMinorOpen(false);
     };
 
-    const handleUserChange = useCallback(
-        (e) => setUsername(e.target.value),
-        [],
-    );
-
     // if I wrap this in useCallback, it breaks
     const handleMajorChange = (newValue) => {
         const index_of_major = major.indexOf(newValue);
@@ -118,7 +113,7 @@ const ProfilePage  = () => {
                 ? minor.filter((maj) => newValue !== maj)
                 : [...minor, newValue],
         );
-    }
+    };
 
     const handleCollegeChange = useCallback((newValue) => {
         const index_of_college = college.indexOf(newValue);
@@ -128,18 +123,14 @@ const ProfilePage  = () => {
     const saveData = () => {
         addInfo({
             variables: {
-               username: document.getElementById("username")
-                        .innerHTML,
-               college: college,
-               major: major,
-               minor: minor,
-               isNewUser: false
+                username: document.getElementById("username").innerHTML,
+                college: college,
+                major: major,
+                minor: minor,
+                isNewUser: false,
             },
         });
     };
-
-    const renderArray = arr => {
-    }
 
     if (!localStorage.getItem(TOKEN_NAME)) {
         return <Redirect to="/login" />;
@@ -210,9 +201,7 @@ const ProfilePage  = () => {
                             <DDListItem key={item}>
                                 <DropDownItem
                                     name={item}
-                                    setInfo={
-                                        handleCollegeChange
-                                    }
+                                    setInfo={handleCollegeChange}
                                     selectedItems={college}
                                 />
                             </DDListItem>
@@ -221,11 +210,9 @@ const ProfilePage  = () => {
                 )}
             </DDWrapper>
 
-            <PostingButton onClick={saveData} >
-                Post
-            </PostingButton>
+            <PostingButton onClick={saveData}>Post</PostingButton>
         </>
     );
-}
+};
 
 export default ProfilePage;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 
-import UploadToPost from './UploadToPost'
+import UploadToPost from "./UploadToPost";
 
 import { useMutation } from "@apollo/client";
 
@@ -25,15 +25,15 @@ import {
     ImageWrapper,
     ImageBox,
     ExitButton,
-    TitleFlex
+    TitleFlex,
 } from "./WritePost.styles";
 
 function WritePost(props) {
     const [url, setUrl] = useState("");
 
     const callbackURL = (childData) => {
-        setUrl(childData)
-    }
+        setUrl(childData);
+    };
 
     useEffect(() => {
         console.log("event happened");
@@ -49,9 +49,9 @@ function WritePost(props) {
     const [, setClosed] = useState(false);
     const [postType, setPostType] = useState("Discussion");
 
-    const [postCreate, {error}] = useMutation(POST_CREATE);
+    const [postCreate] = useMutation(POST_CREATE);
 
-    if(!props.show){
+    if (!props.show) {
         return null;
     }
 
@@ -67,9 +67,10 @@ function WritePost(props) {
 
     const closeModal = () => {
         props.switchVisibility(false);
-    }
+    };
 
-    const checkTitleAndBody = (title, body) => title.length <= 0 || body.length <= 0;
+    const checkTitleAndBody = (title, body) =>
+        title.length <= 0 || body.length <= 0;
 
     switch (postType) {
         case "Discussion":
@@ -86,7 +87,7 @@ function WritePost(props) {
                     <ImageWrapper>
                         <TitleDescriptor>Images</TitleDescriptor>
                         <ImageBox id="image">
-                            <UploadToPost parentUrlCallback = {callbackURL} />
+                            <UploadToPost parentUrlCallback={callbackURL} />
                             {/* <p>{url}</p> */}
                         </ImageBox>
                     </ImageWrapper>
@@ -94,25 +95,25 @@ function WritePost(props) {
                         onClick={(e) => {
                             e.preventDefault();
                             const title = document.getElementById("title")
-                                        .innerHTML;
+                                .innerHTML;
                             const body = document.getElementById("body")
-                                    .innerHTML;
+                                .innerHTML;
                             if (checkTitleAndBody(title, body)) return;
-                            try{
-                            postCreate({
-                                variables: {
-                                    kind: postType,
-                                    title: title,
-                                    body: body,
-                                    creator: userInfo.netID,
-                                    imageUrl: url,
-                                },
-                            });
-                            props.switchVisibility(false);
-                            history.push("/feed");
-                        }catch(error){
-                            console.log("error", error);
-                        }
+                            try {
+                                postCreate({
+                                    variables: {
+                                        kind: postType,
+                                        title: title,
+                                        body: body,
+                                        creator: userInfo.netID,
+                                        imageUrl: url,
+                                    },
+                                });
+                                props.switchVisibility(false);
+                                history.push("/feed");
+                            } catch (error) {
+                                console.log("error", error);
+                            }
                         }}
                     >
                         Post
@@ -134,7 +135,7 @@ function WritePost(props) {
                     <ImageWrapper>
                         <TitleDescriptor>Images</TitleDescriptor>
                         <ImageBox id="image">
-                            <UploadToPost parentUrlCallback = {callbackURL} />
+                            <UploadToPost parentUrlCallback={callbackURL} />
                         </ImageBox>
                     </ImageWrapper>
                     Start Date
@@ -153,29 +154,29 @@ function WritePost(props) {
                     <PostingButton
                         onClick={(e) => {
                             e.preventDefault();
-                            try{
-                            const title = document.getElementById("title")
-                                        .innerHTML;
-                            const body = document.getElementById("body")
+                            try {
+                                const title = document.getElementById("title")
                                     .innerHTML;
-                            if (checkTitleAndBody(title, body)) return;
-                            postCreate({
-                                variables: {
-                                    kind: postType,
-                                    title: title,
-                                    body: body,
-                                    creator: userInfo.netID,
-                                    start: startDate,
-                                    end: endDate,
-                                    place: place,
-                                    imageUrl: url
-                                },
-                            });
-                            props.switchVisibility(false);
-                            history.push("/feed");
-                        }catch(error){
-                            console.log("error",error);
-                        }
+                                const body = document.getElementById("body")
+                                    .innerHTML;
+                                if (checkTitleAndBody(title, body)) return;
+                                postCreate({
+                                    variables: {
+                                        kind: postType,
+                                        title: title,
+                                        body: body,
+                                        creator: userInfo.netID,
+                                        start: startDate,
+                                        end: endDate,
+                                        place: place,
+                                        imageUrl: url,
+                                    },
+                                });
+                                props.switchVisibility(false);
+                                history.push("/feed");
+                            } catch (error) {
+                                console.log("error", error);
+                            }
                         }}
                     >
                         Post
@@ -198,7 +199,7 @@ function WritePost(props) {
                         <ImageWrapper>
                             <TitleDescriptor>Images</TitleDescriptor>
                             <ImageBox id="image">
-                                <UploadToPost parentUrlCallback = {callbackURL} />
+                                <UploadToPost parentUrlCallback={callbackURL} />
                             </ImageBox>
                         </ImageWrapper>
                         <input
@@ -233,11 +234,12 @@ function WritePost(props) {
                         <PostingButton
                             onClick={(e) => {
                                 e.preventDefault();
-                                try{
-                                    const title = document.getElementById("title")
-                                                .innerHTML;
+                                try {
+                                    const title = document.getElementById(
+                                        "title",
+                                    ).innerHTML;
                                     const body = document.getElementById("body")
-                                            .innerHTML;
+                                        .innerHTML;
                                     if (checkTitleAndBody(title, body)) return;
                                     postCreate({
                                         variables: {
@@ -252,13 +254,12 @@ function WritePost(props) {
                                             isClosed: true,
                                         },
                                     });
-                                    console.log("Submitted and push!")
+                                    console.log("Submitted and push!");
                                     props.switchVisibility(false);
                                     history.push("/feed");
+                                } catch (error) {
+                                    console.log("error", error);
                                 }
-                                catch (error){
-                                    console.log("error",error);
-                                }   
                             }}
                         >
                             Post
@@ -281,7 +282,7 @@ function WritePost(props) {
                     <ImageWrapper>
                         <TitleDescriptor>Images</TitleDescriptor>
                         <ImageBox id="image">
-                            <UploadToPost parentUrlCallback = {callbackURL} />
+                            <UploadToPost parentUrlCallback={callbackURL} />
                         </ImageBox>
                     </ImageWrapper>
                     Deadline Date
@@ -293,28 +294,27 @@ function WritePost(props) {
                     <PostingButton
                         onClick={(e) => {
                             e.preventDefault();
-                            try{
-                            const title = document.getElementById("title")
-                                        .innerHTML;
-                            const body = document.getElementById("body")
+                            try {
+                                const title = document.getElementById("title")
                                     .innerHTML;
-                            if (checkTitleAndBody(title, body)) return;
-                            postCreate({
-                                variables: {
-                                    kind: postType,
-                                    title: title,
-                                    body: body,
-                                    creator: userInfo.netID,
-                                    deadline: endDate,
-                                },
-                            });
-                            props.switchVisibility(false);
-                            history.push("/feed");
-                            }catch(error){
-                                console.log("error",error);
-                            }   
+                                const body = document.getElementById("body")
+                                    .innerHTML;
+                                if (checkTitleAndBody(title, body)) return;
+                                postCreate({
+                                    variables: {
+                                        kind: postType,
+                                        title: title,
+                                        body: body,
+                                        creator: userInfo.netID,
+                                        deadline: endDate,
+                                    },
+                                });
+                                props.switchVisibility(false);
+                                history.push("/feed");
+                            } catch (error) {
+                                console.log("error", error);
+                            }
                         }}
-                        
                     >
                         Post
                     </PostingButton>
@@ -348,7 +348,7 @@ function WritePost(props) {
             <PostWrapper>
                 <TitleFlex>
                     <PostHeaderType>{postType}</PostHeaderType>
-                    <ExitButton onClick = {closeModal}>X</ExitButton>
+                    <ExitButton onClick={closeModal}>X</ExitButton>
                 </TitleFlex>
                 {form}
             </PostWrapper>

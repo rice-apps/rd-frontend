@@ -130,14 +130,20 @@ const SET_INFO = gql`
 `;
 
 const S3_SIGN = gql`
-    mutation GetS3Info (
-        $filename: String!, $filetype: String!
-        ) {
-            signS3Url(filename: $filename, filetype: $filetype) {
-                url
-                signedRequest
-            }
+    mutation GetS3Info($filename: String!, $filetype: String!) {
+        signS3Url(filename: $filename, filetype: $filetype) {
+            url
+            signedRequest
+        }
     }
 `;
 
-export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST, SAVE_POST , S3_SIGN};
+export {
+    SET_INFO,
+    POST_CREATE,
+    LOGIN,
+    UPVOTE_POST,
+    DOWNVOTE_POST,
+    SAVE_POST,
+    S3_SIGN,
+};

@@ -82,7 +82,7 @@ const MoreInfo = () => {
     const handleCollegeChange = useCallback((newValue) => {
         const index_of_college = college.indexOf(newValue);
         setCollege(index_of_college >= 0 ? "" : newValue);
-        }, []);
+    }, []);
 
     const toggleMajor = () => {
         setMajorOpen(!isMajorOpen);
@@ -103,7 +103,7 @@ const MoreInfo = () => {
     // if (!localStorage.getItem(TOKEN_NAME)) {
     //     return <Redirect to="/login" />;
     // }
-    
+
     if (!data?.isNewUser) {
         console.log("Redirecting....");
         return <Redirect to={"/feed"} />;

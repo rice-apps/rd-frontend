@@ -173,5 +173,5 @@ export {
     ImageWrapper,
     ImageBox,
     ExitButton,
-    TitleFlex
+    TitleFlex,
 };
