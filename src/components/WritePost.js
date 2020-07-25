@@ -119,6 +119,7 @@ function WritePost(props) {
                                     title: title,
                                     body: body,
                                     creator: userInfo.netID,
+                                    imageUrl: url,
                                 },
                             });
                             props.switchVisibility(false);

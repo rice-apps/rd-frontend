@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import Dropzone from "react-dropzone";
 import moment from "moment";
-import { graphql } from '@apollo/client/react/hoc'
-import {flowRight as compose} from 'lodash';
-import { useHistory } from "react-router-dom";
-import {gql, useMutation} from '@apollo/client'
+import { useMutation } from '@apollo/client'
 
-import {s3SignMutation, DisplayImageMutation} from '../graphql/Mutations'
+import {S3_SIGN } from '../graphql/Mutations'
 
 function UploadToPost(props) {
     // const history = useHistory();
@@ -16,8 +13,7 @@ function UploadToPost(props) {
 
     const sendData = (url) => props.parentUrlCallback(url);
 
-    const [s3Sign, { data: s3Data }] = useMutation(s3SignMutation);
-    const [createDisplay, { data: displayData }] = useMutation(DisplayImageMutation);
+    const [ s3Sign ] = useMutation(S3_SIGN);
     // first one to execute
     // second one (data) to __
     // also available: loading and error states
@@ -27,13 +23,8 @@ function UploadToPost(props) {
     // };
 
     const onDrop2 = event => {
-        console.log("DROP event logging");
-
         const fileList = event.target.files;
-        // console.log(etf); //file list
-        console.log(fileList[0]); //the file itself
-        // console.log(etf[0].name); //filename on my computer
-        // const fileName = fileList[0].name;
+        // console.log(fileList[0]); //the file itself
         setFile(fileList[0]); // chooses first file, would need to modify (and check aws) to drop multiple at once
     };
 
@@ -41,16 +32,13 @@ function UploadToPost(props) {
         const options = {
             headers: {
                 "Content-Type": file.type
-            }
-        };
-        //CHECK
-        // fetch or bent or axios
-        //await axios.put(signedRequest, file, options); // is signedRequest the url??
-        await fetch(signedRequest, {
+            },
+            mode: "cors", //update access
             method: 'PUT',
-            options, 
             body: file
-        });
+        };
+
+        await fetch(signedRequest, options);
     };
 
     const formatFilename = filename => {
@@ -63,49 +51,25 @@ function UploadToPost(props) {
         return newFilename.substring(0, 60);
     };
     
-    const submit = () => {
-        const response = s3Sign({
+    const submit = async (e) => {
+        e.preventDefault()
+        const response = await s3Sign({
             variables: {
                 filename: formatFilename(file.name),
                 filetype: file.type
             }
         });
+
+        console.log(response); //works, "pending promise"
+        console.log(response.data);
+        // console.log(s3Data);
     
-        const { signedRequest, url } = response.data.signS3; 
+        const { signedRequest, url } = response.data.signS3Url; 
         console.log(signedRequest);
         console.log(url);
         uploadToS3(file, signedRequest);
 
-        //return url; // to parent
-        // console.log(url);
         sendData(url);
-
-    
-        // const graphqlResponse = createDisplay({
-        //     variables: {
-        //         pictureUrl: url
-        //     }
-        // });
-
-        
-
-
-    
-        // history.push(
-        //   `/theimage/${graphqlResponse.data.createDisplay.id}` //changes routes with new data
-        // );
-
-        //dont display straight away? use hook
-        //provide url to post when being displayed
-
-        //custom hook
-        //to do the image uploading
-        //indicate to parent that i have something for you to take from me (the url to access the picture)
-        //parent needs it, child produces it
-
-        //define mutations from upload to post in write post
-        //call the mutations that come from props in upload
-        //
     };
 
     return (
@@ -128,7 +92,7 @@ function UploadToPost(props) {
                 onChange={onDrop2}
                 id="img" name="imgFile"
                 accept="image/*"></input>
-            <button onClick={submit}>Submit</button>
+            <button onClick={e => submit(e)}>Submit</button>
         </div>
     )
 }
@@ -138,7 +102,9 @@ function UploadToPost(props) {
 //upload button
 
 
-export default compose(
-    graphql(DisplayImageMutation, { name: "createDisplay" }),
-    graphql(s3SignMutation, { name: "s3Sign" })
-)(UploadToPost);
+// export default compose(
+//     graphql(DisplayImageMutation, { name: "createDisplay" }),
+//     graphql(s3SignMutation, { name: "s3Sign" })
+// )(UploadToPost);
+
+export default UploadToPost;
