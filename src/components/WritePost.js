@@ -6,7 +6,7 @@ import UploadToPost from "./UploadToPost";
 import { useMutation } from "@apollo/client";
 
 import { POST_CREATE } from "../graphql/Mutations";
-import { Checkbox } from '@material-ui/core';
+import { Checkbox } from "@material-ui/core";
 
 import { TOKEN_NAME } from "../utils/config";
 import { Redirect, useHistory } from "react-router-dom";
@@ -66,14 +66,16 @@ function WritePost(props) {
     const changeEndDate = (date) => setEnd(date);
     const changePostType = (e) => setPostType(e.target.id);
 
-    const closeModal = () => { props.switchVisibility(false);}
+    const closeModal = () => {
+        props.switchVisibility(false);
+    };
 
     const checkTitleAndBody = (title, body) =>
         title.length <= 0 || body.length <= 0;
 
     console.log(isPaid);
-    const togglePaid = () => setPaid(!isPaid); 
-                            
+    const togglePaid = () => setPaid(!isPaid);
+
     const toggleClosed = () => setClosed(!isClosed);
 
     switch (postType) {
@@ -224,10 +226,10 @@ function WritePost(props) {
                             onChange={changeEndDate}
                         />
                         <p>Is the job paid?</p>
-                        {/* Documentation for these: https://material-ui.com/api/checkbox/ */ }
-                        <Checkbox id = "isPaid" onChange = {togglePaid}/>
+                        {/* Documentation for these: https://material-ui.com/api/checkbox/ */}
+                        <Checkbox id="isPaid" onChange={togglePaid} />
                         <p>Is the job open?</p>
-                        <Checkbox id = "isOpen" onChange = {toggleClosed}/>
+                        <Checkbox id="isOpen" onChange={toggleClosed} />
                         <PostingButton
                             onClick={(e) => {
                                 e.preventDefault();
