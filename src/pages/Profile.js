@@ -20,7 +20,7 @@ import {
     TitleWrapper,
     TitleBox,
     PostingButton,
-} from "./WritePost.styles";
+} from "../components/WritePost.styles";
 
 const ProfilePage  = () => {
     const [username, setUsername] = useState("");
@@ -61,6 +61,12 @@ const ProfilePage  = () => {
             setCollege(data.userOne.college);
         }
     }, [data]);
+
+    useEffect(() => console.log("Rerendered"));
+    // page rerenders after every state change but the code still continues to execute
+    // along from lines 58 - 61?  I thought when page refreshed, it just went back to the
+    // top of the code like line 26 and did everything all over again.  Even state gets
+    // preserved?
 
     const majors = major_minor_json.majors.split(";").map((major) => {
         const major_obj = {
@@ -126,10 +132,10 @@ const ProfilePage  = () => {
     }, []);
 
     const saveData = () => {
+        setUsername(document.getElementById("username").innerHTML);
         addInfo({
             variables: {
-               username: document.getElementById("username")
-                        .innerHTML,
+               username: username,
                college: college,
                major: major,
                minor: minor,
