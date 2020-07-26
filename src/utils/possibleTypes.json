@@ -1,1 +1,1 @@
-{ "PostInterface": ["Discussion", "Event", "Job", "Notice"] }
+{ "PostInterface": ["Discussion", "Notice", "Event", "Job"] }
