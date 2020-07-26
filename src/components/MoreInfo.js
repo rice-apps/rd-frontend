@@ -5,7 +5,7 @@ import { TOKEN_NAME } from "../utils/config";
 import { SET_INFO } from "../graphql/Mutations";
 import laptop_girl from "../images/Page 2.svg";
 import major_minor_json from "../utils/MajorMinor.json";
-import DropDownItem from "../components/DropDownItem.js";
+import DropDownItem from "./DropDownItem.js";
 import {
     FullGrid,
     PinkShape,
@@ -82,7 +82,7 @@ const MoreInfo = () => {
     const handleCollegeChange = useCallback((newValue) => {
         const index_of_college = college.indexOf(newValue);
         setCollege(index_of_college >= 0 ? "" : newValue);
-        }, []);
+    }, []);
 
     const toggleMajor = () => {
         setMajorOpen(!isMajorOpen);
@@ -103,7 +103,7 @@ const MoreInfo = () => {
     // if (!localStorage.getItem(TOKEN_NAME)) {
     //     return <Redirect to="/login" />;
     // }
-    
+
     if (!data?.isNewUser) {
         console.log("Redirecting....");
         return <Redirect to={"/feed"} />;

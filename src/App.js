@@ -2,11 +2,11 @@ import React from "react";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import Login from "./pages/Login";
-import Feed from "./pages/PostFeedWithData";
-import Home from "./pages/Home";
-import MoreInfo from "./pages/MoreInfo";
-import ProfilePage from "./pages/Profile.js";
+import Login from "./components/Login";
+import Feed from "./components/PostFeedWithData";
+import Home from "./components/Home";
+import MoreInfo from "./components/MoreInfo";
+import ProfilePage from "./components/Profile.js";
 
 // TODO: find a way to fix Login being blank after error ticket
 // without forcing a refresh on page navigation
