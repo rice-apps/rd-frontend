@@ -41,10 +41,10 @@ const Downvote = styled.div`
 `;
 
 const TopComponent = styled.div`
-    // contains DiscussionTitle, Tags
+    // contains DiscussionTitle, Tags, DropDown
     display: grid;
     grid-area: top;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 4fr 2fr 1fr;
     overflow: hidden;
 `;
 
@@ -58,11 +58,14 @@ const DiscussionTitle = styled.text`
 `;
 
 const Tags = styled.text`
+    padding: 10px 0px;
     justify-self: end;
-    align-self: center;
     font-family: "Avenir";
     font-size: 2vh;
     word-wrap: break-word;
+`;
+
+const MoreOptions = styled.div`
 `;
 
 const MiddleComponent = styled.div`
@@ -84,30 +87,18 @@ const BottomComponent = styled.div`
     // contains Save, AddTo, OP, Time, Date, ShareFacebook, ShareTwitter, Share
     grid-area: bottom;
     display: grid;
-    grid-template-columns: 70px 100px 1fr 80px 60px 100px 40px 40px 40px;
-    grid-template-areas: "save addto . op time date facebook twitter share";
+    grid-template-columns: 1fr 80px 60px 100px 40px 40px 40px;
+    grid-template-areas: ". op time date facebook twitter share";
     justify-items: start;
     align-items: center;
 `;
 
 const Save = styled.button`
-    grid-area: save;
-    background: white;
-    color: gray;
-    border: 2px solid gray;
-    border-radius: 5px;
-    font-size: 1em;
-    align-items: stretch;
+
 `;
 
 const AddTo = styled.button`
-    grid-area: addto;
-    background: white;
-    color: gray;
-    border: 2px solid gray;
-    border-radius: 5px;
-    font-size: 1em;
-    align-items: stretch;
+
 `;
 
 const OP = styled.div`
@@ -144,6 +135,7 @@ export {
     TopComponent,
     DiscussionTitle,
     Tags,
+    MoreOptions,
     MiddleComponent,
     DiscussionBody,
     BottomComponent,
