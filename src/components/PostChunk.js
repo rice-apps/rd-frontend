@@ -50,10 +50,18 @@ const useStyles = makeStyles((theme) => ({
 
 function PostChunk(props) {
     const classes = useStyles();
+<<<<<<< HEAD
     const [body, setBody] = useState("");
 
     const [commentCreate] = useMutation(COMMENT_CREATE);
 
+=======
+    let oneImage = <React.Fragment></React.Fragment>
+
+    if (props.post.node.imageUrl) {
+        oneImage = <img src={props.post.node.imageUrl} alt="Custom-thing" />
+    }
+>>>>>>> 4ede5c63b9a9a96e5b99f3936e1afad244cfb09c
 
     return (
         <>
@@ -107,17 +115,22 @@ function PostChunk(props) {
                         <DiscussionBody>
                             {ReactHtmlParser(props.post.node.body)}
                         </DiscussionBody>
+                        {oneImage}
                     </MiddleComponent>
 
                     <BottomComponent>
                         <Save
                             onClick={(e) => {
                                 e.preventDefault();
+
+                                const currentSavedPosts = props.userInfo.savedPosts.map(
+                                    (tup) => tup._id,
+                                );
                                 props.savePost({
                                     variables: {
                                         netID: props.userInfo.netID,
                                         savedPosts: [
-                                            ...props.userInfo.savedPosts,
+                                            ...currentSavedPosts,
                                             props.post.node._id,
                                         ],
                                     },
