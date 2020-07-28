@@ -71,7 +71,6 @@ function WritePost(props) {
     const checkTitleAndBody = (title, body) =>
         title.length <= 0 || body.length <= 0;
 
-    console.log(isPaid);
     const togglePaid = () => setPaid(!isPaid); 
                             
     const toggleClosed = () => setClosed(!isClosed);
