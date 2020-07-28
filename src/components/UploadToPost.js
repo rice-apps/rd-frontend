@@ -26,6 +26,8 @@ function UploadToPost(props) {
             body: file,
         };
 
+        console.log(file.type)
+
         await fetch(signedRequest, options);
     };
 
@@ -50,6 +52,9 @@ function UploadToPost(props) {
         // console.log(response.data);
 
         const { signedRequest, url } = response.data.signS3Url;
+
+        console.log(signedRequest);
+
         uploadToS3(file, signedRequest);
         sendData(url); // make accessible to WritePost
     };

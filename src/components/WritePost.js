@@ -6,7 +6,7 @@ import UploadToPost from "./UploadToPost";
 import { useMutation } from "@apollo/client";
 
 import { POST_CREATE } from "../graphql/Mutations";
-import { Checkbox } from '@material-ui/core';
+import { Checkbox } from "@material-ui/core";
 
 import { TOKEN_NAME } from "../utils/config";
 import { Redirect, useHistory } from "react-router-dom";
@@ -103,6 +103,11 @@ function WritePost(props) {
                                 .innerHTML;
                             if (checkTitleAndBody(title, body)) return;
                             try {
+                                console.log(url);
+                                console.log(postType);
+                                console.log(title);
+                                console.log(body);
+                                console.log(userInfo.netID);
                                 postCreate({
                                     variables: {
                                         kind: postType,
@@ -113,7 +118,7 @@ function WritePost(props) {
                                     },
                                 });
                                 props.switchVisibility(false);
-                                history.push("/feed");
+                                //history.push("/feed");
                             } catch (error) {
                                 console.log("error", error);
                             }
@@ -223,10 +228,10 @@ function WritePost(props) {
                             onChange={changeEndDate}
                         />
                         <p>Is the job paid?</p>
-                        {/* Documentation for these: https://material-ui.com/api/checkbox/ */ }
-                        <Checkbox id = "isPaid" onChange = {togglePaid}/>
+                        {/* Documentation for these: https://material-ui.com/api/checkbox/ */}
+                        <Checkbox id="isPaid" onChange={togglePaid} />
                         <p>Is the job open?</p>
-                        <Checkbox id = "isOpen" onChange = {toggleClosed}/>
+                        <Checkbox id="isOpen" onChange={toggleClosed} />
                         <PostingButton
                             onClick={(e) => {
                                 e.preventDefault();
