@@ -13,7 +13,7 @@ const POST_CREATE = gql`
         $isPaid: Boolean
         $isClosed: Boolean
         $tags: [String]
-        $imageUrl: URL
+        $imageUrl: String
     ) {
         postCreateOne(
             record: {

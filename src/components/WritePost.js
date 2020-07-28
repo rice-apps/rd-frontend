@@ -106,6 +106,11 @@ function WritePost(props) {
                                 .innerHTML;
                             if (checkTitleAndBody(title, body)) return;
                             try {
+                                console.log(url);
+                                console.log(postType);
+                                console.log(title);
+                                console.log(body);
+                                console.log(userInfo.netID);
                                 postCreate({
                                     variables: {
                                         kind: postType,
@@ -116,7 +121,7 @@ function WritePost(props) {
                                     },
                                 });
                                 props.switchVisibility(false);
-                                history.push("/feed");
+                                //history.push("/feed");
                             } catch (error) {
                                 console.log("error", error);
                             }

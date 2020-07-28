@@ -45,6 +45,8 @@ const POST_PAGE = gql`
                     ... on Notice {
                         deadline
                     }
+
+                    imageUrl
                 }
             }
             pageInfo {
