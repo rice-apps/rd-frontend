@@ -14,10 +14,7 @@ function PostFeed(props) {
 
     const [downvotePost] = useMutation(DOWNVOTE_POST);
 
-<<<<<<< HEAD
-=======
     const [savePost] = useMutation(SAVE_POST);
->>>>>>> ee055456ccaec88095ad188bff4111cf9aa184c8
 
     const {
         onLoadMore,

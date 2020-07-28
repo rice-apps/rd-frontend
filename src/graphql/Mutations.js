@@ -127,7 +127,6 @@ const SET_INFO = gql`
     }
 `;
 
-<<<<<<< HEAD
 const COMMENT_CREATE = gql`
     mutation CreateComment(
         $body: String!
@@ -155,7 +154,4 @@ const COMMENT_CREATE = gql`
     }
 `;
 
-export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST, COMMENT_CREATE };
-=======
-export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST, SAVE_POST };
->>>>>>> ee055456ccaec88095ad188bff4111cf9aa184c8
+export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST, COMMENT_CREATE, SAVE_POST };
