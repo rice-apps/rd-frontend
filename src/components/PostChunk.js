@@ -2,8 +2,6 @@ import React, { useState } from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-import DropDownItem from "./DropDownItem.js";
-
 import IconButton from "@material-ui/core/IconButton";
 import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
@@ -15,26 +13,23 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import ReactHtmlParser from "react-html-parser";
 
 import {
-    DDList,
-    DDListItem,
-} from "../pages/MoreInfo.styles";
-
-import {
     DiscussionBoxSection,
     DiscussionBox,
     LeftComponent,
     Likes,
     Upvote,
     Downvote,
-    TopComponent,
+    TopMiddleComponent,
+    DiscussionTitleDiv,
     DiscussionTitle,
     Tags,
     MoreOptions,
-    MiddleComponent,
+    DDMenu,
     DiscussionBody,
     BottomComponent,
     Save,
     AddTo,
+    Delete,
     OP,
     Time,
     Date,
@@ -55,6 +50,7 @@ function PostChunk(props) {
     const classes = useStyles();
 
     const [isDDOpen, setDDOpen] = useState(false);
+
 
     const toggleDD = () => {
         setDDOpen(!isDDOpen);
@@ -101,19 +97,19 @@ function PostChunk(props) {
                         </Downvote>
                     </LeftComponent>
 
-                    <TopComponent>
-                        <DiscussionTitle>
-                            {props.post.node.title}
-                        </DiscussionTitle>
+                    <TopMiddleComponent>
+                        <DiscussionTitleDiv>
+                            <DiscussionTitle>
+                                {props.post.node.title}
+                            </DiscussionTitle>
+                        </DiscussionTitleDiv>
                         <Tags>Tags</Tags>
                         <MoreOptions className={classes.root}>
                             <IconButton onClick={toggleDD}>
                                 <MoreHorizIcon open={isDDOpen}/>
                             </IconButton>
-                        </MoreOptions>
-                        {isDDOpen && (
-                            <DDList>
-                                <DDListItem>
+                            {isDDOpen && (
+                                <DDMenu>
                                     <Save
                                         onClick={(e) => {
                                             e.preventDefault();
@@ -135,16 +131,19 @@ function PostChunk(props) {
                                         Save Post
                                     </Save>
                                     <AddTo>+ Add to...</AddTo>
-                                </DDListItem>
-                            </DDList>
-                        )}
-                    </TopComponent>
+                                    {props.post.node.creator.username === props.userInfo.username && (
+                                        <Delete>Delete Post</Delete>
+                                    )}
+                                    
+                                </DDMenu>
+                            )}
+                        </MoreOptions>
 
-                    <MiddleComponent>
                         <DiscussionBody>
                             {ReactHtmlParser(props.post.node.body)}
                         </DiscussionBody>
-                    </MiddleComponent>
+
+                    </TopMiddleComponent>
 
                     <BottomComponent>
                         

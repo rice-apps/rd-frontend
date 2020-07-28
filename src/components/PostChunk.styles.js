@@ -6,16 +6,15 @@ const DiscussionBoxSection = styled.section`
 `;
 
 const DiscussionBox = styled.section`
-    // contains LeftComponent, MiddleComponent, TopRightComponent, BottomComponent
+    // contains LeftComponent, TopMiddleComponent, BottomComponent
     padding: 5px;
     background: #ffffff;
     border-radius: 10px;
     display: grid;
-    grid-template-rows: 40px 1fr 50px;
+    grid-template-rows: 1fr 50px;
     grid-template-columns: 65px 1fr;
     grid-template-areas:
-        "left top"
-        "left middle"
+        "left topmiddle"
         "left bottom";
 `;
 
@@ -40,25 +39,34 @@ const Downvote = styled.div`
     grid-row: 4/5;
 `;
 
-const TopComponent = styled.div`
-    // contains DiscussionTitle, Tags, DropDown
+const TopMiddleComponent = styled.div`
+    // contains DiscussionTitle, Tags, DropDown, DiscussionBody
+    grid-area: topmiddle;
     display: grid;
-    grid-area: top;
+    grid-template-areas:
+        "title tags moreoptions"
+        "body body moreoptions";
     grid-template-columns: 4fr 2fr 1fr;
+    grid-template-rows: 50px 1fr;
+`;
+
+const DiscussionTitleDiv = styled.div`
+    grid-area: title;
+    padding: 20px 0px;
     overflow: hidden;
 `;
 
 const DiscussionTitle = styled.text`
-    padding: 10px 0px;
     justify-self: start;
     align-self: start;
     font-family: "Avenir";
-    font-size: 3vh;
+    font-size: 2.8vh;
     font-weight: bold;
 `;
 
 const Tags = styled.text`
-    padding: 10px 0px;
+    grid-area: tags;
+    padding: 20px 0px;
     justify-self: end;
     font-family: "Avenir";
     font-size: 2vh;
@@ -66,17 +74,35 @@ const Tags = styled.text`
 `;
 
 const MoreOptions = styled.div`
+    grid-area: moreoptions;
+    align-self: start;
+    justify-self: end;
 `;
 
-const MiddleComponent = styled.div`
-    // contains DiscussionBody
+const DDMenu = styled.div`
+    position: relative;
+    align-self: stretch;
+    justify-self: stretch;
+    background-color: white;
     display: grid;
-    justify-items: start;
-    grid-area: middle;
-    overflow: hidden;
+    bottom: 25px;
+    width: 200%;
+`;
+
+const Save = styled.button`
+    padding: 5px;
+`;
+
+const AddTo = styled.button`
+    padding: 5px;
+`;
+
+const Delete = styled.button`
+    padding: 5px;
 `;
 
 const DiscussionBody = styled.text`
+    grid-area: body;
     padding: 10px 0px;
     font-family: "Avenir";
     font-size: 2vh;
@@ -91,14 +117,6 @@ const BottomComponent = styled.div`
     grid-template-areas: ". op time date facebook twitter share";
     justify-items: start;
     align-items: center;
-`;
-
-const Save = styled.button`
-
-`;
-
-const AddTo = styled.button`
-
 `;
 
 const OP = styled.div`
@@ -132,15 +150,17 @@ export {
     Likes,
     Upvote,
     Downvote,
-    TopComponent,
+    TopMiddleComponent,
+    DiscussionTitleDiv,
     DiscussionTitle,
     Tags,
     MoreOptions,
-    MiddleComponent,
+    DDMenu,
     DiscussionBody,
     BottomComponent,
     Save,
     AddTo,
+    Delete,
     OP,
     Time,
     Date,
