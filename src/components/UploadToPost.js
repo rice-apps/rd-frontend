@@ -26,7 +26,7 @@ function UploadToPost(props) {
             body: file,
         };
 
-        console.log(file.type)
+        console.log(file.type);
 
         await fetch(signedRequest, options);
     };

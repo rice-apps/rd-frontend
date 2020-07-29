@@ -44,10 +44,10 @@ const useStyles = makeStyles((theme) => ({
 
 function PostChunk(props) {
     const classes = useStyles();
-    let oneImage = <React.Fragment></React.Fragment>
+    let oneImage = <React.Fragment></React.Fragment>;
 
     if (props.post.node.imageUrl) {
-        oneImage = <img src={props.post.node.imageUrl} alt="Custom-thing" />
+        oneImage = <img src={props.post.node.imageUrl} alt="Custom-thing" />;
     }
 
     return (
