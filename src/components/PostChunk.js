@@ -141,16 +141,7 @@ function PostChunk(props) {
                                         Report Post
                                     </Report>
                                     {props.post.node.creator.username === props.userInfo.username && (
-                                        <Delete
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            props.removePost({
-                                                variables: {
-                                                    _id: props.post.node._id,
-                                                },
-                                            });
-                                        }}
-                                        >
+                                        <Delete>
                                             Delete Post
                                         </Delete>
                                     )}
@@ -162,7 +153,7 @@ function PostChunk(props) {
                         <DiscussionBody>
                             {ReactHtmlParser(props.post.node.body)}
                         </DiscussionBody>
-                        {oneImage}
+                        
                     </TopMiddleComponent>
 
                     <BottomComponent>
