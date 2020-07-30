@@ -4,8 +4,8 @@ import { useQuery } from "@apollo/client";
 
 import PostFeed from "../components/PostFeed";
 import { POST_PAGE } from "../graphql/Queries";
-import { POST_CREATED, POST_VOTE_CHANGED } from "../graphql/Subscriptions";
-import WritePost from "../components/WritePost"
+import { POST_CREATED, POST_VOTE_CHANGED, POST_REMOVED } from "../graphql/Subscriptions";
+import WritePost from "../components/WritePost";
 
 import {
     Background,
@@ -87,6 +87,11 @@ function PostFeedWithData() {
                                         },
                                     });
                                 },
+                            });
+                        }}
+                        subscribeToNewRemovals={() => {
+                            subscribeToMore({
+                                document: POST_REMOVED,
                             });
                         }}
                         subscribeToNewVotes={() => {

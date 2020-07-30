@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 const DiscussionBoxSection = styled.section`
     // contains DiscussionBox
-    padding: 20px 350px;
+    padding: 20px 140px;
 `;
 
 const DiscussionBox = styled.section`
     // contains LeftComponent, TopMiddleComponent, BottomComponent
     padding: 5px;
     background: #ffffff;
-    border-radius: 10px;
+    border-radius: 20px;
     display: grid;
     grid-template-rows: 1fr 50px;
     grid-template-columns: 65px 1fr;
@@ -47,12 +47,12 @@ const TopMiddleComponent = styled.div`
         "title tags moreoptions"
         "body body moreoptions";
     grid-template-columns: 4fr 2fr 1fr;
-    grid-template-rows: 50px 1fr;
+    grid-template-rows: 65px 1fr;
 `;
 
 const DiscussionTitleDiv = styled.div`
     grid-area: title;
-    padding: 20px 0px;
+    padding: 10px 0px;
     overflow: hidden;
 `;
 
@@ -60,7 +60,7 @@ const DiscussionTitle = styled.text`
     justify-self: start;
     align-self: start;
     font-family: "Avenir";
-    font-size: 2.8vh;
+    font-size: 2.5vh;
     font-weight: bold;
 `;
 
@@ -97,6 +97,10 @@ const AddTo = styled.button`
     padding: 5px;
 `;
 
+const Report = styled.button`
+    padding: 5px;
+`;
+
 const Delete = styled.button`
     padding: 5px;
 `;
@@ -113,8 +117,8 @@ const BottomComponent = styled.div`
     // contains Save, AddTo, OP, Time, Date, ShareFacebook, ShareTwitter, Share
     grid-area: bottom;
     display: grid;
-    grid-template-columns: 1fr 80px 60px 100px 40px 40px 40px;
-    grid-template-areas: ". op time date facebook twitter share";
+    grid-template-columns: 80px 1fr 60px 100px 40px 40px 40px 15px;
+    grid-template-areas: "op . time date facebook twitter share .";
     justify-items: start;
     align-items: center;
 `;
@@ -160,6 +164,7 @@ export {
     BottomComponent,
     Save,
     AddTo,
+    Report,
     Delete,
     OP,
     Time,

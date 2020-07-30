@@ -82,6 +82,15 @@ const DOWNVOTE_POST = gql`
     }
 `;
 
+
+const REMOVE_POST = gql`
+    mutation RemovePost($_id: ID!) {
+        postRemoveById(_id: $_id) {
+            _id
+        }
+    }
+`;
+
 const SAVE_POST = gql`
     mutation SavePost($netID: String!, $savedPosts: [MongoID]) {
         userUpdateOne(
@@ -127,4 +136,4 @@ const SET_INFO = gql`
     }
 `;
 
-export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST, SAVE_POST };
+export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST, REMOVE_POST, SAVE_POST };

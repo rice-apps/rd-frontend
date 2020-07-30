@@ -29,6 +29,7 @@ import {
     BottomComponent,
     Save,
     AddTo,
+    Report,
     Delete,
     OP,
     Time,
@@ -131,8 +132,22 @@ function PostChunk(props) {
                                         Save Post
                                     </Save>
                                     <AddTo>+ Add to...</AddTo>
+                                    <Report>
+                                        Report Post
+                                    </Report>
                                     {props.post.node.creator.username === props.userInfo.username && (
-                                        <Delete>Delete Post</Delete>
+                                        <Delete
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            props.removePost({
+                                                variables: {
+                                                    _id: props.post.node._id,
+                                                },
+                                            });
+                                        }}
+                                        >
+                                            Delete Post
+                                        </Delete>
                                     )}
                                     
                                 </DDMenu>
