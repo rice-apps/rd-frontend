@@ -45,6 +45,8 @@ const POST_PAGE = gql`
                     ... on Notice {
                         deadline
                     }
+
+                    imageUrl
                 }
             }
             pageInfo {
@@ -57,10 +59,9 @@ const POST_PAGE = gql`
     }
 `;
 
-
 const GET_USER_DATA = gql`
     query GetData($netID: String!) {
-        userOne(filter: {netID: $netID}) {
+        userOne(filter: { netID: $netID }) {
             username
             major
             minor
@@ -77,4 +78,4 @@ const USER_EXISTS = gql`
     }
 `;
 
-export { POST_PAGE,  GET_USER_DATA, USER_EXISTS};
+export { POST_PAGE, GET_USER_DATA, USER_EXISTS };

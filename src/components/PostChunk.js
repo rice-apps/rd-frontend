@@ -49,6 +49,11 @@ const useStyles = makeStyles((theme) => ({
 
 function PostChunk(props) {
     const classes = useStyles();
+    let oneImage = <React.Fragment></React.Fragment>;
+
+    if (props.post.node.imageUrl) {
+        oneImage = <img src={props.post.node.imageUrl} alt="Custom-thing" />;
+    }
 
     const [isDDOpen, setDDOpen] = useState(false);
 
@@ -157,7 +162,7 @@ function PostChunk(props) {
                         <DiscussionBody>
                             {ReactHtmlParser(props.post.node.body)}
                         </DiscussionBody>
-
+                        {oneImage}
                     </TopMiddleComponent>
 
                     <BottomComponent>

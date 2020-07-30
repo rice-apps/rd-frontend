@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 
+import UploadToPost from "./UploadToPost";
+
 import { useMutation } from "@apollo/client";
 
 import { POST_CREATE } from "../graphql/Mutations";
+import { Checkbox } from "@material-ui/core";
 
 import { TOKEN_NAME } from "../utils/config";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import {
     PostWrapper,
@@ -20,26 +23,34 @@ import {
     BodyWrapper,
     PostingButton,
     BodyBox,
+    ImageWrapper,
+    ImageBox,
     ExitButton,
-    TitleFlex
+    TitleFlex,
 } from "./WritePost.styles";
 
 function WritePost(props) {
-    useEffect(() => console.log("event happened"));
+    const [url, setUrl] = useState("");
 
-    const history = useHistory();
+    const callbackURL = (childData) => {
+        setUrl(childData);
+    };
+
+    useEffect(() => {
+        console.log("event happened");
+    });
 
     const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));
     const [startDate, setStart] = useState(new Date().getTime());
     const [endDate, setEnd] = useState(new Date().getTime());
     const [place, setPlace] = useState("");
-    const [, setPaid] = useState(false);
-    const [, setClosed] = useState(false);
+    const [isPaid, setPaid] = useState(false);
+    const [isClosed, setClosed] = useState(false);
     const [postType, setPostType] = useState("Discussion");
 
-    const [postCreate, {error}] = useMutation(POST_CREATE);
+    const [postCreate] = useMutation(POST_CREATE);
 
-    if(!props.show){
+    if (!props.show) {
         return null;
     }
 
@@ -49,28 +60,21 @@ function WritePost(props) {
 
     let form = <div>Something went wrong! Please report to riceapps.</div>;
 
-    // const submit = async () => {
-    //     const res = await props.s3Sign({
-    //         variables : {
-    //             filename: formatFilename(file.name),
-    //             filetype: file.type
-    //         }
-    //     });
-
-    //     const {signedRequest, url} = res.data.signS3;
-    //     await uploadToS3(file, signedRequest);
-
-    // }
-
     const changeStartDate = (date) => setStart(date);
     const changeEndDate = (date) => setEnd(date);
     const changePostType = (e) => setPostType(e.target.id);
 
     const closeModal = () => {
         props.switchVisibility(false);
-    }
+    };
 
-    const checkTitleAndBody = (title, body) => title.length <= 0 || body.length <= 0;
+    const checkTitleAndBody = (title, body) =>
+        title.length <= 0 || body.length <= 0;
+
+    console.log(isPaid);
+    const togglePaid = () => setPaid(!isPaid);
+
+    const toggleClosed = () => setClosed(!isClosed);
 
     switch (postType) {
         case "Discussion":
@@ -84,28 +88,35 @@ function WritePost(props) {
                         <TitleDescriptor>Body</TitleDescriptor>
                         <BodyBox id="body" contentEditable={true} />
                     </BodyWrapper>
+                    <ImageWrapper>
+                        <TitleDescriptor>Images</TitleDescriptor>
+                        <ImageBox id="image">
+                            <UploadToPost parentUrlCallback={callbackURL} />
+                            {/* <p>{url}</p> */}
+                        </ImageBox>
+                    </ImageWrapper>
                     <PostingButton
                         onClick={(e) => {
                             e.preventDefault();
                             const title = document.getElementById("title")
-                                        .innerHTML;
+                                .innerHTML;
                             const body = document.getElementById("body")
-                                    .innerHTML;
+                                .innerHTML;
                             if (checkTitleAndBody(title, body)) return;
-                            try{
-                            postCreate({
-                                variables: {
-                                    kind: postType,
-                                    title: title,
-                                    body: body,
-                                    creator: userInfo.netID,
-                                },
-                            });
-                            props.switchVisibility(false);
-                            history.push("/feed");
-                        }catch(error){
-                            console.log("error", error);
-                        }
+                            try {
+                                postCreate({
+                                    variables: {
+                                        kind: postType,
+                                        title: title,
+                                        body: body,
+                                        creator: userInfo.netID,
+                                        imageUrl: url,
+                                    },
+                                });
+                                props.switchVisibility(false);
+                            } catch (error) {
+                                console.log("error", error);
+                            }
                         }}
                     >
                         Post
@@ -124,6 +135,12 @@ function WritePost(props) {
                         <TitleDescriptor>Body</TitleDescriptor>
                         <BodyBox id="body" contentEditable={true} />
                     </BodyWrapper>
+                    <ImageWrapper>
+                        <TitleDescriptor>Images</TitleDescriptor>
+                        <ImageBox id="image">
+                            <UploadToPost parentUrlCallback={callbackURL} />
+                        </ImageBox>
+                    </ImageWrapper>
                     Start Date
                     <DatePicker
                         selected={startDate}
@@ -140,28 +157,28 @@ function WritePost(props) {
                     <PostingButton
                         onClick={(e) => {
                             e.preventDefault();
-                            try{
-                            const title = document.getElementById("title")
-                                        .innerHTML;
-                            const body = document.getElementById("body")
+                            try {
+                                const title = document.getElementById("title")
                                     .innerHTML;
-                            if (checkTitleAndBody(title, body)) return;
-                            postCreate({
-                                variables: {
-                                    kind: postType,
-                                    title: title,
-                                    body: body,
-                                    creator: userInfo.netID,
-                                    start: startDate,
-                                    end: endDate,
-                                    place: place,
-                                },
-                            });
-                            props.switchVisibility(false);
-                            history.push("/feed");
-                        }catch(error){
-                            console.log("error",error);
-                        }
+                                const body = document.getElementById("body")
+                                    .innerHTML;
+                                if (checkTitleAndBody(title, body)) return;
+                                postCreate({
+                                    variables: {
+                                        kind: postType,
+                                        title: title,
+                                        body: body,
+                                        creator: userInfo.netID,
+                                        start: startDate,
+                                        end: endDate,
+                                        place: place,
+                                        imageUrl: url,
+                                    },
+                                });
+                                props.switchVisibility(false);
+                            } catch (error) {
+                                console.log("error", error);
+                            }
                         }}
                     >
                         Post
@@ -181,6 +198,12 @@ function WritePost(props) {
                             <TitleDescriptor>Body</TitleDescriptor>
                             <BodyBox id="body" contentEditable={true} />
                         </BodyWrapper>
+                        <ImageWrapper>
+                            <TitleDescriptor>Images</TitleDescriptor>
+                            <ImageBox id="image">
+                                <UploadToPost parentUrlCallback={callbackURL} />
+                            </ImageBox>
+                        </ImageWrapper>
                         <input
                             type="text"
                             name="Place of Job"
@@ -198,26 +221,20 @@ function WritePost(props) {
                             selected={endDate}
                             onChange={changeEndDate}
                         />
-                        <input
-                            type="text"
-                            name="Is the job paid?"
-                            placeholder="Unpaid"
-                            onChange={(e) => setPaid(e.target.value)}
-                        />
-                        <input
-                            type="text"
-                            name="Is the job closed?"
-                            placeholder="Job open"
-                            onChange={(e) => setClosed(e.target.value)}
-                        />
+                        <p>Is the job paid?</p>
+                        {/* Documentation for these: https://material-ui.com/api/checkbox/ */}
+                        <Checkbox id="isPaid" onChange={togglePaid} />
+                        <p>Is the job open?</p>
+                        <Checkbox id="isOpen" onChange={toggleClosed} />
                         <PostingButton
                             onClick={(e) => {
                                 e.preventDefault();
-                                try{
-                                    const title = document.getElementById("title")
-                                                .innerHTML;
+                                try {
+                                    const title = document.getElementById(
+                                        "title",
+                                    ).innerHTML;
                                     const body = document.getElementById("body")
-                                            .innerHTML;
+                                        .innerHTML;
                                     if (checkTitleAndBody(title, body)) return;
                                     postCreate({
                                         variables: {
@@ -228,17 +245,15 @@ function WritePost(props) {
                                             start: startDate,
                                             end: endDate,
                                             place: place,
-                                            isPaid: true,
-                                            isClosed: true,
+                                            isPaid: isPaid,
+                                            isClosed: isClosed,
                                         },
                                     });
-                                    console.log("Submitted and push!")
+                                    console.log("Submitted and push!");
                                     props.switchVisibility(false);
-                                    history.push("/feed");
+                                } catch (error) {
+                                    console.log("error", error);
                                 }
-                                catch (error){
-                                    console.log("error",error);
-                                }   
                             }}
                         >
                             Post
@@ -258,6 +273,12 @@ function WritePost(props) {
                         <TitleDescriptor>Body</TitleDescriptor>
                         <BodyBox id="body" contentEditable={true} />
                     </BodyWrapper>
+                    <ImageWrapper>
+                        <TitleDescriptor>Images</TitleDescriptor>
+                        <ImageBox id="image">
+                            <UploadToPost parentUrlCallback={callbackURL} />
+                        </ImageBox>
+                    </ImageWrapper>
                     Deadline Date
                     <DatePicker
                         selected={endDate}
@@ -267,28 +288,26 @@ function WritePost(props) {
                     <PostingButton
                         onClick={(e) => {
                             e.preventDefault();
-                            try{
-                            const title = document.getElementById("title")
-                                        .innerHTML;
-                            const body = document.getElementById("body")
+                            try {
+                                const title = document.getElementById("title")
                                     .innerHTML;
-                            if (checkTitleAndBody(title, body)) return;
-                            postCreate({
-                                variables: {
-                                    kind: postType,
-                                    title: title,
-                                    body: body,
-                                    creator: userInfo.netID,
-                                    deadline: endDate,
-                                },
-                            });
-                            props.switchVisibility(false);
-                            history.push("/feed");
-                            }catch(error){
-                                console.log("error",error);
-                            }   
+                                const body = document.getElementById("body")
+                                    .innerHTML;
+                                if (checkTitleAndBody(title, body)) return;
+                                postCreate({
+                                    variables: {
+                                        kind: postType,
+                                        title: title,
+                                        body: body,
+                                        creator: userInfo.netID,
+                                        deadline: endDate,
+                                    },
+                                });
+                                props.switchVisibility(false);
+                            } catch (error) {
+                                console.log("error", error);
+                            }
                         }}
-                        
                     >
                         Post
                     </PostingButton>
@@ -322,7 +341,7 @@ function WritePost(props) {
             <PostWrapper>
                 <TitleFlex>
                     <PostHeaderType>{postType}</PostHeaderType>
-                    <ExitButton onClick = {closeModal}>X</ExitButton>
+                    <ExitButton onClick={closeModal}>X</ExitButton>
                 </TitleFlex>
                 {form}
             </PostWrapper>
