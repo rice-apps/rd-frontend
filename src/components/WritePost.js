@@ -9,7 +9,7 @@ import { POST_CREATE } from "../graphql/Mutations";
 import { Checkbox } from "@material-ui/core";
 
 import { TOKEN_NAME } from "../utils/config";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import {
     PostWrapper,
@@ -39,8 +39,6 @@ function WritePost(props) {
     useEffect(() => {
         console.log("event happened");
     });
-
-    const history = useHistory();
 
     const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));
     const [startDate, setStart] = useState(new Date().getTime());
@@ -103,11 +101,6 @@ function WritePost(props) {
                                 .innerHTML;
                             if (checkTitleAndBody(title, body)) return;
                             try {
-                                console.log(url);
-                                console.log(postType);
-                                console.log(title);
-                                console.log(body);
-                                console.log(userInfo.netID);
                                 postCreate({
                                     variables: {
                                         kind: postType,
@@ -118,7 +111,6 @@ function WritePost(props) {
                                     },
                                 });
                                 props.switchVisibility(false);
-                                //history.push("/feed");
                             } catch (error) {
                                 console.log("error", error);
                             }
@@ -181,7 +173,6 @@ function WritePost(props) {
                                     },
                                 });
                                 props.switchVisibility(false);
-                                history.push("/feed");
                             } catch (error) {
                                 console.log("error", error);
                             }
@@ -257,7 +248,6 @@ function WritePost(props) {
                                     });
                                     console.log("Submitted and push!");
                                     props.switchVisibility(false);
-                                    history.push("/feed");
                                 } catch (error) {
                                     console.log("error", error);
                                 }
@@ -311,7 +301,6 @@ function WritePost(props) {
                                     },
                                 });
                                 props.switchVisibility(false);
-                                history.push("/feed");
                             } catch (error) {
                                 console.log("error", error);
                             }

@@ -15,7 +15,6 @@ import {
     LeftSidebarContainer,
 } from "./PostFeedWithData.styles";
 
-import uuid from "uuid/v4";
 import { Helmet } from "react-helmet";
 import { Banner } from "./PostFeed.styles";
 import { SideNav } from "./SideNav";
@@ -79,7 +78,15 @@ function PostFeedWithData() {
                                                 prev.postConnection.count + 1,
                                             edges: [
                                                 {
-                                                    cursor: uuid(),
+                                                    cursor: btoa(
+                                                        JSON.stringify({
+                                                            _id:
+                                                                subscriptionData
+                                                                    .data
+                                                                    .postCreated
+                                                                    ._id,
+                                                        }),
+                                                    ),
                                                     node:
                                                         subscriptionData.data
                                                             .postCreated,
