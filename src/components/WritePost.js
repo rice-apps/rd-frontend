@@ -64,16 +64,13 @@ function WritePost(props) {
     const changeEndDate = (date) => setEnd(date);
     const changePostType = (e) => setPostType(e.target.id);
 
-    const closeModal = () => {
-        props.switchVisibility(false);
-    };
+    const closeModal = () => { props.switchVisibility(false);}
 
     const checkTitleAndBody = (title, body) =>
         title.length <= 0 || body.length <= 0;
 
-    console.log(isPaid);
-    const togglePaid = () => setPaid(!isPaid);
-
+    const togglePaid = () => setPaid(!isPaid); 
+                            
     const toggleClosed = () => setClosed(!isClosed);
 
     switch (postType) {

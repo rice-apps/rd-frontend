@@ -1,8 +1,9 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Redirect, useHistory } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { useMutation, useLazyQuery } from "@apollo/client";
 import { TOKEN_NAME } from "../utils/config";
 import { SET_INFO } from "../graphql/Mutations";
+import { USER_EXISTS, GET_USER_DATA } from "../graphql/Queries";
 import laptop_girl from "../images/Page 2.svg";
 import major_minor_json from "../utils/MajorMinor.json";
 import DropDownItem from "./DropDownItem.js";
@@ -28,6 +29,7 @@ import { Helmet } from "react-helmet";
 const MoreInfo = () => {
     let history = useHistory();
 
+    const [userStatement, setStatement] = useState("Valid!");
     const [loading, setLoading] = useState(false);
     const [username, setUsername] = useState("");
     const [major, setMajor] = useState([]);
@@ -38,6 +40,7 @@ const MoreInfo = () => {
     const [isCollegeOpen, setCollegeOpen] = useState(false);
 
     const [addInfo] = useMutation(SET_INFO);
+    const [checkUser, { data : userExists, loading : userExistLoading, error }] = useLazyQuery(USER_EXISTS);
     const data = JSON.parse(localStorage.getItem(TOKEN_NAME));
 
     const majors = major_minor_json.majors.split(";").map((major) => {
@@ -56,8 +59,26 @@ const MoreInfo = () => {
 
     const colleges = major_minor_json.colleges.split(";");
 
+    useEffect(() => {
+        checkUser({
+            variables: {
+                username: username,
+            },  
+        })  
+    }, [username])
+
+    useEffect(()=> {
+        const isMyUsernameTaken = userExists?.doesUsernameExist.usernameExists;
+        setStatement("valid username!")
+        if(isMyUsernameTaken){
+            setStatement("somebody already took that username lol");
+        }
+    }, [userExists?.doesUsernameExist.usernameExists])
+
     const handleUserChange = useCallback(
-        (e) => setUsername(e.target.value),
+        (e) => {
+            setUsername(e.target.value)
+        },
         [],
     );
 
@@ -79,10 +100,10 @@ const MoreInfo = () => {
         );
     };
 
-    const handleCollegeChange = useCallback((newValue) => {
+    const handleCollegeChange = (newValue) => {
         const index_of_college = college.indexOf(newValue);
         setCollege(index_of_college >= 0 ? "" : newValue);
-    }, []);
+    };
 
     const toggleMajor = () => {
         setMajorOpen(!isMajorOpen);
@@ -100,9 +121,9 @@ const MoreInfo = () => {
         setMinorOpen(false);
     };
 
-    // if (!localStorage.getItem(TOKEN_NAME)) {
-    //     return <Redirect to="/login" />;
-    // }
+    if (!localStorage.getItem(TOKEN_NAME)) {
+        return <Redirect to="/login" />;
+    }
 
     if (!data?.isNewUser) {
         console.log("Redirecting....");
@@ -121,17 +142,29 @@ const MoreInfo = () => {
                 username: username,
             });
 
-            await addInfo({
-                variables: {
-                    username: username,
-                    college: college,
-                    major: major,
-                    minor: minor,
-                    netID: data.netID,
-                    isNewUser: false,
-                },
-            });
+            if (userExistLoading || userExists?.doesUsernameExist.usernameExists){ 
+                return; 
+            }
 
+            //manually set local storage cause for some reason it's not doing it anymore
+            let local_storage = JSON.parse(localStorage.getItem(TOKEN_NAME));
+            local_storage.isNewUser = false;
+            localStorage.setItem(TOKEN_NAME, JSON.stringify(local_storage))
+
+            try{
+                await addInfo({
+                    variables: {
+                        username: username,
+                        college: college,
+                        major: major,
+                        minor: minor,
+                        netID: data.netID,
+                        isNewUser: false,
+                    },
+                });
+            } catch (error){
+                return ;
+            }
             history.push("/feed");
         } catch (error) {
             console.log(error);
@@ -155,6 +188,7 @@ const MoreInfo = () => {
 
                     <MarginsForm onSubmit={handleSubmit}>
                         <TotalForm>
+                            <p>{userStatement}</p>
                             <FieldSetStyle>
                                 <TextField
                                     type="text"
@@ -231,7 +265,7 @@ const MoreInfo = () => {
                                     </DDList>
                                 )}
                             </DDWrapper>
-                            <SubmitButton type="submit" disabled={loading}>
+                            <SubmitButton type="submit" disabled={userExists?.doesUsernameExist.usernameExists}>
                                 &rarr;
                             </SubmitButton>
                         </TotalForm>
