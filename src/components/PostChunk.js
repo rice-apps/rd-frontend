@@ -153,7 +153,7 @@ function PostChunk(props) {
                         <DiscussionBody>
                             {ReactHtmlParser(props.post.node.body)}
                         </DiscussionBody>
-                        
+                        {oneImage}
                     </TopMiddleComponent>
 
                     <BottomComponent>
