@@ -2,20 +2,19 @@ import styled from "styled-components";
 
 const DiscussionBoxSection = styled.section`
     // contains DiscussionBox
-    padding: 20px 350px;
+    padding: 20px 140px;
 `;
 
 const DiscussionBox = styled.section`
-    // contains LeftComponent, MiddleComponent, TopRightComponent, BottomComponent
+    // contains LeftComponent, TopMiddleComponent, BottomComponent
     padding: 5px;
     background: #ffffff;
-    border-radius: 10px;
+    border-radius: 20px;
     display: grid;
-    grid-template-rows: 40px 1fr 50px;
+    grid-template-rows: 1fr 50px;
     grid-template-columns: 65px 1fr;
     grid-template-areas:
-        "left top"
-        "left middle"
+        "left topmiddle"
         "left bottom";
 `;
 
@@ -40,40 +39,74 @@ const Downvote = styled.div`
     grid-row: 4/5;
 `;
 
-const TopComponent = styled.div`
-    // contains DiscussionTitle, Tags
+const TopMiddleComponent = styled.div`
+    // contains DiscussionTitle, Tags, DropDown, DiscussionBody
+    grid-area: topmiddle;
     display: grid;
-    grid-area: top;
-    grid-template-columns: 2fr 1fr;
+    grid-template-areas:
+        "title tags moreoptions"
+        "body body moreoptions";
+    grid-template-columns: 4fr 2fr 1fr;
+    grid-template-rows: 65px 1fr;
+`;
+
+const DiscussionTitleDiv = styled.div`
+    grid-area: title;
+    padding: 10px 0px;
     overflow: hidden;
 `;
 
 const DiscussionTitle = styled.text`
-    padding: 10px 0px;
     justify-self: start;
     align-self: start;
     font-family: "Avenir";
-    font-size: 3vh;
+    font-size: 2.5vh;
     font-weight: bold;
 `;
 
 const Tags = styled.text`
+    grid-area: tags;
+    padding: 20px 0px;
     justify-self: end;
-    align-self: center;
     font-family: "Avenir";
     font-size: 2vh;
     word-wrap: break-word;
 `;
 
-const MiddleComponent = styled.div`
-    // contains DiscussionBody
+const MoreOptions = styled.div`
+    grid-area: moreoptions;
+    align-self: start;
+    justify-self: end;
+`;
+
+const DDMenu = styled.div`
+    position: relative;
+    align-self: stretch;
+    justify-self: stretch;
+    background-color: white;
     display: grid;
-    justify-items: start;
-    grid-area: middle;
-    overflow: hidden;
+    bottom: 25px;
+    width: 200%;
+`;
+
+const Save = styled.button`
+    padding: 5px;
+`;
+
+const AddTo = styled.button`
+    padding: 5px;
+`;
+
+const Report = styled.button`
+    padding: 5px;
+`;
+
+const Delete = styled.button`
+    padding: 5px;
 `;
 
 const DiscussionBody = styled.text`
+    grid-area: body;
     padding: 10px 0px;
     font-family: "Avenir";
     font-size: 2vh;
@@ -84,30 +117,10 @@ const BottomComponent = styled.div`
     // contains Save, AddTo, OP, Time, Date, ShareFacebook, ShareTwitter, Share
     grid-area: bottom;
     display: grid;
-    grid-template-columns: 70px 100px 1fr 80px 60px 100px 40px 40px 40px;
-    grid-template-areas: "save addto . op time date facebook twitter share";
+    grid-template-columns: 80px 1fr 60px 100px 40px 40px 40px 15px;
+    grid-template-areas: "op . time date facebook twitter share .";
     justify-items: start;
     align-items: center;
-`;
-
-const Save = styled.button`
-    grid-area: save;
-    background: white;
-    color: gray;
-    border: 2px solid gray;
-    border-radius: 5px;
-    font-size: 1em;
-    align-items: stretch;
-`;
-
-const AddTo = styled.button`
-    grid-area: addto;
-    background: white;
-    color: gray;
-    border: 2px solid gray;
-    border-radius: 5px;
-    font-size: 1em;
-    align-items: stretch;
 `;
 
 const OP = styled.div`
@@ -141,14 +154,18 @@ export {
     Likes,
     Upvote,
     Downvote,
-    TopComponent,
+    TopMiddleComponent,
+    DiscussionTitleDiv,
     DiscussionTitle,
     Tags,
-    MiddleComponent,
+    MoreOptions,
+    DDMenu,
     DiscussionBody,
     BottomComponent,
     Save,
     AddTo,
+    Report,
+    Delete,
     OP,
     Time,
     Date,

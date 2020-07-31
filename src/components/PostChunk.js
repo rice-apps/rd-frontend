@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -8,6 +8,7 @@ import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import ShareIcon from "@material-ui/icons/Share";
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 import ReactHtmlParser from "react-html-parser";
 
@@ -18,14 +19,18 @@ import {
     Likes,
     Upvote,
     Downvote,
-    TopComponent,
+    TopMiddleComponent,
+    DiscussionTitleDiv,
     DiscussionTitle,
     Tags,
-    MiddleComponent,
+    MoreOptions,
+    DDMenu,
     DiscussionBody,
     BottomComponent,
     Save,
     AddTo,
+    Report,
+    Delete,
     OP,
     Time,
     Date,
@@ -48,6 +53,13 @@ function PostChunk(props) {
 
     if (props.post.node.imageUrl) {
         oneImage = <img src={props.post.node.imageUrl} alt="Custom-thing" />;
+    }
+
+    const [isDDOpen, setDDOpen] = useState(false);
+
+
+    const toggleDD = () => {
+        setDDOpen(!isDDOpen);
     }
 
     return (
@@ -91,42 +103,61 @@ function PostChunk(props) {
                         </Downvote>
                     </LeftComponent>
 
-                    <TopComponent>
-                        <DiscussionTitle>
-                            {props.post.node.title}
-                        </DiscussionTitle>
+                    <TopMiddleComponent>
+                        <DiscussionTitleDiv>
+                            <DiscussionTitle>
+                                {props.post.node.title}
+                            </DiscussionTitle>
+                        </DiscussionTitleDiv>
                         <Tags>Tags</Tags>
-                    </TopComponent>
+                        <MoreOptions className={classes.root}>
+                            <IconButton onClick={toggleDD}>
+                                <MoreHorizIcon open={isDDOpen}/>
+                            </IconButton>
+                            {isDDOpen && (
+                                <DDMenu>
+                                    <Save
+                                        onClick={(e) => {
+                                            e.preventDefault();
 
-                    <MiddleComponent>
+                                            const currentSavedPosts = props.userInfo.savedPosts.map(
+                                                (tup) => tup._id,
+                                            );
+                                            props.savePost({
+                                                variables: {
+                                                    netID: props.userInfo.netID,
+                                                    savedPosts: [
+                                                        ...currentSavedPosts,
+                                                        props.post.node._id,
+                                                    ],
+                                                },
+                                            });
+                                        }}
+                                    >
+                                        Save Post
+                                    </Save>
+                                    <AddTo>+ Add to...</AddTo>
+                                    <Report>
+                                        Report Post
+                                    </Report>
+                                    {props.post.node.creator.username === props.userInfo.username && (
+                                        <Delete>
+                                            Delete Post
+                                        </Delete>
+                                    )}
+                                    
+                                </DDMenu>
+                            )}
+                        </MoreOptions>
+
                         <DiscussionBody>
                             {ReactHtmlParser(props.post.node.body)}
                         </DiscussionBody>
-                        {oneImage}
-                    </MiddleComponent>
+                        
+                    </TopMiddleComponent>
 
                     <BottomComponent>
-                        <Save
-                            onClick={(e) => {
-                                e.preventDefault();
-
-                                const currentSavedPosts = props.userInfo.savedPosts.map(
-                                    (tup) => tup._id,
-                                );
-                                props.savePost({
-                                    variables: {
-                                        netID: props.userInfo.netID,
-                                        savedPosts: [
-                                            ...currentSavedPosts,
-                                            props.post.node._id,
-                                        ],
-                                    },
-                                });
-                            }}
-                        >
-                            Save
-                        </Save>
-                        <AddTo>+ Add to...</AddTo>
+                        
                         <OP>{props.post.node.creator.username}</OP>
                         <Time>
                             {props.post.node.date_created.substring(11, 16)}

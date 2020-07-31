@@ -72,6 +72,11 @@ export default new ApolloClient({
                             return incoming;
                         },
                     },
+                    postRemoved: {
+                        merge(_ignored, incoming) {
+                            return incoming;
+                        },
+                    },
                 },
             },
             Discussion: {

@@ -20,7 +20,7 @@ import {
     TitleWrapper,
     TitleBox,
     PostingButton,
-} from "./WritePost.styles";
+} from "../components/WritePost.styles";
 
 const ProfilePage = () => {
     const [username, setUsername] = useState("");

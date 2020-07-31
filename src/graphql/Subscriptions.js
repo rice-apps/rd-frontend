@@ -67,6 +67,7 @@ const POST_VOTE_CHANGED = gql`
     }
 `;
 
+
 const POST_REMOVED = gql`
     subscription {
         postRemoved {
