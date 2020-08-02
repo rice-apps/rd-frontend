@@ -1,5 +1,6 @@
 import InfiniteScroll from "react-infinite-scroller";
 import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import { useMutation } from "@apollo/client";
 
 import uuid from "uuid/v4";
@@ -69,5 +70,11 @@ function PostFeed(props) {
         </>
     );
 }
+
+PostFeed.propTypes = {
+    onLoadMore: PropTypes.func.isRequired,
+    subscribeToNewPosts: PropTypes.func.isRequired,
+    subscribeToNewVotes: PropTypes.func.isRequired,
+};
 
 export default PostFeed;

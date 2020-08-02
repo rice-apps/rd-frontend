@@ -24,6 +24,7 @@ export const SideNav = () => {
             {pages.map((page, i) => {
                 return (
                     <NavElement
+                        key={btoa(page)}
                         first={i === 0}
                         selected={i === getSelected}
                         onClick={() => setSelected(i)}
