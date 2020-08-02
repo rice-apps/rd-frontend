@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useParams} from "react";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -7,9 +7,15 @@ import Feed from "./components/PostFeedWithData";
 import Home from "./components/Home";
 import MoreInfo from "./components/MoreInfo";
 import ProfilePage from "./components/Profile.js";
+import PostFull from "./components/PostFull.js";
 
 // TODO: find a way to fix Login being blank after error ticket
 // without forcing a refresh on page navigation
+
+function GoToFullPost() {
+    let { slug } = useParams();
+    return <PostFull postID={slug} />;
+}
 
 function App() {
     return (
@@ -20,6 +26,9 @@ function App() {
                 </Route>
                 <Route path="/feed">
                     <Feed />
+                </Route>
+                <Route path="/posts/:slug">
+                    <GoToFullPost />
                 </Route>
                 <Route exact path="/more_info">
                     <MoreInfo />

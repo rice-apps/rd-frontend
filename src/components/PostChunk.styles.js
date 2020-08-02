@@ -44,7 +44,7 @@ const TopComponent = styled.div`
     // contains DiscussionTitle, Tags
     display: grid;
     grid-area: top;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 2fr 0.5fr 0.5fr;
     overflow: hidden;
 `;
 
@@ -58,11 +58,19 @@ const DiscussionTitle = styled.text`
 `;
 
 const Tags = styled.text`
-    justify-self: end;
+    justify-self: center;
     align-self: center;
     font-family: "Avenir";
     font-size: 2vh;
     word-wrap: break-word;
+`;
+
+// const FullPostLink = styled.link`
+const FullPostLink = styled.text`
+    justify-self: end;
+    align-self: center;
+    font-family: "Avenir";
+    font-size: 2vh;
 `;
 
 const MiddleComponent = styled.div`
@@ -155,4 +163,5 @@ export {
     ShareFacebook,
     ShareTwitter,
     Share,
+    FullPostLink,
 };

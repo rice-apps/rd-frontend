@@ -32,7 +32,9 @@ import {
     ShareFacebook,
     ShareTwitter,
     Share,
+    FullPostLink
 } from "./PostChunk.styles";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -96,6 +98,8 @@ function PostChunk(props) {
                             {props.post.node.title}
                         </DiscussionTitle>
                         <Tags>Tags</Tags>
+                        {/* <FullPostLink>Expand</FullPostLink> */}
+                        <Link to="/posts/:slug">Expand</Link>
                     </TopComponent>
 
                     <MiddleComponent>
