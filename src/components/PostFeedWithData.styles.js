@@ -18,7 +18,7 @@ export const PostFeedContainer = styled.div`
     flex-direction: column;
     align-items: center;
 
-    background: rgba(255, 255, 255, 0.7) 0% 0% no-repeat padding-box;
+    background: rgba(255, 255, 255, 0.5) 0% 0% no-repeat padding-box;
     border-radius: 20px;
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
