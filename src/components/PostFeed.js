@@ -2,10 +2,10 @@ import InfiniteScroll from "react-infinite-scroller";
 import React, { useEffect } from "react";
 import { useMutation } from "@apollo/client";
 
+import uuid from "uuid/v4";
 import PostChunk from "./PostChunk";
 import { TOKEN_NAME } from "../utils/config";
 import { UPVOTE_POST, DOWNVOTE_POST, SAVE_POST } from "../graphql/Mutations";
-import uuid from "uuid/v4";
 
 function PostFeed(props) {
     const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));

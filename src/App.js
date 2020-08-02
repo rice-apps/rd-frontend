@@ -13,7 +13,7 @@ import ProfilePage from "./components/Profile.js";
 
 function App() {
     return (
-        <Router forceRefresh={true}>
+        <Router forceRefresh>
             <Switch>
                 <Route path="/login">
                     <Login />

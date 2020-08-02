@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { useQuery } from "@apollo/client";
 
+import { Helmet } from "react-helmet";
 import PostFeed from "./PostFeed";
 import { POST_PAGE } from "../graphql/Queries";
 import { POST_CREATED, POST_VOTE_CHANGED } from "../graphql/Subscriptions";
@@ -15,7 +16,6 @@ import {
     LeftSidebarContainer,
 } from "./PostFeedWithData.styles";
 
-import { Helmet } from "react-helmet";
 import { Banner } from "./PostFeed.styles";
 import { SideNav } from "./SideNav";
 
@@ -73,7 +73,8 @@ function PostFeedWithData() {
                                         return prev;
                                     }
 
-                                    return Object.assign({}, prev, {
+                                    return {
+                                        ...prev,
                                         postConnection: {
                                             count:
                                                 prev.postConnection.count + 1,
@@ -98,7 +99,7 @@ function PostFeedWithData() {
                                                 prev.postConnection.pageInfo,
                                             __typename: "PostConnection",
                                         },
-                                    });
+                                    };
                                 },
                             });
                         }}
@@ -109,7 +110,7 @@ function PostFeedWithData() {
                         }}
                     />
                 </PostFeedContainer>
-                <RightSidebarContainer></RightSidebarContainer>
+                <RightSidebarContainer />
             </Background>
             <WritePost
                 show={modalVisible}

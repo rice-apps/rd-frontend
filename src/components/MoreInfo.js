@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { useMutation, useLazyQuery } from "@apollo/client";
+import { Helmet } from "react-helmet";
 import { TOKEN_NAME } from "../utils/config";
 import { SET_INFO } from "../graphql/Mutations";
 import { USER_EXISTS, GET_USER_DATA } from "../graphql/Queries";
@@ -24,10 +25,9 @@ import {
     DDListItem,
     ArrowI,
 } from "./MoreInfo.styles";
-import { Helmet } from "react-helmet";
 
 const MoreInfo = () => {
-    let history = useHistory();
+    const history = useHistory();
 
     const [userStatement, setStatement] = useState("Valid!");
     const [loading, setLoading] = useState(false);
@@ -40,7 +40,10 @@ const MoreInfo = () => {
     const [isCollegeOpen, setCollegeOpen] = useState(false);
 
     const [addInfo] = useMutation(SET_INFO);
-    const [checkUser, { data : userExists, loading : userExistLoading, error }] = useLazyQuery(USER_EXISTS);
+    const [
+        checkUser,
+        { data: userExists, loading: userExistLoading, error },
+    ] = useLazyQuery(USER_EXISTS);
     const data = JSON.parse(localStorage.getItem(TOKEN_NAME));
 
     const majors = major_minor_json.majors.split(";").map((major) => {
@@ -62,25 +65,22 @@ const MoreInfo = () => {
     useEffect(() => {
         checkUser({
             variables: {
-                username: username,
-            },  
-        })  
-    }, [username])
+                username,
+            },
+        });
+    }, [username]);
 
-    useEffect(()=> {
+    useEffect(() => {
         const isMyUsernameTaken = userExists?.doesUsernameExist.usernameExists;
-        setStatement("valid username!")
-        if(isMyUsernameTaken){
+        setStatement("valid username!");
+        if (isMyUsernameTaken) {
             setStatement("somebody already took that username lol");
         }
-    }, [userExists?.doesUsernameExist.usernameExists])
+    }, [userExists?.doesUsernameExist.usernameExists]);
 
-    const handleUserChange = useCallback(
-        (e) => {
-            setUsername(e.target.value)
-        },
-        [],
-    );
+    const handleUserChange = useCallback((e) => {
+        setUsername(e.target.value);
+    }, []);
 
     const handleMajorChange = (newValue) => {
         const index_of_major = major.indexOf(newValue);
@@ -127,7 +127,7 @@ const MoreInfo = () => {
 
     if (!data?.isNewUser) {
         console.log("Redirecting....");
-        return <Redirect to={"/feed"} />;
+        return <Redirect to="/feed" />;
     }
 
     const handleSubmit = async (e) => {
@@ -137,33 +137,36 @@ const MoreInfo = () => {
             console.log({
                 major: major.toString(),
                 minor: minor.toString(),
-                college: college,
+                college,
                 netID: data.netID,
-                username: username,
+                username,
             });
 
-            if (userExistLoading || userExists?.doesUsernameExist.usernameExists){ 
-                return; 
+            if (
+                userExistLoading ||
+                userExists?.doesUsernameExist.usernameExists
+            ) {
+                return;
             }
 
-            //manually set local storage cause for some reason it's not doing it anymore
-            let local_storage = JSON.parse(localStorage.getItem(TOKEN_NAME));
+            // manually set local storage cause for some reason it's not doing it anymore
+            const local_storage = JSON.parse(localStorage.getItem(TOKEN_NAME));
             local_storage.isNewUser = false;
-            localStorage.setItem(TOKEN_NAME, JSON.stringify(local_storage))
+            localStorage.setItem(TOKEN_NAME, JSON.stringify(local_storage));
 
-            try{
+            try {
                 await addInfo({
                     variables: {
-                        username: username,
-                        college: college,
-                        major: major,
-                        minor: minor,
+                        username,
+                        college,
+                        major,
+                        minor,
                         netID: data.netID,
                         isNewUser: false,
                     },
                 });
-            } catch (error){
-                return ;
+            } catch (error) {
+                return;
             }
             history.push("/feed");
         } catch (error) {
@@ -173,7 +176,7 @@ const MoreInfo = () => {
         }
     };
 
-    //have to manually push newUser
+    // have to manually push newUser
     return (
         <>
             <Helmet>
@@ -265,7 +268,12 @@ const MoreInfo = () => {
                                     </DDList>
                                 )}
                             </DDWrapper>
-                            <SubmitButton type="submit" disabled={userExists?.doesUsernameExist.usernameExists}>
+                            <SubmitButton
+                                type="submit"
+                                disabled={
+                                    userExists?.doesUsernameExist.usernameExists
+                                }
+                            >
                                 &rarr;
                             </SubmitButton>
                         </TotalForm>
