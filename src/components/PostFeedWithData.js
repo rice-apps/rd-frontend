@@ -26,6 +26,7 @@ function PostFeedWithData() {
         },
 
         fetchPolicy: "cache-and-network",
+        nextFetchPolicy: "cache-first",
     });
 
     const [modalVisible, setVisibility] = useState(false);
