@@ -21,7 +21,7 @@ function UploadToPost(props) {
             headers: {
                 "Content-Type": file.type,
             },
-            mode: "cors", //update access
+            mode: "cors", // update access
             method: "PUT",
             body: file,
         };
@@ -74,14 +74,14 @@ function UploadToPost(props) {
         <div>
             {/* <p>The Image Upload Section</p> */}
             {/* <input type="file" onChange={onDrop2} value={file} /> */}
-            <label for="img">Choose an image: </label>
+            <label htmlFor="img">Choose an image: </label>
             <input
                 type="file"
                 onChange={onDrop}
                 id="img"
                 name="imgFile"
                 accept="image/*"
-            ></input>
+            />
             <button onClick={(e) => submit(e)}>Confirm Image</button>
         </div>
     );

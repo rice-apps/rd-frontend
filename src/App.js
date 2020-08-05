@@ -19,7 +19,7 @@ function GoToFullPost() {
 
 function App() {
     return (
-        <Router forceRefresh={true}>
+        <Router forceRefresh>
             <Switch>
                 <Route path="/login">
                     <Login />

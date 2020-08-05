@@ -8,7 +8,7 @@ import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import ShareIcon from "@material-ui/icons/Share";
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
 import ReactHtmlParser from "react-html-parser";
 
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 function PostChunk(props) {
     const classes = useStyles();
-    let oneImage = <React.Fragment></React.Fragment>;
+    let oneImage = <></>;
 
     if (props.post.node.imageUrl) {
         oneImage = <img src={props.post.node.imageUrl} alt="Custom-thing" />;
@@ -59,10 +59,9 @@ function PostChunk(props) {
 
     const [isDDOpen, setDDOpen] = useState(false);
 
-
     const toggleDD = () => {
         setDDOpen(!isDDOpen);
-    }
+    };
 
     return (
         <>
@@ -116,7 +115,7 @@ function PostChunk(props) {
                         <Link to="/posts/:slug">Expand</Link>
                         <MoreOptions className={classes.root}>
                             <IconButton onClick={toggleDD}>
-                                <MoreHorizIcon open={isDDOpen}/>
+                                <MoreHorizIcon open={isDDOpen} />
                             </IconButton>
                             {isDDOpen && (
                                 <DDMenu>
@@ -141,15 +140,11 @@ function PostChunk(props) {
                                         Save Post
                                     </Save>
                                     <AddTo>+ Add to...</AddTo>
-                                    <Report>
-                                        Report Post
-                                    </Report>
-                                    {props.post.node.creator.username === props.userInfo.username && (
-                                        <Delete>
-                                            Delete Post
-                                        </Delete>
+                                    <Report>Report Post</Report>
+                                    {props.post.node.creator.username ===
+                                        props.userInfo.username && (
+                                        <Delete>Delete Post</Delete>
                                     )}
-                                    
                                 </DDMenu>
                                 )}
                             </MoreOptions>
@@ -161,17 +156,18 @@ function PostChunk(props) {
                     </TopMiddleComponent>
 
                     <BottomComponent>
-                        
                         <OP>{props.post.node.creator.username}</OP>
                         <Time>
                             {props.post.node.date_created.substring(11, 16)}
                         </Time>
                         <Date>
-                            {props.post.node.date_created.substring(5, 7) +
-                                "/" +
-                                props.post.node.date_created.substring(8, 10) +
-                                "/" +
-                                props.post.node.date_created.substring(0, 4)}
+                            {`${props.post.node.date_created.substring(
+                                5,
+                                7,
+                            )}/${props.post.node.date_created.substring(
+                                8,
+                                10,
+                            )}/${props.post.node.date_created.substring(0, 4)}`}
                         </Date>
                         <ShareFacebook>
                             <IconButton>

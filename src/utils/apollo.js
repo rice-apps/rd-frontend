@@ -1,9 +1,9 @@
 import { ApolloClient } from "@apollo/client/core";
 import { InMemoryCache } from "@apollo/client/cache";
-import { createHttpLink } from "@apollo/client";
+import { createHttpLink, split } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { WebSocketLink } from "@apollo/client/link/ws";
-import { split } from "@apollo/client";
+
 import {
     getMainDefinition,
     relayStylePagination,
@@ -46,7 +46,7 @@ const authLink = setContext((_, { headers }) => {
     return {
         headers: {
             ...headers,
-            authorization: token ? token : "",
+            authorization: token || "",
         },
     };
 });
