@@ -48,7 +48,7 @@
         "@types/react": "^16.9.44",
         "@types/react-helmet": "^6.1.0",
         "@types/react-html-parser": "^2.0.1",
-        "@types/uuid": "^8.0.0",
+        "@types/uuid": "^8.0.1",
         "cross-fetch": "^3.0.5",
         "eslint-config-airbnb": "18.2.0",
         "eslint-config-prettier": "^6.11.0",
