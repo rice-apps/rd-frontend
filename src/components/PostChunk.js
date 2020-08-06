@@ -144,7 +144,6 @@ function PostChunk(props) {
                                         Save Post
                                     </Save>
                                     <AddTo>+ Add to...</AddTo>
-<<<<<<< HEAD
                                     <Report 
                                         onClick={(e) => {
                                             e.preventDefault();
@@ -174,12 +173,6 @@ function PostChunk(props) {
                                         >
                                             Delete Post
                                         </Delete>
-=======
-                                    <Report>Report Post</Report>
-                                    {props.post.node.creator.username ===
-                                        props.userInfo.username && (
-                                        <Delete>Delete Post</Delete>
->>>>>>> 81911413b7ebc173bb72f2e33aa5958a29c72f4a
                                     )}
                                 </DDMenu>
                             )}
@@ -192,7 +185,6 @@ function PostChunk(props) {
                     </TopMiddleComponent>
 
                     <BottomComponent>
-<<<<<<< HEAD
                         
                         <Tags>
                             {props.post.node.tags.length > 0 && <Tag>{props.post.node.tags[0]}</Tag>}
@@ -213,21 +205,6 @@ function PostChunk(props) {
                                 </Tags>)}
                         </Tags>
                         
-=======
-                        <OP>{props.post.node.creator.username}</OP>
-                        <Time>
-                            {props.post.node.date_created.substring(11, 16)}
-                        </Time>
-                        <Date>
-                            {`${props.post.node.date_created.substring(
-                                5,
-                                7,
-                            )}/${props.post.node.date_created.substring(
-                                8,
-                                10,
-                            )}/${props.post.node.date_created.substring(0, 4)}`}
-                        </Date>
->>>>>>> 81911413b7ebc173bb72f2e33aa5958a29c72f4a
                         <ShareFacebook>
                             <IconButton>
                                 <FacebookIcon />
