@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 
-import UploadToPost from "./UploadToPost";
-
 import { useMutation } from "@apollo/client";
 
-import { POST_CREATE } from "../graphql/Mutations";
 import { Checkbox } from "@material-ui/core";
 
-import { TOKEN_NAME } from "../utils/config";
 import { Redirect } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { TOKEN_NAME } from "../utils/config";
+import { POST_CREATE } from "../graphql/Mutations";
+import UploadToPost from "./UploadToPost";
 import {
     PostWrapper,
     Button,
@@ -71,7 +70,6 @@ function WritePost(props) {
     const checkTitleAndBody = (title, body) =>
         title.length <= 0 || body.length <= 0;
 
-    console.log(isPaid);
     const togglePaid = () => setPaid(!isPaid);
 
     const toggleClosed = () => setClosed(!isClosed);
@@ -82,11 +80,11 @@ function WritePost(props) {
                 <Form>
                     <TitleWrapper>
                         <TitleDescriptor>Title</TitleDescriptor>
-                        <TitleBox id="title" contentEditable={true} />
+                        <TitleBox id="title" contentEditable />
                     </TitleWrapper>
                     <BodyWrapper>
                         <TitleDescriptor>Body</TitleDescriptor>
-                        <BodyBox id="body" contentEditable={true} />
+                        <BodyBox id="body" contentEditable />
                     </BodyWrapper>
                     <ImageWrapper>
                         <TitleDescriptor>Images</TitleDescriptor>
@@ -107,8 +105,8 @@ function WritePost(props) {
                                 postCreate({
                                     variables: {
                                         kind: postType,
-                                        title: title,
-                                        body: body,
+                                        title,
+                                        body,
                                         creator: userInfo.netID,
                                         imageUrl: url,
                                     },
@@ -129,11 +127,11 @@ function WritePost(props) {
                 <Form>
                     <TitleWrapper>
                         <TitleDescriptor>Title</TitleDescriptor>
-                        <TitleBox id="title" contentEditable={true} />
+                        <TitleBox id="title" contentEditable />
                     </TitleWrapper>
                     <BodyWrapper>
                         <TitleDescriptor>Body</TitleDescriptor>
-                        <BodyBox id="body" contentEditable={true} />
+                        <BodyBox id="body" contentEditable />
                     </BodyWrapper>
                     <ImageWrapper>
                         <TitleDescriptor>Images</TitleDescriptor>
@@ -166,12 +164,12 @@ function WritePost(props) {
                                 postCreate({
                                     variables: {
                                         kind: postType,
-                                        title: title,
-                                        body: body,
+                                        title,
+                                        body,
                                         creator: userInfo.netID,
                                         start: startDate,
                                         end: endDate,
-                                        place: place,
+                                        place,
                                         imageUrl: url,
                                     },
                                 });
@@ -192,11 +190,11 @@ function WritePost(props) {
                     <Form>
                         <TitleWrapper>
                             <TitleDescriptor>Title</TitleDescriptor>
-                            <TitleBox id="title" contentEditable={true} />
+                            <TitleBox id="title" contentEditable />
                         </TitleWrapper>
                         <BodyWrapper>
                             <TitleDescriptor>Body</TitleDescriptor>
-                            <BodyBox id="body" contentEditable={true} />
+                            <BodyBox id="body" contentEditable />
                         </BodyWrapper>
                         <ImageWrapper>
                             <TitleDescriptor>Images</TitleDescriptor>
@@ -239,14 +237,14 @@ function WritePost(props) {
                                     postCreate({
                                         variables: {
                                             kind: postType,
-                                            title: title,
-                                            body: body,
+                                            title,
+                                            body,
                                             creator: userInfo.netID,
                                             start: startDate,
                                             end: endDate,
-                                            place: place,
-                                            isPaid: isPaid,
-                                            isClosed: isClosed,
+                                            place,
+                                            isPaid,
+                                            isClosed,
                                         },
                                     });
                                     console.log("Submitted and push!");
@@ -267,11 +265,11 @@ function WritePost(props) {
                 <Form>
                     <TitleWrapper>
                         <TitleDescriptor>Title</TitleDescriptor>
-                        <TitleBox id="title" contentEditable={true} />
+                        <TitleBox id="title" contentEditable />
                     </TitleWrapper>
                     <BodyWrapper>
                         <TitleDescriptor>Body</TitleDescriptor>
-                        <BodyBox id="body" contentEditable={true} />
+                        <BodyBox id="body" contentEditable />
                     </BodyWrapper>
                     <ImageWrapper>
                         <TitleDescriptor>Images</TitleDescriptor>
@@ -297,8 +295,8 @@ function WritePost(props) {
                                 postCreate({
                                     variables: {
                                         kind: postType,
-                                        title: title,
-                                        body: body,
+                                        title,
+                                        body,
                                         creator: userInfo.netID,
                                         deadline: endDate,
                                     },

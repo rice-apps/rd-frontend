@@ -140,7 +140,7 @@ const SAVE_POST = gql`
 
 const SET_INFO = gql`
     mutation SetInfo(
-        $username: String
+        $username: String!
         $college: EnumUserCollege
         $major: [String]
         $minor: [String]
