@@ -1,11 +1,12 @@
 import InfiniteScroll from "react-infinite-scroller";
 import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import { useMutation } from "@apollo/client";
 
+import uuid from "uuid/v4";
 import PostChunk from "./PostChunk";
 import { TOKEN_NAME } from "../utils/config";
-import { UPVOTE_POST, DOWNVOTE_POST } from "../graphql/Mutations";
-import uuid from "uuid/v4";
+import { UPVOTE_POST, DOWNVOTE_POST, SAVE_POST } from "../graphql/Mutations";
 
 function PostFeed(props) {
     const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));
@@ -13,6 +14,8 @@ function PostFeed(props) {
     const [upvotePost] = useMutation(UPVOTE_POST);
 
     const [downvotePost] = useMutation(DOWNVOTE_POST);
+
+    const [savePost] = useMutation(SAVE_POST);
 
     const {
         onLoadMore,
@@ -46,6 +49,7 @@ function PostFeed(props) {
                 userInfo={userInfo}
                 upvotePost={upvotePost}
                 downvotePost={downvotePost}
+                savePost={savePost}
                 post={post}
                 key={post.node._id}
             />
@@ -66,5 +70,11 @@ function PostFeed(props) {
         </>
     );
 }
+
+PostFeed.propTypes = {
+    onLoadMore: PropTypes.func.isRequired,
+    subscribeToNewPosts: PropTypes.func.isRequired,
+    subscribeToNewVotes: PropTypes.func.isRequired,
+};
 
 export default PostFeed;

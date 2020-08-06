@@ -6,7 +6,7 @@ const Banner = styled.div`
     // Image at the top
     padding: 100px 100px;
     background: url(${LoginBackground});
-    background-color: #FFFDFD;
+    background-color: #fffdfd;
     opacity: 1;
     background-size: 100%;
     background-repeat: no-repeat;

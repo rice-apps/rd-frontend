@@ -11,7 +11,7 @@ const Auth = (successPath, errPath) => {
 
     const [login, { data, loading, error }] = useMutation(LOGIN, {
         variables: {
-            ticket: ticket,
+            ticket,
         },
     });
 

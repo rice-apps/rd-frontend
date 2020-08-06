@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { NavList, NavElement, NavIcon } from "./SideNav.styles";
+import React, { useState } from "react";
 import ChatIcon from "@material-ui/icons/Chat";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import { SvgIcon } from "@material-ui/core";
+import { NavList, NavElement } from "./SideNav.styles";
 
-export const SideNav = ({}) => {
+export const SideNav = () => {
     const [getSelected, setSelected] = useState(0);
     const pages = ["feed", "mail"];
 
@@ -22,15 +22,17 @@ export const SideNav = ({}) => {
     return (
         <NavList>
             {pages.map((page, i) => {
-                console.log(pages[page]);
                 return (
                     <NavElement
-                        first={i == 0 ? true : false}
-                        selected={i == getSelected ? true : false}
+                        key={btoa(page)}
+                        first={i === 0}
+                        selected={i === getSelected}
                         onClick={() => setSelected(i)}
                     >
                         <SvgIcon
-                            htmlColor={i == getSelected ? `#FFFFFF` : `#B78989`}
+                            htmlColor={
+                                i === getSelected ? `#FFFFFF` : `#B78989`
+                            }
                         >
                             {getIcon(page)}
                         </SvgIcon>

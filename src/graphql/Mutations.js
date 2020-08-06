@@ -13,6 +13,7 @@ const POST_CREATE = gql`
         $isPaid: Boolean
         $isClosed: Boolean
         $tags: [String]
+        $imageUrl: String
     ) {
         postCreateOne(
             record: {
@@ -27,6 +28,7 @@ const POST_CREATE = gql`
                 isPaid: $isPaid
                 isClosed: $isClosed
                 tags: $tags
+                imageUrl: $imageUrl
             }
         ) {
             record {
@@ -51,6 +53,9 @@ const LOGIN = gql`
             isNewUser
             token
             __typename
+            savedPosts {
+                _id
+            }
         }
     }
 `;
@@ -79,12 +84,26 @@ const DOWNVOTE_POST = gql`
     }
 `;
 
+const SAVE_POST = gql`
+    mutation SavePost($netID: String!, $savedPosts: [MongoID]) {
+        userUpdateOne(
+            record: { savedPosts: $savedPosts }
+            filter: { netID: $netID }
+        ) {
+            record {
+                netID
+                _id
+            }
+        }
+    }
+`;
+
 const SET_INFO = gql`
     mutation SetInfo(
         $username: String!
-        $college: EnumUserCollege!
-        $major: [String]!
-        $minor: [String]!
+        $college: EnumUserCollege
+        $major: [String]
+        $minor: [String]
         $netID: String!
         $isNewUser: Boolean!
     ) {
@@ -110,4 +129,21 @@ const SET_INFO = gql`
     }
 `;
 
-export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST };
+const S3_SIGN = gql`
+    mutation GetS3Info($filename: String!, $filetype: String!) {
+        signS3Url(filename: $filename, filetype: $filetype) {
+            url
+            signedRequest
+        }
+    }
+`;
+
+export {
+    SET_INFO,
+    POST_CREATE,
+    LOGIN,
+    UPVOTE_POST,
+    DOWNVOTE_POST,
+    SAVE_POST,
+    S3_SIGN,
+};

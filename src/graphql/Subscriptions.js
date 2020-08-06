@@ -42,6 +42,8 @@ const POST_CREATED = gql`
             ... on Notice {
                 deadline
             }
+
+            imageUrl
         }
     }
 `;
