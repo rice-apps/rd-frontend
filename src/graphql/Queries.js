@@ -27,8 +27,7 @@ const POST_PAGE = gql`
                         username
                     }
                     reports {
-                        _id
-                        username
+                        netID
                     }
                     ... on Event {
                         start

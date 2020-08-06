@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 
 import PostFeed from "./PostFeed";
 import { POST_PAGE } from "../graphql/Queries";
-import { POST_CREATED, POST_VOTE_CHANGED } from "../graphql/Subscriptions";
+import { POST_CREATED, POST_VOTE_CHANGED, POST_REMOVED } from "../graphql/Subscriptions";
 import WritePost from "./WritePost";
 
 import {
@@ -104,6 +104,11 @@ function PostFeedWithData() {
                         subscribeToNewVotes={() => {
                             subscribeToMore({
                                 document: POST_VOTE_CHANGED,
+                            });
+                        }}
+                        subscribeToNewRemovals={() => {
+                            subscribeToMore({
+                                document: POST_REMOVED,
                             });
                         }}
                     />

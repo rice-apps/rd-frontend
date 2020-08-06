@@ -84,6 +84,45 @@ const DOWNVOTE_POST = gql`
     }
 `;
 
+const REPORT_POST = gql`
+    mutation ReportPost(
+        $netID: String!
+        $_id: ID!
+        $reports: [String!]
+        $body: String!
+        $title: String!
+    ) {
+        togglePostReport(
+            netID: $netID
+            _id: $_id
+            reports: $reports
+            body: $body
+            title: $title
+        ) {
+            creator {
+                _id
+                netID
+            }
+            _id
+            reports
+            body
+            title
+        }
+    }
+`;
+
+const REMOVE_POST = gql`
+    mutation RemovePost($netID: String!, $_id: ID!) {
+        postRemoveById(netID: $netID, _id: $_id) {
+            creator {
+                _id
+                netID
+            }
+            _id
+        }
+    }
+`;
+
 
 const SAVE_POST = gql`
     mutation SavePost($netID: String!, $savedPosts: [MongoID]) {
@@ -145,6 +184,8 @@ export {
     LOGIN,
     UPVOTE_POST,
     DOWNVOTE_POST,
+    REPORT_POST,
+    REMOVE_POST,
     SAVE_POST,
     S3_SIGN,
 };

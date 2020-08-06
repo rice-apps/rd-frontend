@@ -14,6 +14,8 @@ import ReactHtmlParser from "react-html-parser";
 
 import {
     DiscussionBoxSection,
+    OP,
+    Time,
     DiscussionBox,
     LeftComponent,
     Likes,
@@ -23,6 +25,8 @@ import {
     DiscussionTitleDiv,
     DiscussionTitle,
     Tags,
+    Tag,
+    ViewTags,
     MoreOptions,
     DDMenu,
     DiscussionBody,
@@ -31,9 +35,6 @@ import {
     AddTo,
     Report,
     Delete,
-    OP,
-    Time,
-    Date,
     ShareFacebook,
     ShareTwitter,
     Share,
@@ -56,15 +57,22 @@ function PostChunk(props) {
     }
 
     const [isDDOpen, setDDOpen] = useState(false);
-
+    const [isTagsOpen, setTagsOpen] = useState(false);
 
     const toggleDD = () => {
         setDDOpen(!isDDOpen);
     }
 
+    const toggleTags = () => {
+        setTagsOpen(!isTagsOpen);
+        console.log({isTagsOpen})
+    }
+
     return (
         <>
             <DiscussionBoxSection>
+                <OP>{props.post.node.creator.username} - 5h</OP>
+                
                 <DiscussionBox>
                     <LeftComponent>
                         <Upvote className={classes.root}>
@@ -109,7 +117,6 @@ function PostChunk(props) {
                                 {props.post.node.title}
                             </DiscussionTitle>
                         </DiscussionTitleDiv>
-                        <Tags>Tags</Tags>
                         <MoreOptions className={classes.root}>
                             <IconButton onClick={toggleDD}>
                                 <MoreHorizIcon open={isDDOpen}/>
@@ -137,11 +144,33 @@ function PostChunk(props) {
                                         Save Post
                                     </Save>
                                     <AddTo>+ Add to...</AddTo>
-                                    <Report>
+                                    <Report 
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            props.reportPost({
+                                                variables: {
+                                                    netID: props.userInfo.netID,
+                                                    _id: props.post.node._id,
+                                                    reports: props.post.node.reports,
+                                                    body: props.post.node.body,
+                                                    title: props.post.node.title,
+                                                },
+                                            });
+                                        }}
+                                    >
                                         Report Post
                                     </Report>
                                     {props.post.node.creator.username === props.userInfo.username && (
-                                        <Delete>
+                                        <Delete
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                props.removePost({
+                                                    variables: {
+                                                        _id: props.post.node._id,
+                                                    },
+                                                });
+                                            }}
+                                        >
                                             Delete Post
                                         </Delete>
                                     )}
@@ -153,22 +182,30 @@ function PostChunk(props) {
                         <DiscussionBody>
                             {ReactHtmlParser(props.post.node.body)}
                         </DiscussionBody>
-                        {oneImage}
+                        
                     </TopMiddleComponent>
 
                     <BottomComponent>
                         
-                        <OP>{props.post.node.creator.username}</OP>
-                        <Time>
-                            {props.post.node.date_created.substring(11, 16)}
-                        </Time>
-                        <Date>
-                            {props.post.node.date_created.substring(5, 7) +
-                                "/" +
-                                props.post.node.date_created.substring(8, 10) +
-                                "/" +
-                                props.post.node.date_created.substring(0, 4)}
-                        </Date>
+                        <Tags>
+                            {props.post.node.tags.length > 0 && <Tag>{props.post.node.tags[0]}</Tag>}
+                            {props.post.node.tags.length > 1 && <Tag>{props.post.node.tags[1]}</Tag>}
+                            {props.post.node.tags.length > 2 && <Tag>{props.post.node.tags[2]}</Tag>}               
+
+                            {props.post.node.tags.length > 3 && (
+                                <ViewTags onClick={toggleTags}>
+                                    (See All)
+                                </ViewTags>
+                            )}
+
+                            {isTagsOpen && (
+                                <Tags>
+                                {props.post.node.tags.slice(3,).forEach(tag =>
+                                    <Tag>{tag}</Tag>
+                                )}
+                                </Tags>)}
+                        </Tags>
+                        
                         <ShareFacebook>
                             <IconButton>
                                 <FacebookIcon />
