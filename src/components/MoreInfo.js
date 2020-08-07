@@ -71,9 +71,10 @@ const MoreInfo = () => {
         const isMyUsernameTaken = userExists?.doesUsernameExist.usernameExists;
         setStatement("valid username!")
         if(isMyUsernameTaken){
+            console.log('ohyes');
             setStatement("somebody already took that username lol");
-        }
-    }, [userExists?.doesUsernameExist.usernameExists])
+            }
+        }, [userExists?.doesUsernameExist.usernameExists])
 
     const handleUserChange = useCallback(
         (e) => {
