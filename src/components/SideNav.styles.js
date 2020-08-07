@@ -15,6 +15,11 @@ export const NavElement = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 20px;
+
+    cursor: pointer;
+
+    transition: all .5s ease-in-out;
 
     ${(props) =>
         props.first &&
@@ -28,7 +33,6 @@ export const NavElement = styled.div`
             background: transparent
                 linear-gradient(270deg, #ffa99c 0%, #ffc1b7 100%) 0% 0%
                 no-repeat padding-box;
-            border-radius: 20px;
             opacity: 0.8;
         `}
 `;

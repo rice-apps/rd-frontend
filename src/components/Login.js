@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
+import { Helmet } from "react-helmet";
 import Auth from "./Auth";
 import { LoginButton, LoginContainer, LoginImage } from "./Login.styles";
 
 import { FRONTEND_AUTH_URL } from "../utils/config";
-import { Helmet } from "react-helmet";
 
 function Login() {
-    let [hasTicket] = useState(
+    const [hasTicket] = useState(
         new URLSearchParams(window.location.search).has("ticket"),
     );
 

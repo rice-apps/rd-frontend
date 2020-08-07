@@ -15,7 +15,6 @@ import {
     ArrowI,
     FieldSetStyle,
     TextField,
-
 } from "./MoreInfo.styles";
 
 import {
@@ -23,10 +22,10 @@ import {
     TitleWrapper,
     TitleBox,
     PostingButton,
-} from "../components/WritePost.styles";
+} from "./WritePost.styles";
 
 const ProfilePage = () => {
-    let history = useHistory();
+    const history = useHistory();
     const [userStatement, setStatement] = useState("Valid!");
     const [originalUsername, setOriginal] = useState("");
     const [username, setUsername] = useState("");
@@ -37,23 +36,28 @@ const ProfilePage = () => {
     const [isMinorOpen, setMinorOpen] = useState(false);
     const [isCollegeOpen, setCollegeOpen] = useState(false);
 
-    const netID = JSON.parse(localStorage.getItem(TOKEN_NAME)).netID;
+    const { netID } = JSON.parse(localStorage.getItem(TOKEN_NAME));
     const [addInfo] = useMutation(SET_INFO);
-    const [getUser, { data, loading : userInfoLoading }] = useLazyQuery(GET_USER_DATA);
-    const [checkUser, { data : userExists, loading : userExistLoading, error }] = useLazyQuery(USER_EXISTS);
+    const [getUser, { data, loading: userInfoLoading }] = useLazyQuery(
+        GET_USER_DATA,
+    );
+    const [
+        checkUser,
+        { data: userExists, loading: userExistLoading, error },
+    ] = useLazyQuery(USER_EXISTS);
 
     const fill_state = () => {
         getUser({
             variables: {
-                netID: netID,
+                netID,
             },
         });
     };
 
     useEffect(() => {
         console.log("mount");
-        return () => console.log("unmount")
-    }, [])
+        return () => console.log("unmount");
+    }, []);
 
     useEffect(() => {
         fill_state();
@@ -69,21 +73,21 @@ const ProfilePage = () => {
     useEffect(() => {
         checkUser({
             variables: {
-                username: username,
-            },  
-        })  
-    }, [username])
+                username,
+            },
+        });
+    }, [username]);
 
-    useEffect(()=> {
+    useEffect(() => {
         const isMyUsernameTaken = userExists?.doesUsernameExist.usernameExists;
-        setStatement("valid username!")
-        if(isMyUsernameTaken){
+        setStatement("valid username!");
+        if (isMyUsernameTaken) {
             setStatement("somebody already took username that lol");
         }
-        if(originalUsername === username){
-            setStatement("this is your current username")
+        if (originalUsername === username) {
+            setStatement("this is your current username");
         }
-    }, [userExists?.doesUsernameExist.usernameExists])
+    }, [userExists?.doesUsernameExist.usernameExists]);
 
     const majors = major_minor_json.majors.split(";").map((major) => {
         const major_obj = {
@@ -119,16 +123,13 @@ const ProfilePage = () => {
         setMinorOpen(false);
     };
 
-    const handleUserChange = useCallback(
-        (e) => {
-            setUsername(e.target.value)
-        },
-        [],
-    );
+    const handleUserChange = useCallback((e) => {
+        setUsername(e.target.value);
+    }, []);
 
     const handleBack = () => {
         history.push("/feed");
-    }
+    };
 
     // if I wrap this in useCallback, it breaks
     const handleMajorChange = (newValue) => {
@@ -155,24 +156,22 @@ const ProfilePage = () => {
     }, []);
 
     const saveData = async () => {
-        if (userExistLoading || userExists?.doesUsernameExist.usernameExists){ 
-            return; 
+        if (userExistLoading || userExists?.doesUsernameExist.usernameExists) {
+            return;
         }
-        
-        try{
+
+        try {
             await addInfo({
                 variables: {
-                    username: username,
-                    college: college,
-                    major: major,
-                    minor: minor,
-                    netID: netID,
+                    username,
+                    college,
+                    major,
+                    minor,
+                    netID,
                     isNewUser: false,
                 },
             });
-        } catch (error){
-            return ;
-        }
+        } catch (error) {}
     };
 
     if (!localStorage.getItem(TOKEN_NAME)) {
@@ -183,92 +182,93 @@ const ProfilePage = () => {
 
     return (
         <>
-        <form onSubmit = {saveData}>
-        <p>{userStatement}</p>
-            <FieldSetStyle>
-                <TextField
-                    type="text"
-                    placeholder="username"
-                    value={username}
-                    onChange={handleUserChange}
-                />
-            </FieldSetStyle>
-            <p>Current Majors: {major.toString()}</p>
-            <DDWrapper>
-                <DDHeader onClick={toggleMajor}>
-                    <DDHeaderTitle>
-                        Majors
-                        <ArrowI open={isMajorOpen} />
-                    </DDHeaderTitle>
-                </DDHeader>
-                {isMajorOpen && (
-                    <DDList>
-                        {majors.map((item) => (
-                            <DDListItem key={item.name}>
-                                <DropDownItem
-                                    name={item.name}
-                                    setInfo={handleMajorChange}
-                                    selectedItems={major}
-                                />
-                            </DDListItem>
-                        ))}
-                    </DDList>
-                )}
-            </DDWrapper>
+            <form onSubmit={saveData}>
+                <p>{userStatement}</p>
+                <FieldSetStyle>
+                    <TextField
+                        type="text"
+                        placeholder="username"
+                        value={username}
+                        onChange={handleUserChange}
+                    />
+                </FieldSetStyle>
+                <p>Current Majors: {major.toString()}</p>
+                <DDWrapper>
+                    <DDHeader onClick={toggleMajor}>
+                        <DDHeaderTitle>
+                            Majors
+                            <ArrowI open={isMajorOpen} />
+                        </DDHeaderTitle>
+                    </DDHeader>
+                    {isMajorOpen && (
+                        <DDList>
+                            {majors.map((item) => (
+                                <DDListItem key={item.name}>
+                                    <DropDownItem
+                                        name={item.name}
+                                        setInfo={handleMajorChange}
+                                        selectedItems={major}
+                                    />
+                                </DDListItem>
+                            ))}
+                        </DDList>
+                    )}
+                </DDWrapper>
 
-            <p>Current Minors: {minor.toString()}</p>
-            <DDWrapper>
-                <DDHeader onClick={toggleMinor}>
-                    <DDHeaderTitle>
-                        Minors
-                        <ArrowI open={isMinorOpen} />
-                    </DDHeaderTitle>
-                </DDHeader>
-                {isMinorOpen && (
-                    <DDList>
-                        {minors.map((item) => (
-                            <DDListItem key={item.name}>
-                                <DropDownItem
-                                    name={item.name}
-                                    setInfo={handleMinorChange}
-                                    selectedItems={minor}
-                                />
-                            </DDListItem>
-                        ))}
-                    </DDList>
-                )}
-            </DDWrapper>
+                <p>Current Minors: {minor.toString()}</p>
+                <DDWrapper>
+                    <DDHeader onClick={toggleMinor}>
+                        <DDHeaderTitle>
+                            Minors
+                            <ArrowI open={isMinorOpen} />
+                        </DDHeaderTitle>
+                    </DDHeader>
+                    {isMinorOpen && (
+                        <DDList>
+                            {minors.map((item) => (
+                                <DDListItem key={item.name}>
+                                    <DropDownItem
+                                        name={item.name}
+                                        setInfo={handleMinorChange}
+                                        selectedItems={minor}
+                                    />
+                                </DDListItem>
+                            ))}
+                        </DDList>
+                    )}
+                </DDWrapper>
 
-            <DDWrapper>
-                <DDHeader onClick={toggleCollege}>
-                    <DDHeaderTitle>
-                        {college === "" ? "College" : college}
-                        <ArrowI open={isCollegeOpen} />
-                    </DDHeaderTitle>
-                </DDHeader>
-                {isCollegeOpen && (
-                    <DDList>
-                        {colleges.map((item) => (
-                            <DDListItem key={item}>
-                                <DropDownItem
-                                    name={item}
-                                    setInfo={handleCollegeChange}
-                                    selectedItems={college}
-                                />
-                            </DDListItem>
-                        ))}
-                    </DDList>
-                )}
-            </DDWrapper>
+                <DDWrapper>
+                    <DDHeader onClick={toggleCollege}>
+                        <DDHeaderTitle>
+                            {college === "" ? "College" : college}
+                            <ArrowI open={isCollegeOpen} />
+                        </DDHeaderTitle>
+                    </DDHeader>
+                    {isCollegeOpen && (
+                        <DDList>
+                            {colleges.map((item) => (
+                                <DDListItem key={item}>
+                                    <DropDownItem
+                                        name={item}
+                                        setInfo={handleCollegeChange}
+                                        selectedItems={college}
+                                    />
+                                </DDListItem>
+                            ))}
+                        </DDList>
+                    )}
+                </DDWrapper>
 
-        <PostingButton type="submit" disabled={userExists?.doesUsernameExist.usernameExists}>
-            Save
-        </PostingButton>
-        </form>
+                <PostingButton
+                    type="submit"
+                    disabled={userExists?.doesUsernameExist.usernameExists}
+                >
+                    Save
+                </PostingButton>
+            </form>
 
-        <PostingButton onClick = {handleBack}>
-            Back to feed
-        </PostingButton>
+            <PostingButton onClick={handleBack}>Back to feed</PostingButton>
         </>
     );
 };
