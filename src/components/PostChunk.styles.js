@@ -3,6 +3,7 @@ import styled from "styled-components";
 const DiscussionBoxSection = styled.section`
     // contains DiscussionBox
     padding: 20px 140px;
+    max-width: 50vw;
 `;
 
 const DiscussionBox = styled.section`
@@ -111,6 +112,8 @@ const DiscussionBody = styled.text`
     font-family: "Avenir";
     font-size: 2vh;
     word-wrap: break-word;
+    max-height: 100px;
+    max-width: 100px;
 `;
 
 const BottomComponent = styled.div`
