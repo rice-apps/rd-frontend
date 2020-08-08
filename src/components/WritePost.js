@@ -108,7 +108,7 @@ function WritePost(props) {
                                         title,
                                         body,
                                         creator: userInfo.netID,
-                                        imageUrl: url,
+                                        imageUrl: url === "" ? null : url,
                                     },
                                 });
                                 props.switchVisibility(false);

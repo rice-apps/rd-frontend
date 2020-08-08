@@ -19,7 +19,7 @@ export const NavElement = styled.div`
 
     cursor: pointer;
 
-    transition: all .5s ease-in-out;
+    transition: all 0.5s ease-in-out;
 
     ${(props) =>
         props.first &&
