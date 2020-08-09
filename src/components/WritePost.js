@@ -170,7 +170,7 @@ function WritePost(props) {
                                         start: startDate,
                                         end: endDate,
                                         place,
-                                        imageUrl: url,
+                                        imageUrl: url === "" ? null : url,
                                     },
                                 });
                                 props.switchVisibility(false);
@@ -245,6 +245,7 @@ function WritePost(props) {
                                             place,
                                             isPaid,
                                             isClosed,
+                                            imageUrl: url === "" ? null : url,
                                         },
                                     });
                                     console.log("Submitted and push!");
@@ -299,6 +300,7 @@ function WritePost(props) {
                                         body,
                                         creator: userInfo.netID,
                                         deadline: endDate,
+                                        imageUrl: url === "" ? null : url,
                                     },
                                 });
                                 props.switchVisibility(false);
