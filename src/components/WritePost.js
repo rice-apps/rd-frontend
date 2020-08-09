@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 
 import { useMutation } from "@apollo/client";
@@ -7,6 +7,7 @@ import { Checkbox } from "@material-ui/core";
 
 import { Redirect } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import log from "loglevel";
 import { TOKEN_NAME } from "../utils/config";
 import { POST_CREATE } from "../graphql/Mutations";
 import UploadToPost from "./UploadToPost";
@@ -34,10 +35,6 @@ function WritePost(props) {
     const callbackURL = (childData) => {
         setUrl(childData);
     };
-
-    useEffect(() => {
-        console.log("event happened");
-    });
 
     const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));
     const [startDate, setStart] = useState(new Date().getTime());
@@ -113,7 +110,7 @@ function WritePost(props) {
                                 });
                                 props.switchVisibility(false);
                             } catch (error) {
-                                console.log("error", error);
+                                log.error("error", error);
                             }
                         }}
                     >
@@ -175,7 +172,7 @@ function WritePost(props) {
                                 });
                                 props.switchVisibility(false);
                             } catch (error) {
-                                console.log("error", error);
+                                log.error("error", error);
                             }
                         }}
                     >
@@ -248,10 +245,10 @@ function WritePost(props) {
                                             imageUrl: url === "" ? null : url,
                                         },
                                     });
-                                    console.log("Submitted and push!");
+                                    log.info("Submitted and push!");
                                     props.switchVisibility(false);
                                 } catch (error) {
-                                    console.log("error", error);
+                                    log.error("error", error);
                                 }
                             }}
                         >
@@ -305,7 +302,7 @@ function WritePost(props) {
                                 });
                                 props.switchVisibility(false);
                             } catch (error) {
-                                console.log("error", error);
+                                log.error("error", error);
                             }
                         }}
                     >
