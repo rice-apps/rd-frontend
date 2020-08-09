@@ -140,6 +140,10 @@ const ViewTags = styled.button`
     background-color: inherit;
 `;
 
+const MoreTags = styled.div`
+    word-wrap: break-word;
+`;
+
 const ShareFacebook = styled.div`
     grid-area: facebook;
 `;
@@ -167,6 +171,7 @@ export {
     Tags,
     Tag,
     ViewTags,
+    MoreTags,
     MoreOptions,
     DDMenu,
     DiscussionBody,
