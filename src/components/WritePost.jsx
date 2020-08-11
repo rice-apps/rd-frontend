@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import DatePicker from "react-datepicker";
-
-import UploadToPost from "./UploadToPost";
 
 import { useMutation } from "@apollo/client";
 
-import { POST_CREATE } from "../graphql/Mutations";
 import { Checkbox } from "@material-ui/core";
 
-import { TOKEN_NAME } from "../utils/config";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import log from "loglevel";
+import { TOKEN_NAME } from "../utils/config";
+import { POST_CREATE } from "../graphql/Mutations";
+import UploadToPost from "./UploadToPost";
 import {
     PostWrapper,
     Button,
@@ -44,12 +44,6 @@ function WritePost(props) {
         setUrl(childData);
     };
 
-    useEffect(() => {
-        console.log("event happened");
-    });
-
-    const history = useHistory();
-
     const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));
     const [startDate, setStart] = useState(new Date().getTime());
     const [endDate, setEnd] = useState(new Date().getTime());
@@ -81,7 +75,6 @@ function WritePost(props) {
     const checkTitleAndBody = (title, body) =>
         title.length <= 0 || body.length <= 0;
 
-    console.log(isPaid);
     const togglePaid = () => setPaid(!isPaid);
 
     const toggleClosed = () => setClosed(!isClosed);
@@ -130,24 +123,18 @@ function WritePost(props) {
                                 .innerHTML;
                             if (checkTitleAndBody(title, body)) return;
                             try {
-                                console.log(url);
-                                console.log(postType);
-                                console.log(title);
-                                console.log(body);
-                                console.log(userInfo.netID);
                                 postCreate({
                                     variables: {
                                         kind: postType,
-                                        title: title,
-                                        body: body,
+                                        title,
+                                        body,
                                         creator: userInfo.netID,
-                                        imageUrl: url,
+                                        imageUrl: url === "" ? null : url,
                                     },
                                 });
                                 props.switchVisibility(false);
-                                //history.push("/feed");
                             } catch (error) {
-                                console.log("error", error);
+                                log.error("error", error);
                             }
                         }}
                     >
@@ -216,19 +203,18 @@ function WritePost(props) {
                                 postCreate({
                                     variables: {
                                         kind: postType,
-                                        title: title,
-                                        body: body,
+                                        title,
+                                        body,
                                         creator: userInfo.netID,
                                         start: startDate,
                                         end: endDate,
-                                        place: place,
-                                        imageUrl: url,
+                                        place,
+                                        imageUrl: url === "" ? null : url,
                                     },
                                 });
                                 props.switchVisibility(false);
-                                history.push("/feed");
                             } catch (error) {
-                                console.log("error", error);
+                                log.error("error", error);
                             }
                         }}
                     >
@@ -306,21 +292,21 @@ function WritePost(props) {
                                     postCreate({
                                         variables: {
                                             kind: postType,
-                                            title: title,
-                                            body: body,
+                                            title,
+                                            body,
                                             creator: userInfo.netID,
                                             start: startDate,
                                             end: endDate,
-                                            place: place,
-                                            isPaid: isPaid,
-                                            isClosed: isClosed,
+                                            place,
+                                            isPaid,
+                                            isClosed,
+                                            imageUrl: url === "" ? null : url,
                                         },
                                     });
-                                    console.log("Submitted and push!");
+                                    log.info("Submitted and push!");
                                     props.switchVisibility(false);
-                                    history.push("/feed");
                                 } catch (error) {
-                                    console.log("error", error);
+                                    log.error("error", error);
                                 }
                             }}
                         >
@@ -379,16 +365,16 @@ function WritePost(props) {
                                 postCreate({
                                     variables: {
                                         kind: postType,
-                                        title: title,
-                                        body: body,
+                                        title,
+                                        body,
                                         creator: userInfo.netID,
                                         deadline: endDate,
+                                        imageUrl: url === "" ? null : url,
                                     },
                                 });
                                 props.switchVisibility(false);
-                                history.push("/feed");
                             } catch (error) {
-                                console.log("error", error);
+                                log.error("error", error);
                             }
                         }}
                     >

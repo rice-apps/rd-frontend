@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import moment from "moment";
+import log from "loglevel";
 import { useMutation } from "@apollo/client";
 
 import { S3_SIGN } from "../graphql/Mutations";
@@ -12,7 +13,6 @@ function UploadToPost(props) {
 
     const onDrop = (event) => {
         const fileList = event.target.files;
-        // console.log(fileList[0]); //the file itself
         setFile(fileList[0]); // chooses first file, would need to modify (and check aws) to drop multiple at once
     };
 
@@ -21,12 +21,12 @@ function UploadToPost(props) {
             headers: {
                 "Content-Type": file.type,
             },
-            mode: "cors", //update access
+            mode: "cors", // update access
             method: "PUT",
             body: file,
         };
 
-        console.log(file.type)
+        log.info(file.type);
 
         await fetch(signedRequest, options);
     };
@@ -47,9 +47,6 @@ function UploadToPost(props) {
                 filetype: file.type,
             },
         });
-
-        // console.log(response); //works, "pending promise"
-        // console.log(response.data);
 
         const { signedRequest, url } = response.data.signS3Url;
 
@@ -74,14 +71,14 @@ function UploadToPost(props) {
         <div>
             {/* <p>The Image Upload Section</p> */}
             {/* <input type="file" onChange={onDrop2} value={file} /> */}
-            <label for="img">Choose an image: </label>
+            <label htmlFor="img">Choose an image: </label>
             <input
                 type="file"
                 onChange={onDrop}
                 id="img"
                 name="imgFile"
                 accept="image/*"
-            ></input>
+            />
             <button onClick={(e) => submit(e)}>Confirm Image</button>
         </div>
     );

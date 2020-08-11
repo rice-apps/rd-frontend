@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { useQuery } from "@apollo/client";
 
+import { Helmet } from "react-helmet";
 import PostFeed from "./PostFeed";
 import { POST_PAGE } from "../graphql/Queries";
 import { POST_CREATED, POST_VOTE_CHANGED } from "../graphql/Subscriptions";
@@ -15,8 +16,6 @@ import {
     LeftSidebarContainer,
 } from "./PostFeedWithData.styles";
 
-import uuid from "uuid/v4";
-import { Helmet } from "react-helmet";
 import { Banner } from "./PostFeed.styles";
 import { SideNav } from "./SideNav";
 
@@ -27,6 +26,7 @@ function PostFeedWithData() {
         },
 
         fetchPolicy: "cache-and-network",
+        nextFetchPolicy: "cache-first",
     });
 
     const [modalVisible, setVisibility] = useState(false);
@@ -73,13 +73,22 @@ function PostFeedWithData() {
                                         return prev;
                                     }
 
-                                    return Object.assign({}, prev, {
+                                    return {
+                                        ...prev,
                                         postConnection: {
                                             count:
                                                 prev.postConnection.count + 1,
                                             edges: [
                                                 {
-                                                    cursor: uuid(),
+                                                    cursor: btoa(
+                                                        JSON.stringify({
+                                                            _id:
+                                                                subscriptionData
+                                                                    .data
+                                                                    .postCreated
+                                                                    ._id,
+                                                        }),
+                                                    ),
                                                     node:
                                                         subscriptionData.data
                                                             .postCreated,
@@ -90,7 +99,7 @@ function PostFeedWithData() {
                                                 prev.postConnection.pageInfo,
                                             __typename: "PostConnection",
                                         },
-                                    });
+                                    };
                                 },
                             });
                         }}
@@ -101,7 +110,7 @@ function PostFeedWithData() {
                         }}
                     />
                 </PostFeedContainer>
-                <RightSidebarContainer></RightSidebarContainer>
+                <RightSidebarContainer />
             </Background>
             <WritePost
                 show={modalVisible}
