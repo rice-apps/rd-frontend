@@ -133,14 +133,23 @@ const Tags = styled.div`
 
 const Tag = styled.text`
     font-family: "Avenir";
-    font-size: 2vh;
-    border:1px solid #004993;
-    margin-right: 10px;
+    font-size: 1.75vh;
+    font-weight: bold;
+    color: white;
+    background-color: gray;
+    border: none;
+    border-radius: 5px;
+    margin-right: 7px;
+    padding: 2px 5px;
 `;
 
 const ViewTags = styled.button`
     border: none;
     background-color: inherit;
+`;
+
+const MoreTags = styled.div`
+    word-wrap: break-word;
 `;
 
 const ShareFacebook = styled.div`
@@ -170,6 +179,7 @@ export {
     Tags,
     Tag,
     ViewTags,
+    MoreTags,
     MoreOptions,
     DDMenu,
     DiscussionBody,

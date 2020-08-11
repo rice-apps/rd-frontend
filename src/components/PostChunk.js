@@ -27,6 +27,7 @@ import {
     Tags,
     Tag,
     ViewTags,
+    MoreTags,
     MoreOptions,
     DDMenu,
     DiscussionBody,
@@ -153,12 +154,21 @@ function PostChunk(props) {
                                     <Report 
                                         onClick={(e) => {
                                             e.preventDefault();
+                                            console.log(props.userInfo)
+                                            console.log(props.userInfo.netID)
+                                            console.log(props.post.node._id)
+                                            console.log(props.post.node.reports)
+                                            console.log(props.post.node.body)
+                                            console.log(props.post.node.title)
+
+
                                             props.reportPost({
                                                 variables: {
                                                     netID: props.userInfo.netID,
                                                     _id: props.post.node._id
                                                 },
                                             });
+                                            
                                         }}
                                     >
                                         Report Post
@@ -194,18 +204,22 @@ function PostChunk(props) {
                             {props.post.node.tags.length > 1 && <Tag>{props.post.node.tags[1]}</Tag>}
                             {props.post.node.tags.length > 2 && <Tag>{props.post.node.tags[2]}</Tag>}               
 
+                            {isTagsOpen && (
+                                <MoreTags>
+                                    {props.post.node.tags.slice(3,).forEach((tag) => 
+                                        (
+                                            <Tag>{tag}</Tag>
+                                        )
+                                    )}
+                                </MoreTags>
+                                
+                            )}
+                            
                             {props.post.node.tags.length > 3 && (
                                 <ViewTags onClick={toggleTags}>
                                     (See All)
                                 </ViewTags>
                             )}
-
-                            {isTagsOpen && (
-                                <Tags>
-                                {props.post.node.tags.slice(3,).forEach(tag =>
-                                    <Tag>{tag}</Tag>
-                                )}
-                                </Tags>)}
                         </Tags>
                         
                         <ShareFacebook>
