@@ -112,10 +112,6 @@ const DiscussionBody = styled.text`
     font-size: 2vh;
     word-wrap: break-word;
     max-height: 100px;
-    max-width: 100px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 `;
 
 const BottomComponent = styled.div`
