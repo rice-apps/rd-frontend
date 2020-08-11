@@ -2,9 +2,10 @@ import React, { useState, useCallback, useEffect } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { useMutation, useLazyQuery } from "@apollo/client";
 import { Helmet } from "react-helmet";
+import log from "loglevel";
 import { TOKEN_NAME } from "../utils/config";
 import { SET_INFO } from "../graphql/Mutations";
-import { USER_EXISTS, GET_USER_DATA } from "../graphql/Queries";
+import { USER_EXISTS } from "../graphql/Queries";
 import laptop_girl from "../images/Page 2.svg";
 import major_minor_json from "../utils/MajorMinor.json";
 import DropDownItem from "./DropDownItem.js";
@@ -30,7 +31,7 @@ const MoreInfo = () => {
     const history = useHistory();
 
     const [userStatement, setStatement] = useState("Valid!");
-    const [loading, setLoading] = useState(false);
+    const [, setLoading] = useState(false);
     const [username, setUsername] = useState("");
     const [major, setMajor] = useState([]);
     const [minor, setMinor] = useState([]);
@@ -42,7 +43,7 @@ const MoreInfo = () => {
     const [addInfo] = useMutation(SET_INFO);
     const [
         checkUser,
-        { data: userExists, loading: userExistLoading, error },
+        { data: userExists, loading: userExistLoading },
     ] = useLazyQuery(USER_EXISTS);
     const data = JSON.parse(localStorage.getItem(TOKEN_NAME));
 
@@ -126,7 +127,7 @@ const MoreInfo = () => {
     }
 
     if (!data?.isNewUser) {
-        console.log("Redirecting....");
+        log.info("Redirecting....");
         return <Redirect to="/feed" />;
     }
 
@@ -134,7 +135,7 @@ const MoreInfo = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            console.log({
+            log.info({
                 major: major.toString(),
                 minor: minor.toString(),
                 college,
@@ -170,7 +171,7 @@ const MoreInfo = () => {
             }
             history.push("/feed");
         } catch (error) {
-            console.log(error);
+            log.error(error);
         } finally {
             setLoading(false);
         }

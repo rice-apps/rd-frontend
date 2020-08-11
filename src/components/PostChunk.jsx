@@ -54,7 +54,13 @@ function PostChunk(props) {
     let oneImage = <></>;
 
     if (props.post.node.imageUrl) {
-        oneImage = <img src={props.post.node.imageUrl} alt="Custom-thing" />;
+        oneImage = (
+            <img
+                width={500}
+                src={props.post.node.imageUrl}
+                alt="Custom-thing"
+            />
+        );
     }
 
     const [isDDOpen, setDDOpen] = useState(false);
