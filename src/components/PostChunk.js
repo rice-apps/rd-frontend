@@ -156,10 +156,7 @@ function PostChunk(props) {
                                             props.reportPost({
                                                 variables: {
                                                     netID: props.userInfo.netID,
-                                                    _id: props.post.node._id,
-                                                    reports: props.post.node.reports,
-                                                    body: props.post.node.body,
-                                                    title: props.post.node.title,
+                                                    _id: props.post.node._id
                                                 },
                                             });
                                         }}
