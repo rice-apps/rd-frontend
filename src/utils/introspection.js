@@ -1,5 +1,6 @@
 const fetch = require("cross-fetch");
 const fs = require("fs");
+const log = require("loglevel");
 
 const API_HOST = "http://localhost:3001";
 
@@ -40,9 +41,9 @@ fetch(`${API_HOST}/graphql`, {
             JSON.stringify(possibleTypes),
             (err) => {
                 if (err) {
-                    console.error("Error writing possibleTypes.json", err);
+                    log.error("Error writing possibleTypes.json", err);
                 } else {
-                    console.log("Fragment types successfully extracted!");
+                    log.info("Fragment types successfully extracted!");
                 }
             },
         );

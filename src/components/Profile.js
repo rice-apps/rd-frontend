@@ -17,12 +17,7 @@ import {
     TextField,
 } from "./MoreInfo.styles";
 
-import {
-    TitleDescriptor,
-    TitleWrapper,
-    TitleBox,
-    PostingButton,
-} from "./WritePost.styles";
+import { PostingButton } from "./WritePost.styles";
 
 const ProfilePage = () => {
     const history = useHistory();
@@ -43,7 +38,7 @@ const ProfilePage = () => {
     );
     const [
         checkUser,
-        { data: userExists, loading: userExistLoading, error },
+        { data: userExists, loading: userExistLoading },
     ] = useLazyQuery(USER_EXISTS);
 
     const fill_state = () => {
@@ -53,11 +48,6 @@ const ProfilePage = () => {
             },
         });
     };
-
-    useEffect(() => {
-        console.log("mount");
-        return () => console.log("unmount");
-    }, []);
 
     useEffect(() => {
         fill_state();
