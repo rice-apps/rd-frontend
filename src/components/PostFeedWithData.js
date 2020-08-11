@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { useQuery } from "@apollo/client";
+import { useQuery, useLazyQuery } from "@apollo/client";
 
 import { Helmet } from "react-helmet";
 import PostFeed from "./PostFeed";
@@ -20,7 +20,7 @@ import { Banner } from "./PostFeed.styles";
 import { SideNav } from "./SideNav";
 
 function PostFeedWithData() {
-    const { subscribeToMore, fetchMore, ...result } = useQuery(POST_PAGE, {
+    const [getPosts, {subscribeToMore, fetchMore, refetch, ...result}] = useQuery(POST_PAGE, {
         variables: {
             after: "",
         },
@@ -30,10 +30,7 @@ function PostFeedWithData() {
     });
 
     const [modalVisible, setVisibility] = useState(false);
-
-    const openModal = () => {
-        setVisibility(true);
-    };
+    const openModal = () => setVisibility(true);
 
     return (
         <>
@@ -56,6 +53,7 @@ function PostFeedWithData() {
                     </BannerContainer>
                     <PostFeed
                         {...result}
+                        getPosts = {refetch}
                         onLoadMore={() =>
                             fetchMore({
                                 variables: {
