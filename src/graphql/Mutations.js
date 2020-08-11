@@ -88,16 +88,10 @@ const REPORT_POST = gql`
     mutation ReportPost(
         $netID: String!
         $_id: ID!
-        $reports: [String!]
-        $body: String!
-        $title: String!
     ) {
         togglePostReport(
             netID: $netID
             _id: $_id
-            reports: $reports
-            body: $body
-            title: $title
         ) {
             creator {
                 _id
@@ -122,6 +116,7 @@ const REMOVE_POST = gql`
         }
     }
 `;
+
 
 
 const SAVE_POST = gql`

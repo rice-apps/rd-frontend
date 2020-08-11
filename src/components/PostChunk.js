@@ -148,18 +148,18 @@ function PostChunk(props) {
                                     <Report 
                                         onClick={(e) => {
                                             e.preventDefault();
+                                            console.log(props.userInfo)
                                             console.log(props.userInfo.netID)
                                             console.log(props.post.node._id)
                                             console.log(props.post.node.reports)
                                             console.log(props.post.node.body)
                                             console.log(props.post.node.title)
+
+
                                             props.reportPost({
                                                 variables: {
                                                     netID: props.userInfo.netID,
                                                     _id: props.post.node._id,
-                                                    reports: props.post.node.reports,
-                                                    body: props.post.node.body,
-                                                    title: props.post.node.title,
                                                 },
                                             });
                                             
