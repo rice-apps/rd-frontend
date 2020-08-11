@@ -20,8 +20,10 @@ export const PostFeedContainer = styled.div`
 
     background: rgba(255, 255, 255, 0.7) 0% 0% no-repeat padding-box;
     border-radius: 20px;
+    border: 3px solid #FFFFFF;
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
+    opacity: 1;
 `;
 
 export const BannerContainer = styled.div`

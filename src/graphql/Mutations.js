@@ -129,44 +129,15 @@ const SET_INFO = gql`
     }
 `;
 
-<<<<<<< HEAD
-const COMMENT_CREATE = gql`
-    mutation CreateComment(
-        $body: String!
-        $creator: String!
-        $post: MongoID!
-        $depth: Float!
-    ) {
-        commentCreateOne(
-            record: {
-                body: $body
-                creator: $creator
-                post: $post
-                depth: $depth
-            }
-        ) {
-            record {
-                _id
-                __typename
-                body
-                creator {
-                    netID
-                }
-            }
-=======
 const S3_SIGN = gql`
     mutation GetS3Info($filename: String!, $filetype: String!) {
         signS3Url(filename: $filename, filetype: $filetype) {
             url
             signedRequest
->>>>>>> 4ede5c63b9a9a96e5b99f3936e1afad244cfb09c
         }
     }
 `;
 
-<<<<<<< HEAD
-export { SET_INFO, POST_CREATE, LOGIN, UPVOTE_POST, DOWNVOTE_POST, COMMENT_CREATE, SAVE_POST };
-=======
 export {
     SET_INFO,
     POST_CREATE,
@@ -176,4 +147,3 @@ export {
     SAVE_POST,
     S3_SIGN,
 };
->>>>>>> 4ede5c63b9a9a96e5b99f3936e1afad244cfb09c

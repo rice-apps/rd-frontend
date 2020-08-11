@@ -160,27 +160,6 @@ function PostChunk(props) {
                             </IconButton>
                         </Share>
                     </BottomComponent>
-                    <input
-                        type="text"
-                        name="body"
-                        placeholder="Comment"
-                        onChange={(e) => setBody(e.target.value)}
-                    />
-                    <Save
-                        onClick={(e) => {
-                            e.preventDefault();
-                            commentCreate({
-                                variables: {
-                                    body: body,
-                                    creator: props.userInfo.netID,
-                                    post: props.post.node._id,
-                                    depth: 0
-                                },
-                            });
-                        }}
-                    >
-                        Comment
-                    </Save>
                 </DiscussionBox>
             </DiscussionBoxSection>
         </>
