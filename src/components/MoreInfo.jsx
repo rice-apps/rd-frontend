@@ -8,7 +8,7 @@ import { SET_INFO } from "../graphql/Mutations";
 import { USER_EXISTS } from "../graphql/Queries";
 import laptop_girl from "../images/Page 2.svg";
 import major_minor_json from "../utils/MajorMinor.json";
-import DropDownItem from "./DropDownItem.js";
+import DropDownItem from "./DropDownItem";
 import {
     FullGrid,
     PinkShape,
