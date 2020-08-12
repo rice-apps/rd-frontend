@@ -75,11 +75,12 @@ const Tags = styled.text`
 `;
 
 // const FullPostLink = styled.link`
-const FullPostLink = styled.text`
+const FullPostLink = styled.link`
     justify-self: end;
     align-self: center;
     font-family: "Avenir";
     font-size: 2vh;
+    color: blue;
 `;
 
 const MoreOptions = styled.div`
@@ -99,6 +100,10 @@ const DDMenu = styled.div`
 `;
 
 const Save = styled.button`
+    padding: 5px;
+`;
+
+const Expand = styled.button`
     padding: 5px;
 `;
 
@@ -184,4 +189,5 @@ export {
     ShareTwitter,
     Share,
     FullPostLink,
+    Expand,
 };

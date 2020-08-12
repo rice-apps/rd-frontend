@@ -37,7 +37,8 @@ import {
     ShareFacebook,
     ShareTwitter,
     Share,
-    FullPostLink
+    FullPostLink,
+    Expand,
 } from "./PostChunk.styles";
 import { Link } from "react-router-dom";
 
@@ -62,6 +63,9 @@ function PostChunk(props) {
             />
         );
     }
+
+    const myPostID = props.post.node._id;
+    const myPostLink = "/posts/" + String(myPostID); // forming the url
 
     const [isDDOpen, setDDOpen] = useState(false);
 
@@ -118,14 +122,14 @@ function PostChunk(props) {
                         </DiscussionTitleDiv>
                         <Tags>Tags</Tags>
                         {/* <FullPostLink>Expand</FullPostLink> */}
-                        <Link to="/posts/:slug">Expand</Link>
+                        <Link to={myPostLink}>Expand</Link>
                         <MoreOptions className={classes.root}>
                             <IconButton onClick={toggleDD}>
                                 <MoreHorizIcon open={isDDOpen} />
                             </IconButton>
                             {isDDOpen && (
                                 <DDMenu>
-                                <Save
+                                    <Save
                                         onClick={(e) => {
                                             e.preventDefault();
 
@@ -146,16 +150,21 @@ function PostChunk(props) {
                                         Save Post
                                     </Save>
                                     <AddTo>+ Add to...</AddTo>
+                                    <Expand>
+                                        <FullPostLink to={myPostLink}>
+                                            Expand Button
+                                        </FullPostLink>
+                                    </Expand>
                                     <Report>Report Post</Report>
                                     {props.post.node.creator.username ===
                                         props.userInfo.username && (
                                         <Delete>Delete Post</Delete>
                                     )}
                                 </DDMenu>
-                                )}
-                            </MoreOptions>
+                            )}
+                        </MoreOptions>
 
-                            <DiscussionBody>
+                        <DiscussionBody>
                             {ReactHtmlParser(props.post.node.body)}
                         </DiscussionBody>
                         {oneImage}

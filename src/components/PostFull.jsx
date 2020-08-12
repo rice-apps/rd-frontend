@@ -1,10 +1,15 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
-function PostFull(props) {
+function PostFull() {
+    let { postID } = useParams();
+
+    console.log(postID);
+
     return (
         <div>
             <p>This is the full post page</p>
-            <p>{props.postID}</p>
+            <p>{postID}</p>
         </div>
     );
 }
