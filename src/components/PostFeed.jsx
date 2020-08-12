@@ -70,7 +70,7 @@ function PostFeed (props) {
         >
           Get Comments
         </button>
-        <button onClick={() => refetch()}>Refresh Comments</button>
+        <button onClick={refetch}>Refresh Comments</button>
         <CommentChunk {...result} />
       </>
     )
