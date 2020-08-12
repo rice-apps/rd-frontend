@@ -91,7 +91,7 @@ const PostHeaderType = styled.p`
   position: relative;
   top: -20px;
   text-align: center;
-  text-color: blue;
+  color: blue;
   font-size: 2em;
   background-color: #fabed6;
   width: 100%;
