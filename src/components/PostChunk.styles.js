@@ -126,7 +126,7 @@ const BottomComponent = styled.div`
   align-items: center;
 `
 
-const OP = styled.div`
+const OpDiv = styled.div`
   grid-area: op;
 `
 
@@ -169,7 +169,7 @@ export {
   AddTo,
   Report,
   Delete,
-  OP,
+  OpDiv,
   Time,
   Date,
   ShareFacebook,

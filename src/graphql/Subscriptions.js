@@ -76,59 +76,59 @@ const POST_REMOVED = gql`
 `
 
 const COMMENT_CREATED = gql`
-    subscription {
-        commentCreated {
-            _id
-            post {
-                _id
-            }
-            creator {
-                username
-            }
-            date_created
-            body
-            upvotes {
-                username
-            }
-            downvotes {
-                username
-            }
-            reports {
-                username
-            }
-        }
+  subscription {
+    commentCreated {
+      _id
+      post {
+        _id
+      }
+      creator {
+        username
+      }
+      date_created
+      body
+      upvotes {
+        username
+      }
+      downvotes {
+        username
+      }
+      reports {
+        username
+      }
     }
-`;
+  }
+`
 
 const COMMENT_UPDATED = gql`
-    subscription {
-        commentUpdated {
-            _id
-            post {
-                _id
-            }
-            creator {
-                username
-            }
-            date_created
-            body
-            upvotes {
-                username
-            }
-            downvotes {
-                username
-            }
-            reports {
-                username
-            }
-        }
+  subscription {
+    commentUpdated {
+      _id
+      post {
+        _id
+      }
+      creator {
+        username
+      }
+      date_created
+      body
+      upvotes {
+        username
+      }
+      downvotes {
+        username
+      }
+      reports {
+        username
+      }
     }
-`;
+  }
+`
 
 export {
-    POST_CREATED,
-    POST_VOTE_CHANGED,
-    POST_REMOVED,
-    COMMENT_CREATED,
-    COMMENT_UPDATED,
-};
+  POST_CREATED,
+  POST_VOTE_CHANGED,
+  POST_REMOVED,
+  COMMENT_CREATED,
+  COMMENT_UPDATED
+}

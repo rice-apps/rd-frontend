@@ -79,53 +79,53 @@ const USER_EXISTS = gql`
 `
 
 const FETCH_COMMENTS_POST = gql`
-    query FetchCommentsPost($post_id: ID!) {
-        commentByPost(post: $post_id) {
-            _id
-            creator {
-                username
-            }
-            date_created
-            body
-            upvotes {
-                username
-            }
-            downvotes {
-                username
-            }
-            reports {
-                username
-            }
-        }
+  query FetchCommentsPost($post_id: ID!) {
+    commentByPost(post: $post_id) {
+      _id
+      creator {
+        username
+      }
+      date_created
+      body
+      upvotes {
+        username
+      }
+      downvotes {
+        username
+      }
+      reports {
+        username
+      }
     }
-`;
+  }
+`
 
 const FETCH_COMMENTS_PARENT = gql`
-    query FetchCommentsParent($parent_id: ID!) {
-        commentByParent(parent: $parent_id) {
-            _id
-            creator {
-                username
-            }
-            date_created
-            body
-            upvotes {
-                username
-            }
-            downvotes {
-                username
-            }
-            reports {
-                username
-            }
-        }
+  query FetchCommentsParent($parent_id: ID!) {
+    commentByParent(parent: $parent_id) {
+      _id
+      creator {
+        username
+      }
+      date_created
+      body
+      upvotes {
+        username
+      }
+      downvotes {
+        username
+      }
+      reports {
+        username
+      }
     }
-`;
+  }
+`
 
 export {
-    POST_PAGE,
-    GET_USER_DATA,
-    USER_EXISTS,
-    FETCH_COMMENTS_PARENT,
-    FETCH_COMMENTS_POST,
-};
+  POST_PAGE,
+  GET_USER_DATA,
+  USER_EXISTS,
+  FETCH_COMMENTS_PARENT,
+  FETCH_COMMENTS_POST
+}
