@@ -1,4 +1,4 @@
-import log from "loglevel";
+import log from 'loglevel'
 
 const CAS_AUTH_URL = process.env.REACT_APP_CAS_AUTH_URL
 const SERVICE_URL = process.env.REACT_APP_SERVICE_URL
@@ -9,8 +9,14 @@ const TOKEN_NAME = process.env.REACT_APP_TOKEN_NAME
 
 const FRONTEND_AUTH_URL = `${CAS_AUTH_URL}?service=${SERVICE_URL}`
 
-if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-  log.setLevel("trace")
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  log.setLevel('trace')
+}
+
+function loadToken () {
+  return window.localStorage.getItem(TOKEN_NAME) != null
+    ? JSON.parse(window.localStorage.getItem(TOKEN_NAME)).token
+    : ''
 }
 
 export {
@@ -20,5 +26,6 @@ export {
   BACKEND_AUTH_URL,
   GQL_URL,
   WS_URL,
-  TOKEN_NAME
+  TOKEN_NAME,
+  loadToken
 }

@@ -3,7 +3,6 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useMutation, useLazyQuery } from '@apollo/client'
 
-import log from "loglevel";
 import uuid from 'uuid/v4'
 import PostChunk from './PostChunk'
 import CommentChunk from './CommentChunk'

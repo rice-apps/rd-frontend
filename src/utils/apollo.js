@@ -10,7 +10,7 @@ import {
 } from '@apollo/client/utilities'
 import possibleTypes from './possibleTypes.json'
 
-import { GQL_URL, WS_URL, TOKEN_NAME } from '../config'
+import { GQL_URL, WS_URL, loadToken } from '../config'
 
 const httpLink = createHttpLink({
   uri: GQL_URL,
@@ -22,10 +22,7 @@ const wsLink = new WebSocketLink({
   options: {
     reconnect: true,
     connectionParams: {
-      authToken:
-        window.localStorage.getItem(TOKEN_NAME) != null
-          ? JSON.parse(window.localStorage.getItem(TOKEN_NAME)).token
-          : ''
+      authToken: loadToken()
     }
   }
 })
@@ -46,10 +43,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization:
-        window.localStorage.getItem(TOKEN_NAME) != null
-          ? JSON.parse(window.localStorage.getItem(TOKEN_NAME)).token
-          : ''
+      authorization: loadToken()
     }
   }
 })
@@ -86,7 +80,7 @@ const mainClient = new ApolloClient({
         fields: {
           creator: {
             merge (existing, incoming) {
-              return existing ? existing : incoming
+              return existing || incoming
             }
           },
           upvotes: {
@@ -124,7 +118,7 @@ const mainClient = new ApolloClient({
         fields: {
           creator: {
             merge (existing, incoming) {
-              return existing ? existing : incoming
+              return existing || incoming
             }
           },
           upvotes: {
@@ -143,7 +137,7 @@ const mainClient = new ApolloClient({
         fields: {
           creator: {
             merge (existing, incoming) {
-              return existing ? existing : incoming
+              return existing || incoming
             }
           },
           upvotes: {
