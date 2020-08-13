@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
+<<<<<<< HEAD
 import DropDownItem from "./DropDownItem.js";
 
 import {
+=======
+import DropDownItem from "./DropDownItem";
+
+import {
+    HorizontalDiv,
+>>>>>>> 70cdd1bfe2bb3643bb3df8b9425419b57e0fcfea
     SubmitButton,
     DDWrapper,
     DDHeader,
@@ -10,7 +17,11 @@ import {
     DDList,
     DDListItem,
     ArrowI,
+<<<<<<< HEAD
 } from "./MoreInfo.styles";
+=======
+} from "./Filters.styles";
+>>>>>>> 70cdd1bfe2bb3643bb3df8b9425419b57e0fcfea
 
 const Filters = () => {
     const [isPostTypeOpen, setPostMenuOpen] = useState(false);
@@ -25,6 +36,7 @@ const Filters = () => {
 
     const POST_TYPES = ["Discussion", "Event", "Notice", "Job"];
     const TAGS = ["Going", "to", "query", "the", "tags"];
+<<<<<<< HEAD
     const DATES = ["One day ago", "One week ago"];
     const UPVOTES = ["By greatest", "by least"];
     // on mount we want to render without any filters
@@ -33,6 +45,39 @@ const Filters = () => {
     const toggleTag = () => setTagOpen(!isTagOpen);
     const toggleDate = () => setDateOpen(!isDateOpen);
     const toggleUpvotes = () => setUpvotesOpen(!isUpvotesOpen);
+=======
+    const DATES = ["yesterday", "in the last week", "in the last month"];
+    const UPVOTES = ["most", "least"];
+    // on mount we want to render without any filters
+
+    const togglePost = () => {
+        setPostMenuOpen(!isPostTypeOpen);
+        setTagOpen(false);
+        setDateOpen(false);
+        setUpvotesOpen(false);
+    }
+
+    const toggleTag = () => {
+        setTagOpen(!isTagOpen);
+        setPostMenuOpen(false);
+        setDateOpen(false);
+        setUpvotesOpen(false);
+    }
+
+    const toggleDate = () => {
+        setDateOpen(!isDateOpen);
+        setPostMenuOpen(false);
+        setTagOpen(false);
+        setUpvotesOpen(false);
+    }
+
+    const toggleUpvotes = () => {
+        setUpvotesOpen(!isUpvotesOpen);
+        setPostMenuOpen(false);
+        setDateOpen(false);
+        setTagOpen(false);
+    }
+>>>>>>> 70cdd1bfe2bb3643bb3df8b9425419b57e0fcfea
 
     const handlePostTypeChange = (newValue) => {
         const index_of_postType = postType.indexOf(newValue);
@@ -60,6 +105,11 @@ const Filters = () => {
 
     return(
         <>
+<<<<<<< HEAD
+=======
+        <HorizontalDiv>
+        <div style={{"margin-left": "30px"}}>Filter:</div>
+>>>>>>> 70cdd1bfe2bb3643bb3df8b9425419b57e0fcfea
         <DDWrapper>
             <DDHeader onClick={togglePost}>
                 <DDHeaderTitle>
@@ -156,6 +206,10 @@ const Filters = () => {
             )}
         </DDWrapper>
         <SubmitButton onClick={submitFilters}> Filter! </SubmitButton>
+<<<<<<< HEAD
+=======
+        </HorizontalDiv>
+>>>>>>> 70cdd1bfe2bb3643bb3df8b9425419b57e0fcfea
         </>
 
     );

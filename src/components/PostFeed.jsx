@@ -5,6 +5,7 @@ import { useMutation, useLazyQuery } from "@apollo/client";
 
 import uuid from "uuid/v4";
 import PostChunk from "./PostChunk";
+import Filters from "./Filters";
 import CommentChunk from "./CommentChunk";
 import { TOKEN_NAME } from "../utils/config";
 import { UPVOTE_POST, DOWNVOTE_POST, SAVE_POST } from "../graphql/Mutations";
@@ -31,6 +32,7 @@ function PostFeed(props) {
         subscribeToNewVotes,
         loading,
         error,
+        data,
     } = props;
 
     useEffect(() => {
@@ -39,17 +41,15 @@ function PostFeed(props) {
         // eslint-disable-next-line
     }, []);
 
-    if (loading) return <h1>Loading...</h1>;
-    if (error){ console.log(error); return <h1>Something went wrong...</h1>;}
-
+    if (error) return <h1>Something went wrong...</h1>;
+    if (loading || !data) return <h1>Loading...</h1>;
+    
     const {
-        data: {
-            postConnection: {
-                edges,
-                pageInfo: { hasNextPage },
-            },
+        postConnection: {
+            edges,
+            pageInfo: { hasNextPage },
         },
-    } = props;
+    } = data;
 
     const posts = edges.map((post, _i) => {
         return (
@@ -86,6 +86,7 @@ function PostFeed(props) {
                 hasMore={hasNextPage}
                 loader={<div key={uuid()}>Loading...</div>}
             >
+                <Filters />
                 {posts}
             </InfiniteScroll>
         </>
