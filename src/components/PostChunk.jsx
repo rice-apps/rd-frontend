@@ -122,7 +122,7 @@ function PostChunk(props) {
                         </DiscussionTitleDiv>
                         <Tags>Tags</Tags>
                         {/* <FullPostLink>Expand</FullPostLink> */}
-                        <Link to={myPostLink}>Expand</Link>
+                        {/* <Link to={myPostLink}>Expand</Link> */}
                         <MoreOptions className={classes.root}>
                             <IconButton onClick={toggleDD}>
                                 <MoreHorizIcon open={isDDOpen} />
@@ -152,7 +152,7 @@ function PostChunk(props) {
                                     <AddTo>+ Add to...</AddTo>
                                     <Expand>
                                         <FullPostLink to={myPostLink}>
-                                            Expand Button
+                                            Expand
                                         </FullPostLink>
                                     </Expand>
                                     <Report>Report Post</Report>

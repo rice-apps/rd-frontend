@@ -122,10 +122,106 @@ const FETCH_COMMENTS_PARENT = gql`
     }
 `;
 
+const GET_POST = gql`
+    query GetPostById($id: ID!) {
+        postById(_id: $id) {
+            _id
+            __typename
+            kind
+            title
+            body
+            imageUrl
+            creator {
+                netID
+                username
+                savedPosts {
+                    _id
+                }
+            }
+
+            ... on Event {
+                start
+                end
+                location: place
+            }
+            ... on Job {
+                start
+                end
+                isPaid
+                isClosed
+                workplace: place
+            }
+            ... on Notice {
+                deadline
+            }
+            reports {
+                netID
+                username
+            }
+            comments {
+                body
+                creator {
+                    username
+                }
+                upvotes {
+                    username
+                }
+                downvotes {
+                    username
+                }
+                children {
+                    body
+                    creator {
+                        username
+                    }
+                    upvotes {
+                        username
+                    }
+                    downvotes {
+                        username
+                    }
+                    children {
+                        body
+                        creator {
+                            username
+                        }
+                        upvotes {
+                            username
+                        }
+                        downvotes {
+                            username
+                        }
+                        children {
+                            body
+                            creator {
+                                username
+                            }
+                            upvotes {
+                                username
+                            }
+                            downvotes {
+                                username
+                            }
+                        }
+                    }
+                }
+            }
+            upvotes {
+                username
+            }
+            downvotes {
+                username
+            }
+            tags
+        }
+    }
+`;
+
 export {
     POST_PAGE,
     GET_USER_DATA,
     USER_EXISTS,
     FETCH_COMMENTS_PARENT,
     FETCH_COMMENTS_POST,
+    GET_POST,
 };
