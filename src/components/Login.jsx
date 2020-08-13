@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet'
 import Auth from './Auth'
 import { LoginButton, LoginContainer, LoginImage } from './Login.styles'
 
-import { FRONTEND_AUTH_URL } from '../utils/config'
+import { FRONTEND_AUTH_URL } from '../config'
 
 function Login () {
   const [hasTicket] = useState(

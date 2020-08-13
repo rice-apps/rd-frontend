@@ -8,7 +8,7 @@ import { Checkbox } from '@material-ui/core'
 import { Navigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import log from 'loglevel'
-import { TOKEN_NAME } from '../utils/config'
+import { TOKEN_NAME } from '../config'
 import { POST_CREATE } from '../graphql/Mutations'
 import UploadToPost from './UploadToPost'
 import {

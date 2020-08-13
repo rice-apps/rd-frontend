@@ -10,7 +10,7 @@ import {
 } from '@apollo/client/utilities'
 import possibleTypes from './possibleTypes.json'
 
-import { GQL_URL, WS_URL, TOKEN_NAME } from './config'
+import { GQL_URL, WS_URL, TOKEN_NAME } from '../config'
 
 const httpLink = createHttpLink({
   uri: GQL_URL,

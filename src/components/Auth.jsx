@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 
 import { LOGIN } from '../graphql/Mutations'
-import { TOKEN_NAME } from '../utils/config'
+import { TOKEN_NAME } from '../config'
 
 const Auth = (successPath, errPath) => {
   const ticket = new URLSearchParams(window.location.search).get('ticket')

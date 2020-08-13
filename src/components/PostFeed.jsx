@@ -6,7 +6,7 @@ import { useMutation, useLazyQuery } from '@apollo/client'
 import uuid from 'uuid/v4'
 import PostChunk from './PostChunk'
 import CommentChunk from './CommentChunk'
-import { TOKEN_NAME } from '../utils/config'
+import { TOKEN_NAME } from '../config'
 import { UPVOTE_POST, DOWNVOTE_POST, SAVE_POST } from '../graphql/Mutations'
 import { FETCH_COMMENTS_POST } from '../graphql/Queries'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate, Route, useRoutes } from 'react-router-dom'
-import { TOKEN_NAME } from '../utils/config'
+import { TOKEN_NAME } from '../config'
 import { useQuery } from '@apollo/client'
 import { VERIFY_USER } from '../graphql/Queries'
 import Feed from './PostFeedWithData'
