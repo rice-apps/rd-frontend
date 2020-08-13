@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate, Route, useRoutes } from 'react-router-dom'
-import { TOKEN_NAME } from '../config'
+import { TOKEN_NAME, loadToken } from '../config'
 import { useQuery } from '@apollo/client'
 import { VERIFY_USER } from '../graphql/Queries'
 import Feed from './PostFeedWithData'
@@ -9,10 +9,7 @@ import MoreInfo from './MoreInfo'
 import ProfilePage from './Profile'
 
 function PrivateRoute ({ element, ...rest }) {
-  const token =
-    window.localStorage.getItem(TOKEN_NAME) != null
-      ? JSON.parse(window.localStorage.getItem(TOKEN_NAME)).token
-      : ''
+  const token = loadToken()
 
   const { data, loading, error } = useQuery(VERIFY_USER, {
     variables: { token: token },
