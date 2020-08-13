@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/client'
 
 import { Checkbox } from '@material-ui/core'
 
-import { Redirect } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import log from 'loglevel'
 import { TOKEN_NAME } from '../utils/config'
@@ -51,7 +51,7 @@ function WritePost (props) {
   }
 
   if (!window.localStorage.getItem(TOKEN_NAME)) {
-    return <Redirect to='/login' />
+    return <Navigate to='/login' />
   }
 
   let form = <div>Something went wrong! Please report to riceapps.</div>

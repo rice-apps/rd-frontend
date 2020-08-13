@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { Redirect, useHistory } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { useMutation, useLazyQuery } from '@apollo/client'
 import { SET_INFO } from '../graphql/Mutations'
 import { GET_USER_DATA, USER_EXISTS } from '../graphql/Queries'
@@ -20,7 +20,7 @@ import {
 import { PostingButton } from './WritePost.styles'
 
 const ProfilePage = () => {
-  const history = useHistory()
+  const navigator = useNavigate()
   const [userStatement, setStatement] = useState('Valid!')
   const [originalUsername, setOriginal] = useState('')
   const [username, setUsername] = useState('')
@@ -118,7 +118,7 @@ const ProfilePage = () => {
   }, [])
 
   const handleBack = () => {
-    history.push('/feed')
+    navigator('/feed')
   }
 
   // if I wrap this in useCallback, it breaks
@@ -165,7 +165,7 @@ const ProfilePage = () => {
   }
 
   if (!window.localStorage.getItem(TOKEN_NAME)) {
-    return <Redirect to='/login' />
+    return <Navigate to='/login' />
   }
 
   if (userInfoLoading) return <p>Loading...</p>

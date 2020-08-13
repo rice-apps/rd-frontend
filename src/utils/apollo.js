@@ -12,9 +12,6 @@ import possibleTypes from './possibleTypes.json'
 
 import { GQL_URL, WS_URL, TOKEN_NAME } from './config'
 
-const user = window.localStorage.getItem(TOKEN_NAME)
-const token = user ? JSON.parse(user).token : ''
-
 const httpLink = createHttpLink({
   uri: GQL_URL,
   credentials: 'same-origin'
@@ -25,12 +22,15 @@ const wsLink = new WebSocketLink({
   options: {
     reconnect: true,
     connectionParams: {
-      authToken: token
+      authToken:
+        window.localStorage.getItem(TOKEN_NAME) != null
+          ? JSON.parse(window.localStorage.getItem(TOKEN_NAME)).token
+          : ''
     }
   }
 })
 
-const link = split(
+const splitLink = split(
   ({ query }) => {
     const definition = getMainDefinition(query)
     return (
@@ -46,12 +46,15 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token || ''
+      authorization:
+        window.localStorage.getItem(TOKEN_NAME) != null
+          ? JSON.parse(window.localStorage.getItem(TOKEN_NAME)).token
+          : ''
     }
   }
 })
 
-export default new ApolloClient({
+const mainClient = new ApolloClient({
   cache: new InMemoryCache({
     possibleTypes,
     typePolicies: {
@@ -137,5 +140,7 @@ export default new ApolloClient({
       }
     }
   }),
-  link: authLink.concat(link)
+  link: authLink.concat(splitLink)
 })
+
+export default mainClient

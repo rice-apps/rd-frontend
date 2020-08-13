@@ -12,7 +12,7 @@ function Login () {
   )
 
   return hasTicket ? (
-    Auth('more_info', 'login')
+    Auth('info', 'login')
   ) : (
     <LoginContainer>
       <Helmet>

@@ -24,7 +24,6 @@ function PostFeedWithData () {
     variables: {
       after: ''
     },
-
     fetchPolicy: 'cache-and-network',
     nextFetchPolicy: 'cache-first'
   })

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { Redirect, useHistory } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { useMutation, useLazyQuery } from '@apollo/client'
 import { Helmet } from 'react-helmet'
 import log from 'loglevel'
@@ -28,7 +28,7 @@ import {
 } from './MoreInfo.styles'
 
 const MoreInfo = () => {
-  const history = useHistory()
+  const navigator = useNavigate()
 
   const [userStatement, setStatement] = useState('Valid!')
   const [, setLoading] = useState(false)
@@ -123,12 +123,12 @@ const MoreInfo = () => {
   }
 
   if (!window.localStorage.getItem(TOKEN_NAME)) {
-    return <Redirect to='/login' />
+    return <Navigate to='/login' />
   }
 
   if (!data?.isNewUser) {
-    log.info('Redirecting....')
-    return <Redirect to='/feed' />
+    log.info('Navigateing....')
+    return <Navigate to='/feed' />
   }
 
   const handleSubmit = async e => {
@@ -166,7 +166,7 @@ const MoreInfo = () => {
       } catch (error) {
         return
       }
-      history.push('/feed')
+      navigator('/feed')
     } catch (error) {
       log.error(error)
     } finally {

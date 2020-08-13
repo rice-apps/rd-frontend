@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 import { useMutation } from '@apollo/client'
 
@@ -16,11 +16,11 @@ const Auth = (successPath, errPath) => {
   })
 
   useEffect(() => {
-    login().catch(() => <Redirect to={`/${errPath}`} />)
+    login().catch(() => <Navigate to={`/${errPath}`} />)
     // eslint-disable-next-line
   }, [])
 
-  if (error) return <Redirect to={`/${errPath}`} />
+  if (error) return <Navigate to={`/${errPath}`} />
 
   if (loading) return <div>Loading...</div>
 
@@ -31,7 +31,7 @@ const Auth = (successPath, errPath) => {
     JSON.stringify(data.userAuthentication)
   )
 
-  return <Redirect to={`/${successPath}`} />
+  return <Navigate to={`/${successPath}`} />
 }
 
 export default Auth

@@ -122,10 +122,26 @@ const FETCH_COMMENTS_PARENT = gql`
   }
 `
 
+const VERIFY_USER = gql`
+  query VerifyUser($token: String!) {
+    verifyToken(token: $token) {
+      username
+      netID
+      isNewUser
+      token
+      __typename
+      savedPosts {
+        _id
+      }
+    }
+  }
+`
+
 export {
   POST_PAGE,
   GET_USER_DATA,
   USER_EXISTS,
   FETCH_COMMENTS_PARENT,
-  FETCH_COMMENTS_POST
+  FETCH_COMMENTS_POST,
+  VERIFY_USER
 }
