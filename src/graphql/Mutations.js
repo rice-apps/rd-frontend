@@ -34,7 +34,6 @@ const POST_CREATE = gql`
       record {
         _id
         kind
-        __typename
         title
         body
         creator {
@@ -52,7 +51,6 @@ const LOGIN = gql`
       netID
       isNewUser
       token
-      __typename
       savedPosts {
         _id
       }

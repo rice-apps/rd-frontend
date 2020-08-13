@@ -25,7 +25,6 @@ render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  console.log("DEVELOPMENT")
   serviceWorker.unregister()
 } else {
   serviceWorker.register()

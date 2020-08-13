@@ -8,7 +8,6 @@ const POST_PAGE = gql`
         cursor
         node {
           _id
-          __typename
           kind
           title
           creator {
@@ -129,7 +128,6 @@ const VERIFY_USER = gql`
       netID
       isNewUser
       token
-      __typename
       savedPosts {
         _id
       }

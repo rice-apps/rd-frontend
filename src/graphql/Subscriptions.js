@@ -5,7 +5,6 @@ const POST_CREATED = gql`
     postCreated {
       _id
       kind
-      __typename
       title
       creator {
         _id

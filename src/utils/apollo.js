@@ -84,6 +84,11 @@ const mainClient = new ApolloClient({
       },
       Discussion: {
         fields: {
+          creator: {
+            merge (existing, incoming) {
+              return existing ? existing : incoming
+            }
+          },
           upvotes: {
             merge (_ignored, incoming) {
               return incoming
@@ -97,6 +102,11 @@ const mainClient = new ApolloClient({
         }
       },
       Event: {
+        creator: {
+          merge (existing, _ignored) {
+            return existing
+          }
+        },
         fields: {
           upvotes: {
             merge (_ignored, incoming) {
@@ -112,6 +122,11 @@ const mainClient = new ApolloClient({
       },
       Job: {
         fields: {
+          creator: {
+            merge (existing, incoming) {
+              return existing ? existing : incoming
+            }
+          },
           upvotes: {
             merge (_ignored, incoming) {
               return incoming
@@ -126,6 +141,11 @@ const mainClient = new ApolloClient({
       },
       Notice: {
         fields: {
+          creator: {
+            merge (existing, incoming) {
+              return existing ? existing : incoming
+            }
+          },
           upvotes: {
             merge (_ignored, incoming) {
               return incoming
