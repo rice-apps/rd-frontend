@@ -100,12 +100,14 @@ function PostFeed(props) {
         });
     }
 
-    const tags = new Set()
+    let tags = new Set()
     edges.forEach(edge => {
         edge.node.tags.forEach(tag => {
             tags.add(tag)
         })
     })
+
+    if (tags.size === 0) tags = ["No tags for these filters"]
 
     const compare_upvote_lengths = (a, b) => {
         return a.node.upvotes.length <= b.node.upvotes.length ? -1 : 1
