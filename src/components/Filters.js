@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
-<<<<<<< HEAD
-import DropDownItem from "./DropDownItem.js";
-
-import {
-=======
 import DropDownItem from "./DropDownItem";
 
 import {
     HorizontalDiv,
->>>>>>> 70cdd1bfe2bb3643bb3df8b9425419b57e0fcfea
     SubmitButton,
     DDWrapper,
     DDHeader,
@@ -17,38 +11,30 @@ import {
     DDList,
     DDListItem,
     ArrowI,
-<<<<<<< HEAD
-} from "./MoreInfo.styles";
-=======
 } from "./Filters.styles";
->>>>>>> 70cdd1bfe2bb3643bb3df8b9425419b57e0fcfea
 
-const Filters = () => {
+const Filters = (props) => {
     const [isPostTypeOpen, setPostMenuOpen] = useState(false);
     const [isTagOpen, setTagOpen] = useState(false);
     const [isDateOpen, setDateOpen] = useState(false);
     const [isUpvotesOpen, setUpvotesOpen] = useState(false);
 
-    const [postType, setPostType] = useState([]);
+    const [postType, setPostType] = useState("");
     const [tags, setTags] = useState([]);
-    const [dates, setDates] = useState([]);
-    const [upvotes, setUpvotes] = useState([]);
+    const [dates, setDates] = useState("");
+    const [upvotes, setUpvotes] = useState("");
 
     const POST_TYPES = ["Discussion", "Event", "Notice", "Job"];
-    const TAGS = ["Going", "to", "query", "the", "tags"];
-<<<<<<< HEAD
-    const DATES = ["One day ago", "One week ago"];
-    const UPVOTES = ["By greatest", "by least"];
-    // on mount we want to render without any filters
-
-    const togglePost = () => setPostMenuOpen(!isPostTypeOpen);
-    const toggleTag = () => setTagOpen(!isTagOpen);
-    const toggleDate = () => setDateOpen(!isDateOpen);
-    const toggleUpvotes = () => setUpvotesOpen(!isUpvotesOpen);
-=======
+    const TAGS = props.tagsList;
     const DATES = ["yesterday", "in the last week", "in the last month"];
     const UPVOTES = ["most", "least"];
-    // on mount we want to render without any filters
+
+    useEffect(() => {
+        setDates(props.dateFilter);
+        setUpvotes(props.upvoteFilter); 
+        setTags(props.tagFilter);
+        setPostType(props.kindFilter);
+    }, [])
 
     const togglePost = () => {
         setPostMenuOpen(!isPostTypeOpen);
@@ -77,7 +63,6 @@ const Filters = () => {
         setDateOpen(false);
         setTagOpen(false);
     }
->>>>>>> 70cdd1bfe2bb3643bb3df8b9425419b57e0fcfea
 
     const handlePostTypeChange = (newValue) => {
         const index_of_postType = postType.indexOf(newValue);
@@ -85,31 +70,39 @@ const Filters = () => {
     };
 
     const handleTagsChange = (newValue) => {
-        const index_of_tags = tags.indexOf(newValue);
-        setPostType(index_of_tags >= 0 ? "" : newValue);
+        const index_of_tag = tags.indexOf(newValue);
+        setTags(
+            index_of_tag >= 0
+                ? tags.filter((tag) => newValue !== tag)
+                : [...tags, newValue],
+        );
     };
 
     const handleDateChange = (newValue) => {
         const index_of_date = dates.indexOf(newValue);
-        setPostType(index_of_date >= 0 ? "" : newValue);
+        setDates(index_of_date >= 0 ? "" : newValue);
     };
 
     const handleUpvoteChange = newValue => {
-        const index_of_upvote = dates.indexOf(newValue);
-        setPostType(index_of_upvote >= 0 ? "" : newValue);
+        const index_of_upvote = upvotes.indexOf(newValue);
+        setUpvotes(index_of_upvote >= 0 ? "" : newValue);
     }
 
     const submitFilters = () => {
-        // send up to post feed
+        props.processDate(dates);
+        props.setDateFilter(dates);
+        props.sort_by_upvotes(upvotes);
+        props.setUpvoteFilter(upvotes);
+
+        props.setKindFilter(postType);
+
+        props.setTagFilter(tags);
     }
 
     return(
         <>
-<<<<<<< HEAD
-=======
         <HorizontalDiv>
         <div style={{"margin-left": "30px"}}>Filter:</div>
->>>>>>> 70cdd1bfe2bb3643bb3df8b9425419b57e0fcfea
         <DDWrapper>
             <DDHeader onClick={togglePost}>
                 <DDHeaderTitle>
@@ -137,7 +130,7 @@ const Filters = () => {
         <DDWrapper>
             <DDHeader onClick={toggleTag}>
                 <DDHeaderTitle>
-                    {tags === "" ? "Tags" : tags}
+                    Tags
                     <ArrowI open={isTagOpen} />
                 </DDHeaderTitle>
             </DDHeader>
@@ -185,7 +178,7 @@ const Filters = () => {
         <DDWrapper>
             <DDHeader onClick={toggleUpvotes}>
                 <DDHeaderTitle>
-                    {upvotes === "" ? "Upvotes" : upvotes}
+                    {upvotes === "" ? "By Upvotes" : upvotes}
                     <ArrowI open={isUpvotesOpen} />
                 </DDHeaderTitle>
             </DDHeader>
@@ -206,10 +199,7 @@ const Filters = () => {
             )}
         </DDWrapper>
         <SubmitButton onClick={submitFilters}> Filter! </SubmitButton>
-<<<<<<< HEAD
-=======
         </HorizontalDiv>
->>>>>>> 70cdd1bfe2bb3643bb3df8b9425419b57e0fcfea
         </>
 
     );
