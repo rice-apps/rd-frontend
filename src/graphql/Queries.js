@@ -138,7 +138,6 @@ const GET_POST = gql`
                     _id
                 }
             }
-
             ... on Event {
                 start
                 end
@@ -153,10 +152,6 @@ const GET_POST = gql`
             }
             ... on Notice {
                 deadline
-            }
-            reports {
-                netID
-                username
             }
             comments {
                 body

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const DiscussionBoxSection = styled.section`
     // contains DiscussionBox
@@ -75,7 +76,7 @@ const Tags = styled.text`
 `;
 
 // const FullPostLink = styled.link`
-const FullPostLink = styled.link`
+const FullPostLink = styled(Link)`
     justify-self: end;
     align-self: center;
     font-family: "Avenir";

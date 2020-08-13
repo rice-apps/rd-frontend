@@ -9,20 +9,20 @@ function PostFull() {
     let { postID } = useParams();
     console.log(postID);
 
-    // const { ...result } = useQuery(GET_POST, {
-    //     variables: {
-    //         _id: postID,
-    //     },
+    const { ...result } = useQuery(GET_POST, {
+        // const { loading, error, data } = useQuery(GET_POST, {
+        variables: {
+            _id: postID,
+        },
+    });
 
-    //     fetchPolicy: "cache-and-network",
-    //     nextFetchPolicy: "cache-first",
-    // });
+    console.log(result);
 
     return (
         <div>
             <p>This is the full post page</p>
             <p>{postID}</p>
-            {/* <p>{result}</p> */}
+            {/* <p>{data}</p> */}
         </div>
     );
 }
