@@ -1,34 +1,37 @@
-import React, { useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import React, { useEffect } from 'react'
+import { Navigate } from 'react-router-dom'
 
-import { useMutation } from "@apollo/client";
+import { useMutation } from '@apollo/client'
 
-import { LOGIN } from "../graphql/Mutations";
-import { TOKEN_NAME } from "../utils/config";
+import { LOGIN } from '../graphql/Mutations'
+import { TOKEN_NAME } from '../config'
 
 const Auth = (successPath, errPath) => {
-    const ticket = new URLSearchParams(window.location.search).get("ticket");
+  const ticket = new URLSearchParams(window.location.search).get('ticket')
 
-    const [login, { data, loading, error }] = useMutation(LOGIN, {
-        variables: {
-            ticket,
-        },
-    });
+  const [login, { data, loading, error }] = useMutation(LOGIN, {
+    variables: {
+      ticket
+    }
+  })
 
-    useEffect(() => {
-        login().catch(() => <Redirect to={`/${errPath}`} />);
-        // eslint-disable-next-line
-    }, []);
+  useEffect(() => {
+    login().catch(() => <Navigate to={`/${errPath}`} />)
+    // eslint-disable-next-line
+  }, [])
 
-    if (error) return <Redirect to={`/${errPath}`} />;
+  if (error) return <Navigate to={`/${errPath}`} />
 
-    if (loading) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>
 
-    if (!data) return <div>Login went wrong</div>;
+  if (!data) return <div>Login went wrong</div>
 
-    localStorage.setItem(TOKEN_NAME, JSON.stringify(data.userAuthentication));
+  window.localStorage.setItem(
+    TOKEN_NAME,
+    JSON.stringify(data.userAuthentication)
+  )
 
-    return <Redirect to={`/${successPath}`} />;
-};
+  return <Navigate to={`/${successPath}`} />
+}
 
-export default Auth;
+export default Auth
