@@ -5,11 +5,8 @@ import { useMutation, useLazyQuery } from "@apollo/client";
 
 import uuid from "uuid/v4";
 import PostChunk from "./PostChunk";
-<<<<<<< HEAD:src/components/PostFeed.js
 import Filters from "./Filters";
-=======
 import CommentChunk from "./CommentChunk";
->>>>>>> bea56c4c6f28716896c7d104083e602f5f46dea7:src/components/PostFeed.jsx
 import { TOKEN_NAME } from "../utils/config";
 import { UPVOTE_POST, DOWNVOTE_POST, SAVE_POST } from "../graphql/Mutations";
 import { FETCH_COMMENTS_POST, FETCH_COMMENTS_PARENT } from "../graphql/Queries";
@@ -35,7 +32,6 @@ function PostFeed(props) {
         subscribeToNewVotes,
         loading,
         error,
-        getPosts,
         data,
     } = props;
 

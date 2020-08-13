@@ -59,6 +59,61 @@ const POST_PAGE = gql`
     }
 `;
 
+const FILTER = gql`
+    query GetFilteredData(
+        $today: Date
+        $earlyDate: Date
+        $kind: EnumDKeyPostKind
+    ){
+        postConnection(
+            filter: {
+                OR: [
+                    {kind: $kind}
+                    {
+                        AND: [
+                            { _operators: { date_created: { gt: $earlyDate } } }
+                            { _operators: { date_created: { lt: $today } } }
+                        ]
+                    }
+                ]
+            }
+        ) {
+        edges {
+            node {
+                title
+                body
+                date_created
+                creator {
+                    username
+                }
+
+                ... on Event {
+                    start
+                    end
+                    location: place
+                }
+                ... on Job {
+                    start
+                    end
+                    workplace: place
+                    isPaid
+                    isClosed
+                }
+                ... on Notice {
+                    deadline
+                }
+            }
+        }
+        pageInfo {
+            startCursor
+            endCursor
+            hasPreviousPage
+            hasNextPage
+        }
+    }
+}
+`;
+
 const GET_USER_DATA = gql`
     query GetData($netID: String!) {
         userOne(filter: { netID: $netID }) {
@@ -128,4 +183,5 @@ export {
     USER_EXISTS,
     FETCH_COMMENTS_PARENT,
     FETCH_COMMENTS_POST,
+    FILTER
 };

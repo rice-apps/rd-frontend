@@ -4,7 +4,7 @@ import { useMutation, useLazyQuery } from "@apollo/client";
 import { SET_INFO } from "../graphql/Mutations";
 import { GET_USER_DATA, USER_EXISTS } from "../graphql/Queries";
 import { TOKEN_NAME } from "../utils/config";
-import DropDownItem from "./DropDownItem.js";
+import DropDownItem from "./DropDownItem";
 import major_minor_json from "../utils/MajorMinor.json";
 import {
     DDWrapper,
