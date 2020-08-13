@@ -52,7 +52,7 @@ function PostFeed (props) {
 
   const posts = edges.map((post, _i) => {
     return (
-      <>
+      <React.Fragment key={btoa("Fragment:" + post.node._id)}>
         <PostChunk
           userInfo={userInfo}
           upvotePost={upvotePost}
@@ -62,6 +62,7 @@ function PostFeed (props) {
           key={post.node._id}
         />
         <button
+          key={btoa("Button 1:" + post.node._id)}
           onClick={() =>
             getCommentsPost({
               variables: { post_id: post.node._id }
@@ -70,9 +71,9 @@ function PostFeed (props) {
         >
           Get Comments
         </button>
-        <button onClick={refetch}>Refresh Comments</button>
-        <CommentChunk {...result} />
-      </>
+        <button key={btoa("Button 2:" + post.node._id)} onClick={refetch}>Refresh Comments</button>
+        <CommentChunk key={btoa("Comment:" + post.node._id)} {...result} />
+      </React.Fragment>
     )
   })
 
