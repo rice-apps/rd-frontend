@@ -61,6 +61,11 @@ const mainClient = new ApolloClient({
             read() {
               return currentUser()
             }
+          },
+          currentNetID: {
+            read() {
+              return currentUser().netID
+            }
           }
         }
       },
