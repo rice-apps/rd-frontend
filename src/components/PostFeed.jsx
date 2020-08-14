@@ -3,7 +3,6 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useMutation, useLazyQuery } from '@apollo/client'
 
-import uuid from 'uuid/v4'
 import PostChunk from './PostChunk'
 import CommentChunk from './CommentChunk'
 import { TOKEN_NAME } from '../config'
@@ -92,7 +91,7 @@ function PostFeed (props) {
         pageStart={0}
         loadMore={() => onLoadMore()}
         hasMore={hasNextPage}
-        loader={<div key={uuid()}>Loading...</div>}
+        loader={<div>Loading...</div>}
       >
         {posts}
       </InfiniteScroll>
