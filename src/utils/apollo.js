@@ -1,13 +1,17 @@
-import { ApolloClient } from '@apollo/client/core'
-import { InMemoryCache } from '@apollo/client/cache'
-import { createHttpLink, split, makeVar } from '@apollo/client'
+import {
+  createHttpLink,
+  split,
+  makeVar,
+  ApolloClient,
+  InMemoryCache
+} from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { WebSocketLink } from '@apollo/client/link/ws'
-
 import {
   getMainDefinition,
   relayStylePagination
 } from '@apollo/client/utilities'
+
 import possibleTypes from './possibleTypes.json'
 
 import { GQL_URL, WS_URL, loadToken } from '../config'
