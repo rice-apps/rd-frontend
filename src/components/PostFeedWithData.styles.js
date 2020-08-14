@@ -31,15 +31,16 @@ export const BannerContainer = styled.div`
 
 export const LeftSidebarContainer = styled.div`
   position: sticky;
-  top: 150px;
+  top: 5vh;
 
-  margin-top: 150px;
+  margin-top: 30vh;
   justify-self: center;
-  width: 3vw;
-  height: calc(50vh);
+  width: 3.5vw;
+  height: 15vw;
 
   background: rgba(255, 255, 255, 0.65) 0% 0% no-repeat padding-box;
-  border-radius: 20px;
+  border-radius: 1.3vw;
+  border: 0.16vw solid #FFFFFF;
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
 `
