@@ -14,6 +14,24 @@ import { GQL_URL, WS_URL, loadToken } from '../config'
 
 const currentUser = makeVar({})
 
+const postFieldPolicies = {
+  creator: {
+    merge (existing, incoming) {
+      return existing || incoming
+    }
+  },
+  upvotes: {
+    merge (_ignored, incoming) {
+      return incoming
+    }
+  },
+  downvotes: {
+    merge (_ignored, incoming) {
+      return incoming
+    }
+  }
+}
+
 const httpLink = createHttpLink({
   uri: GQL_URL,
   credentials: 'same-origin'
@@ -51,6 +69,7 @@ const authLink = setContext((_, { headers }) => {
 })
 
 const mainClient = new ApolloClient({
+  link: authLink.concat(splitLink),
   cache: new InMemoryCache({
     possibleTypes,
     typePolicies: {
@@ -89,84 +108,19 @@ const mainClient = new ApolloClient({
         }
       },
       Discussion: {
-        fields: {
-          creator: {
-            merge (existing, incoming) {
-              return existing || incoming
-            }
-          },
-          upvotes: {
-            merge (_ignored, incoming) {
-              return incoming
-            }
-          },
-          downvotes: {
-            merge (_ignored, incoming) {
-              return incoming
-            }
-          }
-        }
+        fields: postFieldPolicies
       },
       Event: {
-        creator: {
-          merge (existing, _ignored) {
-            return existing
-          }
-        },
-        fields: {
-          upvotes: {
-            merge (_ignored, incoming) {
-              return incoming
-            }
-          },
-          downvotes: {
-            merge (_ignored, incoming) {
-              return incoming
-            }
-          }
-        }
+        fields: postFieldPolicies
       },
       Job: {
-        fields: {
-          creator: {
-            merge (existing, incoming) {
-              return existing || incoming
-            }
-          },
-          upvotes: {
-            merge (_ignored, incoming) {
-              return incoming
-            }
-          },
-          downvotes: {
-            merge (_ignored, incoming) {
-              return incoming
-            }
-          }
-        }
+        fields: postFieldPolicies
       },
       Notice: {
-        fields: {
-          creator: {
-            merge (existing, incoming) {
-              return existing || incoming
-            }
-          },
-          upvotes: {
-            merge (_ignored, incoming) {
-              return incoming
-            }
-          },
-          downvotes: {
-            merge (_ignored, incoming) {
-              return incoming
-            }
-          }
-        }
+        fields: postFieldPolicies
       }
     }
-  }),
-  link: authLink.concat(splitLink)
+  })
 })
 
 export { mainClient, currentUser }
