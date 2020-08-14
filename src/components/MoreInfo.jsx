@@ -3,7 +3,6 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import { useMutation, useLazyQuery } from '@apollo/client'
 import { Helmet } from 'react-helmet'
 import log from 'loglevel'
-import { TOKEN_NAME } from '../config'
 import { SET_INFO } from '../graphql/Mutations'
 import { USER_EXISTS } from '../graphql/Queries'
 import laptopGirl from '../images/Page 2.svg'
@@ -26,6 +25,7 @@ import {
   DDListItem,
   ArrowI
 } from './MoreInfo.styles'
+import { currentUser } from '../utils/apollo'
 
 const MoreInfo = () => {
   const navigator = useNavigate()
@@ -45,7 +45,7 @@ const MoreInfo = () => {
     checkUser,
     { data: userExists, loading: userExistLoading }
   ] = useLazyQuery(USER_EXISTS)
-  const data = JSON.parse(window.localStorage.getItem(TOKEN_NAME))
+  const data = currentUser()
 
   const majors = majorMinorJson.majors.split(';').map(major => {
     const majorObj = {
@@ -122,7 +122,7 @@ const MoreInfo = () => {
     setMinorOpen(false)
   }
 
-  if (!window.localStorage.getItem(TOKEN_NAME)) {
+  if (currentUser() === {}) {
     return <Navigate to='/login' />
   }
 
@@ -147,10 +147,7 @@ const MoreInfo = () => {
         return
       }
 
-      // manually set local storage cause for some reason it's not doing it anymore
-      const token = JSON.parse(window.localStorage.getItem(TOKEN_NAME))
-      token.isNewUser = false
-      window.localStorage.setItem(TOKEN_NAME, JSON.stringify(token))
+      currentUser({ ...data, isNewUser: false })
 
       try {
         await addInfo({

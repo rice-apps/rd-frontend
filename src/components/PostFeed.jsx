@@ -5,12 +5,12 @@ import { useMutation, useLazyQuery } from '@apollo/client'
 
 import PostChunk from './PostChunk'
 import CommentChunk from './CommentChunk'
-import { TOKEN_NAME } from '../config'
 import { UPVOTE_POST, DOWNVOTE_POST, SAVE_POST } from '../graphql/Mutations'
 import { FETCH_COMMENTS_POST } from '../graphql/Queries'
+import { currentUser } from '../utils/apollo'
 
 function PostFeed (props) {
-  const userInfo = JSON.parse(window.localStorage.getItem(TOKEN_NAME))
+  const userInfo = currentUser()
 
   const [
     getCommentsPost,

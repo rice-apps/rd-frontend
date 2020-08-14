@@ -33,7 +33,7 @@ function PrivateRoute ({ element, ...rest }) {
     return <Navigate to='/login' />
   }
 
-  window.localStorage.setItem(TOKEN_NAME, JSON.stringify(data.verifyToken))
+  window.localStorage.setItem(TOKEN_NAME, data.verifyToken.token)
 
   currentUser(data.verifyToken)
 

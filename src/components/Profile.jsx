@@ -3,7 +3,6 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import { useMutation, useLazyQuery } from '@apollo/client'
 import { SET_INFO } from '../graphql/Mutations'
 import { GET_USER_DATA, USER_EXISTS } from '../graphql/Queries'
-import { TOKEN_NAME } from '../config'
 import DropDownItem from './DropDownItem'
 import majorMinorJson from '../utils/MajorMinor.json'
 import {
@@ -18,6 +17,7 @@ import {
 } from './MoreInfo.styles'
 
 import { PostingButton } from './WritePost.styles'
+import { currentUser } from '../utils/apollo'
 
 const ProfilePage = () => {
   const navigator = useNavigate()
@@ -31,7 +31,7 @@ const ProfilePage = () => {
   const [isMinorOpen, setMinorOpen] = useState(false)
   const [isCollegeOpen, setCollegeOpen] = useState(false)
 
-  const { netID } = JSON.parse(window.localStorage.getItem(TOKEN_NAME))
+  const { netID } = currentUser()
   const [addInfo] = useMutation(SET_INFO)
   const [getUser, { data, loading: userInfoLoading }] = useLazyQuery(
     GET_USER_DATA
@@ -164,7 +164,7 @@ const ProfilePage = () => {
     } catch (error) {}
   }
 
-  if (!window.localStorage.getItem(TOKEN_NAME)) {
+  if (currentUser() === {}) {
     return <Navigate to='/login' />
   }
 

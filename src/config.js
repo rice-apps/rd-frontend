@@ -15,7 +15,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 
 function loadToken () {
   return window.localStorage.getItem(TOKEN_NAME) != null
-    ? JSON.parse(window.localStorage.getItem(TOKEN_NAME)).token
+    ? window.localStorage.getItem(TOKEN_NAME)
     : ''
 }
 

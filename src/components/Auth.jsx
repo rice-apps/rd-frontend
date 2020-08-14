@@ -26,10 +26,7 @@ const Auth = (successPath, errPath) => {
 
   if (!data) return <div>Login went wrong</div>
 
-  window.localStorage.setItem(
-    TOKEN_NAME,
-    JSON.stringify(data.userAuthentication)
-  )
+  window.localStorage.setItem(TOKEN_NAME, data.userAuthentication.token)
 
   return <Navigate to={`/${successPath}`} />
 }
