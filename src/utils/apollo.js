@@ -1,6 +1,6 @@
 import { ApolloClient } from '@apollo/client/core'
 import { InMemoryCache } from '@apollo/client/cache'
-import { createHttpLink, split } from '@apollo/client'
+import { createHttpLink, split, makeVar } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { WebSocketLink } from '@apollo/client/link/ws'
 
@@ -11,6 +11,8 @@ import {
 import possibleTypes from './possibleTypes.json'
 
 import { GQL_URL, WS_URL, loadToken } from '../config'
+
+const currentUser = makeVar({})
 
 const httpLink = createHttpLink({
   uri: GQL_URL,
@@ -54,7 +56,12 @@ const mainClient = new ApolloClient({
     typePolicies: {
       Query: {
         fields: {
-          postConnection: relayStylePagination()
+          postConnection: relayStylePagination(),
+          currentUser: {
+            read() {
+              return currentUser()
+            }
+          }
         }
       },
       Subscription: {
@@ -157,4 +164,4 @@ const mainClient = new ApolloClient({
   link: authLink.concat(splitLink)
 })
 
-export default mainClient
+export { mainClient, currentUser }

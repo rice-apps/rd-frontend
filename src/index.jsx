@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 
 import { ApolloProvider } from '@apollo/client'
 
-import client from './utils/apollo'
+import { mainClient as client } from './utils/apollo'
 
 import App from './App'
 import GlobalStyle from './index.styles'

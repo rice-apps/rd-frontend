@@ -131,6 +131,9 @@ const VERIFY_USER = gql`
       savedPosts {
         _id
       }
+      major
+      minor
+      college
     }
   }
 `

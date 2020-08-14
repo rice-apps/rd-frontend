@@ -7,6 +7,7 @@ import Feed from './PostFeedWithData'
 import Login from './Login'
 import MoreInfo from './MoreInfo'
 import ProfilePage from './Profile'
+import { currentUser } from '../utils/apollo'
 
 function PrivateRoute ({ element, ...rest }) {
   const token = loadToken()
@@ -33,6 +34,8 @@ function PrivateRoute ({ element, ...rest }) {
   }
 
   window.localStorage.setItem(TOKEN_NAME, JSON.stringify(data.verifyToken))
+
+  currentUser(data.verifyToken)
 
   return <Route {...rest} element={element} />
 }
