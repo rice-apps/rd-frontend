@@ -58,12 +58,12 @@ const mainClient = new ApolloClient({
         fields: {
           postConnection: relayStylePagination(),
           currentUser: {
-            read() {
+            read () {
               return currentUser()
             }
           },
           currentNetID: {
-            read() {
+            read () {
               return currentUser().netID
             }
           }
