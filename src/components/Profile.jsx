@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { useMutation, useLazyQuery } from '@apollo/client'
 import { SET_INFO } from '../graphql/Mutations'
-import { GET_USER_DATA, USER_EXISTS } from '../graphql/Queries'
+import { USER_EXISTS } from '../graphql/Queries'
 import DropDownItem from './DropDownItem'
 import majorMinorJson from '../utils/MajorMinor.json'
 import {
@@ -33,30 +33,19 @@ const ProfilePage = () => {
 
   const { netID } = currentUser()
   const [addInfo] = useMutation(SET_INFO)
-  const [getUser, { data, loading: userInfoLoading }] = useLazyQuery(
-    GET_USER_DATA
-  )
+  const data = currentUser()
   const [
     checkUser,
     { data: userExists, loading: userExistLoading }
   ] = useLazyQuery(USER_EXISTS)
 
-  const fillState = () => {
-    getUser({
-      variables: {
-        netID
-      }
-    })
-  }
-
   useEffect(() => {
-    fillState()
     if (data) {
-      if (username.length === 0) setOriginal(data.userOne.username)
-      setUsername(data.userOne.username)
-      setMajor(data.userOne.major)
-      setMinor(data.userOne.minor)
-      setCollege(data.userOne.college)
+      if (username.length === 0) setOriginal(data.username)
+      setUsername(data.username)
+      setMajor(data.major)
+      setMinor(data.minor)
+      setCollege(data.college)
     }
   }, [data])
 
@@ -167,8 +156,6 @@ const ProfilePage = () => {
   if (currentUser() === {}) {
     return <Navigate to='/login' />
   }
-
-  if (userInfoLoading) return <p>Loading...</p>
 
   return (
     <>

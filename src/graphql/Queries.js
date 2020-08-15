@@ -57,18 +57,6 @@ const POST_PAGE = gql`
     }
   }
 `
-
-const GET_USER_DATA = gql`
-  query GetData($netID: String!) {
-    userOne(filter: { netID: $netID }) {
-      username
-      major
-      minor
-      college
-    }
-  }
-`
-
 const USER_EXISTS = gql`
   query GetData($username: String!) {
     doesUsernameExist(username: $username) {
@@ -140,7 +128,6 @@ const VERIFY_USER = gql`
 
 export {
   POST_PAGE,
-  GET_USER_DATA,
   USER_EXISTS,
   FETCH_COMMENTS_PARENT,
   FETCH_COMMENTS_POST,
