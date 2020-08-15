@@ -81,11 +81,23 @@ function PostFeedWithData () {
                               _id: subscriptionData.data.postCreated._id
                             })
                           ),
-                          node: subscriptionData.data.postCreated
+                          node: {
+                            ...subscriptionData.data.postCreated,
+                            __typename: 'PostNode'
+                          },
+                          __typename: 'PostEdge'
                         },
                         ...prev.postConnection.edges
                       ],
-                      pageInfo: prev.postConnection.pageInfo,
+                      pageInfo: {
+                        ...prev.postConnection.pageInfo,
+                        startCursor: window.btoa(
+                          JSON.stringify({
+                            _id: subscriptionData.data.postCreated._id
+                          })
+                        ),
+                        __typename: 'PageInfo'
+                      },
                       __typename: 'PostConnection'
                     }
                   }

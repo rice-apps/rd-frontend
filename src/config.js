@@ -21,5 +21,4 @@ export {
   GQL_URL,
   WS_URL,
   TOKEN_NAME,
-  loadToken
 }

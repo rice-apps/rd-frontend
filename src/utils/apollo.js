@@ -14,7 +14,7 @@ import {
 
 import possibleTypes from './possibleTypes.json'
 
-import { GQL_URL, WS_URL, } from '../config'
+import { GQL_URL, WS_URL, TOKEN_NAME } from '../config'
 
 function loadToken () {
   return window.localStorage.getItem(TOKEN_NAME) != null
