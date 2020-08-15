@@ -14,7 +14,13 @@ import {
 
 import possibleTypes from './possibleTypes.json'
 
-import { GQL_URL, WS_URL, loadToken } from '../config'
+import { GQL_URL, WS_URL, } from '../config'
+
+function loadToken () {
+  return window.localStorage.getItem(TOKEN_NAME) != null
+    ? window.localStorage.getItem(TOKEN_NAME)
+    : ''
+}
 
 const currentUser = makeVar({})
 
@@ -127,4 +133,4 @@ const mainClient = new ApolloClient({
   })
 })
 
-export { mainClient, currentUser }
+export { mainClient, currentUser, loadToken }

@@ -13,12 +13,6 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   log.setLevel('trace')
 }
 
-function loadToken () {
-  return window.localStorage.getItem(TOKEN_NAME) != null
-    ? window.localStorage.getItem(TOKEN_NAME)
-    : ''
-}
-
 export {
   CAS_AUTH_URL,
   SERVICE_URL,

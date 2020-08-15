@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 
 const DropDownItem = props => {
+  const { selectedItems, name } = props
+
   const [selected, setSelected] = useState(false)
   const [color, setColored] = useState('white')
 
   useEffect(() => {
-    const data = props.selectedItems
-    data.includes(props.name) ? setSelected(true) : setSelected(false)
-    // eslint-disable-next-line
-  }, [props.selectedItems])
+    selectedItems.includes(name) ? setSelected(true) : setSelected(false)
+  }, [selectedItems, name])
 
   useEffect(() => {
     setColored(selected ? 'lightblue' : 'white')

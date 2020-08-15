@@ -17,8 +17,7 @@ const Auth = (successPath, errPath) => {
 
   useEffect(() => {
     login().catch(() => <Navigate to={`/${errPath}`} />)
-    // eslint-disable-next-line
-  }, [])
+  }, [errPath, login])
 
   if (error) return <Navigate to={`/${errPath}`} />
 

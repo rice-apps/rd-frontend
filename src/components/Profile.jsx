@@ -33,21 +33,27 @@ const ProfilePage = () => {
 
   const { netID } = currentUser()
   const [addInfo] = useMutation(SET_INFO)
-  const data = currentUser()
+
+  const {
+    username: currentUsername,
+    major: currentMajor,
+    minor: currentMinor,
+    college: currentCollege
+  } = currentUser()
+
   const [
     checkUser,
     { data: userExists, loading: userExistLoading }
   ] = useLazyQuery(USER_EXISTS)
 
   useEffect(() => {
-    if (data) {
-      if (username.length === 0) setOriginal(data.username)
-      setUsername(data.username)
-      setMajor(data.major)
-      setMinor(data.minor)
-      setCollege(data.college)
-    }
-  }, [data])
+    const newUsername = username.length === 0 ? currentUsername : username
+    setOriginal(newUsername)
+    setUsername(currentUsername)
+    setMajor(currentMajor)
+    setMinor(currentMinor)
+    setCollege(currentCollege)
+  }, [])
 
   useEffect(() => {
     checkUser({

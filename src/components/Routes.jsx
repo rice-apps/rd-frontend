@@ -1,13 +1,14 @@
 import React from 'react'
 import { Navigate, Route, useRoutes } from 'react-router-dom'
-import { TOKEN_NAME, loadToken } from '../config'
 import { useQuery } from '@apollo/client'
-import { VERIFY_USER } from '../graphql/Queries'
+
 import Feed from './PostFeedWithData'
 import Login from './Login'
 import MoreInfo from './MoreInfo'
 import ProfilePage from './Profile'
-import { currentUser } from '../utils/apollo'
+import { currentUser, loadToken } from '../utils/apollo'
+import { VERIFY_USER } from '../graphql/Queries'
+import { TOKEN_NAME } from '../config'
 
 function PrivateRoute ({ element, ...rest }) {
   const token = loadToken()
