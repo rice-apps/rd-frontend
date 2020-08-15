@@ -13,11 +13,15 @@ import {
   PostFeedContainer,
   BannerContainer,
   RightSidebarContainer,
-  LeftSidebarContainer
+  LeftSidebarContainer,
+  NewPostButtonContainer,
+  NewPostButton,
+  ButtonText
 } from './PostFeedWithData.styles'
 
 import { Banner } from './PostFeed.styles'
 import { SideNav } from './SideNav'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 function PostFeedWithData () {
   const { subscribeToMore, fetchMore, ...result } = useQuery(POST_PAGE, {
@@ -44,12 +48,16 @@ function PostFeedWithData () {
           <SideNav />
         </LeftSidebarContainer>
         <PostFeedContainer>
-          <p
-            onClick={openModal}
-            style={{ background: 'lightpink', cursor: 'pointer' }}
-          >
-            New Post
-          </p>
+          <NewPostButtonContainer>
+            <NewPostButton
+              onClick={openModal}
+            >
+              <AddCircleIcon style={{ color: '#EAB4AC', width: '1.3vw', height: '1.3vw' }} />
+              <ButtonText>
+                Create Post
+              </ButtonText>
+            </NewPostButton>
+          </NewPostButtonContainer>
           <BannerContainer>
             <Banner />
           </BannerContainer>

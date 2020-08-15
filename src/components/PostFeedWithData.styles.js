@@ -59,3 +59,36 @@ export const RightSidebarContainer = styled.div`
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
 `
+export const NewPostButtonContainer = styled.div`
+  padding-top: 1.6vw;
+  
+  width: 47vw;
+  height: 3vw;
+  
+  justify-content: space-between;
+`
+
+export const NewPostButton = styled.div`
+    display: flex;
+    
+    width: 10vw;
+    height: 2.3vw;
+    
+    cursor: pointer;
+    
+    background: #FFFFFF93 0% 0% no-repeat padding-box;
+    box-shadow: 0.1vw 0.1vw 0.5vw #7478861A;
+    border-radius: 0.7vw;
+    opacity: 1;
+    
+    justify-content: flex-start;
+    align-items: center;
+    
+    padding-left: 0.8vw
+`
+
+export const ButtonText = styled.div`
+    font-size: 0.9vw;
+    padding-left: 1.3vw;
+    padding-bottom: 0.2vw
+`
