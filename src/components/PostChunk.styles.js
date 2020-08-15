@@ -47,14 +47,15 @@ const Downvote = styled.div`
 `;
 
 const TopMiddleComponent = styled.div`
-    // contains DiscussionTitle, DropDown, DiscussionBody
+    // contains DiscussionTitle, MoreOptions, DiscussionBody
     grid-area: topmiddle;
     display: grid;
     grid-template-areas:
         "title moreoptions"
-        "body moreoptions";
-    grid-template-columns: 6fr 1fr;
-    grid-template-rows: 50px 1fr;
+        "body moreoptions"
+        "image moreoptions";
+    grid-template-columns: 1fr 60px;
+    grid-template-rows: 50px 1fr auto;
 `;
 
 const DiscussionTitleDiv = styled.div`
@@ -76,17 +77,17 @@ const DiscussionTitle = styled.text`
 const MoreOptions = styled.div`
     grid-area: moreoptions;
     align-self: start;
-    justify-self: end;
+    justify-self: start;
 `;
 
 const DDMenu = styled.div`
     position: relative;
-    align-self: stretch;
-    justify-self: stretch;
+    align-self: start;
+    justify-self: center;
     background-color: white;
     display: grid;
     bottom: 25px;
-    width: 200%;
+    width: 150%;
 `;
 
 const Save = styled.button`
@@ -147,10 +148,6 @@ const ViewTags = styled.button`
     background-color: inherit;
 `;
 
-const MoreTags = styled.div`
-    word-wrap: break-word;
-`;
-
 const ShareFacebook = styled.div`
     grid-area: facebook;
 `;
@@ -178,7 +175,6 @@ export {
     Tags,
     Tag,
     ViewTags,
-    MoreTags,
     MoreOptions,
     DDMenu,
     DiscussionBody,

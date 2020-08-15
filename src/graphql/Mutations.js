@@ -111,7 +111,8 @@ const REMOVE_POST = gql`
                 _id
                 netID
             }
-            _id
+            body
+            title
         }
     }
 `;

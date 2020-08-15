@@ -27,7 +27,6 @@ import {
     Tags,
     Tag,
     ViewTags,
-    MoreTags,
     MoreOptions,
     DDMenu,
     DiscussionBody,
@@ -74,6 +73,7 @@ function PostChunk(props) {
         setTagsOpen(!isTagsOpen);
         console.log({isTagsOpen})
     }
+
 
     return (
         <>
@@ -134,6 +134,8 @@ function PostChunk(props) {
                                         onClick={(e) => {
                                             e.preventDefault();
 
+                                            
+
                                             const currentSavedPosts = props.userInfo.savedPosts.map(
                                                 (tup) => tup._id,
                                             );
@@ -146,6 +148,8 @@ function PostChunk(props) {
                                                     ],
                                                 },
                                             });
+
+                                            console.log(props.userInfo.savedPosts)
                                         }}
                                     >
                                         Save Post
@@ -167,20 +171,20 @@ function PostChunk(props) {
                                     >
                                         Report Post
                                     </Report>
-                                    {props.post.node.creator.username === props.userInfo.username && (
-                                        <Delete
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                props.removePost({
-                                                    variables: {
-                                                        _id: props.post.node._id,
-                                                    },
-                                                });
-                                            }}
-                                        >
-                                            Delete Post
-                                        </Delete>
-                                    )}
+
+                                    <Delete
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            props.removePost({
+                                                variables: {
+                                                    _id: props.post.node._id,
+                                                },
+                                            });
+                                        }}
+                                    >
+                                        Delete Post
+                                    </Delete>
+                                    
                                 </DDMenu>
                             )}
                         </MoreOptions>
@@ -188,7 +192,9 @@ function PostChunk(props) {
                         <DiscussionBody>
                             {ReactHtmlParser(props.post.node.body)}
                         </DiscussionBody>
+
                         {oneImage}
+                        
                     </TopMiddleComponent>
 
                     <BottomComponent>
@@ -198,20 +204,20 @@ function PostChunk(props) {
                             {props.post.node.tags.length > 1 && <Tag>{props.post.node.tags[1]}</Tag>}
                             {props.post.node.tags.length > 2 && <Tag>{props.post.node.tags[2]}</Tag>}               
 
-                            {isTagsOpen && (
-                                <MoreTags>
-                                    {props.post.node.tags.slice(3,).forEach((tag) => 
-                                        (
-                                            <Tag>{tag}</Tag>
-                                        )
-                                    )}
-                                </MoreTags>
-                                
-                            )}
+
+                            {isTagsOpen && 
+                                props.post.node.tags.slice(3,).map((tag) => 
+                                    (
+                                        <Tag>{tag}</Tag>
+                                    )
+                                )
+                            }
                             
                             {props.post.node.tags.length > 3 && (
                                 <ViewTags onClick={toggleTags}>
-                                    (See All)
+                                    {isTagsOpen
+                                        ? <text>(View Less)</text>
+                                        : <text>(View All)</text>} 
                                 </ViewTags>
                             )}
                         </Tags>
