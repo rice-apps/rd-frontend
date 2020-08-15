@@ -4,7 +4,7 @@ import CustomRoutes from './components/Routes'
 
 function App () {
   return (
-    <Router forceRefresh>
+    <Router>
       <CustomRoutes />
     </Router>
   )
