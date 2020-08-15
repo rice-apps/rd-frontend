@@ -33,13 +33,6 @@ function PostFeed (props) {
     } = props;
 
 
-  const {
-    onLoadMore,
-    subscribeToNewPosts,
-    subscribeToNewVotes,
-    loading,
-    error
-  } = props
 
     if (error) return <h1>Something went wrong...</h1>;
     if (loading || !data) return <h1>Loading...</h1>;
@@ -51,35 +44,6 @@ function PostFeed (props) {
         },
     } = data;
 
-<<<<<<< HEAD
-    const posts = edges.map((post, _i) => {
-        console.log(post.node._id)
-        console.log(userInfo.netID)
-        return (
-            <>
-                <PostChunk
-                    userInfo={userInfo}
-                    upvotePost={upvotePost}
-                    downvotePost={downvotePost}
-                    savePost={savePost}
-                    post={post}
-                    key={post.node._id}
-                />
-                <button
-                    onClick={() =>
-                        getCommentsPost({
-                            variables: { post_id: post.node._id },
-                        })
-                    }
-                >
-                    Get Comments
-                </button>
-                <button onClick={() => refetch()}>Refresh Comments</button>
-                <CommentChunk {...result} />
-            </>
-        );
-    });
-=======
     const process_date_filter = filter => {
         const today = props.currentDate
 
@@ -135,7 +99,6 @@ function PostFeed (props) {
             tags.add(tag)
         })
     })
->>>>>>> 73e62facf1bed46b48b5835267a108dd5e53a4f8
 
     if (tags.size === 0) tags = ["No tags for these filters"]
 

@@ -18,7 +18,6 @@ export const PostFeedContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
-<<<<<<< HEAD
     background: rgba(255, 255, 255, 0.5) 0% 0% no-repeat padding-box;
     border-radius: 20px;
     border: 3px solid #FFFFFF;
@@ -26,14 +25,6 @@ export const PostFeedContainer = styled.div`
     -webkit-backdrop-filter: blur(30px);
     opacity: 1;
 `;
-=======
-  background: rgba(255, 255, 255, 0.5) 0% 0% no-repeat padding-box;
-  border: 0.16vw solid #FFFFFF;
-  border-radius: 1.6vw;
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-`
->>>>>>> 73e62facf1bed46b48b5835267a108dd5e53a4f8
 
 export const BannerContainer = styled.div`
   padding: 50px;

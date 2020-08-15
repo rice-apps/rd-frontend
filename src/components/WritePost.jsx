@@ -344,12 +344,12 @@ function WritePost (props) {
                         Add Tag (press enter after each tag)
                         <TagBox id="tag" contentEditable={true}>
                         </TagBox>
-                        keyPress(e){
+                        {/* keyPress(e){
                             (e.keyCode == "Enter") ?
-                                console.log('tag', e.target.value);
+                                console.log('tag', e.target.value)
                                 // put the login here
                             }
-                        }
+                        } */}
                         <TagChosenWrapper>
                             Your tags: 
                             <TagChosen>
