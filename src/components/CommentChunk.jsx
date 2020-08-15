@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
-function CommentChunk(props) {
-    return <div>Comment Chunk</div>;
+function CommentChunk (props) {
+  return <div>Comment Chunk</div>
 }
 
-export default CommentChunk;
+export default CommentChunk
