@@ -12,14 +12,15 @@ export const Background = styled.div`
 `
 
 export const PostFeedContainer = styled.div`
-  margin-top: 150px;
+  margin-top: 8.6vh;
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
   background: rgba(255, 255, 255, 0.5) 0% 0% no-repeat padding-box;
-  border-radius: 20px;
+  border: 0.16vw solid #FFFFFF;
+  border-radius: 1.6vw;
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
 `
@@ -33,7 +34,7 @@ export const LeftSidebarContainer = styled.div`
   position: sticky;
   top: 5vh;
 
-  margin-top: 30vh;
+  margin-top: 12vh;
   justify-self: center;
   width: 3.5vw;
   height: 15vw;
@@ -47,15 +48,15 @@ export const LeftSidebarContainer = styled.div`
 
 export const RightSidebarContainer = styled.div`
   position: sticky;
-  top: 150px;
+  top: 5vh;
 
-  margin-top: 150px;
+  margin-top: 8.6vh;
   justify-self: center;
   width: 20vw;
   height: calc(80vh);
-  background: #ffffff 0% 0% no-repeat padding-box;
-  border-radius: 20px;
-  opacity: 0.7;
+  background: rgba(255, 255, 255, 0.5) 0% 0% no-repeat padding-box;
+  border: 0.16vw solid #FFFFFF;
+  border-radius: 1.6vw;
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
 `
@@ -79,7 +80,6 @@ export const NewPostButton = styled.div`
     background: #FFFFFF93 0% 0% no-repeat padding-box;
     box-shadow: 0.1vw 0.1vw 0.5vw #7478861A;
     border-radius: 0.7vw;
-    opacity: 1;
     
     justify-content: flex-start;
     align-items: center;
