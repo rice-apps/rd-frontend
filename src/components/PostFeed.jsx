@@ -10,6 +10,8 @@ import { FETCH_COMMENTS_POST } from '../graphql/Queries'
 import { currentUser } from '../utils/apollo'
 
 function PostFeed (props) {
+  const date = new Date()
+
   const userInfo = currentUser()
 
   const [
@@ -91,7 +93,7 @@ function PostFeed (props) {
         pageStart={0}
         loadMore={() => onLoadMore()}
         hasMore={hasNextPage}
-        loader={<div>Loading...</div>}
+        loader={<div key={btoa(date.getTime())}>Loading...</div>}
       >
         {posts}
       </InfiniteScroll>
