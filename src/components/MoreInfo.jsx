@@ -156,7 +156,6 @@ const MoreInfo = () => {
             college,
             major,
             minor,
-            netID: data.netID,
             isNewUser: false
           }
         })

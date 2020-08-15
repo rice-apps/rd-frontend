@@ -74,7 +74,6 @@ function PostChunk (props) {
                   e.preventDefault()
                   props.upvotePost({
                     variables: {
-                      netID: props.userInfo.netID,
                       _id: props.post.node._id
                     }
                   })
@@ -93,7 +92,6 @@ function PostChunk (props) {
                   e.preventDefault()
                   props.downvotePost({
                     variables: {
-                      netID: props.userInfo.netID,
                       _id: props.post.node._id
                     }
                   })
@@ -124,7 +122,6 @@ function PostChunk (props) {
                       )
                       props.savePost({
                         variables: {
-                          netID: props.userInfo.netID,
                           savedPosts: [
                             ...currentSavedPosts,
                             props.post.node._id

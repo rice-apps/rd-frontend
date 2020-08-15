@@ -36,7 +36,6 @@ function WritePost (props) {
     setUrl(childData)
   }
 
-  const userInfo = currentUser()
   const [startDate, setStart] = useState(new Date().getTime())
   const [endDate, setEnd] = useState(new Date().getTime())
   const [place, setPlace] = useState('')
@@ -102,7 +101,6 @@ function WritePost (props) {
                     kind: postType,
                     title,
                     body,
-                    creator: userInfo.netID,
                     imageUrl: url === '' ? null : url
                   }
                 })
@@ -156,7 +154,6 @@ function WritePost (props) {
                     kind: postType,
                     title,
                     body,
-                    creator: userInfo.netID,
                     start: startDate,
                     end: endDate,
                     place,
@@ -223,7 +220,6 @@ function WritePost (props) {
                       kind: postType,
                       title,
                       body,
-                      creator: userInfo.netID,
                       start: startDate,
                       end: endDate,
                       place,
@@ -280,7 +276,6 @@ function WritePost (props) {
                     kind: postType,
                     title,
                     body,
-                    creator: userInfo.netID,
                     deadline: endDate,
                     imageUrl: url === '' ? null : url
                   }
