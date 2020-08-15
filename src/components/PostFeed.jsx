@@ -93,7 +93,7 @@ function PostFeed (props) {
         pageStart={0}
         loadMore={() => onLoadMore()}
         hasMore={hasNextPage}
-        loader={<div key={btoa(date.getTime())}>Loading...</div>}
+        loader={<div key={window.btoa(date.getTime())}>Loading...</div>}
       >
         {posts}
       </InfiniteScroll>
