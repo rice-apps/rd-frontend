@@ -6,7 +6,7 @@ import { Redirect, useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import PostFeed from "./PostFeed";
 import { POST_PAGE } from "../graphql/Queries";
-import { POST_CREATED, POST_VOTE_CHANGED } from "../graphql/Subscriptions";
+import { POST_CREATED, POST_VOTE_CHANGED, GET_TAGS } from "../graphql/Subscriptions";
 import WritePost from "./WritePost";
 
 import {
@@ -43,6 +43,16 @@ function PostFeedWithData() {
         fetchPolicy: "cache-and-network",
         nextFetchPolicy: "cache-first",
     });
+
+    
+    // const {subscribeToMore, fetchMore, refetch, ...result} = useQuery(GET_TAGS, {
+    //     variables: {
+    //         after: "",
+    //     },
+
+    //     fetchPolicy: "cache-and-network",
+    //     nextFetchPolicy: "cache-first",
+    // });
 
     // by default we set latest day to be today
     useEffect(() => {

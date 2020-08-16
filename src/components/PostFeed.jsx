@@ -107,7 +107,10 @@ function PostFeed(props) {
         })
     })
 
-    if (tags.size === 0) tags = ["No tags for these filters"]
+    if (tags.size === 0){ 
+        tags = ["No tags for these filters (this is a bug rn lmao)"]
+        // props.setTagFilter([])
+    }
 
     const compare_upvote_lengths = (a, b) => {
         return a.node.upvotes.length <= b.node.upvotes.length ? -1 : 1
