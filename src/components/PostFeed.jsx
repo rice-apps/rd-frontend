@@ -1,3 +1,4 @@
+
 import InfiniteScroll from "react-infinite-scroller";
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
@@ -12,14 +13,10 @@ import { UPVOTE_POST, DOWNVOTE_POST, SAVE_POST } from "../graphql/Mutations";
 import { FETCH_COMMENTS_POST, FETCH_COMMENTS_PARENT } from "../graphql/Queries";
 import { COMMENT_CREATED, COMMENT_UPDATED } from "../graphql/Queries";
 
-function PostFeed(props) {
-    const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));
+function PostFeed (props) {
+  const date = new Date()
 
-    const [
-        getCommentsPost,
-        { subscribeToMore, refetch, ...result },
-    ] = useLazyQuery(FETCH_COMMENTS_POST);
-
+  const userInfo = currentUser()
     const [upvotePost] = useMutation(UPVOTE_POST);
     const [downvotePost] = useMutation(DOWNVOTE_POST);
     const [savePost] = useMutation(SAVE_POST);
@@ -35,11 +32,14 @@ function PostFeed(props) {
         data,
     } = props;
 
-    useEffect(() => {
-        subscribeToNewPosts();
-        subscribeToNewVotes();
-        // eslint-disable-next-line
-    }, []);
+
+  const {
+    onLoadMore,
+    subscribeToNewPosts,
+    subscribeToNewVotes,
+    loading,
+    error
+  } = props
 
     if (error) return <h1>Something went wrong...</h1>;
     if (loading || !data) return <h1>Loading...</h1>;
@@ -126,6 +126,8 @@ function PostFeed(props) {
         posts = generate_posts(sorted_edges)
     }
 
+
+  const posts = edges.map((post, _i) => {
     return (
         <>
             {/* <Banner /> */}
@@ -157,12 +159,13 @@ function PostFeed(props) {
             </InfiniteScroll>
         </>
     );
+
 }
 
 PostFeed.propTypes = {
-    onLoadMore: PropTypes.func.isRequired,
-    subscribeToNewPosts: PropTypes.func.isRequired,
-    subscribeToNewVotes: PropTypes.func.isRequired,
-};
+  onLoadMore: PropTypes.func.isRequired,
+  subscribeToNewPosts: PropTypes.func.isRequired,
+  subscribeToNewVotes: PropTypes.func.isRequired
+}
 
 export default PostFeed;

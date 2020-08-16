@@ -1,4 +1,4 @@
-import gql from "graphql-tag.macro";
+import gql from 'graphql-tag.macro'
 
 const POST_PAGE = gql`
         query PostPage(
@@ -81,69 +81,108 @@ const GET_USER_DATA = gql`
     query GetData($netID: String!) {
         userOne(filter: { netID: $netID }) {
             username
-            major
-            minor
-            college
-        }
-    }
-`;
+          }
+          ... on Event {
+            start
+            end
+            location: place
+          }
+          ... on Job {
+            start
+            end
+            workplace: place
+            isPaid
+            isClosed
+          }
+          ... on Notice {
+            deadline
+          }
 
-const USER_EXISTS = gql`
-    query GetData($username: String!) {
-        doesUsernameExist(username: $username) {
-            usernameExists
+          imageUrl
         }
+      }
+      pageInfo {
+        startCursor
+        endCursor
+        hasPreviousPage
+        hasNextPage
+      }
     }
-`;
+  }
+`
+const USER_EXISTS = gql`
+  query GetData($username: String!) {
+    doesUsernameExist(username: $username) {
+      usernameExists
+    }
+  }
+`
 
 const FETCH_COMMENTS_POST = gql`
-    query FetchCommentsPost($post_id: ID!) {
-        commentByPost(post: $post_id) {
-            _id
-            creator {
-                username
-            }
-            date_created
-            body
-            upvotes {
-                username
-            }
-            downvotes {
-                username
-            }
-            reports {
-                username
-            }
-        }
+  query FetchCommentsPost($post_id: ID!) {
+    commentByPost(post: $post_id) {
+      _id
+      creator {
+        username
+      }
+      date_created
+      body
+      upvotes {
+        username
+      }
+      downvotes {
+        username
+      }
+      reports {
+        username
+      }
     }
-`;
+  }
+`
 
 const FETCH_COMMENTS_PARENT = gql`
-    query FetchCommentsParent($parent_id: ID!) {
-        commentByParent(parent: $parent_id) {
-            _id
-            creator {
-                username
-            }
-            date_created
-            body
-            upvotes {
-                username
-            }
-            downvotes {
-                username
-            }
-            reports {
-                username
-            }
-        }
+  query FetchCommentsParent($parent_id: ID!) {
+    commentByParent(parent: $parent_id) {
+      _id
+      creator {
+        username
+      }
+      date_created
+      body
+      upvotes {
+        username
+      }
+      downvotes {
+        username
+      }
+      reports {
+        username
+      }
     }
-`;
+  }
+`
+
+const VERIFY_USER = gql`
+  query VerifyUser($token: String!) {
+    verifyToken(token: $token) {
+      username
+      netID
+      isNewUser
+      token
+      savedPosts {
+        _id
+      }
+      major
+      minor
+      college
+    }
+  }
+`
 
 export {
-    POST_PAGE,
-    GET_USER_DATA,
-    USER_EXISTS,
-    FETCH_COMMENTS_PARENT,
-    FETCH_COMMENTS_POST,
-};
+  POST_PAGE,
+  USER_EXISTS,
+  FETCH_COMMENTS_PARENT,
+  FETCH_COMMENTS_POST,
+  VERIFY_USER
+}
