@@ -77,11 +77,8 @@ const Tags = styled.text`
 
 // const FullPostLink = styled.link`
 const FullPostLink = styled(Link)`
-    justify-self: end;
-    align-self: center;
-    font-family: "Avenir";
-    font-size: 2vh;
-    color: blue;
+    color: black;
+    text-decoration: none;
 `;
 
 const MoreOptions = styled.div`

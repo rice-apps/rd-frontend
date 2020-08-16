@@ -127,7 +127,7 @@ const VERIFY_USER = gql`
 `
 
 const GET_POST = gql`
-    query GetPostById($id: ID!) {
+    query GetPostById($id: MongoID!) {
         postById(_id: $id) {
             _id
             __typename
