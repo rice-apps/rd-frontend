@@ -1,33 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react'
 
-const DropDownItem = (props) => {
-    const [selected, setSelected] = useState(false);
-    const [color, setColored] = useState("white");
+const DropDownItem = props => {
+  const { selectedItems, name } = props
 
-    useEffect(() => {
-        const data = props.selectedItems;
-        data.includes(props.name) ? setSelected(true) : setSelected(false);
-        // eslint-disable-next-line
-    }, [props.selectedItems]);
+  const [selected, setSelected] = useState(false)
+  const [color, setColored] = useState('white')
 
-    useEffect(() => {
-        setColored(selected ? "lightblue" : "white");
-    }, [selected]);
+  useEffect(() => {
+    selectedItems.includes(name) ? setSelected(true) : setSelected(false)
+  }, [selectedItems, name])
 
-    const toggleSelected = () => {
-        setSelected(!selected);
-        props.setInfo(props.name);
-    };
+  useEffect(() => {
+    setColored(selected ? 'lightblue' : 'white')
+  }, [selected])
 
-    return (
-        <div
-            onClick={toggleSelected}
-            style={{ background: color, width: "300px" }}
-        >
-            {props.name}
-            {selected && "✔"}
-        </div>
-    );
-};
+  const toggleSelected = () => {
+    setSelected(!selected)
+    props.setInfo(props.name)
+  }
 
-export default DropDownItem;
+  return (
+    <div onClick={toggleSelected} style={{ background: color, width: '300px' }}>
+      {props.name}
+      {selected && '✔'}
+    </div>
+  )
+}
+
+export default DropDownItem

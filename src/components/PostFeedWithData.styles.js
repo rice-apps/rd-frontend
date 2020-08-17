@@ -1,23 +1,24 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Background = styled.div`
-    display: grid;
+  display: grid;
 
-    grid-template-columns: 2fr 12fr 5fr;
+  grid-template-columns: 2fr 12fr 5fr;
 
-    /* grid-template-columns: 1.2fr 1.75fr 2.25fr 1fr 1fr 1fr 0.5fr; */
-    /* grid-template-rows: 12fr 12fr 1fr 1fr; */
+  /* grid-template-columns: 1.2fr 1.75fr 2.25fr 1fr 1fr 1fr 0.5fr; */
+  /* grid-template-rows: 12fr 12fr 1fr 1fr; */
 
-    background-color: #f4efef;
-`;
+  background-color: #f4efef;
+`
 
 export const PostFeedContainer = styled.div`
-    margin-top: 150px;
+  margin-top: 8.6vh;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
+<<<<<<< HEAD
     background: rgba(255, 255, 255, 0.5) 0% 0% no-repeat padding-box;
     border-radius: 20px;
     border: 3px solid #FFFFFF;
@@ -25,38 +26,79 @@ export const PostFeedContainer = styled.div`
     -webkit-backdrop-filter: blur(30px);
     opacity: 1;
 `;
+=======
+  background: rgba(255, 255, 255, 0.5) 0% 0% no-repeat padding-box;
+  border: 0.16vw solid #FFFFFF;
+  border-radius: 1.6vw;
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+`
+>>>>>>> 73e62facf1bed46b48b5835267a108dd5e53a4f8
 
 export const BannerContainer = styled.div`
-    padding: 50px;
-    width: 70%;
-`;
+  padding: 50px;
+  width: 70%;
+`
 
 export const LeftSidebarContainer = styled.div`
-    position: sticky;
-    top: 150px;
+  position: sticky;
+  top: 5vh;
 
-    margin-top: 150px;
-    justify-self: center;
-    width: 3vw;
-    height: calc(50vh);
+  margin-top: 12vh;
+  justify-self: center;
+  width: 3.5vw;
+  height: 15vw;
 
-    background: rgba(255, 255, 255, 0.65) 0% 0% no-repeat padding-box;
-    border-radius: 20px;
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-`;
+  background: rgba(255, 255, 255, 0.65) 0% 0% no-repeat padding-box;
+  border-radius: 1.3vw;
+  border: 0.16vw solid #FFFFFF;
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+`
 
 export const RightSidebarContainer = styled.div`
-    position: sticky;
-    top: 150px;
+  position: sticky;
+  top: 5vh;
 
-    margin-top: 150px;
-    justify-self: center;
-    width: 20vw;
-    height: calc(80vh);
-    background: #ffffff 0% 0% no-repeat padding-box;
-    border-radius: 20px;
-    opacity: 0.7;
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-`;
+  margin-top: 8.6vh;
+  justify-self: center;
+  width: 20vw;
+  height: calc(80vh);
+  background: rgba(255, 255, 255, 0.5) 0% 0% no-repeat padding-box;
+  border: 0.16vw solid #FFFFFF;
+  border-radius: 1.6vw;
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+`
+export const NewPostButtonContainer = styled.div`
+  padding-top: 1.6vw;
+  
+  width: 47vw;
+  height: 3vw;
+  
+  justify-content: space-between;
+`
+
+export const NewPostButton = styled.div`
+    display: flex;
+    
+    width: 10vw;
+    height: 2.3vw;
+    
+    cursor: pointer;
+    
+    background: #FFFFFF93 0% 0% no-repeat padding-box;
+    box-shadow: 0.1vw 0.1vw 0.5vw #7478861A;
+    border-radius: 0.7vw;
+    
+    justify-content: flex-start;
+    align-items: center;
+    
+    padding-left: 0.8vw
+`
+
+export const ButtonText = styled.div`
+    font-size: 0.9vw;
+    padding-left: 1.3vw;
+    padding-bottom: 0.2vw
+`
