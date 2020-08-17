@@ -24,6 +24,7 @@ const ExitButton = styled.div`
     cursor: pointer;
     &:hover {
         background-color: red;
+        opacity: 70%;
     }
 
     // top: 177px;
@@ -350,9 +351,10 @@ const TagWrapper = styled.div`
 `;
 
 const TagBox = styled.div`
-    width: 741px;
+    width: 740px;
     height: 44px;
     background: #F8F8F8 0% 0% no-repeat padding-box;
+    margin-left: 25px;
     border-radius: 10px;
     opacity: 1;
 `;
@@ -370,7 +372,8 @@ const TagChosenWrapper = styled.div`
 `;
 
 const TagChosen = styled.div`
-    width: 124px;
+    //width: 124px;
+    padding: 0px 10px 0px 5px;
     height: 24px;
     margin-left: 5px;
     background: #9BBAD1 0% 0% no-repeat padding-box;
@@ -384,11 +387,17 @@ const TagChosen = styled.div`
     letter-spacing: 0px;
     color: #FFFFFF;
     opacity: 1;
+
+    &:hover {
+        background-color: red;
+        opacity: 70%;
+    }
 `;
 
 const TagCircle = styled.div`
-    width: 7px;
-    height: 7px;
+    width: 10px;
+    height: 10px;
+    margin-right: 10px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     opacity: 0.85;
     border-radius: 75px;
