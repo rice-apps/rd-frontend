@@ -11,7 +11,6 @@ import log from 'loglevel'
 import { POST_CREATE } from '../graphql/Mutations'
 import UploadToPost from './UploadToPost'
 import {
-<<<<<<< HEAD
     PostWrapper,
     Button,
     ButtonWrapper,
@@ -36,25 +35,6 @@ import {
     TagChosen,
     TagCircle,
 } from "./WritePost.styles";
-=======
-  PostWrapper,
-  Button,
-  ButtonWrapper,
-  PostHeaderType,
-  Form,
-  TitleDescriptor,
-  TitleWrapper,
-  TitleBox,
-  BodyWrapper,
-  PostingButton,
-  BodyBox,
-  ImageWrapper,
-  ImageBox,
-  ExitButton,
-  TitleFlex
-} from './WritePost.styles'
-import { currentUser } from '../utils/apollo'
->>>>>>> 73e62facf1bed46b48b5835267a108dd5e53a4f8
 
 function WritePost (props) {
   const [url, setUrl] = useState('')
@@ -72,17 +52,9 @@ function WritePost (props) {
 
   const [postCreate] = useMutation(POST_CREATE)
 
-<<<<<<< HEAD
-    const [tagList, setTag] = useState([]);
-
-    if (!props.show) {
-        return null;
-    }
-=======
   if (!props.show) {
     return null
   }
->>>>>>> 73e62facf1bed46b48b5835267a108dd5e53a4f8
 
   if (currentUser() === {}) {
     return <Navigate to='/login' />
@@ -105,7 +77,6 @@ function WritePost (props) {
 
   const toggleClosed = () => setClosed(!isClosed)
 
-<<<<<<< HEAD
     switch (postType) {
         case "Discussion":
             form = (
@@ -417,235 +388,11 @@ function WritePost (props) {
                 </Form>
             );
             break;
-=======
-  switch (postType) {
-    case 'Discussion':
-      form = (
-        <Form>
-          <TitleWrapper>
-            <TitleDescriptor>Title</TitleDescriptor>
-            <TitleBox id='title' contentEditable />
-          </TitleWrapper>
-          <BodyWrapper>
-            <TitleDescriptor>Body</TitleDescriptor>
-            <BodyBox id='body' contentEditable />
-          </BodyWrapper>
-          <ImageWrapper>
-            <TitleDescriptor>Images</TitleDescriptor>
-            <ImageBox id='image'>
-              <UploadToPost parentUrlCallback={callbackURL} />
-              {/* <p>{url}</p> */}
-            </ImageBox>
-          </ImageWrapper>
-          <PostingButton
-            onClick={e => {
-              e.preventDefault()
-              const title = document.getElementById('title').innerHTML
-              const body = document.getElementById('body').innerHTML
-              if (checkTitleAndBody(title, body)) return
-              try {
-                postCreate({
-                  variables: {
-                    kind: postType,
-                    title,
-                    body,
-                    imageUrl: url === '' ? null : url
-                  }
-                })
-                props.switchVisibility(false)
-              } catch (error) {
-                log.error('error', error)
-              }
-            }}
-          >
-            Post
-          </PostingButton>
-        </Form>
-      )
-      break
-    case 'Event':
-      form = (
-        <Form>
-          <TitleWrapper>
-            <TitleDescriptor>Title</TitleDescriptor>
-            <TitleBox id='title' contentEditable />
-          </TitleWrapper>
-          <BodyWrapper>
-            <TitleDescriptor>Body</TitleDescriptor>
-            <BodyBox id='body' contentEditable />
-          </BodyWrapper>
-          <ImageWrapper>
-            <TitleDescriptor>Images</TitleDescriptor>
-            <ImageBox id='image'>
-              <UploadToPost parentUrlCallback={callbackURL} />
-            </ImageBox>
-          </ImageWrapper>
-          Start Date
-          <DatePicker selected={startDate} onChange={changeStartDate} />
-          End Date
-          <DatePicker selected={endDate} onChange={changeEndDate} />
-          <input
-            type='text'
-            name='Place of Event'
-            placeholder='Event Location'
-            onChange={e => setPlace(e.target.value)}
-          />
-          <PostingButton
-            onClick={e => {
-              e.preventDefault()
-              try {
-                const title = document.getElementById('title').innerHTML
-                const body = document.getElementById('body').innerHTML
-                if (checkTitleAndBody(title, body)) return
-                postCreate({
-                  variables: {
-                    kind: postType,
-                    title,
-                    body,
-                    start: startDate,
-                    end: endDate,
-                    place,
-                    imageUrl: url === '' ? null : url
-                  }
-                })
-                props.switchVisibility(false)
-              } catch (error) {
-                log.error('error', error)
-              }
-            }}
-          >
-            Post
-          </PostingButton>
-        </Form>
-      )
-      break
-    case 'Job':
-      form = (
-        <>
-          <Form>
-            <TitleWrapper>
-              <TitleDescriptor>Title</TitleDescriptor>
-              <TitleBox id='title' contentEditable />
-            </TitleWrapper>
-            <BodyWrapper>
-              <TitleDescriptor>Body</TitleDescriptor>
-              <BodyBox id='body' contentEditable />
-            </BodyWrapper>
-            <ImageWrapper>
-              <TitleDescriptor>Images</TitleDescriptor>
-              <ImageBox id='image'>
-                <UploadToPost parentUrlCallback={callbackURL} />
-              </ImageBox>
-            </ImageWrapper>
-            <input
-              type='text'
-              name='Place of Job'
-              placeholder='Event Location'
-              onChange={e => setPlace(e.target.value)}
-            />
-            Start Date
-            <DatePicker
-              selected={startDate}
-              onChange={changeStartDate}
-              style={{ width: 'inherit' }}
-            />
-            End Date
-            <DatePicker selected={endDate} onChange={changeEndDate} />
-            <p>Is the job paid?</p>
-            {/* Documentation for these: https://material-ui.com/api/checkbox/ */}
-            <Checkbox id='isPaid' onChange={togglePaid} />
-            <p>Is the job open?</p>
-            <Checkbox id='isOpen' onChange={toggleClosed} />
-            <PostingButton
-              onClick={e => {
-                e.preventDefault()
-                try {
-                  const title = document.getElementById('title').innerHTML
-                  const body = document.getElementById('body').innerHTML
-                  if (checkTitleAndBody(title, body)) return
-                  postCreate({
-                    variables: {
-                      kind: postType,
-                      title,
-                      body,
-                      start: startDate,
-                      end: endDate,
-                      place,
-                      isPaid,
-                      isClosed,
-                      imageUrl: url === '' ? null : url
-                    }
-                  })
-                  log.info('Submitted and push!')
-                  props.switchVisibility(false)
-                } catch (error) {
-                  log.error('error', error)
-                }
-              }}
-            >
-              Post
-            </PostingButton>
-          </Form>
-        </>
-      )
-      break
-    case 'Notice':
-      form = (
-        <Form>
-          <TitleWrapper>
-            <TitleDescriptor>Title</TitleDescriptor>
-            <TitleBox id='title' contentEditable />
-          </TitleWrapper>
-          <BodyWrapper>
-            <TitleDescriptor>Body</TitleDescriptor>
-            <BodyBox id='body' contentEditable />
-          </BodyWrapper>
-          <ImageWrapper>
-            <TitleDescriptor>Images</TitleDescriptor>
-            <ImageBox id='image'>
-              <UploadToPost parentUrlCallback={callbackURL} />
-            </ImageBox>
-          </ImageWrapper>
-          Deadline Date
-          <DatePicker
-            selected={endDate}
-            onChange={changeEndDate}
-            style={{ width: 'inherit' }}
-          />
-          <PostingButton
-            onClick={e => {
-              e.preventDefault()
-              try {
-                const title = document.getElementById('title').innerHTML
-                const body = document.getElementById('body').innerHTML
-                if (checkTitleAndBody(title, body)) return
-                postCreate({
-                  variables: {
-                    kind: postType,
-                    title,
-                    body,
-                    deadline: endDate,
-                    imageUrl: url === '' ? null : url
-                  }
-                })
-                props.switchVisibility(false)
-              } catch (error) {
-                log.error('error', error)
-              }
-            }}
-          >
-            Post
-          </PostingButton>
-        </Form>
-      )
-      break
->>>>>>> 73e62facf1bed46b48b5835267a108dd5e53a4f8
 
     default:
       throw new Error('something went horribly wrong!')
   }
 
-<<<<<<< HEAD
     return (
         <div>
             <Helmet>
@@ -675,36 +422,6 @@ function WritePost (props) {
             </PostWrapper>
         </div>
     );
-=======
-  return (
-    <div>
-      <Helmet>
-        <title>RiceDiscuss &middot; Compose post</title>
-      </Helmet>
-      <ButtonWrapper>
-        <Button id='Discussion' onClick={changePostType}>
-          Discussion
-        </Button>
-        <Button id='Notice' onClick={changePostType}>
-          Notice
-        </Button>
-        <Button id='Event' onClick={changePostType}>
-          Event
-        </Button>
-        <Button id='Job' onClick={changePostType}>
-          Job
-        </Button>
-      </ButtonWrapper>
-      <PostWrapper>
-        <TitleFlex>
-          <PostHeaderType>{postType}</PostHeaderType>
-          <ExitButton onClick={closeModal}>X</ExitButton>
-        </TitleFlex>
-        {form}
-      </PostWrapper>
-    </div>
-  )
->>>>>>> 73e62facf1bed46b48b5835267a108dd5e53a4f8
 }
 
 export default WritePost

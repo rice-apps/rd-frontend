@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import React, { useState, useCallback, useEffect } from "react";
-import { Redirect, useHistory } from "react-router-dom";
-import { useMutation, useLazyQuery } from "@apollo/client";
-import { Helmet } from "react-helmet";
-import log from "loglevel";
-import { TOKEN_NAME } from "../utils/config";
-import { SET_INFO } from "../graphql/Mutations";
-import { USER_EXISTS } from "../graphql/Queries";
-import laptop_girl from "../images/Page 2.svg";
-import major_minor_json from "../utils/MajorMinor.json";
-import DropDownItem from "./DropDownItem";
-=======
 import React, { useState, useCallback, useEffect } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { useMutation, useLazyQuery } from '@apollo/client'
@@ -21,7 +8,6 @@ import { USER_EXISTS } from '../graphql/Queries'
 import laptopGirl from '../images/Page 2.svg'
 import majorMinorJson from '../utils/MajorMinor.json'
 import DropDownItem from './DropDownItem'
->>>>>>> 73e62facf1bed46b48b5835267a108dd5e53a4f8
 import {
   FullGrid,
   PinkShape,
