@@ -10,15 +10,15 @@ import { POST_CREATED, POST_VOTE_CHANGED, GET_TAGS } from "../graphql/Subscripti
 import WritePost from "./WritePost";
 
 import {
-    Background,
-    PostFeedContainer,
-    BannerContainer,
-    RightSidebarContainer,
-    LeftSidebarContainer,
-} from "./PostFeedWithData.styles";
+  Background,
+  PostFeedContainer,
+  BannerContainer,
+  RightSidebarContainer,
+  LeftSidebarContainer
+} from './PostFeedWithData.styles'
 
-import { Banner } from "./PostFeed.styles";
-import { SideNav } from "./SideNav";
+import { Banner } from './PostFeed.styles'
+import { SideNav } from './SideNav'
 
 function PostFeedWithData() {
     const history = useHistory();
@@ -39,10 +39,11 @@ function PostFeedWithData() {
             earlyDate: earlyDateBound,
             // kind: kind,
         },
-
         fetchPolicy: "cache-and-network",
         nextFetchPolicy: "cache-first",
     });
+
+  const [modalVisible, setVisibility] = useState(false)
 
     
     // const {subscribeToMore, fetchMore, refetch, ...result} = useQuery(GET_TAGS, {
@@ -117,62 +118,46 @@ function PostFeedWithData() {
                                         result.data.postConnection.pageInfo
                                             .endCursor,
                                 },
-                            })
-                        }
-                        subscribeToNewPosts={() => {
-                            subscribeToMore({
-                                document: POST_CREATED,
-                                updateQuery: (prev, { subscriptionData }) => {
-                                    if (!subscriptionData) {
-                                        return prev;
-                                    }
-
-                                    return {
-                                        ...prev,
-                                        postConnection: {
-                                            count:
-                                                prev.postConnection.count + 1,
-                                            edges: [
-                                                {
-                                                    cursor: btoa(
-                                                        JSON.stringify({
-                                                            _id:
-                                                                subscriptionData
-                                                                    .data
-                                                                    .postCreated
-                                                                    ._id,
-                                                        }),
-                                                    ),
-                                                    node:
-                                                        subscriptionData.data
-                                                            .postCreated,
-                                                },
-                                                ...prev.postConnection.edges,
-                                            ],
-                                            pageInfo:
-                                                prev.postConnection.pageInfo,
-                                            __typename: "PostConnection",
-                                        },
-                                    };
-                                },
-                            });
-                        }}
-                        subscribeToNewVotes={() => {
-                            subscribeToMore({
-                                document: POST_VOTE_CHANGED,
-                            });
-                        }}
-                    />
-                </PostFeedContainer>
-                <RightSidebarContainer />
-            </Background>
-            <WritePost
-                show={modalVisible}
-                switchVisibility={setVisibility}
-                style={{ position: "fixed" }}
-            />
-        </>
-    );
+                            }),
+                          node: {
+                            ...subscriptionData.data.postCreated,
+                            __typename: 'PostNode'
+                          },
+                          __typename: 'PostEdge'
+                        },
+                        ...prev.postConnection.edges
+                      ],
+                      pageInfo: {
+                        ...prev.postConnection.pageInfo,
+                        startCursor: window.btoa(
+                          JSON.stringify({
+                            _id: subscriptionData.data.postCreated._id
+                          })
+                        ),
+                        __typename: 'PageInfo'
+                      },
+                      __typename: 'PostConnection'
+                    }
+                  }
+                }
+              })
+            }}
+            subscribeToNewVotes={() => {
+              subscribeToMore({
+                document: POST_VOTE_CHANGED
+              })
+            }}
+          />
+        </PostFeedContainer>
+        <RightSidebarContainer />
+      </Background>
+      <WritePost
+        show={modalVisible}
+        switchVisibility={setVisibility}
+        style={{ position: 'fixed' }}
+      />
+    </>
+  )
 }
 
 export default PostFeedWithData;
