@@ -44,7 +44,7 @@ function PostFeedWithData() {
             // kind: kind,
         },
 
-  const [modalVisible, setVisibility] = useState(false);
+  const [modalVisible, setVisibility] = useState(false)
 
     // by default we set latest day to be today
     useEffect(() => {
