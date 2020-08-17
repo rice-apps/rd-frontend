@@ -14,11 +14,15 @@ import {
   PostFeedContainer,
   BannerContainer,
   RightSidebarContainer,
-  LeftSidebarContainer
+  LeftSidebarContainer,
+  NewPostButtonContainer,
+  NewPostButton,
+  ButtonText
 } from './PostFeedWithData.styles'
 
 import { Banner } from './PostFeed.styles'
 import { SideNav } from './SideNav'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 function PostFeedWithData() {
     const history = useHistory();
@@ -47,6 +51,7 @@ function PostFeedWithData() {
         setToday(new Date());
     }, [])
 
+
     useEffect(() => {
         refetch();
         console.log("refetched!")
@@ -66,6 +71,16 @@ function PostFeedWithData() {
                     <SideNav />
                 </LeftSidebarContainer>
                 <PostFeedContainer>
+                    <NewPostButtonContainer>
+                        <NewPostButton
+                            onClick={openModal}
+                        >
+                            <AddCircleIcon style={{ color: '#EAB4AC', width: '1.3vw', height: '1.3vw' }} />
+                            <ButtonText>
+                                Create Post
+                            </ButtonText>
+                        </NewPostButton>
+                    </NewPostButtonContainer>
                     <div style = {{"display": "flex", "gap": "20px"}}>
                         <p
                             onClick={openModal}
@@ -80,6 +95,7 @@ function PostFeedWithData() {
                             Profile
                         </p>
                     </div>
+
                     <BannerContainer>
                         <Banner />
                     </BannerContainer>
@@ -105,6 +121,25 @@ function PostFeedWithData() {
                                         result.data.postConnection.pageInfo
                                             .endCursor,
                                 },
+                            })
+                        }
+                        subscribeToNewPosts={() => {
+                            subscribeToMore({
+                                document: POST_CREATED,
+                                updateQuery: (prev, { subscriptionData }) => {
+                                    if (!subscriptionData) {
+                                        return prev
+                                    }
+                                    
+                                    return {
+                                        ...prev,
+                                        postConnection: {
+                                            count: prev.postConnection.count + 1,
+                                            edges: [
+                                                {
+                                                    cursor: window.btoa(
+                                                        JSON.stringify({
+                                                            _id: subscriptionData.data.postCreated._id
                             })
                           ),
                           node: {
