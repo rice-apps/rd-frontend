@@ -12,10 +12,13 @@ import { UPVOTE_POST, DOWNVOTE_POST, SAVE_POST } from "../graphql/Mutations";
 import { FETCH_COMMENTS_POST, FETCH_COMMENTS_PARENT } from "../graphql/Queries";
 import { COMMENT_CREATED, COMMENT_UPDATED } from "../graphql/Queries";
 
-function PostFeed (props) {
-  const date = new Date()
+function PostFeed(props) {
+    const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));
 
-  const userInfo = currentUser()
+    const [
+        getCommentsPost,
+        { subscribeToMore, refetch, ...result },
+    ] = useLazyQuery(FETCH_COMMENTS_POST);
 
     const [upvotePost] = useMutation(UPVOTE_POST);
     const [downvotePost] = useMutation(DOWNVOTE_POST);
@@ -32,13 +35,11 @@ function PostFeed (props) {
         data,
     } = props;
 
-  const {
-    onLoadMore,
-    subscribeToNewPosts,
-    subscribeToNewVotes,
-    loading,
-    error
-  } = props
+    useEffect(() => {
+        subscribeToNewPosts();
+        subscribeToNewVotes();
+        // eslint-disable-next-line
+    }, []);
 
     if (error) return <h1>Something went wrong...</h1>;
     if (loading || !data) return <h1>Loading...</h1>;
@@ -98,23 +99,15 @@ function PostFeed (props) {
             );
         });
     }
-
-    let tags = new Set()
+    const tags = new Set()
     edges.forEach(edge => {
         edge.node.tags.forEach(tag => {
             tags.add(tag)
         })
     })
-
-    if (tags.size === 0){ 
-        tags = ["No tags for these filters (this is a bug rn lmao)"]
-        // props.setTagFilter([])
-    }
-
     const compare_upvote_lengths = (a, b) => {
         return a.node.upvotes.length <= b.node.upvotes.length ? -1 : 1
     }
-
     let posts;
     if (sort_by_upvotes.length == 0){
         posts = generate_posts(edges) 
@@ -127,8 +120,6 @@ function PostFeed (props) {
         const sorted_edges = [...edges].sort(compare_upvote_lengths)
         posts = generate_posts(sorted_edges)
     }
-
-  const posts = edges.map((post, _i) => {
     return (
         <>
             {/* <Banner /> */}
@@ -141,19 +132,14 @@ function PostFeed (props) {
                 <Filters 
                 processDate = {process_date_filter}
                 sort_by_upvotes = {setSort_by_upvotes}
-
                 setDateFilter = {props.setDateFilter}
                 dateFilter = {props.dateFilter}
-
                 setKindFilter = {props.setKindFilter}
                 kindFilter = {props.kindFilter}
-
                 setUpvoteFilter = {props.setUpvoteFilter}
                 upvoteFilter = {props.upvoteFilter}
-
                 setTagFilter = {props.setTagFilter}
                 tagFilter = {props.tagFilter}
-
                 tagsList = {[...tags]}
                 />
                 {posts}
@@ -161,11 +147,9 @@ function PostFeed (props) {
         </>
     );
 }
-
 PostFeed.propTypes = {
-  onLoadMore: PropTypes.func.isRequired,
-  subscribeToNewPosts: PropTypes.func.isRequired,
-  subscribeToNewVotes: PropTypes.func.isRequired
-}
-
+    onLoadMore: PropTypes.func.isRequired,
+    subscribeToNewPosts: PropTypes.func.isRequired,
+    subscribeToNewVotes: PropTypes.func.isRequired,
+};
 export default PostFeed;
