@@ -1,32 +1,85 @@
 import gql from 'graphql-tag.macro'
 
 const POST_PAGE = gql`
-  query PostPage($after: String!) {
-    postConnection(after: $after) {
-      count
-      edges {
-        cursor
-        node {
-          _id
-          kind
-          title
-          creator {
-            _id
-            username
-          }
-          date_created
-          body
-          tags
-          upvotes {
-            _id
-            username
-          }
-          downvotes {
-            _id
-            username
-          }
-          reports {
-            _id
+        query PostPage(
+            $after: String!
+            $today: Date
+            $earlyDate: Date
+            $kind: EnumDKeyPostKind
+            ) {
+            postConnection(
+                after: $after
+                filter: {   
+                    OR: [
+                        {kind: $kind}
+                        {
+                            AND: [
+                                { _operators: { date_created: { gt: $earlyDate } } }
+                                { _operators: { date_created: { lt: $today } } }
+                            ]
+                        }
+                    ]
+                }
+            ) {
+                count
+                edges {
+                    cursor
+                    node {
+                        _id
+                        __typename
+                        kind
+                        title
+                        creator {
+                            _id
+                            username
+                        }
+                        date_created
+                        body
+                        tags
+                        upvotes {
+                            _id
+                            username
+                        }
+                        downvotes {
+                            _id
+                            username
+                        }
+                        reports {
+                            _id
+                            username
+                        }
+                        ... on Event {
+                            start
+                            end
+                            location: place
+                        }
+                        ... on Job {
+                            start
+                            end
+                            workplace: place
+                            isPaid
+                            isClosed
+                        }
+                        ... on Notice {
+                            deadline
+                        }
+
+                        imageUrl
+                    }
+                }
+                pageInfo {
+                    startCursor
+                    endCursor
+                    hasPreviousPage
+                    hasNextPage
+                }
+            }
+        }
+`;
+
+const GET_USER_DATA = gql`
+    query GetData($netID: String!) {
+        userOne(filter: { netID: $netID }) {
             username
           }
           ... on Event {
@@ -57,18 +110,6 @@ const POST_PAGE = gql`
     }
   }
 `
-
-const GET_USER_DATA = gql`
-  query GetData($netID: String!) {
-    userOne(filter: { netID: $netID }) {
-      username
-      major
-      minor
-      college
-    }
-  }
-`
-
 const USER_EXISTS = gql`
   query GetData($username: String!) {
     doesUsernameExist(username: $username) {
@@ -131,13 +172,15 @@ const VERIFY_USER = gql`
       savedPosts {
         _id
       }
+      major
+      minor
+      college
     }
   }
 `
 
 export {
   POST_PAGE,
-  GET_USER_DATA,
   USER_EXISTS,
   FETCH_COMMENTS_PARENT,
   FETCH_COMMENTS_POST,

@@ -1,16 +1,46 @@
-import { ApolloClient } from '@apollo/client/core'
-import { InMemoryCache } from '@apollo/client/cache'
-import { createHttpLink, split } from '@apollo/client'
+import {
+  createHttpLink,
+  split,
+  makeVar,
+  ApolloClient,
+  InMemoryCache
+} from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { WebSocketLink } from '@apollo/client/link/ws'
-
 import {
   getMainDefinition,
   relayStylePagination
 } from '@apollo/client/utilities'
+
 import possibleTypes from './possibleTypes.json'
 
-import { GQL_URL, WS_URL, loadToken } from '../config'
+import { GQL_URL, WS_URL, TOKEN_NAME } from '../config'
+
+function loadToken () {
+  return window.localStorage.getItem(TOKEN_NAME) != null
+    ? window.localStorage.getItem(TOKEN_NAME)
+    : ''
+}
+
+const currentUser = makeVar({})
+
+const postFieldPolicies = {
+  creator: {
+    merge (existing, incoming) {
+      return existing || incoming
+    }
+  },
+  upvotes: {
+    merge (_ignored, incoming) {
+      return incoming
+    }
+  },
+  downvotes: {
+    merge (_ignored, incoming) {
+      return incoming
+    }
+  }
+}
 
 const httpLink = createHttpLink({
   uri: GQL_URL,
@@ -49,12 +79,23 @@ const authLink = setContext((_, { headers }) => {
 })
 
 const mainClient = new ApolloClient({
+  link: authLink.concat(splitLink),
   cache: new InMemoryCache({
     possibleTypes,
     typePolicies: {
       Query: {
         fields: {
-          postConnection: relayStylePagination()
+          postConnection: relayStylePagination(),
+          currentUser: {
+            read () {
+              return currentUser()
+            }
+          },
+          currentNetID: {
+            read () {
+              return currentUser().netID
+            }
+          }
         }
       },
       Subscription: {
@@ -77,84 +118,19 @@ const mainClient = new ApolloClient({
         }
       },
       Discussion: {
-        fields: {
-          creator: {
-            merge (existing, incoming) {
-              return existing || incoming
-            }
-          },
-          upvotes: {
-            merge (_ignored, incoming) {
-              return incoming
-            }
-          },
-          downvotes: {
-            merge (_ignored, incoming) {
-              return incoming
-            }
-          }
-        }
+        fields: postFieldPolicies
       },
       Event: {
-        creator: {
-          merge (existing, _ignored) {
-            return existing
-          }
-        },
-        fields: {
-          upvotes: {
-            merge (_ignored, incoming) {
-              return incoming
-            }
-          },
-          downvotes: {
-            merge (_ignored, incoming) {
-              return incoming
-            }
-          }
-        }
+        fields: postFieldPolicies
       },
       Job: {
-        fields: {
-          creator: {
-            merge (existing, incoming) {
-              return existing || incoming
-            }
-          },
-          upvotes: {
-            merge (_ignored, incoming) {
-              return incoming
-            }
-          },
-          downvotes: {
-            merge (_ignored, incoming) {
-              return incoming
-            }
-          }
-        }
+        fields: postFieldPolicies
       },
       Notice: {
-        fields: {
-          creator: {
-            merge (existing, incoming) {
-              return existing || incoming
-            }
-          },
-          upvotes: {
-            merge (_ignored, incoming) {
-              return incoming
-            }
-          },
-          downvotes: {
-            merge (_ignored, incoming) {
-              return incoming
-            }
-          }
-        }
+        fields: postFieldPolicies
       }
     }
-  }),
-  link: authLink.concat(splitLink)
+  })
 })
 
-export default mainClient
+export { mainClient, currentUser, loadToken }

@@ -15,6 +15,7 @@ const POST_CREATE = gql`
     $tags: [String]
     $imageUrl: String
   ) {
+    currentNetID @client @export(as: "creator")
     postCreateOne(
       record: {
         kind: $kind
@@ -60,6 +61,7 @@ const LOGIN = gql`
 
 const UPVOTE_POST = gql`
   mutation UpvotePost($netID: String!, $_id: ID!) {
+    currentNetID @client @export(as: "netID")
     upvotePostById(netID: $netID, _id: $_id) {
       creator {
         _id
@@ -72,6 +74,7 @@ const UPVOTE_POST = gql`
 
 const DOWNVOTE_POST = gql`
   mutation DownvotePost($netID: String!, $_id: ID!) {
+    currentNetID @client @export(as: "netID")
     downvotePostById(netID: $netID, _id: $_id) {
       creator {
         _id
@@ -84,6 +87,7 @@ const DOWNVOTE_POST = gql`
 
 const SAVE_POST = gql`
   mutation SavePost($netID: String!, $savedPosts: [MongoID]) {
+    currentNetID @client @export(as: "netID")
     userUpdateOne(
       record: { savedPosts: $savedPosts }
       filter: { netID: $netID }
@@ -105,6 +109,7 @@ const SET_INFO = gql`
     $netID: String!
     $isNewUser: Boolean!
   ) {
+    currentNetID @client @export(as: "netID")
     userUpdateOne(
       record: {
         username: $username

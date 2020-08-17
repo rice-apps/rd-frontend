@@ -2,8 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { useMutation, useLazyQuery } from '@apollo/client'
 import { SET_INFO } from '../graphql/Mutations'
-import { GET_USER_DATA, USER_EXISTS } from '../graphql/Queries'
-import { TOKEN_NAME } from '../config'
+import { USER_EXISTS } from '../graphql/Queries'
 import DropDownItem from './DropDownItem'
 import majorMinorJson from '../utils/MajorMinor.json'
 import {
@@ -18,6 +17,7 @@ import {
 } from './MoreInfo.styles'
 
 import { PostingButton } from './WritePost.styles'
+import { currentUser } from '../utils/apollo'
 
 const ProfilePage = () => {
   const navigator = useNavigate()
@@ -31,34 +31,29 @@ const ProfilePage = () => {
   const [isMinorOpen, setMinorOpen] = useState(false)
   const [isCollegeOpen, setCollegeOpen] = useState(false)
 
-  const { netID } = JSON.parse(window.localStorage.getItem(TOKEN_NAME))
+  const { netID } = currentUser()
   const [addInfo] = useMutation(SET_INFO)
-  const [getUser, { data, loading: userInfoLoading }] = useLazyQuery(
-    GET_USER_DATA
-  )
+
+  const {
+    username: currentUsername,
+    major: currentMajor,
+    minor: currentMinor,
+    college: currentCollege
+  } = currentUser()
+
   const [
     checkUser,
     { data: userExists, loading: userExistLoading }
   ] = useLazyQuery(USER_EXISTS)
 
-  const fillState = () => {
-    getUser({
-      variables: {
-        netID
-      }
-    })
-  }
-
   useEffect(() => {
-    fillState()
-    if (data) {
-      if (username.length === 0) setOriginal(data.userOne.username)
-      setUsername(data.userOne.username)
-      setMajor(data.userOne.major)
-      setMinor(data.userOne.minor)
-      setCollege(data.userOne.college)
-    }
-  }, [data])
+    const newUsername = username.length === 0 ? currentUsername : username
+    setOriginal(newUsername)
+    setUsername(currentUsername)
+    setMajor(currentMajor)
+    setMinor(currentMinor)
+    setCollege(currentCollege)
+  }, [])
 
   useEffect(() => {
     checkUser({
@@ -164,11 +159,9 @@ const ProfilePage = () => {
     } catch (error) {}
   }
 
-  if (!window.localStorage.getItem(TOKEN_NAME)) {
+  if (currentUser() === {}) {
     return <Navigate to='/login' />
   }
-
-  if (userInfoLoading) return <p>Loading...</p>
 
   return (
     <>

@@ -17,8 +17,7 @@ const Auth = (successPath, errPath) => {
 
   useEffect(() => {
     login().catch(() => <Navigate to={`/${errPath}`} />)
-    // eslint-disable-next-line
-  }, [])
+  }, [errPath, login])
 
   if (error) return <Navigate to={`/${errPath}`} />
 
@@ -26,10 +25,7 @@ const Auth = (successPath, errPath) => {
 
   if (!data) return <div>Login went wrong</div>
 
-  window.localStorage.setItem(
-    TOKEN_NAME,
-    JSON.stringify(data.userAuthentication)
-  )
+  window.localStorage.setItem(TOKEN_NAME, data.userAuthentication.token)
 
   return <Navigate to={`/${successPath}`} />
 }

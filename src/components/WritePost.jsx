@@ -8,7 +8,6 @@ import { Checkbox } from '@material-ui/core'
 import { Navigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import log from 'loglevel'
-import { TOKEN_NAME } from '../config'
 import { POST_CREATE } from '../graphql/Mutations'
 import UploadToPost from './UploadToPost'
 import {
@@ -28,6 +27,7 @@ import {
   ExitButton,
   TitleFlex
 } from './WritePost.styles'
+import { currentUser } from '../utils/apollo'
 
 function WritePost (props) {
   const [url, setUrl] = useState('')
@@ -36,7 +36,6 @@ function WritePost (props) {
     setUrl(childData)
   }
 
-  const userInfo = JSON.parse(window.localStorage.getItem(TOKEN_NAME))
   const [startDate, setStart] = useState(new Date().getTime())
   const [endDate, setEnd] = useState(new Date().getTime())
   const [place, setPlace] = useState('')
@@ -50,7 +49,7 @@ function WritePost (props) {
     return null
   }
 
-  if (!window.localStorage.getItem(TOKEN_NAME)) {
+  if (currentUser() === {}) {
     return <Navigate to='/login' />
   }
 
@@ -102,7 +101,6 @@ function WritePost (props) {
                     kind: postType,
                     title,
                     body,
-                    creator: userInfo.netID,
                     imageUrl: url === '' ? null : url
                   }
                 })
@@ -156,7 +154,6 @@ function WritePost (props) {
                     kind: postType,
                     title,
                     body,
-                    creator: userInfo.netID,
                     start: startDate,
                     end: endDate,
                     place,
@@ -223,7 +220,6 @@ function WritePost (props) {
                       kind: postType,
                       title,
                       body,
-                      creator: userInfo.netID,
                       start: startDate,
                       end: endDate,
                       place,
@@ -280,7 +276,6 @@ function WritePost (props) {
                     kind: postType,
                     title,
                     body,
-                    creator: userInfo.netID,
                     deadline: endDate,
                     imageUrl: url === '' ? null : url
                   }

@@ -13,12 +13,6 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   log.setLevel('trace')
 }
 
-function loadToken () {
-  return window.localStorage.getItem(TOKEN_NAME) != null
-    ? JSON.parse(window.localStorage.getItem(TOKEN_NAME)).token
-    : ''
-}
-
 export {
   CAS_AUTH_URL,
   SERVICE_URL,
@@ -27,5 +21,4 @@ export {
   GQL_URL,
   WS_URL,
   TOKEN_NAME,
-  loadToken
 }

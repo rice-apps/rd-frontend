@@ -59,20 +59,7 @@ function UploadToPost (props) {
   }
 
   return (
-    // <div>
-    //     <p>The Image Upload Section</p>
-    //     <input name="name" onChange={onChange} value={name} />
-    //     <Dropzone onDrop={onDrop}>
-    //         <p>
-    //             Try dropping some files here, or click to select files to upload.
-    //         </p>
-    //     </Dropzone>
-    //     {/* <input type="file" onChange={onDrop} value={name} /> */}
-    //     <button onClick={submit}>Submit</button>
-    // </div>
     <div>
-      {/* <p>The Image Upload Section</p> */}
-      {/* <input type="file" onChange={onDrop2} value={file} /> */}
       <label htmlFor='img'>Choose an image: </label>
       <input
         type='file'
