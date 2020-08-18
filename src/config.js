@@ -20,5 +20,5 @@ export {
   BACKEND_AUTH_URL,
   GQL_URL,
   WS_URL,
-  TOKEN_NAME,
+  TOKEN_NAME
 }
