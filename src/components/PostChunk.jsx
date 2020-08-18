@@ -72,6 +72,13 @@ function PostChunk (props) {
       console.log({isTagsOpen})
   }
 
+  const calIcon = { 'calendar-plus-o': 'right' };
+
+  const calDropDown = [
+    { google: 'Google Calendar' },
+    { apple: 'Apple Calendar' }
+ ];
+
   const calEvent = {
     title: props.post.node.title,
     description: props.post.node.body,
@@ -162,8 +169,12 @@ function PostChunk (props) {
                               </Save>
                               {(props.post.node.kind === 'Event' || props.post.node.kind === 'Job') && (
                                 <AddTo>
-                                  <AddToCalendar event={calEvent}>
-                                    + Add to...
+                                  <AddToCalendar 
+                                    event={calEvent}
+                                    buttonLabel="Add to "
+                                    buttonTemplate={calIcon}
+                                    listItems={calDropDown}
+                                  >
                                   </AddToCalendar>
                                 </AddTo>
                               )}
