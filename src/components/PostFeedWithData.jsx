@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { useQuery, useLazyQuery } from "@apollo/client";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect, useNavigate } from "react-router-dom";
 
 import { Helmet } from 'react-helmet'
 import PostFeed from './PostFeed'
@@ -25,7 +25,7 @@ import { SideNav } from './SideNav'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 function PostFeedWithData() {
-    const history = useHistory();
+    const history = useNavigate();
     const [today, setToday] = useState(null);
     const [earlyDateBound, setEarlyDateBound] = useState(new Date(2000, 1, 1))
     const [kind, setKind] = useState("")
@@ -42,14 +42,17 @@ function PostFeedWithData() {
             today: today,
             earlyDate: earlyDateBound,
             // kind: kind,
-        },
 
-  const [modalVisible, setVisibility] = useState(false)
+          },
+          fetchPolicy: 'cache-and-network',
+          nextFetchPolicy: 'cache-first'});
+
+  const [modalVisible, setVisibility] = useState(false);
 
     // by default we set latest day to be today
     useEffect(() => {
         setToday(new Date());
-    }, [])
+    }, []);
 
 
     useEffect(() => {
@@ -57,7 +60,7 @@ function PostFeedWithData() {
         console.log("refetched!")
     }, [today, earlyDateBound])
     
-    const [modalVisible, setVisibility] = useState(false);
+    // const [modalVisible, setVisibility] = useState(false);
     const openModal = () => setVisibility(true);
     const goToProfile = () => history.push("/profile");
 

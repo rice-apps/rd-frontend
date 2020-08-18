@@ -32,15 +32,6 @@ function PostFeed (props) {
         data,
     } = props;
 
-
-  const {
-    onLoadMore,
-    subscribeToNewPosts,
-    subscribeToNewVotes,
-    loading,
-    error
-  } = props
-
     if (error) return <h1>Something went wrong...</h1>;
     if (loading || !data) return <h1>Loading...</h1>;
     
@@ -127,7 +118,7 @@ function PostFeed (props) {
     }
 
 
-  const posts = edges.map((post, _i) => {
+   posts = edges.map((post, _i) => {
     return (
         <>
             {/* <Banner /> */}
@@ -162,10 +153,10 @@ function PostFeed (props) {
 
 }
 
-PostFeed.propTypes = {
-  onLoadMore: PropTypes.func.isRequired,
-  subscribeToNewPosts: PropTypes.func.isRequired,
-  subscribeToNewVotes: PropTypes.func.isRequired
-}
+// PostFeed.propTypes = {
+//   onLoadMore: PropTypes.func.isRequired,
+//   subscribeToNewPosts: PropTypes.func.isRequired,
+//   subscribeToNewVotes: PropTypes.func.isRequired
+// };
 
 export default PostFeed;
