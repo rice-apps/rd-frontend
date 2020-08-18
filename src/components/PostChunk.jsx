@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
+import { red, grey } from '@material-ui/core/colors'
 
 import AddToCalendar from 'react-add-to-calendar';
 
@@ -47,7 +48,7 @@ const useStyles = makeStyles(theme => ({
     '& > *': {
       margin: theme.spacing(1)
     }
-  }
+  },
 }))
 
 function PostChunk (props) {
@@ -60,16 +61,35 @@ function PostChunk (props) {
     )
   }
 
+  const listOfUpvoters = props.post.node.upvotes.map((userObject) => 
+    userObject.username
+  )
+
+  const listOfDownvoters = props.post.node.downvotes.map((userObject) => 
+    userObject.username
+  )
+
   const [isDDOpen, setDDOpen] = useState(false)
   const [isTagsOpen, setTagsOpen] = useState(false)
+  const [isUpvoted, setUpvoted] = useState(listOfUpvoters.includes(props.userInfo.username))
+  const [isDownvoted, setDownvoted] = useState(listOfDownvoters.includes(props.userInfo.username))
 
   const toggleDD = () => {
     setDDOpen(!isDDOpen)
   }
 
   const toggleTags = () => {
-      setTagsOpen(!isTagsOpen);
-      console.log({isTagsOpen})
+    setTagsOpen(!isTagsOpen)
+  }
+
+  const toggleUpvoted = () => {
+    setUpvoted(!isUpvoted)
+    setDownvoted(false)
+  }
+
+  const toggleDownvoted = () => {
+    setDownvoted(!isDownvoted)
+    setUpvoted(false)
   }
 
   const calIcon = { 'calendar-plus-o': 'right' };
@@ -80,8 +100,8 @@ function PostChunk (props) {
  ];
 
   const calEvent = {
-    title: props.post.node.title,
-    description: props.post.node.body,
+    title: (props.post.node.title) ? props.post.node.title : "",
+    description: (props.post.node.body ? props.post.node.body : ""),
     location: (props.post.node.place) ? props.post.node.place : "",
     startTime: (props.post.node.start) ? props.post.node.start : "",
     endTime: (props.post.node.end) ? props.post.node.end : ""
@@ -96,9 +116,10 @@ function PostChunk (props) {
           <DiscussionBox>
               <LeftComponent>
                   <Upvote className={classes.root}>
-                      <IconButton
+                      <IconButton style={ isUpvoted ? { color: red[200]} : { color: grey[800] }}
                           onClick={(e) => {
                               e.preventDefault();
+                              toggleUpvoted();
                               props.upvotePost({
                                   variables: {
                                       netID: props.userInfo.netID,
@@ -115,9 +136,10 @@ function PostChunk (props) {
                           props.post.node.downvotes.length}
                   </Likes>
                   <Downvote className={classes.root}>
-                      <IconButton
+                      <IconButton style={ isDownvoted ? { color: red[200]} : { color: grey[800] }}
                           onClick={(e) => {
                               e.preventDefault();
+                              toggleDownvoted();
                               props.downvotePost({
                                   variables: {
                                       netID: props.userInfo.netID,
@@ -182,14 +204,13 @@ function PostChunk (props) {
                               <Report 
                                   onClick={(e) => {
                                       e.preventDefault();
-                                      console.log(props.post.node.reports)
+                                      
                                       props.reportPost({
                                           variables: {
                                               netID: props.userInfo.netID,
                                               _id: props.post.node._id
                                           },
                                       });
-                                      console.log(props.post.node.reports)
                                       
                                   }}
                               >

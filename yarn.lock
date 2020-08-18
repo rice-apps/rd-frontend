@@ -3541,7 +3541,7 @@ core-js-pure@^3.0.0:
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.6.5.tgz#c79e75f5e38dbc85a662d91eea52b8256d53b813"
   integrity sha512-lacdXOimsiD0QyNf9BC/mxivNJ/ybBGJXQFKzRekp1WTHoVUWsUHEn+2T8GJAzzIhyOuXA+gOxCVN3l+5PLPUA==
 
-core-js@^2.4.0:
+core-js@^2.4.0, core-js@^2.5.7:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
   integrity sha512-5wjnpaT/3dV+XB4borEsnAYQchn00XSgTAWKDkEqv+K8KevjbzmofK6hfJ9TZIlpj2N0xQpazy7PiRQiWHqzWg==
@@ -9756,6 +9756,14 @@ raw-body@2.4.0:
     http-errors "1.7.2"
     iconv-lite "0.4.24"
     unpipe "1.0.0"
+
+react-add-to-calendar-hoc@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/react-add-to-calendar-hoc/-/react-add-to-calendar-hoc-1.0.10.tgz#ceec3776f28653172d2bad798e35d9f84701605a"
+  integrity sha512-/tbI8Vez0LKAIPKi8g6KK1NdnUMig3lve5w7xdzkoACmniCrUtAG8d9veh9zF7HqEUO049S6IIREfMRxqiFKiQ==
+  dependencies:
+    core-js "^2.5.7"
+    prop-types "^15.6.2"
 
 react-add-to-calendar@^0.1.5:
   version "0.1.5"

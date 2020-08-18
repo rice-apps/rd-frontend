@@ -7,6 +7,7 @@ const DiscussionBoxSection = styled.section`
 `
 
 const OP = styled.div`
+  padding: 0px 0px 5px 5px;
 `;
 
 const Time = styled.div`
