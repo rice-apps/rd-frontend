@@ -1,85 +1,52 @@
 import gql from 'graphql-tag.macro'
 
 const POST_PAGE = gql`
-        query PostPage(
-            $after: String!
-            $today: Date
-            $earlyDate: Date
-            $kind: EnumDKeyPostKind
-            ) {
-            postConnection(
-                after: $after
-                filter: {   
-                    OR: [
-                        {kind: $kind}
-                        {
-                            AND: [
-                                { _operators: { date_created: { gt: $earlyDate } } }
-                                { _operators: { date_created: { lt: $today } } }
-                            ]
-                        }
-                    ]
-                }
-            ) {
-                count
-                edges {
-                    cursor
-                    node {
-                        _id
-                        __typename
-                        kind
-                        title
-                        creator {
-                            _id
-                            username
-                        }
-                        date_created
-                        body
-                        tags
-                        upvotes {
-                            _id
-                            username
-                        }
-                        downvotes {
-                            _id
-                            username
-                        }
-                        reports {
-                            _id
-                            username
-                        }
-                        ... on Event {
-                            start
-                            end
-                            location: place
-                        }
-                        ... on Job {
-                            start
-                            end
-                            workplace: place
-                            isPaid
-                            isClosed
-                        }
-                        ... on Notice {
-                            deadline
-                        }
-
-                        imageUrl
-                    }
-                }
-                pageInfo {
-                    startCursor
-                    endCursor
-                    hasPreviousPage
-                    hasNextPage
-                }
-            }
-        }
-`;
-
-const GET_USER_DATA = gql`
-    query GetData($netID: String!) {
-        userOne(filter: { netID: $netID }) {
+  query PostPage(
+    $after: String!
+    $today: Date
+    $earlyDate: Date
+    $kind: EnumDKeyPostKind
+  ) {
+    postConnection(
+      first: 5
+      after: $after
+      filter: {
+        OR: [
+          { kind: $kind }
+          {
+            AND: [
+              { _operators: { date_created: { gt: $earlyDate } } }
+              { _operators: { date_created: { lt: $today } } }
+            ]
+          }
+        ]
+      }
+    ) {
+      count
+      edges {
+        cursor
+        node {
+          _id
+          __typename
+          kind
+          title
+          creator {
+            _id
+            username
+          }
+          date_created
+          body
+          tags
+          upvotes {
+            _id
+            username
+          }
+          downvotes {
+            _id
+            username
+          }
+          reports {
+            _id
             username
           }
           ... on Event {
@@ -110,6 +77,7 @@ const GET_USER_DATA = gql`
     }
   }
 `
+
 const USER_EXISTS = gql`
   query GetData($username: String!) {
     doesUsernameExist(username: $username) {

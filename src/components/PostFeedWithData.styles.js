@@ -19,7 +19,7 @@ export const PostFeedContainer = styled.div`
   align-items: center;
 
   background: rgba(255, 255, 255, 0.5) 0% 0% no-repeat padding-box;
-  border: 0.16vw solid #FFFFFF;
+  border: 0.16vw solid #ffffff;
   border-radius: 1.6vw;
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
@@ -41,7 +41,7 @@ export const LeftSidebarContainer = styled.div`
 
   background: rgba(255, 255, 255, 0.65) 0% 0% no-repeat padding-box;
   border-radius: 1.3vw;
-  border: 0.16vw solid #FFFFFF;
+  border: 0.16vw solid #ffffff;
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
 `
@@ -55,40 +55,40 @@ export const RightSidebarContainer = styled.div`
   width: 20vw;
   height: calc(80vh);
   background: rgba(255, 255, 255, 0.5) 0% 0% no-repeat padding-box;
-  border: 0.16vw solid #FFFFFF;
+  border: 0.16vw solid #ffffff;
   border-radius: 1.6vw;
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
 `
 export const NewPostButtonContainer = styled.div`
   padding-top: 1.6vw;
-  
+
   width: 47vw;
   height: 3vw;
-  
+
   justify-content: space-between;
 `
 
 export const NewPostButton = styled.div`
-    display: flex;
-    
-    width: 10vw;
-    height: 2.3vw;
-    
-    cursor: pointer;
-    
-    background: #FFFFFF93 0% 0% no-repeat padding-box;
-    box-shadow: 0.1vw 0.1vw 0.5vw #7478861A;
-    border-radius: 0.7vw;
-    
-    justify-content: flex-start;
-    align-items: center;
-    
-    padding-left: 0.8vw
+  display: flex;
+
+  width: 10vw;
+  height: 2.3vw;
+
+  cursor: pointer;
+
+  background: #ffffff93 0% 0% no-repeat padding-box;
+  box-shadow: 0.1vw 0.1vw 0.5vw #7478861a;
+  border-radius: 0.7vw;
+
+  justify-content: flex-start;
+  align-items: center;
+
+  padding-left: 0.8vw;
 `
 
 export const ButtonText = styled.div`
-    font-size: 0.9vw;
-    padding-left: 1.3vw;
-    padding-bottom: 0.2vw
+  font-size: 0.9vw;
+  padding-left: 1.3vw;
+  padding-bottom: 0.2vw;
 `
