@@ -117,7 +117,6 @@ function PostChunk (props) {
     return (
       <>
         <DiscussionBoxSection>
-          {console.log(props.post.node.date_created)}
           <OP>{props.post.node.creator.username} - <ReactTimeAgo date={props.post.node.date_created}/></OP>
           <DiscussionBox>
               <LeftComponent>

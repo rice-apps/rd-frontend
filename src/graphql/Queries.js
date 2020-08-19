@@ -1,13 +1,33 @@
 import gql from 'graphql-tag.macro'
 
 const POST_PAGE = gql`
-  query PostPage($after: String!) {
-    postConnection(after: $after) {
+  query PostPage(
+    $after: String!
+    $today: Date
+    $earlyDate: Date
+    $kind: EnumDKeyPostKind
+  ) {
+    postConnection(
+      first: 5
+      after: $after
+      filter: {
+        OR: [
+          { kind: $kind }
+          {
+            AND: [
+              { _operators: { date_created: { gt: $earlyDate } } }
+              { _operators: { date_created: { lt: $today } } }
+            ]
+          }
+        ]
+      }
+    ) {
       count
       edges {
         cursor
         node {
           _id
+          __typename
           kind
           title
           creator {
@@ -57,6 +77,7 @@ const POST_PAGE = gql`
     }
   }
 `
+
 const USER_EXISTS = gql`
   query GetData($username: String!) {
     doesUsernameExist(username: $username) {
