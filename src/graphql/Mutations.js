@@ -106,9 +106,12 @@ const REPORT_POST = gql`
 `;
 
 const REMOVE_POST = gql`
-    mutation RemovePost($_id: ID!) {
+    mutation RemovePost($_id: MongoID!) {
         postRemoveById(_id: $_id) {
-            _id
+            record{
+                date_created
+                _id
+              }
         }
     }
 `;
