@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
 import { useQuery, useLazyQuery } from '@apollo/client'
-import { Redirect, useNavigate } from 'react-router-dom'
 
 import { Helmet } from 'react-helmet'
 import PostFeed from './PostFeed'
@@ -25,7 +24,6 @@ import { SideNav } from './SideNav'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 function PostFeedWithData () {
-  const history = useNavigate()
   const [today, setToday] = useState(null)
   const [earlyDateBound, setEarlyDateBound] = useState(new Date(2000, 1, 1))
   const [kind, setKind] = useState('')
@@ -64,7 +62,6 @@ function PostFeedWithData () {
 
   // const [modalVisible, setVisibility] = useState(false);
   const openModal = () => setVisibility(true)
-  const goToProfile = () => history.push('/profile')
 
   return (
     <>
@@ -84,20 +81,6 @@ function PostFeedWithData () {
               <ButtonText>Create Post</ButtonText>
             </NewPostButton>
           </NewPostButtonContainer>
-          <div style={{ display: 'flex', gap: '20px' }}>
-            <p
-              onClick={openModal}
-              style={{ background: 'lightpink', cursor: 'pointer' }}
-            >
-              New Post
-            </p>
-            <p
-              onClick={goToProfile}
-              style={{ background: 'lightpink', cursor: 'pointer' }}
-            >
-              Profile
-            </p>
-          </div>
 
           <BannerContainer>
             <Banner />

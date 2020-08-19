@@ -18,6 +18,8 @@ import {
 
 import { PostingButton } from './WritePost.styles'
 import { currentUser } from '../utils/apollo'
+import {Background, LeftSidebarContainer} from "./PostFeedWithData.styles";
+import {SideNav} from "./SideNav";
 
 const ProfilePage = () => {
   const navigator = useNavigate()
@@ -165,6 +167,9 @@ const ProfilePage = () => {
 
   return (
     <>
+      <LeftSidebarContainer>
+        <SideNav />
+      </LeftSidebarContainer>
       <form onSubmit={saveData}>
         <p>{userStatement}</p>
         <FieldSetStyle>
