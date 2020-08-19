@@ -7,7 +7,7 @@ import uuid from "uuid/v4";
 import PostChunk from "./PostChunk";
 import Filters from "./Filters";
 import CommentChunk from "./CommentChunk";
-import { TOKEN_NAME } from "../utils/config";
+import { TOKEN_NAME } from "../config";
 import { UPVOTE_POST, DOWNVOTE_POST, SAVE_POST } from "../graphql/Mutations";
 import { FETCH_COMMENTS_POST, FETCH_COMMENTS_PARENT } from "../graphql/Queries";
 import { COMMENT_CREATED, COMMENT_UPDATED } from "../graphql/Queries";

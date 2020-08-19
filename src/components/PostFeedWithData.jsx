@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { useQuery, useLazyQuery } from "@apollo/client";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect,  } from "react-router-dom";
 
 import { Helmet } from "react-helmet";
 import PostFeed from "./PostFeed";
@@ -21,7 +21,7 @@ import { Banner } from "./PostFeed.styles";
 import { SideNav } from "./SideNav";
 
 function PostFeedWithData() {
-    const history = useHistory();
+    // const history = useHistory();
     const [today, setToday] = useState(null);
     const [earlyDateBound, setEarlyDateBound] = useState(new Date(2000, 1, 1))
     const [kind, setKind] = useState("")
@@ -56,7 +56,9 @@ function PostFeedWithData() {
     
     const [modalVisible, setVisibility] = useState(false);
     const openModal = () => setVisibility(true);
-    const goToProfile = () => history.push("/profile");
+    const goToProfile = () => {
+        // history.push("/profile");
+    }
 
     return (
         <>
