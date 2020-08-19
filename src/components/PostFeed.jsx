@@ -8,7 +8,7 @@ import PostChunk from './PostChunk'
 import Filters from './Filters'
 import CommentChunk from './CommentChunk'
 import { TOKEN_NAME } from '../config'
-import { UPVOTE_POST, DOWNVOTE_POST, SAVE_POST } from '../graphql/Mutations'
+import { UPVOTE_POST, DOWNVOTE_POST, REPORT_POST, REMOVE_POST, SAVE_POST } from '../graphql/Mutations'
 import { FETCH_COMMENTS_POST, FETCH_COMMENTS_PARENT } from '../graphql/Queries'
 import { COMMENT_CREATED, COMMENT_UPDATED } from '../graphql/Queries'
 import { currentUser } from "../utils/apollo"
@@ -19,6 +19,8 @@ function PostFeed (props) {
   const userInfo = currentUser()
   const [upvotePost] = useMutation(UPVOTE_POST)
   const [downvotePost] = useMutation(DOWNVOTE_POST)
+  const [reportPost] = useMutation(REPORT_POST)
+  const [removePost] = useMutation(REMOVE_POST)
   const [savePost] = useMutation(SAVE_POST)
   const [getCommentsPost, { refetch, ...result }] = useLazyQuery(FETCH_COMMENTS_POST)
 
@@ -75,6 +77,8 @@ function PostFeed (props) {
             userInfo={userInfo}
             upvotePost={upvotePost}
             downvotePost={downvotePost}
+            reportPost={reportPost}
+            removePost={removePost}
             savePost={savePost}
             post={post}
             key={post.node._id}
