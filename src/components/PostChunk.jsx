@@ -15,6 +15,10 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
 import ReactHtmlParser from 'react-html-parser'
 
+import JavascriptTimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+import ReactTimeAgo from 'react-time-ago'
+
 import {
   DiscussionBoxSection,
     OP,
@@ -42,6 +46,8 @@ import {
     ShareTwitter,
     Share,
 } from './PostChunk.styles'
+
+JavascriptTimeAgo.addLocale(en)
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -111,12 +117,12 @@ function PostChunk (props) {
     return (
       <>
         <DiscussionBoxSection>
-          <OP>{props.post.node.creator.username} - 5h</OP>
-          
+          {console.log(props.post.node.date_created)}
+          <OP>{props.post.node.creator.username} - <ReactTimeAgo date={props.post.node.date_created}/></OP>
           <DiscussionBox>
               <LeftComponent>
                   <Upvote className={classes.root}>
-                      <IconButton style={ isUpvoted ? { color: red[200]} : { color: grey[800] }}
+                      <IconButton style={ isUpvoted ? { color: red[200]} : { color: grey[700] }}
                           onClick={(e) => {
                               e.preventDefault();
                               toggleUpvoted();
@@ -128,7 +134,7 @@ function PostChunk (props) {
                               });
                           }}
                       >
-                          <ArrowDropUp />
+                          <ArrowDropUp fontSize="large" />
                       </IconButton>
                   </Upvote>
                   <Likes>
@@ -148,7 +154,7 @@ function PostChunk (props) {
                               });
                           }}
                       >
-                          <ArrowDropDown />
+                          <ArrowDropDown fontSize="large" />
                       </IconButton>
                   </Downvote>
               </LeftComponent>
