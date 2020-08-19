@@ -49,6 +49,7 @@ const Downvote = styled.div`
 
 const TopMiddleComponent = styled.div`
     // contains DiscussionTitle, MoreOptions, DiscussionBody
+    position: relative;
     grid-area: topmiddle;
     display: grid;
     grid-template-areas:
@@ -76,13 +77,14 @@ const DiscussionTitle = styled.text`
 `
 
 const MoreOptions = styled.div`
+    position: relative;
     grid-area: moreoptions;
     align-self: start;
     justify-self: start;
 `;
 
 const DDMenu = styled.div`
-    position: relative;
+    position: absolute;
     align-self: start;
     justify-self: center;
     background-color: white;
