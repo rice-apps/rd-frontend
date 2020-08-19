@@ -6,6 +6,13 @@ const DiscussionBoxSection = styled.section`
   max-width: 50vw;
 `
 
+const OP = styled.div`
+  padding: 0px 0px 5px 5px;
+`;
+
+const Time = styled.div`
+`;
+
 const DiscussionBox = styled.section`
   // contains LeftComponent, TopMiddleComponent, BottomComponent
   padding: 5px;
@@ -41,21 +48,24 @@ const Downvote = styled.div`
 `
 
 const TopMiddleComponent = styled.div`
-  // contains DiscussionTitle, Tags, DropDown, DiscussionBody
-  grid-area: topmiddle;
-  display: grid;
-  grid-template-areas:
-    'title tags moreoptions'
-    'body body moreoptions';
-  grid-template-columns: 4fr 2fr 1fr;
-  grid-template-rows: 65px 1fr;
-`
+    // contains DiscussionTitle, MoreOptions, DiscussionBody
+    grid-area: topmiddle;
+    display: grid;
+    grid-template-areas:
+        "title moreoptions"
+        "body moreoptions"
+        "image moreoptions";
+    grid-template-columns: 1fr 60px;
+    grid-template-rows: 50px 1fr auto;
+`;
 
 const DiscussionTitleDiv = styled.div`
-  grid-area: title;
-  padding: 10px 0px;
-  overflow: hidden;
-`
+    grid-area: title;
+    padding: 20px 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+`;
 
 const DiscussionTitle = styled.text`
   justify-self: start;
@@ -65,30 +75,21 @@ const DiscussionTitle = styled.text`
   font-weight: bold;
 `
 
-const Tags = styled.text`
-  grid-area: tags;
-  padding: 20px 0px;
-  justify-self: end;
-  font-family: 'Avenir';
-  font-size: 2vh;
-  word-wrap: break-word;
-`
-
 const MoreOptions = styled.div`
-  grid-area: moreoptions;
-  align-self: start;
-  justify-self: end;
-`
+    grid-area: moreoptions;
+    align-self: start;
+    justify-self: start;
+`;
 
 const DDMenu = styled.div`
-  position: relative;
-  align-self: stretch;
-  justify-self: stretch;
-  background-color: white;
-  display: grid;
-  bottom: 25px;
-  width: 200%;
-`
+    position: relative;
+    align-self: start;
+    justify-self: center;
+    background-color: white;
+    display: grid;
+    bottom: 25px;
+    width: 150%;
+`;
 
 const Save = styled.button`
   padding: 5px;
@@ -107,36 +108,46 @@ const Delete = styled.button`
 `
 
 const DiscussionBody = styled.text`
-  grid-area: body;
-  padding: 10px 0px;
-  font-family: 'Avenir';
-  font-size: 2vh;
-  word-wrap: break-word;
-  max-height: 100px;
-  max-width: 100px;
-`
+    grid-area: body;
+    padding: 10px 0px;
+    font-family: "Avenir";
+    font-size: 2vh;
+    word-wrap: break-word;
+    max-height: 100px;
+`;
 
 const BottomComponent = styled.div`
-  // contains Save, AddTo, OP, Time, Date, ShareFacebook, ShareTwitter, Share
-  grid-area: bottom;
-  display: grid;
-  grid-template-columns: 80px 1fr 60px 100px 40px 40px 40px 15px;
-  grid-template-areas: 'op . time date facebook twitter share .';
-  justify-items: start;
-  align-items: center;
-`
+    // contains Tags, ShareFacebook, ShareTwitter, Share
+    grid-area: bottom;
+    display: grid;
+    grid-template-columns: 1fr 40px 40px 40px 15px;
+    grid-template-areas: "tags facebook twitter share .";
+    justify-items: start;
+    align-items: center;
+`;
 
-const OpDiv = styled.div`
-  grid-area: op;
-`
+const Tags = styled.div`
+    // contains Tag, ViewTags
+    grid-area: tags;
+    word-wrap: break-word;
+`;
 
-const Time = styled.div`
-  grid-area: time;
-`
+const Tag = styled.text`
+    font-family: "Avenir";
+    font-size: 1.75vh;
+    font-weight: bold;
+    color: white;
+    background-color: gray;
+    border: none;
+    border-radius: 5px;
+    margin-right: 7px;
+    padding: 2px 5px;
+`;
 
-const Date = styled.div`
-  grid-area: date;
-`
+const ViewTags = styled.button`
+    border: none;
+    background-color: inherit;
+`;
 
 const ShareFacebook = styled.div`
   grid-area: facebook;
@@ -151,28 +162,29 @@ const Share = styled.div`
 `
 
 export {
-  DiscussionBoxSection,
-  DiscussionBox,
-  LeftComponent,
-  Likes,
-  Upvote,
-  Downvote,
-  TopMiddleComponent,
-  DiscussionTitleDiv,
-  DiscussionTitle,
-  Tags,
-  MoreOptions,
-  DDMenu,
-  DiscussionBody,
-  BottomComponent,
-  Save,
-  AddTo,
-  Report,
-  Delete,
-  OpDiv,
-  Time,
-  Date,
-  ShareFacebook,
-  ShareTwitter,
-  Share
-}
+    DiscussionBoxSection,
+    OP,
+    Time,
+    DiscussionBox,
+    LeftComponent,
+    Likes,
+    Upvote,
+    Downvote,
+    TopMiddleComponent,
+    DiscussionTitleDiv,
+    DiscussionTitle,
+    Tags,
+    Tag,
+    ViewTags,
+    MoreOptions,
+    DDMenu,
+    DiscussionBody,
+    BottomComponent,
+    Save,
+    AddTo,
+    Report,
+    Delete,
+    ShareFacebook,
+    ShareTwitter,
+    Share,
+};
