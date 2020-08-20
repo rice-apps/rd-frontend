@@ -203,7 +203,7 @@ function PostChunk (props) {
                     <AddTo>
                       <AddToCalendar
                         event={calEvent}
-                        buttonLabel='Add to '
+                        buttonLabel='Add to Calendar'
                         buttonTemplate={calIcon}
                         listItems={calDropDown}
                       ></AddToCalendar>
