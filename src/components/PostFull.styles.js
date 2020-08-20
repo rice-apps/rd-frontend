@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-// note: PostFull.styles.js is based on this file 
-// so please make relevant design updates to both places
+// note: this is a copy of PostChunk.styles.js 
+// (for now, will be changed so the post is bigger on this new page)
+// if post chunk styles gets updated in a way that affects this design, update this file too
 
 const DiscussionBoxSection = styled.section`
   // contains DiscussionBox
@@ -51,17 +52,16 @@ const Downvote = styled.div`
 `
 
 const TopMiddleComponent = styled.div`
-    // contains DiscussionTitle, MoreOptions, DiscussionBody
-    position: relative;
-    grid-area: topmiddle;
-    display: grid;
-    grid-template-areas:
-        "title moreoptions"
-        "body moreoptions"
-        "image moreoptions";
-    grid-template-columns: 1fr 60px;
-    grid-template-rows: 50px 1fr auto;
-`;
+  // contains DiscussionTitle, MoreOptions, DiscussionBody
+  grid-area: topmiddle;
+  display: grid;
+  grid-template-areas:
+    'title moreoptions'
+    'body moreoptions'
+    'image moreoptions';
+  grid-template-columns: 1fr 60px;
+  grid-template-rows: 50px 1fr auto;
+`
 
 const DiscussionTitleDiv = styled.div`
   grid-area: title;
@@ -79,11 +79,10 @@ const DiscussionTitle = styled.text`
   font-weight: bold;
 `
 
-const MoreOptions = styled.div`
-    position: relative;
-    grid-area: moreoptions;
-    align-self: start;
-    justify-self: start;
+// const FullPostLink = styled.link`
+const FullPostLink = styled(Link)`
+    color: black;
+    text-decoration: none;
 `;
 
 const MoreOptions = styled.div`
@@ -93,14 +92,14 @@ const MoreOptions = styled.div`
 `
 
 const DDMenu = styled.div`
-    position: absolute;
-    align-self: start;
-    justify-self: center;
-    background-color: white;
-    display: grid;
-    bottom: 25px;
-    width: 150%;
-`;
+  position: relative;
+  align-self: start;
+  justify-self: center;
+  background-color: white;
+  display: grid;
+  bottom: 25px;
+  width: 150%;
+`
 
 const Save = styled.button`
   padding: 5px;
