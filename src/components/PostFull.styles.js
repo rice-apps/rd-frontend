@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-// note: PostFull.styles.js is based on this file 
-// so please make relevant design updates to both places
+// note: this is a copy of PostChunk.styles.js 
+// (for now, will be changed so the post is bigger on this new page)
+// if post chunk styles gets updated in a way that affects this design, update this file too
 
 const DiscussionBoxSection = styled.section`
   // contains DiscussionBox
