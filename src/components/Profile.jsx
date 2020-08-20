@@ -40,7 +40,8 @@ const ProfilePage = () => {
     username: currentUsername,
     major: currentMajor,
     minor: currentMinor,
-    college: currentCollege
+    college: currentCollege,
+    savedPosts: savedPosts
   } = currentUser()
 
   const [
@@ -247,6 +248,13 @@ const ProfilePage = () => {
             </DDList>
           )}
         </DDWrapper>
+
+        <div>
+          Your saved posts:
+          {savedPosts.map(post => (
+            <div>{"localhost:3000/posts/" + post._id}</div>
+          ))}
+        </div>
 
         <PostingButton
           type='submit'

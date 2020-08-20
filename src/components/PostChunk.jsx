@@ -205,6 +205,7 @@ function PostChunk(props) {
                   </Save>
                   {(props.post.node.kind === 'Event' ||
                     props.post.node.kind === 'Job') && (
+
                       <AddTo>
                         <AddToCalendar
                           event={calEvent}
@@ -239,19 +240,20 @@ function PostChunk(props) {
 
                   {props.post.node.creator.username ===
                     props.userInfo.username && (
-                      <Delete
-                        onClick={e => {
-                          e.preventDefault()
-                          props.removePost({
-                            variables: {
-                              _id: props.post.node._id
-                            }
-                          })
-                        }}
-                      >
-                        Delete Post
-                      </Delete>
-                    )}
+                    <Delete
+                      onClick={e => {
+                        e.preventDefault()
+                        window.location.reload(false);
+                        props.removePost({
+                          variables: {
+                            _id: props.post.node._id
+                          }
+                        })
+                      }}
+                    >
+                      Delete Post
+                    </Delete>
+                  )}
                 </DDMenu>
               )}
             </MoreOptions>
