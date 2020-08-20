@@ -8,10 +8,16 @@ import PostChunk from './PostChunk'
 import Filters from './Filters'
 import CommentChunk from './CommentChunk'
 import { TOKEN_NAME } from '../config'
-import { UPVOTE_POST, DOWNVOTE_POST, REPORT_POST, REMOVE_POST, SAVE_POST } from '../graphql/Mutations'
+import {
+  UPVOTE_POST,
+  DOWNVOTE_POST,
+  REPORT_POST,
+  REMOVE_POST,
+  SAVE_POST
+} from '../graphql/Mutations'
 import { FETCH_COMMENTS_POST, FETCH_COMMENTS_PARENT } from '../graphql/Queries'
 import { COMMENT_CREATED, COMMENT_UPDATED } from '../graphql/Queries'
-import { currentUser } from "../utils/apollo"
+import { currentUser } from '../utils/apollo'
 
 function PostFeed (props) {
   const date = new Date()
@@ -22,7 +28,9 @@ function PostFeed (props) {
   const [reportPost] = useMutation(REPORT_POST)
   const [removePost] = useMutation(REMOVE_POST)
   const [savePost] = useMutation(SAVE_POST)
-  const [getCommentsPost, { refetch, ...result }] = useLazyQuery(FETCH_COMMENTS_POST)
+  const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
+    FETCH_COMMENTS_POST
+  )
 
   const [sort_by_upvotes, setSort_by_upvotes] = useState('')
 
@@ -36,9 +44,9 @@ function PostFeed (props) {
   } = props
 
   useEffect(() => {
-      subscribeToNewPosts()
-      subscribeToNewVotes()
-  }, []);
+    subscribeToNewPosts()
+    subscribeToNewVotes()
+  }, [])
 
   if (error) return <h1>Something went wrong...</h1>
   if (loading || !data) return <h1>Loading...</h1>
