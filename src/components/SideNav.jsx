@@ -35,7 +35,10 @@ export const SideNav = () => {
             selected={i === getSelected}
             onClick={() => setSelected(i)}
           >
-            <SvgIcon htmlColor={i === getSelected ? `#FFFFFF` : `#B78989`} style={{fontSize: '1.6vw'}}>
+            <SvgIcon
+              htmlColor={i === getSelected ? `#FFFFFF` : `#B78989`}
+              style={{ fontSize: '1.6vw' }}
+            >
               {getIcon(page)}
             </SvgIcon>
           </NavElement>

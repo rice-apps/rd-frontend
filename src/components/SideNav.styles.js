@@ -20,7 +20,7 @@ export const NavElement = styled.div`
   cursor: pointer;
 
   transition: all 0.5s ease-in-out;
-  
+
   margin-bottom: 0.5vw;
 
   ${props =>
@@ -35,6 +35,6 @@ export const NavElement = styled.div`
       background: transparent linear-gradient(270deg, #ffa99c 0%, #ffc1b7 100%)
         0% 0% no-repeat padding-box;
       opacity: 0.8;
-      box-shadow: 0.15vw 0.15vw 3vw #FFA99C7B;
+      box-shadow: 0.15vw 0.15vw 3vw #ffa99c7b;
     `}
 `

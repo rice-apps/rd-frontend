@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
+import { red, grey } from '@material-ui/core/colors'
+
+import AddToCalendar from 'react-add-to-calendar'
 
 import IconButton from '@material-ui/core/IconButton'
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp'
@@ -12,10 +15,14 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
 import ReactHtmlParser from 'react-html-parser'
 
-
+import JavascriptTimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+import ReactTimeAgo from 'react-time-ago'
 
 import {
   DiscussionBoxSection,
+  OP,
+  Time,
   DiscussionBox,
   LeftComponent,
   Likes,
@@ -25,6 +32,8 @@ import {
   DiscussionTitleDiv,
   DiscussionTitle,
   Tags,
+  Tag,
+  ViewTags,
   MoreOptions,
   DDMenu,
   DiscussionBody,
@@ -33,14 +42,12 @@ import {
   AddTo,
   Report,
   Delete,
-  OpDiv,
-  Time,
-  Date,
   ShareFacebook,
   ShareTwitter,
   Share
 } from './PostChunk.styles'
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 
@@ -53,6 +60,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 =======
+=======
+JavascriptTimeAgo.addLocale(en)
+
+>>>>>>> 19d584de3b7b08f5cc79ef7958c8b2df75a136f8
 const useStyles = makeStyles(theme => ({
   root: {
     '& > *': {
@@ -72,29 +83,80 @@ function PostChunk (props) {
     )
   }
 
+  const listOfUpvoters = props.post.node.upvotes.map(
+    userObject => userObject.username
+  )
+
+  const listOfDownvoters = props.post.node.downvotes.map(
+    userObject => userObject.username
+  )
+
   const [isDDOpen, setDDOpen] = useState(false)
+  const [isTagsOpen, setTagsOpen] = useState(false)
+  const [isUpvoted, setUpvoted] = useState(
+    listOfUpvoters.includes(props.userInfo.username)
+  )
+  const [isDownvoted, setDownvoted] = useState(
+    listOfDownvoters.includes(props.userInfo.username)
+  )
 
   const toggleDD = () => {
     setDDOpen(!isDDOpen)
   }
 
+  const toggleTags = () => {
+    setTagsOpen(!isTagsOpen)
+  }
+
+  const toggleUpvoted = () => {
+    setUpvoted(!isUpvoted)
+    setDownvoted(false)
+  }
+
+  const toggleDownvoted = () => {
+    setDownvoted(!isDownvoted)
+    setUpvoted(false)
+  }
+
+  const calIcon = { 'calendar-plus-o': 'right' }
+
+  const calDropDown = [
+    { google: 'Google Calendar' },
+    { apple: 'Apple Calendar' }
+  ]
+
+  const calEvent = {
+    title: props.post.node.title ? props.post.node.title : '',
+    description: props.post.node.body ? props.post.node.body : '',
+    location: props.post.node.place ? props.post.node.place : '',
+    startTime: props.post.node.start ? props.post.node.start : '',
+    endTime: props.post.node.end ? props.post.node.end : ''
+  }
+
   return (
     <>
       <DiscussionBoxSection>
+        <OP>
+          {props.post.node.creator.username} -{' '}
+          <ReactTimeAgo date={props.post.node.date_created} />
+        </OP>
         <DiscussionBox>
           <LeftComponent>
             <Upvote className={classes.root}>
               <IconButton
+                style={isUpvoted ? { color: red[200] } : { color: grey[700] }}
                 onClick={e => {
                   e.preventDefault()
+                  toggleUpvoted()
                   props.upvotePost({
                     variables: {
+                      netID: props.userInfo.netID,
                       _id: props.post.node._id
                     }
                   })
                 }}
               >
-                <ArrowDropUp />
+                <ArrowDropUp fontSize='large' />
               </IconButton>
             </Upvote>
             <Likes>
@@ -103,16 +165,19 @@ function PostChunk (props) {
             </Likes>
             <Downvote className={classes.root}>
               <IconButton
+                style={isDownvoted ? { color: red[200] } : { color: grey[800] }}
                 onClick={e => {
                   e.preventDefault()
+                  toggleDownvoted()
                   props.downvotePost({
                     variables: {
+                      netID: props.userInfo.netID,
                       _id: props.post.node._id
                     }
                   })
                 }}
               >
-                <ArrowDropDown />
+                <ArrowDropDown fontSize='large' />
               </IconButton>
             </Downvote>
           </LeftComponent>
@@ -121,7 +186,6 @@ function PostChunk (props) {
             <DiscussionTitleDiv>
               <DiscussionTitle>{props.post.node.title}</DiscussionTitle>
             </DiscussionTitleDiv>
-            <Tags>Tags</Tags>
             <MoreOptions className={classes.root}>
               <IconButton onClick={toggleDD}>
                 <MoreHorizIcon open={isDDOpen} />
@@ -137,20 +201,61 @@ function PostChunk (props) {
                       )
                       props.savePost({
                         variables: {
+                          netID: props.userInfo.netID,
                           savedPosts: [
                             ...currentSavedPosts,
                             props.post.node._id
                           ]
                         }
                       })
+
+                      console.log(props.userInfo.savedPosts)
                     }}
                   >
                     Save Post
                   </Save>
-                  <AddTo>+ Add to...</AddTo>
-                  <Report>Report Post</Report>
+                  {(props.post.node.kind === 'Event' ||
+                    props.post.node.kind === 'Job') && (
+                    <AddTo>
+                      <AddToCalendar
+                        event={calEvent}
+                        buttonLabel='Add to '
+                        buttonTemplate={calIcon}
+                        listItems={calDropDown}
+                      ></AddToCalendar>
+                    </AddTo>
+                  )}
+
+                  <Report
+                    onClick={e => {
+                      e.preventDefault()
+
+                      props.reportPost({
+                        variables: {
+                          netID: props.userInfo.netID,
+                          _id: props.post.node._id
+                        }
+                      })
+                    }}
+                  >
+                    Report Post
+                  </Report>
+
                   {props.post.node.creator.username ===
-                    props.userInfo.username && <Delete>Delete Post</Delete>}
+                    props.userInfo.username && (
+                    <Delete
+                      onClick={e => {
+                        e.preventDefault()
+                        props.removePost({
+                          variables: {
+                            _id: props.post.node._id
+                          }
+                        })
+                      }}
+                    >
+                      Delete Post
+                    </Delete>
+                  )}
                 </DDMenu>
               )}
             </MoreOptions>
@@ -158,21 +263,36 @@ function PostChunk (props) {
             <DiscussionBody>
               {ReactHtmlParser(props.post.node.body)}
             </DiscussionBody>
+
             {oneImage}
           </TopMiddleComponent>
 
           <BottomComponent>
-            <OpDiv>{props.post.node.creator.username}</OpDiv>
-            <Time>{props.post.node.date_created.substring(11, 16)}</Time>
-            <Date>
-              {`${props.post.node.date_created.substring(
-                5,
-                7
-              )}/${props.post.node.date_created.substring(
-                8,
-                10
-              )}/${props.post.node.date_created.substring(0, 4)}`}
-            </Date>
+            <Tags>
+              {props.post.node.tags.length > 0 && (
+                <Tag>{props.post.node.tags[0]}</Tag>
+              )}
+              {props.post.node.tags.length > 1 && (
+                <Tag>{props.post.node.tags[1]}</Tag>
+              )}
+              {props.post.node.tags.length > 2 && (
+                <Tag>{props.post.node.tags[2]}</Tag>
+              )}
+
+              {isTagsOpen &&
+                props.post.node.tags.slice(3).map(tag => <Tag>{tag}</Tag>)}
+
+              {props.post.node.tags.length > 3 && (
+                <ViewTags onClick={toggleTags}>
+                  {isTagsOpen ? (
+                    <text>(View Less)</text>
+                  ) : (
+                    <text>(View All)</text>
+                  )}
+                </ViewTags>
+              )}
+            </Tags>
+
             <ShareFacebook>
               <IconButton>
                 <FacebookIcon />
