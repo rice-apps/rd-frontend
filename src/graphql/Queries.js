@@ -156,6 +156,7 @@ const GET_POST = gql`
             title
             body
             imageUrl
+            date_created
             creator {
                 netID
                 username

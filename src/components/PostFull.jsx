@@ -95,20 +95,12 @@ function PostFull() {
         },
     });
 
-    // *********** post full below
-
-    if (loading) {
-        return (<p>Loading</p>);
-    }
-
-    if (error) {
-        return (<p>Error</p>);
-    }
-
-    console.log(data);
-    console.log(data.postById);
-
-    const thePost = data.postById;
+    const dummyData = {
+        imageUrl: "",
+        upvotes: [],
+        downvotes: []
+    };
+    let thePost = dummyData; //for now
 
     // *********** post chunk setup below
 
@@ -123,11 +115,11 @@ function PostFull() {
         )
     }
 
-    const listOfUpvoters = thePost.upvotes.map(
+    let listOfUpvoters = thePost.upvotes.map(
         userObject => userObject.username
     )
 
-    const listOfDownvoters = thePost.downvotes.map(
+    let listOfDownvoters = thePost.downvotes.map(
         userObject => userObject.username
     )
 
@@ -159,6 +151,38 @@ function PostFull() {
         setDownvoted(!isDownvoted)
         setUpvoted(false)
     }
+
+    // *********** post full below
+
+    if (loading) {
+        return (<p>Loading</p>);
+    }
+
+    if (error) {
+        return (<p>Error</p>);
+    }
+
+    console.log(data);
+    console.log(data.postById);
+
+    thePost = data.postById; //real data
+
+    // *********** post chunk things that require thePost below
+    // change to real data now that its available
+
+    if (thePost.imageUrl) {
+        oneImage = (
+            <img width={500} src={thePost.imageUrl} alt='Custom-thing' />
+        )
+    }
+
+    listOfUpvoters = thePost.upvotes.map(
+        userObject => userObject.username
+    )
+
+    listOfDownvoters = thePost.downvotes.map(
+        userObject => userObject.username
+    )
 
     // *********** post chunk below
 
