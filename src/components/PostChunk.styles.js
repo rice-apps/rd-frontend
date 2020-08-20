@@ -85,12 +85,6 @@ const MoreOptions = styled.div`
     justify-self: start;
 `;
 
-const MoreOptions = styled.div`
-  grid-area: moreoptions;
-  align-self: start;
-  justify-self: start;
-`
-
 const DDMenu = styled.div`
     position: absolute;
     align-self: start;
