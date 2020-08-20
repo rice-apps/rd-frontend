@@ -58,9 +58,8 @@ import {
     ShareFacebook,
     ShareTwitter,
     Share,
-    FullPostLink,
-    Expand,
-} from './PostChunk.styles'
+    BackToFeed,
+} from './PostFull.styles'
 
 JavascriptTimeAgo.addLocale(en)
 
@@ -203,6 +202,9 @@ function PostFull() {
 
     return (
         <>
+            <BackToFeed to="/feed">
+                Back To Feed
+            </BackToFeed>
             <DiscussionBoxSection>
                 <OP>
                     {thePost.creator.username} -{' '}

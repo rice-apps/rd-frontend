@@ -5,6 +5,14 @@ import { Link } from "react-router-dom";
 // (for now, will be changed so the post is bigger on this new page)
 // if post chunk styles gets updated in a way that affects this design, update this file too
 
+// differences:
+// doesnt have or need expand and fullpostlink
+// has back button
+
+const BackToFeed = styled(Link)`
+  color: black;
+`
+
 const DiscussionBoxSection = styled.section`
   // contains DiscussionBox
   padding: 20px 140px;
@@ -53,6 +61,7 @@ const Downvote = styled.div`
 
 const TopMiddleComponent = styled.div`
   // contains DiscussionTitle, MoreOptions, DiscussionBody
+  position: relative;
   grid-area: topmiddle;
   display: grid;
   grid-template-areas:
@@ -74,22 +83,16 @@ const DiscussionTitleDiv = styled.div`
 const DiscussionTitle = styled.text`
   justify-self: start;
   align-self: start;
-  font-family: 'Avenir';
   font-size: 2.5vh;
   font-weight: bold;
 `
 
-// const FullPostLink = styled.link`
-const FullPostLink = styled(Link)`
-    color: black;
-    text-decoration: none;
-`;
-
 const MoreOptions = styled.div`
+  position: relative;
   grid-area: moreoptions;
   align-self: start;
   justify-self: start;
-`
+`;
 
 const DDMenu = styled.div`
   position: relative;
@@ -104,10 +107,6 @@ const DDMenu = styled.div`
 const Save = styled.button`
   padding: 5px;
 `
-
-const Expand = styled.button`
-    padding: 5px;
-`;
 
 const AddTo = styled.button`
   padding: 5px;
@@ -124,7 +123,6 @@ const Delete = styled.button`
 const DiscussionBody = styled.text`
   grid-area: body;
   padding: 10px 0px;
-  font-family: 'Avenir';
   font-size: 2vh;
   word-wrap: break-word;
   max-height: 100px;
@@ -201,6 +199,5 @@ export {
   ShareFacebook,
   ShareTwitter,
   Share,
-  FullPostLink,
-  Expand,
+  BackToFeed,
 };
