@@ -147,10 +147,102 @@ const VERIFY_USER = gql`
   }
 `
 
+const GET_POST = gql`
+    query GetPostById($id: MongoID!) {
+        postById(_id: $id) {
+            _id
+            __typename
+            kind
+            title
+            body
+            imageUrl
+            date_created
+            creator {
+                netID
+                username
+                savedPosts {
+                    _id
+                }
+            }
+            ... on Event {
+                start
+                end
+                location: place
+            }
+            ... on Job {
+                start
+                end
+                isPaid
+                isClosed
+                workplace: place
+            }
+            ... on Notice {
+                deadline
+            }
+            comments {
+                body
+                creator {
+                    username
+                }
+                upvotes {
+                    username
+                }
+                downvotes {
+                    username
+                }
+                children {
+                    body
+                    creator {
+                        username
+                    }
+                    upvotes {
+                        username
+                    }
+                    downvotes {
+                        username
+                    }
+                    children {
+                        body
+                        creator {
+                            username
+                        }
+                        upvotes {
+                            username
+                        }
+                        downvotes {
+                            username
+                        }
+                        children {
+                            body
+                            creator {
+                                username
+                            }
+                            upvotes {
+                                username
+                            }
+                            downvotes {
+                                username
+                            }
+                        }
+                    }
+                }
+            }
+            upvotes {
+                username
+            }
+            downvotes {
+                username
+            }
+            tags
+        }
+    }
+`;
+
 export {
   POST_PAGE,
   USER_EXISTS,
   FETCH_COMMENTS_PARENT,
   FETCH_COMMENTS_POST,
-  VERIFY_USER
+  VERIFY_USER,
+  GET_POST,
 }
