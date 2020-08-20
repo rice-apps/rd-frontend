@@ -165,7 +165,7 @@ function PostFeedWithData () {
             }}
             subscribeToNewVotes={() => {
               subscribeToMore({
-                document: POST_VOTE_CHANGED,
+                document: POST_VOTE_CHANGED
               })
             }}
           />

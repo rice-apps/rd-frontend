@@ -86,37 +86,29 @@ const DOWNVOTE_POST = gql`
 `
 
 const REPORT_POST = gql`
-    mutation ReportPost(
-        $netID: String!
-        $_id: ID!
-    ) {
-        togglePostReport(
-            netID: $netID
-            _id: $_id
-        ) {
-            creator {
-                _id
-                netID
-            }
-            _id
-            body
-            title
-        }
+  mutation ReportPost($netID: String!, $_id: ID!) {
+    togglePostReport(netID: $netID, _id: $_id) {
+      creator {
+        _id
+        netID
+      }
+      _id
+      body
+      title
     }
-`;
+  }
+`
 
 const REMOVE_POST = gql`
-    mutation RemovePost($_id: MongoID!) {
-        postRemoveById(_id: $_id) {
-            record{
-                date_created
-                _id
-              }
-        }
+  mutation RemovePost($_id: MongoID!) {
+    postRemoveById(_id: $_id) {
+      record {
+        date_created
+        _id
+      }
     }
-`;
-
-
+  }
+`
 
 const SAVE_POST = gql`
   mutation SavePost($netID: String!, $savedPosts: [MongoID]) {
