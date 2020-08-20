@@ -78,6 +78,12 @@ const DiscussionTitle = styled.text`
   font-weight: bold;
 `
 
+// const FullPostLink = styled.link`
+const FullPostLink = styled(Link)`
+    color: black;
+    text-decoration: none;
+`;
+
 const MoreOptions = styled.div`
     position: relative;
     grid-area: moreoptions;
