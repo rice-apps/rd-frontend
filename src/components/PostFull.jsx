@@ -95,20 +95,6 @@ function PostFull() {
         },
     });
 
-    // *********** post chunk setup below
-
-    const classes = useStyles()
-    let oneImage = <></>
-
-    const [isDDOpen, setDDOpen] = useState(false)
-    const [isTagsOpen, setTagsOpen] = useState(false)
-    const [isUpvoted, setUpvoted] = useState(
-        listOfUpvoters.includes(userInfo.username)
-    )
-    const [isDownvoted, setDownvoted] = useState(
-        listOfDownvoters.includes(userInfo.username)
-    )
-
     // *********** post full below
 
     if (loading) {
@@ -126,6 +112,11 @@ function PostFull() {
 
     // *********** post chunk setup below
 
+    const classes = useStyles()
+    let oneImage = <></>
+
+    // *********** post chunk setup below
+
     if (thePost.imageUrl) {
         oneImage = (
             <img width={500} src={thePost.imageUrl} alt='Custom-thing' />
@@ -139,6 +130,17 @@ function PostFull() {
     const listOfDownvoters = thePost.downvotes.map(
         userObject => userObject.username
     )
+
+    const [isDDOpen, setDDOpen] = useState(false)
+    const [isTagsOpen, setTagsOpen] = useState(false)
+    const [isUpvoted, setUpvoted] = useState(
+        listOfUpvoters.includes(userInfo.username)
+    )
+    const [isDownvoted, setDownvoted] = useState(
+        listOfDownvoters.includes(userInfo.username)
+    )
+
+    // *********** post chunk setup below
 
     const toggleDD = () => {
         setDDOpen(!isDDOpen)
