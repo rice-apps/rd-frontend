@@ -133,8 +133,8 @@ const BottomComponent = styled.div`
   // contains Tags, ShareFacebook, ShareTwitter, Share
   grid-area: bottom;
   display: grid;
-  grid-template-columns: 1fr 40px 40px 40px 15px;
-  grid-template-areas: 'tags facebook twitter share .';
+  grid-template-columns: 1fr 8vw 2.5vw 2.5vw 2.5vw 1vw;
+  grid-template-areas: 'tags comments facebook twitter share .';
   justify-items: start;
   align-items: center;
 `
@@ -160,6 +160,10 @@ const Tag = styled.text`
 const ViewTags = styled.button`
   border: none;
   background-color: inherit;
+`
+
+const Comments = styled.div`
+  grid-area: comments;
 `
 
 const ShareFacebook = styled.div`
@@ -197,6 +201,7 @@ export {
   AddTo,
   Report,
   Delete,
+  Comments,
   ShareFacebook,
   ShareTwitter,
   Share,

@@ -39,7 +39,7 @@ export const LeftSidebarContainer = styled.div`
   /* margin-top: 12vh; */
   justify-self: center;
   width: 100%;
-  height: 100vw;
+  height: 100%;
   grid-column-start: 1;
   grid-column-end: 2;
 
@@ -56,7 +56,7 @@ export const RightSidebarContainer = styled.div`
 
   justify-self: center;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-color: #FFFFFF;
   box-shadow: 0px 0px .2vw white; 
 `

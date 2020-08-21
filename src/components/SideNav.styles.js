@@ -39,9 +39,9 @@ export const NavElement = styled.div`
   ${props =>
     !props.selected &&
     css`
-      transition: background-color 0.5s ease-in-out;
+      transition: background-color 0.3s ease-in-out;
       &:hover {
-        background-color: #E5E6F7;
+        background-color: rgba(229, 230, 247, .7);
       }
   `}
 
