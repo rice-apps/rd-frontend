@@ -76,15 +76,15 @@ function PostFeedWithData () {
           <NewPostButtonContainer>
             <NewPostButton onClick={openModal}>
               <AddCircleIcon
-                style={{ color: '#EAB4AC', width: '1.3vw', height: '1.3vw' }}
+                style={{ color: '#7380FF', width: '1.3vw', height: '1.3vw' }}
               />
               <ButtonText>Create Post</ButtonText>
             </NewPostButton>
           </NewPostButtonContainer>
 
-          <BannerContainer>
+          {/* <BannerContainer>
             <Banner />
-          </BannerContainer>
+          </BannerContainer> */}
           <PostFeed
             {...result}
             setEarlyDateBound={setEarlyDateBound}
