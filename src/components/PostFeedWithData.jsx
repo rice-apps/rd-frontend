@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
-<<<<<<< HEAD
-import { useQuery, useLazyQuery } from "@apollo/client";
-import { Redirect, useNavigate } from "react-router-dom";
-=======
 import { useQuery, useLazyQuery } from '@apollo/client'
 import { Redirect, useNavigate } from 'react-router-dom'
->>>>>>> 19d584de3b7b08f5cc79ef7958c8b2df75a136f8
 
 import { Helmet } from 'react-helmet'
 import PostFeed from './PostFeed'

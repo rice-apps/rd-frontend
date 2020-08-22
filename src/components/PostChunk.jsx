@@ -47,23 +47,12 @@ import {
   Share
 } from './PostChunk.styles'
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        "& > *": {
-            margin: theme.spacing(1),
-        },
-    },
-}));
-=======
-=======
+
 JavascriptTimeAgo.addLocale(en)
 
->>>>>>> 19d584de3b7b08f5cc79ef7958c8b2df75a136f8
 const useStyles = makeStyles(theme => ({
   root: {
     '& > *': {
@@ -71,7 +60,7 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }))
->>>>>>> 73e62facf1bed46b48b5835267a108dd5e53a4f8
+
 
 function PostChunk (props) {
   const classes = useStyles()

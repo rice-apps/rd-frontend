@@ -36,6 +36,8 @@ import {
     TagCircle,
 } from "./WritePost.styles";
 
+import { currentUser } from '../utils/apollo'
+
 function WritePost (props) {
   const [url, setUrl] = useState('')
 
@@ -50,7 +52,16 @@ function WritePost (props) {
   const [isClosed, setClosed] = useState(false)
   const [postType, setPostType] = useState('Discussion')
 
+  const userInfo = currentUser()
+
+  const [tags, setTags] = useState([]);
+
+//   const [tag, setTag] = useState({
+//     name: ""
+//   });
+
   const [postCreate] = useMutation(POST_CREATE)
+  
 
   if (!props.show) {
     return null
@@ -77,6 +88,25 @@ function WritePost (props) {
 
   const toggleClosed = () => setClosed(!isClosed)
 
+
+  function addTag(e) {
+    console.log("tag")
+    console.log(e.keyCode)
+    e.preventDefault();
+    // adds new todo to beginning of todos array
+    if (e.keyCode === 13) {
+        console.log('tag', e.target.value)
+        if (!tags.includes(document.getElementById("tag").innerText)){
+            setTags([...tags,document.getElementById("tag").innerText])
+        }
+        document.getElementById("tag").innerHTML = "";
+    }
+  }
+
+  function removeTag(old) {
+    setTags(tags.filter(tag => tag !== old));
+  }
+
     switch (postType) {
         case "Discussion":
             form = (
@@ -102,14 +132,16 @@ function WritePost (props) {
                         </ImageBox>
                     </ImageWrapper>
                     <TagWrapper>
-                        Add Tag
-                        <TagBox contentEditable={true}/>
+                        Add Tag (press enter after each tag)
+                        <TagBox id="tag" contentEditable={true} onKeyUp={addTag}/>
                         <TagChosenWrapper>
                             Your tags: 
-                            <TagChosen>
-                                <TagCircle/>
-                                CS
-                            </TagChosen>
+                            {tags.map(tag => (
+                                <TagChosen onClick={()=>removeTag(tag)}>
+                                    <TagCircle/>
+                                    {tag}
+                                </TagChosen>
+                            ))}
                         </TagChosenWrapper>
                     </TagWrapper>
                     <PostingButton
@@ -128,8 +160,10 @@ function WritePost (props) {
                                         body,
                                         creator: userInfo.netID,
                                         imageUrl: url === "" ? null : url,
+                                        tags: tags,
                                     },
                                 });
+                                setTags([]);
                                 props.switchVisibility(false);
                             } catch (error) {
                                 log.error("error", error);
@@ -173,14 +207,15 @@ function WritePost (props) {
                             {/* <p>{url}</p> */}
                     </ImageBox>
                     <TagWrapper>
-                        Add Tag
-                        <TagBox contentEditable={true}/>
+                        Add Tag (press enter after each tag)
+                        <TagBox contentEditable={true} onKeyUp={addTag}/>
                         <TagChosenWrapper>
                             Your tags: 
-                            <TagChosen>
-                                <TagCircle/>
-                                CS
-                            </TagChosen>
+                            tags.array.forEach(element{});(
+                                <TagChosen>
+                                    <TagCircle/>
+                                    (element)
+                                </TagChosen>)
                         </TagChosenWrapper>
                     </TagWrapper>
                     <JobWrapper>
@@ -254,8 +289,8 @@ function WritePost (props) {
                             {/* <p>{url}</p> */}
                         </ImageBox>
                         <TagWrapper>
-                            Add Tag
-                            <TagBox contentEditable={true}/>
+                            Add Tag (press enter after each tag)
+                            <TagBox contentEditable={true} onKeyUp={addTag}/>
                             <TagChosenWrapper>
                                 Your tags: 
                                 <TagChosen>
@@ -342,14 +377,9 @@ function WritePost (props) {
                     </ImageBox>
                     <TagWrapper>
                         Add Tag (press enter after each tag)
-                        <TagBox id="tag" contentEditable={true}>
+                        <TagBox contentEditable={true} onKeyUp={addTag}>
                         </TagBox>
-                        {/* keyPress(e){
-                            (e.keyCode == "Enter") ?
-                                console.log('tag', e.target.value)
-                                // put the login here
-                            }
-                        } */}
+
                         <TagChosenWrapper>
                             Your tags: 
                             <TagChosen>
