@@ -56,9 +56,6 @@ function WritePost (props) {
 
   const [tags, setTags] = useState([]);
 
-//   const [tag, setTag] = useState({
-//     name: ""
-//   });
 
   const [postCreate] = useMutation(POST_CREATE)
   
@@ -208,14 +205,15 @@ function WritePost (props) {
                     </ImageBox>
                     <TagWrapper>
                         Add Tag (press enter after each tag)
-                        <TagBox contentEditable={true} onKeyUp={addTag}/>
+                        <TagBox id="tag" contentEditable={true} onKeyUp={addTag}/>
                         <TagChosenWrapper>
                             Your tags: 
-                            tags.array.forEach(element{});(
-                                <TagChosen>
+                            {tags.map(tag => (
+                                <TagChosen onClick={()=>removeTag(tag)}>
                                     <TagCircle/>
-                                    (element)
-                                </TagChosen>)
+                                    {tag}
+                                </TagChosen>
+                            ))}
                         </TagChosenWrapper>
                     </TagWrapper>
                     <JobWrapper>
@@ -243,8 +241,10 @@ function WritePost (props) {
                                         end: endDate,
                                         place,
                                         imageUrl: url === "" ? null : url,
+                                        tags: tags,
                                     },
                                 });
+                                setTags([]);
                                 props.switchVisibility(false);
                             } catch (error) {
                                 log.error("error", error);
@@ -290,13 +290,15 @@ function WritePost (props) {
                         </ImageBox>
                         <TagWrapper>
                             Add Tag (press enter after each tag)
-                            <TagBox contentEditable={true} onKeyUp={addTag}/>
+                            <TagBox id="tag" contentEditable={true} onKeyUp={addTag}/>
                             <TagChosenWrapper>
                                 Your tags: 
-                                <TagChosen>
-                                    <TagCircle/>
-                                    CS
-                                </TagChosen>
+                                {tags.map(tag => (
+                                    <TagChosen onClick={()=>removeTag(tag)}>
+                                        <TagCircle/>
+                                        {tag}
+                                    </TagChosen>
+                                ))}
                             </TagChosenWrapper>
                         </TagWrapper>
                         <JobWrapper>
@@ -334,9 +336,11 @@ function WritePost (props) {
                                             isPaid,
                                             isClosed,
                                             imageUrl: url === "" ? null : url,
+                                            tags: tags,
                                         },
                                     });
                                     log.info("Submitted and push!");
+                                    setTags([]);
                                     props.switchVisibility(false);
                                 } catch (error) {
                                     log.error("error", error);
@@ -377,15 +381,15 @@ function WritePost (props) {
                     </ImageBox>
                     <TagWrapper>
                         Add Tag (press enter after each tag)
-                        <TagBox contentEditable={true} onKeyUp={addTag}>
-                        </TagBox>
-
+                        <TagBox id="tag" contentEditable={true} onKeyUp={addTag}/>
                         <TagChosenWrapper>
                             Your tags: 
-                            <TagChosen>
-                                <TagCircle/>
-                                CS
-                            </TagChosen>
+                            {tags.map(tag => (
+                                <TagChosen onClick={()=>removeTag(tag)}>
+                                    <TagCircle/>
+                                    {tag}
+                                </TagChosen>
+                            ))}
                         </TagChosenWrapper>
                     </TagWrapper>
                     <PostingButton
@@ -405,8 +409,10 @@ function WritePost (props) {
                                         creator: userInfo.netID,
                                         deadline: endDate,
                                         imageUrl: url === "" ? null : url,
+                                        tags: tags,
                                     },
                                 });
+                                setTags([]);
                                 props.switchVisibility(false);
                             } catch (error) {
                                 log.error("error", error);
