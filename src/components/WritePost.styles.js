@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import LoginBackground from "../images/backgroundLogin.svg";
+import LoginBackground from '../images/backgroundLogin.svg'
 
 const ExitButton = styled.div`
   cursor: pointer;
@@ -7,24 +7,24 @@ const ExitButton = styled.div`
   &:hover {
     background-color: red;
   }
-  
+
   position: relative;
   left: 15vw;
   bottom: 10vh;
-  
+
   transform: rotate(65deg);
   grid-row: 1/2;
   grid-column: 3/3;
-  
+
   border-radius: 26vw;
-  
+
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   width: 15vw;
   height: 15vw;
-  
+
   font-family: Helvetica, Charcoal, sans-serif;
   font-size: 10vw;
   color: #000000;
@@ -45,10 +45,10 @@ const PostWrapper = styled.div`
   display: grid;
   // flex-direction: column;
   // align-items: center;
-  
+
   grid-template-columns: 1.2fr 1.75fr 2.25fr 1fr 1fr 1fr 0.5fr;
   grid-template-rows: 12fr 12fr 1fr 1fr;
-  
+
   border-radius: 1.6vw;
 `
 
@@ -81,7 +81,7 @@ const PostingButton = styled.button`
   display: inline-block;
   font-size: 3vw;
   cursor: pointer;
-  
+
   border-radius: 0.5vw;
   width: 15vw;
   height: 30vh;
@@ -102,7 +102,7 @@ const Form = styled.form`
   height: 90vh;
   top: -30vh;
   left: 22vw;
-  
+
   grid-row: 2/2;
   grid-column: 2/3;
 `
@@ -135,15 +135,15 @@ const PostHeaderType = styled.p`
   font-style: normal;
   font-variant: normal;
   text-transform: uppercase;
-  
+
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   transform: rotate(-38deg);
   grid-row: 1/2;
   grid-column: 1/3;
-  
+
   border-top-right-radius: 26vw;
   border-bottom-right-radius: 26vw;
   border-bottom-left-radius: 4vw;
@@ -227,7 +227,7 @@ const Banner = styled.div`
   height: 20vh;
   background-size: 40vw;
   background-repeat: no-repeat;
-  
+
   position: relative;
   top: 6vh;
 `

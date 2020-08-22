@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
-// note: PostFull.styles.js is based on this file 
+// note: PostFull.styles.js is based on this file
 // so please make relevant design updates to both places
 
 const DiscussionBoxSection = styled.section`
@@ -81,14 +81,14 @@ const DiscussionTitle = styled.text`
 const FullPostLink = styled(Link)`
   color: black;
   text-decoration: none;
-`;
+`
 
 const MoreOptions = styled.div`
   position: relative;
   grid-area: moreoptions;
   align-self: start;
   justify-self: start;
-`;
+`
 
 const DDMenu = styled.div`
   position: relative;
@@ -106,7 +106,7 @@ const Save = styled.button`
 
 const Expand = styled.button`
   padding: 5px;
-`;
+`
 
 const AddTo = styled.button`
   padding: 5px;
@@ -200,5 +200,5 @@ export {
   ShareTwitter,
   Share,
   FullPostLink,
-  Expand,
-};
+  Expand
+}

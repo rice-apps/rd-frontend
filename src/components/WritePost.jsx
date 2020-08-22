@@ -83,41 +83,41 @@ function WritePost (props) {
             <TitleDescriptor>Body</TitleDescriptor>
             <BodyBox id='body' contentEditable />
           </BodyWrapper>
-            <ExtrasWrapper>
-                <ImageWrapper>
-                    <TitleDescriptor>Images</TitleDescriptor>
-                    <ImageBox id='image'>
-                        <UploadToPost parentUrlCallback={callbackURL} />
-                        {/* <p>{url}</p> */}
-                    </ImageBox>
-                </ImageWrapper>
+          <ExtrasWrapper>
+            <ImageWrapper>
+              <TitleDescriptor>Images</TitleDescriptor>
+              <ImageBox id='image'>
+                <UploadToPost parentUrlCallback={callbackURL} />
+                {/* <p>{url}</p> */}
+              </ImageBox>
+            </ImageWrapper>
 
-                <Banner />
+            <Banner />
 
-                <PostingButton
-                    onClick={e => {
-                        e.preventDefault()
-                        const title = document.getElementById('title').innerHTML
-                        const body = document.getElementById('body').innerHTML
-                        if (checkTitleAndBody(title, body)) return
-                        try {
-                            postCreate({
-                                variables: {
-                                    kind: postType,
-                                    title,
-                                    body,
-                                    imageUrl: url === '' ? null : url
-                                }
-                            })
-                            props.switchVisibility(false)
-                        } catch (error) {
-                            log.error('error', error)
-                        }
-                    }}
-                >
-                    Post
-                </PostingButton>
-            </ExtrasWrapper>
+            <PostingButton
+              onClick={e => {
+                e.preventDefault()
+                const title = document.getElementById('title').innerHTML
+                const body = document.getElementById('body').innerHTML
+                if (checkTitleAndBody(title, body)) return
+                try {
+                  postCreate({
+                    variables: {
+                      kind: postType,
+                      title,
+                      body,
+                      imageUrl: url === '' ? null : url
+                    }
+                  })
+                  props.switchVisibility(false)
+                } catch (error) {
+                  log.error('error', error)
+                }
+              }}
+            >
+              Post
+            </PostingButton>
+          </ExtrasWrapper>
         </Form>
       )
       break
@@ -132,50 +132,50 @@ function WritePost (props) {
             <TitleDescriptor>Body</TitleDescriptor>
             <BodyBox id='body' contentEditable />
           </BodyWrapper>
-            <ExtrasWrapper>
-              <ImageWrapper>
-                <TitleDescriptor>Images</TitleDescriptor>
-                <ImageBox id='image'>
-                  <UploadToPost parentUrlCallback={callbackURL} />
-                </ImageBox>
-              </ImageWrapper>
-              Start Date
-              <DatePicker selected={startDate} onChange={changeStartDate} />
-              End Date
-              <DatePicker selected={endDate} onChange={changeEndDate} />
-              <input
-                type='text'
-                name='Place of Event'
-                placeholder='Event Location'
-                onChange={e => setPlace(e.target.value)}
-              />
-              <PostingButton
-                onClick={e => {
-                  e.preventDefault()
-                  try {
-                    const title = document.getElementById('title').innerHTML
-                    const body = document.getElementById('body').innerHTML
-                    if (checkTitleAndBody(title, body)) return
-                    postCreate({
-                      variables: {
-                        kind: postType,
-                        title,
-                        body,
-                        start: startDate,
-                        end: endDate,
-                        place,
-                        imageUrl: url === '' ? null : url
-                      }
-                    })
-                    props.switchVisibility(false)
-                  } catch (error) {
-                    log.error('error', error)
-                  }
-                }}
-              >
-                Post
-              </PostingButton>
-            </ExtrasWrapper>
+          <ExtrasWrapper>
+            <ImageWrapper>
+              <TitleDescriptor>Images</TitleDescriptor>
+              <ImageBox id='image'>
+                <UploadToPost parentUrlCallback={callbackURL} />
+              </ImageBox>
+            </ImageWrapper>
+            Start Date
+            <DatePicker selected={startDate} onChange={changeStartDate} />
+            End Date
+            <DatePicker selected={endDate} onChange={changeEndDate} />
+            <input
+              type='text'
+              name='Place of Event'
+              placeholder='Event Location'
+              onChange={e => setPlace(e.target.value)}
+            />
+            <PostingButton
+              onClick={e => {
+                e.preventDefault()
+                try {
+                  const title = document.getElementById('title').innerHTML
+                  const body = document.getElementById('body').innerHTML
+                  if (checkTitleAndBody(title, body)) return
+                  postCreate({
+                    variables: {
+                      kind: postType,
+                      title,
+                      body,
+                      start: startDate,
+                      end: endDate,
+                      place,
+                      imageUrl: url === '' ? null : url
+                    }
+                  })
+                  props.switchVisibility(false)
+                } catch (error) {
+                  log.error('error', error)
+                }
+              }}
+            >
+              Post
+            </PostingButton>
+          </ExtrasWrapper>
         </Form>
       )
       break
@@ -191,62 +191,62 @@ function WritePost (props) {
               <TitleDescriptor>Body</TitleDescriptor>
               <BodyBox id='body' contentEditable />
             </BodyWrapper>
-              <ExtrasWrapper>
-                <ImageWrapper>
-                  <TitleDescriptor>Images</TitleDescriptor>
-                  <ImageBox id='image'>
-                    <UploadToPost parentUrlCallback={callbackURL} />
-                  </ImageBox>
-                </ImageWrapper>
-                <input
-                  type='text'
-                  name='Place of Job'
-                  placeholder='Event Location'
-                  onChange={e => setPlace(e.target.value)}
-                />
-                Start Date
-                <DatePicker
-                  selected={startDate}
-                  onChange={changeStartDate}
-                  style={{ width: 'inherit' }}
-                />
-                End Date
-                <DatePicker selected={endDate} onChange={changeEndDate} />
-                <p>Is the job paid?</p>
-                {/* Documentation for these: https://material-ui.com/api/checkbox/ */}
-                <Checkbox id='isPaid' onChange={togglePaid} />
-                <p>Is the job open?</p>
-                <Checkbox id='isOpen' onChange={toggleClosed} />
-                <PostingButton
-                  onClick={e => {
-                    e.preventDefault()
-                    try {
-                      const title = document.getElementById('title').innerHTML
-                      const body = document.getElementById('body').innerHTML
-                      if (checkTitleAndBody(title, body)) return
-                      postCreate({
-                        variables: {
-                          kind: postType,
-                          title,
-                          body,
-                          start: startDate,
-                          end: endDate,
-                          place,
-                          isPaid,
-                          isClosed,
-                          imageUrl: url === '' ? null : url
-                        }
-                      })
-                      log.info('Submitted and push!')
-                      props.switchVisibility(false)
-                    } catch (error) {
-                      log.error('error', error)
-                    }
-                  }}
-                >
-                  Post
-                </PostingButton>
-              </ExtrasWrapper>
+            <ExtrasWrapper>
+              <ImageWrapper>
+                <TitleDescriptor>Images</TitleDescriptor>
+                <ImageBox id='image'>
+                  <UploadToPost parentUrlCallback={callbackURL} />
+                </ImageBox>
+              </ImageWrapper>
+              <input
+                type='text'
+                name='Place of Job'
+                placeholder='Event Location'
+                onChange={e => setPlace(e.target.value)}
+              />
+              Start Date
+              <DatePicker
+                selected={startDate}
+                onChange={changeStartDate}
+                style={{ width: 'inherit' }}
+              />
+              End Date
+              <DatePicker selected={endDate} onChange={changeEndDate} />
+              <p>Is the job paid?</p>
+              {/* Documentation for these: https://material-ui.com/api/checkbox/ */}
+              <Checkbox id='isPaid' onChange={togglePaid} />
+              <p>Is the job open?</p>
+              <Checkbox id='isOpen' onChange={toggleClosed} />
+              <PostingButton
+                onClick={e => {
+                  e.preventDefault()
+                  try {
+                    const title = document.getElementById('title').innerHTML
+                    const body = document.getElementById('body').innerHTML
+                    if (checkTitleAndBody(title, body)) return
+                    postCreate({
+                      variables: {
+                        kind: postType,
+                        title,
+                        body,
+                        start: startDate,
+                        end: endDate,
+                        place,
+                        isPaid,
+                        isClosed,
+                        imageUrl: url === '' ? null : url
+                      }
+                    })
+                    log.info('Submitted and push!')
+                    props.switchVisibility(false)
+                  } catch (error) {
+                    log.error('error', error)
+                  }
+                }}
+              >
+                Post
+              </PostingButton>
+            </ExtrasWrapper>
           </Form>
         </>
       )
@@ -263,45 +263,44 @@ function WritePost (props) {
             <BodyBox id='body' contentEditable />
           </BodyWrapper>
 
-            <ExtrasWrapper>
-                  <ImageWrapper>
-                    <TitleDescriptor>Images</TitleDescriptor>
-                    <ImageBox id='image'>
-                      <UploadToPost parentUrlCallback={callbackURL} />
-                    </ImageBox>
-                  </ImageWrapper>
-                  Deadline Date
-                  <DatePicker
-                    selected={endDate}
-                    onChange={changeEndDate}
-                    style={{ width: 'inherit' }}
-                  />
-                  <PostingButton
-                    onClick={e => {
-                      e.preventDefault()
-                      try {
-                        const title = document.getElementById('title').innerHTML
-                        const body = document.getElementById('body').innerHTML
-                        if (checkTitleAndBody(title, body)) return
-                        postCreate({
-                          variables: {
-                            kind: postType,
-                            title,
-                            body,
-                            deadline: endDate,
-                            imageUrl: url === '' ? null : url
-                          }
-                        })
-                        props.switchVisibility(false)
-                      } catch (error) {
-                        log.error('error', error)
-                      }
-                    }}
-                  >
-                    Post
-                  </PostingButton>
-
-                </ExtrasWrapper>
+          <ExtrasWrapper>
+            <ImageWrapper>
+              <TitleDescriptor>Images</TitleDescriptor>
+              <ImageBox id='image'>
+                <UploadToPost parentUrlCallback={callbackURL} />
+              </ImageBox>
+            </ImageWrapper>
+            Deadline Date
+            <DatePicker
+              selected={endDate}
+              onChange={changeEndDate}
+              style={{ width: 'inherit' }}
+            />
+            <PostingButton
+              onClick={e => {
+                e.preventDefault()
+                try {
+                  const title = document.getElementById('title').innerHTML
+                  const body = document.getElementById('body').innerHTML
+                  if (checkTitleAndBody(title, body)) return
+                  postCreate({
+                    variables: {
+                      kind: postType,
+                      title,
+                      body,
+                      deadline: endDate,
+                      imageUrl: url === '' ? null : url
+                    }
+                  })
+                  props.switchVisibility(false)
+                } catch (error) {
+                  log.error('error', error)
+                }
+              }}
+            >
+              Post
+            </PostingButton>
+          </ExtrasWrapper>
         </Form>
       )
       break

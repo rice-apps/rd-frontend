@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
-// note: this is a copy of PostChunk.styles.js 
+// note: this is a copy of PostChunk.styles.js
 // (for now, will be changed so the post is bigger on this new page)
 // if post chunk styles gets updated in a way that affects this design, update this file too
 
@@ -92,7 +92,7 @@ const MoreOptions = styled.div`
   grid-area: moreoptions;
   align-self: start;
   justify-self: start;
-`;
+`
 
 const DDMenu = styled.div`
   position: relative;
@@ -199,5 +199,5 @@ export {
   ShareFacebook,
   ShareTwitter,
   Share,
-  BackToFeed,
-};
+  BackToFeed
+}

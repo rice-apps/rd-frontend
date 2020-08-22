@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
-import { useParams } from "react-router-dom";
-import { useMutation, useLazyQuery, useQuery } from "@apollo/client";
-import { GET_POST } from "../graphql/Queries";
+import { useParams } from 'react-router-dom'
+import { useMutation, useLazyQuery, useQuery } from '@apollo/client'
+import { GET_POST } from '../graphql/Queries'
 
 import { currentUser } from '../utils/apollo'
 import {
-    UPVOTE_POST,
-    DOWNVOTE_POST,
-    REPORT_POST,
-    REMOVE_POST,
-    SAVE_POST
+  UPVOTE_POST,
+  DOWNVOTE_POST,
+  REPORT_POST,
+  REMOVE_POST,
+  SAVE_POST
 } from '../graphql/Mutations'
 import { FETCH_COMMENTS_POST } from '../graphql/Queries'
 
@@ -33,357 +33,327 @@ import en from 'javascript-time-ago/locale/en'
 import ReactTimeAgo from 'react-time-ago'
 
 import {
-    DiscussionBoxSection,
-    OP,
-    Time,
-    DiscussionBox,
-    LeftComponent,
-    Likes,
-    Upvote,
-    Downvote,
-    TopMiddleComponent,
-    DiscussionTitleDiv,
-    DiscussionTitle,
-    Tags,
-    Tag,
-    ViewTags,
-    MoreOptions,
-    DDMenu,
-    DiscussionBody,
-    BottomComponent,
-    Save,
-    AddTo,
-    Report,
-    Delete,
-    ShareFacebook,
-    ShareTwitter,
-    Share,
-    BackToFeed,
+  DiscussionBoxSection,
+  OP,
+  Time,
+  DiscussionBox,
+  LeftComponent,
+  Likes,
+  Upvote,
+  Downvote,
+  TopMiddleComponent,
+  DiscussionTitleDiv,
+  DiscussionTitle,
+  Tags,
+  Tag,
+  ViewTags,
+  MoreOptions,
+  DDMenu,
+  DiscussionBody,
+  BottomComponent,
+  Save,
+  AddTo,
+  Report,
+  Delete,
+  ShareFacebook,
+  ShareTwitter,
+  Share,
+  BackToFeed
 } from './PostFull.styles'
 
 JavascriptTimeAgo.addLocale(en)
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1)
-        }
+  root: {
+    '& > *': {
+      margin: theme.spacing(1)
     }
+  }
 }))
 
-function PostFull() {
-    // *********** post feed setup below
+function PostFull () {
+  // *********** post feed setup below
 
-    const userInfo = currentUser()
-    const [upvotePost] = useMutation(UPVOTE_POST)
-    const [downvotePost] = useMutation(DOWNVOTE_POST)
-    const [reportPost] = useMutation(REPORT_POST)
-    const [removePost] = useMutation(REMOVE_POST)
-    const [savePost] = useMutation(SAVE_POST)
-    const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
-        FETCH_COMMENTS_POST
-    )
+  const userInfo = currentUser()
+  const [upvotePost] = useMutation(UPVOTE_POST)
+  const [downvotePost] = useMutation(DOWNVOTE_POST)
+  const [reportPost] = useMutation(REPORT_POST)
+  const [removePost] = useMutation(REMOVE_POST)
+  const [savePost] = useMutation(SAVE_POST)
+  const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
+    FETCH_COMMENTS_POST
+  )
 
-    // *********** post full setup below
+  // *********** post full setup below
 
-    let { postID } = useParams();
+  let { postID } = useParams()
 
-    const { loading, error, data } = useQuery(GET_POST, {
-        variables: {
-            id: postID,
-        },
-    });
-
-    const dummyData = {
-        imageUrl: "",
-        upvotes: [],
-        downvotes: []
-    };
-    let thePost = dummyData; //for now
-
-    // *********** post chunk setup below
-
-    const classes = useStyles()
-    let oneImage = <></>
-
-    // *********** post chunk setup below
-
-    if (thePost.imageUrl) {
-        oneImage = (
-            <img width={500} src={thePost.imageUrl} alt='Custom-thing' />
-        )
+  const { loading, error, data } = useQuery(GET_POST, {
+    variables: {
+      id: postID
     }
+  })
 
-    let listOfUpvoters = thePost.upvotes.map(
-        userObject => userObject.username
-    )
+  const dummyData = {
+    imageUrl: '',
+    upvotes: [],
+    downvotes: []
+  }
+  let thePost = dummyData //for now
 
-    let listOfDownvoters = thePost.downvotes.map(
-        userObject => userObject.username
-    )
+  // *********** post chunk setup below
 
-    const [isDDOpen, setDDOpen] = useState(false)
-    const [isTagsOpen, setTagsOpen] = useState(false)
-    const [isUpvoted, setUpvoted] = useState(
-        listOfUpvoters.includes(userInfo.username)
-    )
-    const [isDownvoted, setDownvoted] = useState(
-        listOfDownvoters.includes(userInfo.username)
-    )
+  const classes = useStyles()
+  let oneImage = <></>
 
-    // *********** post chunk setup below
+  // *********** post chunk setup below
 
-    const toggleDD = () => {
-        setDDOpen(!isDDOpen)
-    }
+  if (thePost.imageUrl) {
+    oneImage = <img width={500} src={thePost.imageUrl} alt='Custom-thing' />
+  }
 
-    const toggleTags = () => {
-        setTagsOpen(!isTagsOpen)
-    }
+  let listOfUpvoters = thePost.upvotes.map(userObject => userObject.username)
 
-    const toggleUpvoted = () => {
-        setUpvoted(!isUpvoted)
-        setDownvoted(false)
-    }
+  let listOfDownvoters = thePost.downvotes.map(
+    userObject => userObject.username
+  )
 
-    const toggleDownvoted = () => {
-        setDownvoted(!isDownvoted)
-        setUpvoted(false)
-    }
+  const [isDDOpen, setDDOpen] = useState(false)
+  const [isTagsOpen, setTagsOpen] = useState(false)
+  const [isUpvoted, setUpvoted] = useState(
+    listOfUpvoters.includes(userInfo.username)
+  )
+  const [isDownvoted, setDownvoted] = useState(
+    listOfDownvoters.includes(userInfo.username)
+  )
 
-    // *********** post full below
+  // *********** post chunk setup below
 
-    if (loading) {
-        return (<p>Loading</p>);
-    }
+  const toggleDD = () => {
+    setDDOpen(!isDDOpen)
+  }
 
-    if (error) {
-        return (<p>Error</p>);
-    }
+  const toggleTags = () => {
+    setTagsOpen(!isTagsOpen)
+  }
 
-    console.log(data);
-    console.log(data.postById);
+  const toggleUpvoted = () => {
+    setUpvoted(!isUpvoted)
+    setDownvoted(false)
+  }
 
-    thePost = data.postById; //real data
+  const toggleDownvoted = () => {
+    setDownvoted(!isDownvoted)
+    setUpvoted(false)
+  }
 
-    // *********** post chunk things that require thePost below
-    // change to real data now that its available
+  // *********** post full below
 
-    if (thePost.imageUrl) {
-        oneImage = (
-            <img width={500} src={thePost.imageUrl} alt='Custom-thing' />
-        )
-    }
+  if (loading) {
+    return <p>Loading</p>
+  }
 
-    listOfUpvoters = thePost.upvotes.map(
-        userObject => userObject.username
-    )
+  if (error) {
+    return <p>Error</p>
+  }
 
-    listOfDownvoters = thePost.downvotes.map(
-        userObject => userObject.username
-    )
+  console.log(data)
+  console.log(data.postById)
 
-    // *********** post chunk below
+  thePost = data.postById //real data
 
-    const calIcon = { 'calendar-plus-o': 'right' }
+  // *********** post chunk things that require thePost below
+  // change to real data now that its available
 
-    const calDropDown = [
-        { google: 'Google Calendar' },
-        { apple: 'Apple Calendar' }
-    ]
+  if (thePost.imageUrl) {
+    oneImage = <img width={500} src={thePost.imageUrl} alt='Custom-thing' />
+  }
 
-    const calEvent = {
-        title: thePost.title ? thePost.title : '',
-        description: thePost.body ? thePost.body : '',
-        location: thePost.place ? thePost.place : '',
-        startTime: thePost.start ? thePost.start : '',
-        endTime: thePost.end ? thePost.end : ''
-    }
+  listOfUpvoters = thePost.upvotes.map(userObject => userObject.username)
 
-    return (
-        <>
-            <BackToFeed to="/feed">
-                Back To Feed
-            </BackToFeed>
-            <DiscussionBoxSection>
-                <OP>
-                    {thePost.creator.username} -{' '}
-                    <ReactTimeAgo date={thePost.date_created} />
-                </OP>
-                <DiscussionBox>
-                    <LeftComponent>
-                        <Upvote className={classes.root}>
-                            <IconButton
-                                style={isUpvoted ? { color: red[200] } : { color: grey[700] }}
-                                onClick={e => {
-                                    e.preventDefault()
-                                    toggleUpvoted()
-                                    upvotePost({
-                                        variables: {
-                                            netID: userInfo.netID,
-                                            _id: thePost._id
-                                        }
-                                    })
-                                }}
-                            >
-                                <ArrowDropUp fontSize='large' />
-                            </IconButton>
-                        </Upvote>
-                        <Likes>
-                            {thePost.upvotes.length -
-                                thePost.downvotes.length}
-                        </Likes>
-                        <Downvote className={classes.root}>
-                            <IconButton
-                                style={isDownvoted ? { color: red[200] } : { color: grey[800] }}
-                                onClick={e => {
-                                    e.preventDefault()
-                                    toggleDownvoted()
-                                    downvotePost({
-                                        variables: {
-                                            netID: userInfo.netID,
-                                            _id: thePost._id
-                                        }
-                                    })
-                                }}
-                            >
-                                <ArrowDropDown fontSize='large' />
-                            </IconButton>
-                        </Downvote>
-                    </LeftComponent>
+  listOfDownvoters = thePost.downvotes.map(userObject => userObject.username)
 
-                    <TopMiddleComponent>
-                        <DiscussionTitleDiv>
-                            <DiscussionTitle>{thePost.title}</DiscussionTitle>
-                        </DiscussionTitleDiv>
-                        <MoreOptions className={classes.root}>
-                            <IconButton onClick={toggleDD}>
-                                <MoreHorizIcon open={isDDOpen} />
-                            </IconButton>
-                            {isDDOpen && (
-                                <DDMenu>
-                                    <Save
-                                        onClick={e => {
-                                            e.preventDefault()
+  // *********** post chunk below
 
-                                            const currentSavedPosts = userInfo.savedPosts.map(
-                                                tup => tup._id
-                                            )
-                                            savePost({
-                                                variables: {
-                                                    netID: userInfo.netID,
-                                                    savedPosts: [
-                                                        ...currentSavedPosts,
-                                                        thePost._id
-                                                    ]
-                                                }
-                                            })
+  const calIcon = { 'calendar-plus-o': 'right' }
 
-                                            console.log(userInfo.savedPosts)
-                                        }}
-                                    >
-                                        Save Post
+  const calDropDown = [
+    { google: 'Google Calendar' },
+    { apple: 'Apple Calendar' }
+  ]
+
+  const calEvent = {
+    title: thePost.title ? thePost.title : '',
+    description: thePost.body ? thePost.body : '',
+    location: thePost.place ? thePost.place : '',
+    startTime: thePost.start ? thePost.start : '',
+    endTime: thePost.end ? thePost.end : ''
+  }
+
+  return (
+    <>
+      <BackToFeed to='/feed'>Back To Feed</BackToFeed>
+      <DiscussionBoxSection>
+        <OP>
+          {thePost.creator.username} -{' '}
+          <ReactTimeAgo date={thePost.date_created} />
+        </OP>
+        <DiscussionBox>
+          <LeftComponent>
+            <Upvote className={classes.root}>
+              <IconButton
+                style={isUpvoted ? { color: red[200] } : { color: grey[700] }}
+                onClick={e => {
+                  e.preventDefault()
+                  toggleUpvoted()
+                  upvotePost({
+                    variables: {
+                      netID: userInfo.netID,
+                      _id: thePost._id
+                    }
+                  })
+                }}
+              >
+                <ArrowDropUp fontSize='large' />
+              </IconButton>
+            </Upvote>
+            <Likes>{thePost.upvotes.length - thePost.downvotes.length}</Likes>
+            <Downvote className={classes.root}>
+              <IconButton
+                style={isDownvoted ? { color: red[200] } : { color: grey[800] }}
+                onClick={e => {
+                  e.preventDefault()
+                  toggleDownvoted()
+                  downvotePost({
+                    variables: {
+                      netID: userInfo.netID,
+                      _id: thePost._id
+                    }
+                  })
+                }}
+              >
+                <ArrowDropDown fontSize='large' />
+              </IconButton>
+            </Downvote>
+          </LeftComponent>
+
+          <TopMiddleComponent>
+            <DiscussionTitleDiv>
+              <DiscussionTitle>{thePost.title}</DiscussionTitle>
+            </DiscussionTitleDiv>
+            <MoreOptions className={classes.root}>
+              <IconButton onClick={toggleDD}>
+                <MoreHorizIcon open={isDDOpen} />
+              </IconButton>
+              {isDDOpen && (
+                <DDMenu>
+                  <Save
+                    onClick={e => {
+                      e.preventDefault()
+
+                      const currentSavedPosts = userInfo.savedPosts.map(
+                        tup => tup._id
+                      )
+                      savePost({
+                        variables: {
+                          netID: userInfo.netID,
+                          savedPosts: [...currentSavedPosts, thePost._id]
+                        }
+                      })
+
+                      console.log(userInfo.savedPosts)
+                    }}
+                  >
+                    Save Post
                   </Save>
-                                    {(thePost.kind === 'Event' ||
-                                        thePost.kind === 'Job') && (
-                                            <AddTo>
-                                                <AddToCalendar
-                                                    event={calEvent}
-                                                    buttonLabel='Add to '
-                                                    buttonTemplate={calIcon}
-                                                    listItems={calDropDown}
-                                                ></AddToCalendar>
-                                            </AddTo>
+                  {(thePost.kind === 'Event' || thePost.kind === 'Job') && (
+                    <AddTo>
+                      <AddToCalendar
+                        event={calEvent}
+                        buttonLabel='Add to '
+                        buttonTemplate={calIcon}
+                        listItems={calDropDown}
+                      ></AddToCalendar>
+                    </AddTo>
+                  )}
 
-                                        )}
+                  <Report
+                    onClick={e => {
+                      e.preventDefault()
 
-                                    <Report
-                                        onClick={e => {
-                                            e.preventDefault()
-
-                                            reportPost({
-                                                variables: {
-                                                    netID: userInfo.netID,
-                                                    _id: thePost._id
-                                                }
-                                            })
-                                        }}
-                                    >
-                                        Report Post
+                      reportPost({
+                        variables: {
+                          netID: userInfo.netID,
+                          _id: thePost._id
+                        }
+                      })
+                    }}
+                  >
+                    Report Post
                   </Report>
 
-                                    {thePost.creator.username ===
-                                        userInfo.username && (
-                                            <Delete
-                                                onClick={e => {
-                                                    e.preventDefault()
-                                                    removePost({
-                                                        variables: {
-                                                            _id: thePost._id
-                                                        }
-                                                    })
-                                                }}
-                                            >
-                                                Delete Post
-                                            </Delete>
-                                        )}
-                                </DDMenu>
-                            )}
-                        </MoreOptions>
+                  {thePost.creator.username === userInfo.username && (
+                    <Delete
+                      onClick={e => {
+                        e.preventDefault()
+                        removePost({
+                          variables: {
+                            _id: thePost._id
+                          }
+                        })
+                      }}
+                    >
+                      Delete Post
+                    </Delete>
+                  )}
+                </DDMenu>
+              )}
+            </MoreOptions>
 
-                        <DiscussionBody>
-                            {ReactHtmlParser(thePost.body)}
-                        </DiscussionBody>
+            <DiscussionBody>{ReactHtmlParser(thePost.body)}</DiscussionBody>
 
-                        {oneImage}
-                    </TopMiddleComponent>
+            {oneImage}
+          </TopMiddleComponent>
 
-                    <BottomComponent>
-                        <Tags>
-                            {thePost.tags.length > 0 && (
-                                <Tag>{thePost.tags[0]}</Tag>
-                            )}
-                            {thePost.tags.length > 1 && (
-                                <Tag>{thePost.tags[1]}</Tag>
-                            )}
-                            {thePost.tags.length > 2 && (
-                                <Tag>{thePost.tags[2]}</Tag>
-                            )}
+          <BottomComponent>
+            <Tags>
+              {thePost.tags.length > 0 && <Tag>{thePost.tags[0]}</Tag>}
+              {thePost.tags.length > 1 && <Tag>{thePost.tags[1]}</Tag>}
+              {thePost.tags.length > 2 && <Tag>{thePost.tags[2]}</Tag>}
 
-                            {isTagsOpen &&
-                                thePost.tags.slice(3).map(tag => <Tag>{tag}</Tag>)}
+              {isTagsOpen && thePost.tags.slice(3).map(tag => <Tag>{tag}</Tag>)}
 
-                            {thePost.tags.length > 3 && (
-                                <ViewTags onClick={toggleTags}>
-                                    {isTagsOpen ? (
-                                        <text>(View Less)</text>
-                                    ) : (
-                                            <text>(View All)</text>
-                                        )}
-                                </ViewTags>
-                            )}
-                        </Tags>
+              {thePost.tags.length > 3 && (
+                <ViewTags onClick={toggleTags}>
+                  {isTagsOpen ? (
+                    <text>(View Less)</text>
+                  ) : (
+                    <text>(View All)</text>
+                  )}
+                </ViewTags>
+              )}
+            </Tags>
 
-                        <ShareFacebook>
-                            <IconButton>
-                                <FacebookIcon />
-                            </IconButton>
-                        </ShareFacebook>
-                        <ShareTwitter>
-                            <IconButton>
-                                <TwitterIcon />
-                            </IconButton>
-                        </ShareTwitter>
-                        <Share>
-                            <IconButton>
-                                <ShareIcon />
-                            </IconButton>
-                        </Share>
-                    </BottomComponent>
-                </DiscussionBox>
-            </DiscussionBoxSection>
-        </>
-    )
+            <ShareFacebook>
+              <IconButton>
+                <FacebookIcon />
+              </IconButton>
+            </ShareFacebook>
+            <ShareTwitter>
+              <IconButton>
+                <TwitterIcon />
+              </IconButton>
+            </ShareTwitter>
+            <Share>
+              <IconButton>
+                <ShareIcon />
+              </IconButton>
+            </Share>
+          </BottomComponent>
+        </DiscussionBox>
+      </DiscussionBoxSection>
+    </>
+  )
 }
 
 export default PostFull

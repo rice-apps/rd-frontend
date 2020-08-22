@@ -18,8 +18,8 @@ import {
 
 import { PostingButton } from './WritePost.styles'
 import { currentUser } from '../utils/apollo'
-import {Background, LeftSidebarContainer} from "./PostFeedWithData.styles";
-import {SideNav} from "./SideNav";
+import { Background, LeftSidebarContainer } from './PostFeedWithData.styles'
+import { SideNav } from './SideNav'
 
 const ProfilePage = () => {
   const navigator = useNavigate()
@@ -252,7 +252,7 @@ const ProfilePage = () => {
         <div>
           Your saved posts:
           {savedPosts.map(post => (
-            <div>{"localhost:3000/posts/" + post._id}</div>
+            <div>{'localhost:3000/posts/' + post._id}</div>
           ))}
         </div>
 
