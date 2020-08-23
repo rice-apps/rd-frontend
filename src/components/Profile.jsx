@@ -67,7 +67,7 @@ const ProfilePage = () => {
   }, [username])
 
   useEffect(() => {
-    const isMyUsernameTaken = userExists?.doesUsernameExist.usernameExists
+    const isMyUsernameTaken = userExists?.doesUsernameExist
     setStatement('valid username!')
     if (isMyUsernameTaken) {
       setStatement('somebody already took username that lol')
@@ -75,7 +75,7 @@ const ProfilePage = () => {
     if (originalUsername === username) {
       setStatement('this is your current username')
     }
-  }, [userExists?.doesUsernameExist.usernameExists])
+  }, [userExists?.doesUsernameExist])
 
   const majors = majorMinorJson.majors.split(';').map(major => {
     const majorObj = {
@@ -144,7 +144,7 @@ const ProfilePage = () => {
   }, [])
 
   const saveData = async () => {
-    if (userExistLoading || userExists?.doesUsernameExist.usernameExists) {
+    if (userExistLoading || userExists?.doesUsernameExist) {
       return
     }
 
@@ -258,7 +258,7 @@ const ProfilePage = () => {
 
         <PostingButton
           type='submit'
-          disabled={userExists?.doesUsernameExist.usernameExists}
+          disabled={userExists?.doesUsernameExist}
         >
           Save
         </PostingButton>
