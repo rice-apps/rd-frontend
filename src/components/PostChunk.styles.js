@@ -11,7 +11,10 @@ const DiscussionBoxSection = styled.section`
 `
 
 const OP = styled.div`
-  padding: 0px 0px 5px 5px;
+  display: grid;
+  grid-area: op;
+  white-space: nowrap;
+  margin-top: 1vh;
 `
 
 const Time = styled.div``
@@ -22,9 +25,10 @@ const DiscussionBox = styled.section`
   background: #ffffff;
   border-radius: 20px;
   display: grid;
-  grid-template-rows: 1fr 50px;
+  grid-template-rows: 3vh 1fr 50px;
   grid-template-columns: 65px 1fr;
   grid-template-areas:
+    'owo op'
     'left topmiddle'
     'left bottom';
 `

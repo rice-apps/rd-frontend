@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { red, grey } from '@material-ui/core/colors'
+import Divider from '@material-ui/core/Divider';
 
 import AddToCalendar from 'react-add-to-calendar'
 
@@ -135,10 +136,10 @@ function PostChunk(props) {
   return (
     <>
       <DiscussionBoxSection>
-        <OP>
+        {/* <OP>
           {props.post.node.creator.username} -{' '}
           <ReactTimeAgo date={props.post.node.date_created} />
-        </OP>
+        </OP> */}
         <DiscussionBox>
           <LeftComponent>
             <Upvote className={classes.root}>
@@ -180,7 +181,13 @@ function PostChunk(props) {
               </IconButton>
             </Downvote>
           </LeftComponent>
-
+          <OP>
+            <a>
+              {props.post.node.creator.username} -{' '}
+              <ReactTimeAgo date={props.post.node.date_created} />
+            </a>
+            <Divider style={{width: '41.5vw', maxWidth: '97%', marginTop: '1vh'}}/>
+          </OP>
           <TopMiddleComponent>
             <DiscussionTitleDiv>
               <DiscussionTitle>{props.post.node.title}</DiscussionTitle>
