@@ -61,7 +61,7 @@ export const RightSidebarContainer = styled.div`
   box-shadow: 0px 0px .2vw white; 
 `
 export const NewPostButtonContainer = styled.div`
-  padding-top: 1.6vw;
+  padding-top: 1vh;
 
   width: 47vw;
   height: 3vw;
@@ -85,6 +85,8 @@ export const NewPostButton = styled.div`
   align-items: center;
 
   padding-left: 0.8vw;
+  margin-left: -4vw;
+  margin-top: 3vw;
 `
 
 export const ButtonText = styled.div`

@@ -6,8 +6,9 @@ import { Link } from "react-router-dom";
 
 const DiscussionBoxSection = styled.section`
   // contains DiscussionBox
-  padding: 20px 140px;
-  max-width: 50vw;
+  padding: 20px 70px;
+  min-width: 55vw;
+  max-width: 65vw;
 `
 
 const OP = styled.div`
@@ -93,6 +94,7 @@ const MoreOptions = styled.div`
     grid-area: moreoptions;
     align-self: start;
     justify-self: start;
+    margin-top: -2vw;
 `;
 
 const DDMenu = styled.div`
