@@ -161,23 +161,37 @@ const ButtonWrapper = styled.div`
 
 const PostHeaderType = styled.p`
   position: relative;
-  top: -20px;
+  top: -5vh;
+  // right: 10vw;
   text-align: center;
-  color: blue;
+  // color: blue;
   font-size: 2em;
   background-color: #fabed6;
-  width: 100%;
+  width: 25vw;
+  height: 10vw;
 
   font-family: Impact, Charcoal, sans-serif;
-  font-size: 25px;
-  letter-spacing: 2px;
-  word-spacing: 2px;
+  font-size: 3vw;
+  letter-spacing: 0.05vw;
   color: #000000;
   font-weight: 700;
   text-decoration: none;
   font-style: normal;
   font-variant: normal;
   text-transform: uppercase;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform: rotate(-38deg);
+  grid-row: 1/2;
+  grid-column: 1/3;
+
+  border-top-right-radius: 26vw;
+  border-bottom-right-radius: 26vw;
+  border-bottom-left-radius: 4vw;
+  border-top-left-radius: 26vw;
 `
 
 const TitleDescriptor = styled.p`

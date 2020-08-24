@@ -35,7 +35,7 @@ import {
     TagChosen,
     TagCircle,
 } from "./WritePost.styles";
-
+        
 import { currentUser } from '../utils/apollo'
 
 function WritePost (props) {
@@ -84,7 +84,6 @@ function WritePost (props) {
   const togglePaid = () => setPaid(!isPaid)
 
   const toggleClosed = () => setClosed(!isClosed)
-
 
   function addTag(e) {
     console.log("tag")
@@ -424,12 +423,11 @@ function WritePost (props) {
                 </Form>
             );
             break;
-
     default:
       throw new Error('something went horribly wrong!')
   }
 
-    return (
+  return (
         <div>
             <Helmet>
                 <title>RiceDiscuss &middot; Compose post</title>
