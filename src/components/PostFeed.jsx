@@ -127,7 +127,7 @@ function PostFeed (props) {
     posts = generate_posts(sorted_edges)
   }
 
-  posts = edges.map((_i) => {
+  posts = edges.map(_i => {
     return (
       <>
         {/* <Banner /> */}
