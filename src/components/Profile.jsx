@@ -256,10 +256,7 @@ const ProfilePage = () => {
           ))}
         </div>
 
-        <PostingButton
-          type='submit'
-          disabled={userExists?.doesUsernameExist}
-        >
+        <PostingButton type='submit' disabled={userExists?.doesUsernameExist}>
           Save
         </PostingButton>
       </form>

@@ -1,13 +1,10 @@
 import InfiniteScroll from 'react-infinite-scroller'
 import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
 import { useMutation, useLazyQuery } from '@apollo/client'
 
-import uuid from 'uuid/v4'
 import PostChunk from './PostChunk'
 import Filters from './Filters'
 import CommentChunk from './CommentChunk'
-import { TOKEN_NAME } from '../config'
 import {
   UPVOTE_POST,
   DOWNVOTE_POST,
@@ -15,8 +12,7 @@ import {
   REMOVE_POST,
   SAVE_POST
 } from '../graphql/Mutations'
-import { FETCH_COMMENTS_POST, FETCH_COMMENTS_PARENT } from '../graphql/Queries'
-import { COMMENT_CREATED, COMMENT_UPDATED } from '../graphql/Queries'
+import { FETCH_COMMENTS_POST } from '../graphql/Queries'
 import { currentUser } from '../utils/apollo'
 
 function PostFeed (props) {
@@ -131,7 +127,7 @@ function PostFeed (props) {
     posts = generate_posts(sorted_edges)
   }
 
-  posts = edges.map((post, _i) => {
+  posts = edges.map((_i) => {
     return (
       <>
         {/* <Banner /> */}
@@ -139,7 +135,7 @@ function PostFeed (props) {
           pageStart={0}
           loadMore={() => onLoadMore()}
           hasMore={hasNextPage}
-          loader={<div key={uuid()}>Loading...</div>}
+          loader={<div key={date.getTime()}>Loading...</div>}
         >
           <Filters
             processDate={process_date_filter}
@@ -162,11 +158,5 @@ function PostFeed (props) {
 
   return posts
 }
-
-// PostFeed.propTypes = {
-//   onLoadMore: PropTypes.func.isRequired,
-//   subscribeToNewPosts: PropTypes.func.isRequired,
-//   subscribeToNewVotes: PropTypes.func.isRequired
-// };
 
 export default PostFeed
