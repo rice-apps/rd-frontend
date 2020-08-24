@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useMutation, useLazyQuery, useQuery } from '@apollo/client'
 import { GET_POST } from '../graphql/Queries'
+import { FETCH_COMMENTS_NESTED } from '../graphql/Queries'
 
 import { currentUser } from '../utils/apollo'
 import {
@@ -71,7 +72,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function PostFull () {
+function PostFull() {
   // *********** post feed setup below
 
   const userInfo = currentUser()
@@ -88,18 +89,25 @@ function PostFull () {
 
   let { postID } = useParams()
 
-  const { loading, error, data } = useQuery(GET_POST, {
+  const { ...resultPost } = useQuery(GET_POST, {
     variables: {
       id: postID
     }
   })
 
-  const dummyData = {
+  const { ...resultComments } = useQuery(FETCH_COMMENTS_NESTED, {
+    variables: {
+      post_id: postID
+    }
+  })
+  // shouldn't need dummy data
+
+  const dummyDataPost = {
     imageUrl: '',
     upvotes: [],
     downvotes: []
   }
-  let thePost = dummyData //for now
+  let thePost = dummyDataPost //for now
 
   // *********** post chunk setup below
 
@@ -149,18 +157,29 @@ function PostFull () {
 
   // *********** post full below
 
-  if (loading) {
-    return <p>Loading</p>
+  if (resultPost.loading) {
+    return <p>Loading Post</p>
   }
 
-  if (error) {
-    return <p>Error</p>
+  if (resultPost.error) {
+    return <p>Error Fetching Post</p>
   }
 
-  console.log(data)
-  console.log(data.postById)
+  if (resultComments.loading) {
+    return <p>Loading Comments</p>
+  }
 
-  thePost = data.postById //real data
+  if (resultComments.error) {
+    return <p>Error Fetching Comments</p>
+  }
+
+  // console.log(resultPost.data.postById)
+  thePost = resultPost.data.postById //real data
+
+  // console.log(resultComments)
+  let theComments = resultComments.data.commentByPost;
+  // are there comments?
+
 
   // *********** post chunk things that require thePost below
   // change to real data now that its available
@@ -296,6 +315,7 @@ function PostFull () {
                     <Delete
                       onClick={e => {
                         e.preventDefault()
+                        window.location.reload(false)
                         removePost({
                           variables: {
                             _id: thePost._id
@@ -328,8 +348,8 @@ function PostFull () {
                   {isTagsOpen ? (
                     <text>(View Less)</text>
                   ) : (
-                    <text>(View All)</text>
-                  )}
+                      <text>(View All)</text>
+                    )}
                 </ViewTags>
               )}
             </Tags>
@@ -351,6 +371,12 @@ function PostFull () {
             </Share>
           </BottomComponent>
         </DiscussionBox>
+        <h3>Comments:</h3>
+        <ul>
+          {thePost.comments.map(comment => (
+            <li key={comment.id}>{comment}</li>
+          ))}
+        </ul>
       </DiscussionBoxSection>
     </>
   )
