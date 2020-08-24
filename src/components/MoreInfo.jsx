@@ -72,12 +72,12 @@ const MoreInfo = () => {
   }, [username])
 
   useEffect(() => {
-    const isMyUsernameTaken = userExists?.doesUsernameExist.usernameExists
+    const isMyUsernameTaken = userExists?.doesUsernameExist
     setStatement('valid username!')
     if (isMyUsernameTaken) {
       setStatement('somebody already took that username lol')
     }
-  }, [userExists?.doesUsernameExist.usernameExists])
+  }, [userExists?.doesUsernameExist])
 
   const handleUserChange = useCallback(e => {
     setUsername(e.target.value)
@@ -143,7 +143,7 @@ const MoreInfo = () => {
         username
       })
 
-      if (userExistLoading || userExists?.doesUsernameExist.usernameExists) {
+      if (userExistLoading || userExists?.doesUsernameExist) {
         return
       }
 
@@ -262,7 +262,7 @@ const MoreInfo = () => {
               </DDWrapper>
               <SubmitButton
                 type='submit'
-                disabled={userExists?.doesUsernameExist.usernameExists}
+                disabled={userExists?.doesUsernameExist}
               >
                 &rarr;
               </SubmitButton>

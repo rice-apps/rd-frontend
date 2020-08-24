@@ -80,9 +80,7 @@ const POST_PAGE = gql`
 
 const USER_EXISTS = gql`
   query GetData($username: String!) {
-    doesUsernameExist(username: $username) {
-      usernameExists
-    }
+    doesUsernameExist(username: $username)
   }
 `
 

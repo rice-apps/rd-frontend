@@ -1,34 +1,38 @@
 import styled from 'styled-components'
-import LoginBackground from '../images/backgroundLogin.svg'
+
+const TitleFlex = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: inherit;
+  justify-content: space-around;
+
+  // top: 185px;
+  // left: 528px;
+  ///width: 231px;
+  // height: 54px;
+  margin: 25px;
+  text-align: left;
+  font: Roman 48px/44px Avenir;
+  letter-spacing: 0px;
+  color: #747886;
+  opacity: 1;
+`
 
 const ExitButton = styled.div`
+  align-self: flex-start;
   cursor: pointer;
-  background-color: beige;
   &:hover {
     background-color: red;
+    opacity: 70%;
   }
 
-  position: relative;
-  left: 15vw;
-  bottom: 10vh;
-
-  transform: rotate(65deg);
-  grid-row: 1/2;
-  grid-column: 3/3;
-
-  border-radius: 26vw;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 15vw;
-  height: 15vw;
-
-  font-family: Helvetica, Charcoal, sans-serif;
-  font-size: 10vw;
-  color: #000000;
-  font-weight: 700;
+  // top: 177px;
+  // left: 1392px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #cdced2;
+  opacity: 1;
+  text-align: center;
 `
 
 const PostWrapper = styled.div`
@@ -36,83 +40,122 @@ const PostWrapper = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
-  width: 80%;
-  height: 80%;
-  border-style: solid;
-  border-color: green;
+  // background-color: white;
+  // width: 98.4%;
+  // height: 80.9%;
+  // border-style: solid;
+  // border-color: green;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: space-between;
 
-  display: grid;
-  // flex-direction: column;
-  // align-items: center;
-
-  grid-template-columns: 1.2fr 1.75fr 2.25fr 1fr 1fr 1fr 0.5fr;
-  grid-template-rows: 12fr 12fr 1fr 1fr;
-
-  border-radius: 1.6vw;
+  // top: 144px;
+  // left: 468px;
+  width: 984px;
+  height: 90vh;
+  background: #ffffffe8 0% 0% no-repeat padding-box;
+  border: 4px solid #ffffff;
+  border-radius: 20px;
+  opacity: 1;
 `
 
 const Button = styled.button`
-  background-color: lightpink; /* Green */
+  // background-color: lightpink; /* Green */
   border: none;
-  color: black;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+  // color: black;
+  // padding: 15px 32px;
+  // text-align: center;
+  // text-decoration: none;
+  // display: inline-block;
+  // font-size: 16px;
   // z-index: 5;
   margin: 5px;
   cursor: pointer;
-
   &:hover {
-    background-color: #de4783;
-    opacity: 50%;
+    font: Heavy 14px/17px Avenir;
+    color: #a86565;
   }
+
+  // top: 263px;
+  // left: 757px;
+  width: 59px;
+  height: 21px;
+  text-align: center;
+  font: Medium 14px/17px Avenir;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+  background-color: #e7c6c6;
 `
 
 const PostingButton = styled.button`
   position: relative;
-  background-color: #fabed6; /* Light pink */
+  // background-color: #fabed6; /* Light pink */
   border: none;
-  color: black;
+  // color: black;
+  padding: 15px 32px;
   text-align: center;
-  text-decoration: none;
+  // text-decoration: none;
   display: inline-block;
-  font-size: 3vw;
+  // font-size: 16px;
   cursor: pointer;
-
-  border-radius: 0.5vw;
-  width: 15vw;
-  height: 30vh;
-
+  z-index: 5;
+  margin: 5px;
   &:hover {
-    background-color: #de4783;
-    opacity: 50%;
+    background-color: #e7c6c6;
+    opacity: 100%;
   }
+
+  //top: 849px;
+  //left: 1222px;
+  width: 114px;
+  height: 46px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  font: Medium 20px/17px Avenir;
+  letter-spacing: 0px;
+  color: #747886;
+  border: 2px solid #cdced2;
+  border-radius: 20px;
+  opacity: 1;
 `
 
 const Form = styled.form`
-  // background-color: white;
-  position: relative;
   display: flex;
   flex-direction: column;
+  align-content: space-around;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 100%;
+  //width: 850px;
+  // background-color: green;
+  // background-color: white;
+  // position: relative;
+  // display: flex;
+  // flex-direction: column;
   // flex-wrap: wrap;
-  width: 50vw;
-  height: 90vh;
-  top: -30vh;
-  left: 22vw;
-
-  grid-row: 2/2;
-  grid-column: 2/3;
+  // width: 95%;
+  // height: 90%;
+  // top: -5%;
 `
 
 const ButtonWrapper = styled.div`
-  position: absolute;
+  // position: absolute;
   // left: 50%;
-  left: 42.5vw;
-  top: 0;
+  // top: 0%;
   // transform: translate(-50%, 0%);
+
+  // top: 257px;
+  // left: 733px;
+  width: 382px;
+  height: 31px;
+  background: #e7c6c6 0% 0% no-repeat padding-box;
+  border-radius: 15px;
+  opacity: 1;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 `
 
 const PostHeaderType = styled.p`
@@ -152,7 +195,9 @@ const PostHeaderType = styled.p`
 
 const TitleDescriptor = styled.p`
   font-family: 'Courier New', Courier, monospace;
-  font-size: 1.5vw;
+  font-size: 22px;
+  letter-spacing: 1px;
+  word-spacing: 0px;
   color: #000000;
   font-weight: 700;
   text-decoration: none;
@@ -165,71 +210,208 @@ const TitleDescriptor = styled.p`
 
 const TitleWrapper = styled.div`
   position: relative;
-  top: -4vh;
-  width: 40vw;
+  //top: -30px;
+  display: flex;
+  justify-content: space-between;
 `
 
 const TitleBox = styled.div`
   border: solid;
-  position: relative;
-  height: 7vh;
-  flex: 0 0 100%;
-  border-radius: 0.5vw;
+  //position: relative;
+  // height: 5vh;
+  //flex: 0 0 100%;
+
+  //top: 315px;
+  // left: 574px;
+  width: 386px;
+  height: 42px;
+  background: #f4f4f49a 0% 0% no-repeat padding-box;
+  border-radius: 5px;
+  opacity: 1;
+
+  text-align: left;
+  vertical-align: middle;
+  font: Roman 21px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
 `
 
 const BodyBox = styled.div`
   border: solid;
   position: relative;
-  height: 20vh;
-  width: 60vw;
-  border-radius: 0.5vw;
+  // height: 10vh;
+
+  //top: 427px;
+  // left: 587px;
+  width: 741px;
+  height: 160px;
+  background: #f8f8f8 0% 0% no-repeat padding-box;
+  border-radius: 5px;
+  opacity: 1;
+
+  text-align: left;
+  font: Roman 18px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
 `
 
 const BodyWrapper = styled.div`
   position: relative;
-  top: -5vh;
-  left: -8vw;
+  //top: -60px;
+  //top: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // left: 565px;
+  width: 790px;
+  height: 229px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 2px solid #cdced2;
+  border-radius: 15px;
+  opacity: 1;
 `
 
 const ImageWrapper = styled.div`
-  position: relative;
-  top: -2vh;
-  width: 15vw;
-  // left: -22vw;
-  height: 30vh;
+  display: flex;
+  //position: relative;
+  //top: -90px;
 `
 
 const ImageBox = styled.div`
   border: solid;
   position: relative;
-  height: 20vh;
-  padding: 0.6vw;
-  border-radius: 0.5vw;
+  // height: 10vh;
+  padding: 10px;
+
+  //top: 629px;
+  // left: 565px;
+  width: 790px;
+  height: 45px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 2px solid #cdced2;
+  border-radius: 15px;
+  opacity: 1;
+
+  text-align: left;
+  font: Roman 18px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
 `
 
-const ExtrasWrapper = styled.div`
-  position: relative;
-  flex-direction: row;
+const DateWrapper = styled.div`
+  margin: 10px;
   display: flex;
   justify-content: space-between;
-  width: 75vw;
-  // background-color: red;
-  left: -22.8vw;
-  top: -5vh;
+  text-align: left;
+  font: Medium 18px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
+  opacity: 1;
 `
 
-const Banner = styled.div`
-  // Image at the top
-  background: url(${LoginBackground});
-  background-color: #fffdfd;
-  opacity: 1;
-  width: 40vw;
-  height: 20vh;
-  background-size: 40vw;
-  background-repeat: no-repeat;
+const PaidWrapper = styled.div`
+  display: flex;
+  text-align: left;
+  margin-left: 20px;
+  font: Roman 18px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
+`
 
-  position: relative;
-  top: 6vh;
+const LocationWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  text-align: left;
+  font: Medium 18px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
+  opacity: 1;
+`
+
+const LocationBox = styled.div`
+  width: 166px;
+  height: 39px;
+  margin-left: 5px;
+  background: #f4f4f49a 0% 0% no-repeat padding-box;
+  border-radius: 5px;
+  opacity: 1;
+`
+
+const JobWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+const TagWrapper = styled.div`
+  width: 790px;
+  height: 150px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 2px solid #cdced2;
+  border-radius: 15px;
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-content: center;
+  text-align: left;
+  font: Roman 18px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
+  opacity: 1;
+`
+
+const TagBox = styled.div`
+  width: 740px;
+  height: 44px;
+  background: #f8f8f8 0% 0% no-repeat padding-box;
+  margin-left: 25px;
+  border-radius: 10px;
+  opacity: 1;
+`
+
+const TagChosenWrapper = styled.div`
+  width: 741px;
+  height: 30px;
+  text-align: left;
+  text-align: left;
+  font: Roman 16px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
+  opacity: 1;
+  display: flex;
+`
+
+const TagChosen = styled.div`
+  //width: 124px;
+  padding: 0px 10px 0px 5px;
+  height: 24px;
+  margin-left: 5px;
+  background: #9bbad1 0% 0% no-repeat padding-box;
+  opacity: 1;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 30px 10px 10px 30px;
+  text-align: left;
+  font: Heavy 14px/17px Avenir;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+
+  &:hover {
+    background-color: red;
+    opacity: 70%;
+  }
+`
+
+const TagCircle = styled.div`
+  width: 10px;
+  height: 10px;
+  margin-right: 10px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  opacity: 0.85;
+  border-radius: 75px;
 `
 
 export {
@@ -247,6 +429,15 @@ export {
   ImageWrapper,
   ImageBox,
   ExitButton,
-  ExtrasWrapper,
-  Banner
+  TitleFlex,
+  DateWrapper,
+  PaidWrapper,
+  JobWrapper,
+  LocationBox,
+  LocationWrapper,
+  TagBox,
+  TagWrapper,
+  TagChosen,
+  TagChosenWrapper,
+  TagCircle
 }
