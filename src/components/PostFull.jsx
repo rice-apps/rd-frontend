@@ -35,7 +35,6 @@ import ReactTimeAgo from 'react-time-ago'
 import {
   DiscussionBoxSection,
   OP,
-  Time,
   DiscussionBox,
   LeftComponent,
   Likes,
@@ -80,7 +79,7 @@ function PostFull () {
   const [reportPost] = useMutation(REPORT_POST)
   const [removePost] = useMutation(REMOVE_POST)
   const [savePost] = useMutation(SAVE_POST)
-  const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
+  const [, { refetch }] = useLazyQuery(
     FETCH_COMMENTS_POST
   )
 

@@ -18,7 +18,7 @@ import {
 
 import { PostingButton } from './WritePost.styles'
 import { currentUser } from '../utils/apollo'
-import { Background, LeftSidebarContainer } from './PostFeedWithData.styles'
+import { LeftSidebarContainer } from './PostFeedWithData.styles'
 import { SideNav } from './SideNav'
 
 const ProfilePage = () => {

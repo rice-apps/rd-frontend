@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { useQuery, useLazyQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 
 import { Helmet } from 'react-helmet'
 import PostFeed from './PostFeed'
@@ -26,7 +26,6 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 function PostFeedWithData () {
   const [today, setToday] = useState(null)
   const [earlyDateBound, setEarlyDateBound] = useState(new Date(2000, 1, 1))
-  const [kind, setKind] = useState('')
 
   // these set states are there so we can remember our filters upon filter.jsx remount
   const [upvoteFilter, setUpvoteFilter] = useState('')
