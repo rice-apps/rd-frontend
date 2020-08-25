@@ -12,19 +12,12 @@ export const SideNav = () => {
   const location = useLocation()
   const pages = ['/profile', '/feed', '/calendar', '/mail']
 
-  const getIcon = page => {
-    switch (page) {
-      case '/feed':
-        return <ChatIcon />
-      case '/mail':
-        return <MailOutlineIcon />
-      case '/profile':
-        return <AccountBoxIcon />
-      case '/calendar':
-        return <DateRangeIcon />
-      default:
-        return <ChatIcon />
-    }
+  const getIcon = {
+    '/feed': <ChatIcon />,
+    '/mail': <MailOutlineIcon />,
+    '/profile': <AccountBoxIcon />,
+    '/calendar': <DateRangeIcon />,
+    'default': <ChatIcon />
   }
 
   return (
@@ -46,7 +39,7 @@ export const SideNav = () => {
                   htmlColor={page === location.pathname ? `#FFFFFF` : `#A9ABB4`}
                   style={{ fontSize: '1.6vw' }}
                 >
-                  {getIcon(page)}
+                  {getIcon[page] || getIcon["default"]}
                 </SvgIcon>
               </NavElement>
             </Link>

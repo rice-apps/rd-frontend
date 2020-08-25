@@ -55,6 +55,7 @@ import {
   FullPostLink,
   Expand
 } from './PostChunk.styles'
+import {convertFromRaw, Editor, EditorState} from "draft-js";
 
 JavascriptTimeAgo.addLocale(en)
 
@@ -65,6 +66,26 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }))
+
+const styleMap = {
+  'STRIKETHROUGH': {
+    textDecoration: 'line-through',
+  },
+};
+
+const parseBodyString = bodyString => {
+  try {
+    const parsed = JSON.parse(bodyString)
+    return (
+      <Editor readOnly={true} editorState={EditorState.createWithContent(convertFromRaw(parsed))}
+              customStyleMap={styleMap} style={{zIndex: 'auto'}}
+              // textAlignment={textAlignment}
+      />
+    )
+  } catch (error) { // string is not a JSON (or is not in draft js format)
+    return ReactHtmlParser(bodyString)
+  }
+}
 
 function PostChunk (props) {
   const classes = useStyles()
@@ -273,7 +294,8 @@ function PostChunk (props) {
             </MoreOptions>
 
             <DiscussionBody>
-              {ReactHtmlParser(props.post.node.body)}
+              {/*{ReactHtmlParser(props.post.node.body)}*/}
+              {parseBodyString(props.post.node.body)}
             </DiscussionBody>
 
             {oneImage}
