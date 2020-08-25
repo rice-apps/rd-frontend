@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { red, grey } from '@material-ui/core/colors'
+import Divider from '@material-ui/core/Divider';
 
 import AddToCalendar from 'react-add-to-calendar'
 
 import IconButton from '@material-ui/core/IconButton'
+import Button from '@material-ui/core/Button';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp'
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
+import ChatIcon from '@material-ui/icons/Chat'
 import FacebookIcon from '@material-ui/icons/Facebook'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import ShareIcon from '@material-ui/icons/Share'
@@ -18,6 +21,9 @@ import ReactHtmlParser from 'react-html-parser'
 import JavascriptTimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import ReactTimeAgo from 'react-time-ago'
+
+import { useMutation, useLazyQuery } from '@apollo/client'
+import { FETCH_COMMENTS_POST, FETCH_COMMENTS_PARENT } from '../graphql/Queries'
 
 import {
   DiscussionBoxSection,
@@ -42,6 +48,7 @@ import {
   AddTo,
   Report,
   Delete,
+  Comments,
   ShareFacebook,
   ShareTwitter,
   Share,
@@ -69,8 +76,13 @@ function PostChunk (props) {
     )
   }
 
-  const myPostID = props.post.node._id
-  const myPostLink = '/posts/' + String(myPostID) // forming the url
+
+  const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
+    FETCH_COMMENTS_POST
+  )
+
+  const myPostID = props.post.node._id;
+  const myPostLink = "/posts/" + String(myPostID); // forming the url
 
   const listOfUpvoters = props.post.node.upvotes.map(
     userObject => userObject.username
@@ -125,15 +137,15 @@ function PostChunk (props) {
   return (
     <>
       <DiscussionBoxSection>
-        <OP>
+        {/* <OP>
           {props.post.node.creator.username} -{' '}
           <ReactTimeAgo date={props.post.node.date_created} />
-        </OP>
+        </OP> */}
         <DiscussionBox>
           <LeftComponent>
             <Upvote className={classes.root}>
               <IconButton
-                style={isUpvoted ? { color: red[200] } : { color: grey[700] }}
+                style={isUpvoted ? { color: '#7380FF' } : { color: grey[700] }}
                 onClick={e => {
                   e.preventDefault()
                   toggleUpvoted()
@@ -154,7 +166,7 @@ function PostChunk (props) {
             </Likes>
             <Downvote className={classes.root}>
               <IconButton
-                style={isDownvoted ? { color: red[200] } : { color: grey[800] }}
+                style={isDownvoted ? { color: '#7380FF' } : { color: grey[800] }}
                 onClick={e => {
                   e.preventDefault()
                   toggleDownvoted()
@@ -170,7 +182,13 @@ function PostChunk (props) {
               </IconButton>
             </Downvote>
           </LeftComponent>
-
+          <OP>
+            <a>
+              {props.post.node.creator.username} -{' '}
+              <ReactTimeAgo date={props.post.node.date_created} />
+            </a>
+            <Divider style={{width: '51.5vw', maxWidth: '97%', marginTop: '1vh'}}/>
+          </OP>
           <TopMiddleComponent>
             <DiscussionTitleDiv>
               <DiscussionTitle>{props.post.node.title}</DiscussionTitle>
@@ -286,7 +304,26 @@ function PostChunk (props) {
                 </ViewTags>
               )}
             </Tags>
-
+            {/* Insert Comments */}
+            <Comments>
+              <Button
+                variant="contained"
+                startIcon={<ChatIcon />}
+                style={{
+                  backgroundColor: 'rgba(109, 200, 249, .3)',
+                  textTransform: 'none',
+                  maxWidth: '8vw',
+                  display: 'flex'
+                }}
+                onClick={() =>
+                  getCommentsPost({
+                    variables: { post_id: props.post.node._id }
+                  })
+                }
+              >
+                Comments
+              </Button>
+            </Comments>
             <ShareFacebook>
               <IconButton>
                 <FacebookIcon />

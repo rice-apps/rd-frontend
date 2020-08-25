@@ -91,7 +91,7 @@ function PostFeed (props) {
             post={post}
             key={post.node._id}
           />
-          <button
+          {/* <button
             onClick={() =>
               getCommentsPost({
                 variables: { post_id: post.node._id }
@@ -101,7 +101,7 @@ function PostFeed (props) {
             Get Comments
           </button>
           <button onClick={() => refetch()}>Refresh Comments</button>
-          <CommentChunk {...result} />
+          <CommentChunk {...result} /> */}
         </>
       )
     })

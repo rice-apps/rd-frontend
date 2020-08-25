@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation, useQuery, useLazyQuery } from '@apollo/client'
+import IconButton from '@material-ui/core/IconButton';
+import TuneIcon from '@material-ui/icons/Tune';
 import DropDownItem from './DropDownItem'
 
 import {
@@ -102,7 +104,6 @@ const Filters = props => {
   return (
     <>
       <HorizontalDiv>
-        <div style={{ 'margin-left': '30px' }}>Filter:</div>
         <DDWrapper>
           <DDHeader onClick={togglePost}>
             <DDHeaderTitle>
@@ -190,7 +191,19 @@ const Filters = props => {
             </DDList>
           )}
         </DDWrapper>
-        <SubmitButton onClick={submitFilters}> Filter! </SubmitButton>
+        <IconButton 
+          onClick={submitFilters}
+          style={{
+            background: 'white',
+            borderRadius: '.8vw',
+            height: '2.4vw',
+            width: '2.4vw',
+            marginLeft: '1vw'
+          }}
+        >
+          <TuneIcon />
+        </IconButton>
+        {/* <SubmitButton onClick={submitFilters}> Filter! </SubmitButton> */}
       </HorizontalDiv>
     </>
   )
