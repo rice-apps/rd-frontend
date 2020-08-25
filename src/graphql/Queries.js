@@ -80,9 +80,7 @@ const POST_PAGE = gql`
 
 const USER_EXISTS = gql`
   query GetData($username: String!) {
-    doesUsernameExist(username: $username) {
-      usernameExists
-    }
+    doesUsernameExist(username: $username)
   }
 `
 
@@ -148,95 +146,95 @@ const VERIFY_USER = gql`
 `
 
 const GET_POST = gql`
-    query GetPostById($id: MongoID!) {
-        postById(_id: $id) {
-            _id
-            __typename
-            kind
-            title
+  query GetPostById($id: MongoID!) {
+    postById(_id: $id) {
+      _id
+      __typename
+      kind
+      title
+      body
+      imageUrl
+      date_created
+      creator {
+        netID
+        username
+        savedPosts {
+          _id
+        }
+      }
+      ... on Event {
+        start
+        end
+        location: place
+      }
+      ... on Job {
+        start
+        end
+        isPaid
+        isClosed
+        workplace: place
+      }
+      ... on Notice {
+        deadline
+      }
+      comments {
+        body
+        creator {
+          username
+        }
+        upvotes {
+          username
+        }
+        downvotes {
+          username
+        }
+        children {
+          body
+          creator {
+            username
+          }
+          upvotes {
+            username
+          }
+          downvotes {
+            username
+          }
+          children {
             body
-            imageUrl
-            date_created
             creator {
-                netID
-                username
-                savedPosts {
-                    _id
-                }
-            }
-            ... on Event {
-                start
-                end
-                location: place
-            }
-            ... on Job {
-                start
-                end
-                isPaid
-                isClosed
-                workplace: place
-            }
-            ... on Notice {
-                deadline
-            }
-            comments {
-                body
-                creator {
-                    username
-                }
-                upvotes {
-                    username
-                }
-                downvotes {
-                    username
-                }
-                children {
-                    body
-                    creator {
-                        username
-                    }
-                    upvotes {
-                        username
-                    }
-                    downvotes {
-                        username
-                    }
-                    children {
-                        body
-                        creator {
-                            username
-                        }
-                        upvotes {
-                            username
-                        }
-                        downvotes {
-                            username
-                        }
-                        children {
-                            body
-                            creator {
-                                username
-                            }
-                            upvotes {
-                                username
-                            }
-                            downvotes {
-                                username
-                            }
-                        }
-                    }
-                }
+              username
             }
             upvotes {
-                username
+              username
             }
             downvotes {
-                username
+              username
             }
-            tags
+            children {
+              body
+              creator {
+                username
+              }
+              upvotes {
+                username
+              }
+              downvotes {
+                username
+              }
+            }
+          }
         }
+      }
+      upvotes {
+        username
+      }
+      downvotes {
+        username
+      }
+      tags
     }
-`;
+  }
+`
 
 export {
   POST_PAGE,
@@ -244,5 +242,5 @@ export {
   FETCH_COMMENTS_PARENT,
   FETCH_COMMENTS_POST,
   VERIFY_USER,
-  GET_POST,
+  GET_POST
 }

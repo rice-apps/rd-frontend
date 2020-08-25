@@ -18,8 +18,8 @@ import {
 
 import { PostingButton } from './WritePost.styles'
 import { currentUser } from '../utils/apollo'
-import {Background, LeftSidebarContainer} from "./PostFeedWithData.styles";
-import {SideNav} from "./SideNav";
+import { Background, LeftSidebarContainer } from './PostFeedWithData.styles'
+import { SideNav } from './SideNav'
 
 const ProfilePage = () => {
   const navigator = useNavigate()
@@ -67,7 +67,7 @@ const ProfilePage = () => {
   }, [username])
 
   useEffect(() => {
-    const isMyUsernameTaken = userExists?.doesUsernameExist.usernameExists
+    const isMyUsernameTaken = userExists?.doesUsernameExist
     setStatement('valid username!')
     if (isMyUsernameTaken) {
       setStatement('somebody already took username that lol')
@@ -75,7 +75,7 @@ const ProfilePage = () => {
     if (originalUsername === username) {
       setStatement('this is your current username')
     }
-  }, [userExists?.doesUsernameExist.usernameExists])
+  }, [userExists?.doesUsernameExist])
 
   const majors = majorMinorJson.majors.split(';').map(major => {
     const majorObj = {
@@ -144,7 +144,7 @@ const ProfilePage = () => {
   }, [])
 
   const saveData = async () => {
-    if (userExistLoading || userExists?.doesUsernameExist.usernameExists) {
+    if (userExistLoading || userExists?.doesUsernameExist) {
       return
     }
 
@@ -252,14 +252,11 @@ const ProfilePage = () => {
         <div>
           Your saved posts:
           {savedPosts.map(post => (
-            <div>{"localhost:3000/posts/" + post._id}</div>
+            <div>{'localhost:3000/posts/' + post._id}</div>
           ))}
         </div>
 
-        <PostingButton
-          type='submit'
-          disabled={userExists?.doesUsernameExist.usernameExists}
-        >
+        <PostingButton type='submit' disabled={userExists?.doesUsernameExist}>
           Save
         </PostingButton>
       </form>

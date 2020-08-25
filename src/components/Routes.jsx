@@ -11,7 +11,7 @@ import { currentUser, loadToken } from '../utils/apollo'
 import { VERIFY_USER } from '../graphql/Queries'
 import { TOKEN_NAME } from '../config'
 
-function PrivateRoute({ element, ...rest }) {
+function PrivateRoute ({ element, ...rest }) {
   const token = loadToken()
 
   const { data, loading, error } = useQuery(VERIFY_USER, {
@@ -69,7 +69,7 @@ const routesArray = [
   }
 ]
 
-function CustomRoutes() {
+function CustomRoutes () {
   return useRoutes(routesArray)
 }
 
