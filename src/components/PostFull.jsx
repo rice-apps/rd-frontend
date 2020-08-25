@@ -173,10 +173,10 @@ function PostFull() {
     return <p>Error Fetching Comments</p>
   }
 
-  // console.log(resultPost.data.postById)
+  console.log(resultPost.data.postById)
   thePost = resultPost.data.postById //real data
 
-  // console.log(resultComments)
+  console.log(resultComments)
   let theComments = resultComments.data.commentByPost;
   // are there comments?
 
@@ -372,11 +372,11 @@ function PostFull() {
           </BottomComponent>
         </DiscussionBox>
         <h3>Comments:</h3>
-        <ul>
+        {/* <ul>
           {thePost.comments.map(comment => (
             <li key={comment.id}>{comment}</li>
           ))}
-        </ul>
+        </ul> */}
       </DiscussionBoxSection>
     </>
   )
