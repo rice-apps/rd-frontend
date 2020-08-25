@@ -53,7 +53,7 @@ import {
   ShareTwitter,
   Share,
   FullPostLink,
-  Expand,
+  Expand
 } from './PostChunk.styles'
 
 JavascriptTimeAgo.addLocale(en)
@@ -66,7 +66,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function PostChunk(props) {
+function PostChunk (props) {
   const classes = useStyles()
   let oneImage = <></>
 
@@ -75,6 +75,7 @@ function PostChunk(props) {
       <img width={500} src={props.post.node.imageUrl} alt='Custom-thing' />
     )
   }
+
 
   const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
     FETCH_COMMENTS_POST
@@ -222,22 +223,18 @@ function PostChunk(props) {
                   </Save>
                   {(props.post.node.kind === 'Event' ||
                     props.post.node.kind === 'Job') && (
-
-                      <AddTo>
-                        <AddToCalendar
-                          event={calEvent}
-                          buttonLabel='Add to '
-                          buttonTemplate={calIcon}
-                          listItems={calDropDown}
-                        ></AddToCalendar>
-                      </AddTo>
-
-                    )}
+                    <AddTo>
+                      <AddToCalendar
+                        event={calEvent}
+                        buttonLabel='Add to '
+                        buttonTemplate={calIcon}
+                        listItems={calDropDown}
+                      ></AddToCalendar>
+                    </AddTo>
+                  )}
 
                   <Expand>
-                    <FullPostLink to={myPostLink}>
-                      Expand
-                    </FullPostLink>
+                    <FullPostLink to={myPostLink}>Expand</FullPostLink>
                   </Expand>
 
                   <Report
@@ -260,7 +257,7 @@ function PostChunk(props) {
                     <Delete
                       onClick={e => {
                         e.preventDefault()
-                        window.location.reload(false);
+                        window.location.reload(false)
                         props.removePost({
                           variables: {
                             _id: props.post.node._id
@@ -302,8 +299,8 @@ function PostChunk(props) {
                   {isTagsOpen ? (
                     <text>(View Less)</text>
                   ) : (
-                      <text>(View All)</text>
-                    )}
+                    <text>(View All)</text>
+                  )}
                 </ViewTags>
               )}
             </Tags>
