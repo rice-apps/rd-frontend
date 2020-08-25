@@ -16,12 +16,15 @@ import { FETCH_COMMENTS_POST } from '../graphql/Queries'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { red, grey } from '@material-ui/core/colors'
+import Divider from '@material-ui/core/Divider';
 
 import AddToCalendar from 'react-add-to-calendar'
 
 import IconButton from '@material-ui/core/IconButton'
+import Button from '@material-ui/core/Button';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp'
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
+import ChatIcon from '@material-ui/icons/Chat'
 import FacebookIcon from '@material-ui/icons/Facebook'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import ShareIcon from '@material-ui/icons/Share'
@@ -56,6 +59,7 @@ import {
   AddTo,
   Report,
   Delete,
+  Comments,
   ShareFacebook,
   ShareTwitter,
   Share,
@@ -213,15 +217,15 @@ function PostFull() {
     <>
       <BackToFeed to='/feed'>Back To Feed</BackToFeed>
       <DiscussionBoxSection>
-        <OP>
+        {/* <OP>
           {thePost.creator.username} -{' '}
           <ReactTimeAgo date={thePost.date_created} />
-        </OP>
+        </OP> */}
         <DiscussionBox>
           <LeftComponent>
             <Upvote className={classes.root}>
               <IconButton
-                style={isUpvoted ? { color: red[200] } : { color: grey[700] }}
+                style={isUpvoted ? { color: '#7380FF' } : { color: grey[700] }}
                 onClick={e => {
                   e.preventDefault()
                   toggleUpvoted()
@@ -239,7 +243,7 @@ function PostFull() {
             <Likes>{thePost.upvotes.length - thePost.downvotes.length}</Likes>
             <Downvote className={classes.root}>
               <IconButton
-                style={isDownvoted ? { color: red[200] } : { color: grey[800] }}
+                style={isDownvoted ? { color: '#7380FF' } : { color: grey[800] }}
                 onClick={e => {
                   e.preventDefault()
                   toggleDownvoted()
@@ -255,7 +259,13 @@ function PostFull() {
               </IconButton>
             </Downvote>
           </LeftComponent>
-
+          <OP>
+            <a>
+              {thePost.creator.username} -{' '}
+              <ReactTimeAgo date={thePost.date_created} />
+            </a>
+            <Divider style={{ width: '51.5vw', maxWidth: '97%', marginTop: '1vh' }} />
+          </OP>
           <TopMiddleComponent>
             <DiscussionTitleDiv>
               <DiscussionTitle>{thePost.title}</DiscussionTitle>
@@ -354,6 +364,27 @@ function PostFull() {
               )}
             </Tags>
 
+            {/* Insert Comments */}
+            <Comments>
+              <Button
+                variant="contained"
+                startIcon={<ChatIcon />}
+                style={{
+                  backgroundColor: 'rgba(109, 200, 249, .3)',
+                  textTransform: 'none',
+                  maxWidth: '8vw',
+                  display: 'flex'
+                }}
+                onClick={() =>
+                  getCommentsPost({
+                    variables: { post_id: thePost._id }
+                  })
+                }
+              >
+                Comments
+              </Button>
+            </Comments>
+
             <ShareFacebook>
               <IconButton>
                 <FacebookIcon />
@@ -371,7 +402,7 @@ function PostFull() {
             </Share>
           </BottomComponent>
         </DiscussionBox>
-        <h3>Comments:</h3>
+        {/* <h3>Comments:</h3> */}
         {/* <ul>
           {thePost.comments.map(comment => (
             <li key={comment.id}>{comment}</li>
