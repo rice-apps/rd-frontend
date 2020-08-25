@@ -37,7 +37,7 @@ const DiscussionBox = styled.section`
 const LeftComponent = styled.div`
   // contains Upvote, Downvote, Likes
   display: grid;
-  grid-template-rows: 1fr 30px 40px 30px 1fr;
+  grid-template-rows: 20px 30px 40px 30px 1fr;
   grid-area: left;
   justify-items: center;
   align-items: center;
@@ -93,7 +93,7 @@ const MoreOptions = styled.div`
     grid-area: moreoptions;
     align-self: start;
     justify-self: start;
-    margin-top: -2vw;
+    margin-top: -4.5vh;
 `;
 
 
