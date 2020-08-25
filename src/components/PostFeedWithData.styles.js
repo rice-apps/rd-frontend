@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Background = styled.div`
   display: grid;
 
-  grid-template-columns: 2fr 12fr 5fr;
+  grid-template-columns: 1fr 12fr 4fr;
 
   /* grid-template-columns: 1.2fr 1.75fr 2.25fr 1fr 1fr 1fr 0.5fr; */
   /* grid-template-rows: 12fr 12fr 1fr 1fr; */
@@ -12,17 +12,20 @@ export const Background = styled.div`
 `
 
 export const PostFeedContainer = styled.div`
-  margin-top: 8.6vh;
+  /* margin-top: 8.6vh; */
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  background: rgba(255, 255, 255, 0.5) 0% 0% no-repeat padding-box;
-  border: 0.16vw solid #ffffff;
+  grid-column-start: 2;
+  grid-column-end: 3;
+
+  background-color: #EFF0F8;
+  /* border: 0.16vw solid #ffffff;
   border-radius: 1.6vw;
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px); */
+  /* -webkit-backdrop-filter: blur(30px); */
 `
 
 export const BannerContainer = styled.div`
@@ -32,36 +35,33 @@ export const BannerContainer = styled.div`
 
 export const LeftSidebarContainer = styled.div`
   position: sticky;
-  top: 5vh;
 
-  margin-top: 12vh;
+  /* margin-top: 12vh; */
   justify-self: center;
-  width: 3.5vw;
-  height: 15vw;
+  width: 100%;
+  height: 100%;
+  grid-column-start: 1;
+  grid-column-end: 2;
 
-  background: rgba(255, 255, 255, 0.65) 0% 0% no-repeat padding-box;
-  border-radius: 1.3vw;
-  border: 0.16vw solid #ffffff;
+  background-color: #FFFFFF;
+  box-shadow: 0px 0px .2vw white; 
+  /* border-right: 0.16vw solid #ffffff; 
   backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px); */
 `
 
 export const RightSidebarContainer = styled.div`
   position: sticky;
-  top: 5vh;
+  grid-column-start: 3;
 
-  margin-top: 8.6vh;
   justify-self: center;
-  width: 20vw;
-  height: calc(80vh);
-  background: rgba(255, 255, 255, 0.5) 0% 0% no-repeat padding-box;
-  border: 0.16vw solid #ffffff;
-  border-radius: 1.6vw;
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  width: 100%;
+  height: 100%;
+  background-color: #FFFFFF;
+  box-shadow: 0px 0px .2vw white; 
 `
 export const NewPostButtonContainer = styled.div`
-  padding-top: 1.6vw;
+  padding-top: 1vh;
 
   width: 47vw;
   height: 3vw;
@@ -85,6 +85,8 @@ export const NewPostButton = styled.div`
   align-items: center;
 
   padding-left: 0.8vw;
+  margin-left: -4vw;
+  margin-top: 3vw;
 `
 
 export const ButtonText = styled.div`
