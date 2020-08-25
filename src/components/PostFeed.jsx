@@ -13,128 +13,143 @@ import { FETCH_COMMENTS_POST, FETCH_COMMENTS_PARENT } from '../graphql/Queries'
 import { COMMENT_CREATED, COMMENT_UPDATED } from '../graphql/Queries'
 import { currentUser } from "../utils/apollo"
 
-function PostFeed(props) {
-    const userInfo = JSON.parse(localStorage.getItem(TOKEN_NAME));
+function PostFeed (props) {
+    const userInfo = currentUser()
+    const [upvotePost] = useMutation(UPVOTE_POST)
+    const [downvotePost] = useMutation(DOWNVOTE_POST)
+    const [savePost] = useMutation(SAVE_POST)
+    const [getCommentsPost, { refetch, ...result }] = useLazyQuery(FETCH_COMMENTS_POST)
 
-    const [
-        getCommentsPost,
-        { subscribeToMore, refetch, ...result },
-    ] = useLazyQuery(FETCH_COMMENTS_POST);
+    const [sort_by_upvotes, setSort_by_upvotes] = useState('')
 
-  const userInfo = currentUser()
-  const [upvotePost] = useMutation(UPVOTE_POST)
-  const [downvotePost] = useMutation(DOWNVOTE_POST)
-  const [savePost] = useMutation(SAVE_POST)
-  const [getCommentsPost, { refetch, ...result }] = useLazyQuery(FETCH_COMMENTS_POST)
+    const {
+        onLoadMore,
+        subscribeToNewPosts,
+        subscribeToNewVotes,
+        loading,
+        error,
+        data,
+        all_posts_loading,
+        all_posts_error,
+        all_posts_ids
+    } = props
 
-  const [sort_by_upvotes, setSort_by_upvotes] = useState('')
+    useEffect(() => {
+        subscribeToNewPosts()
+        subscribeToNewVotes()
+    }, []);
 
-  const {
-    onLoadMore,
-    subscribeToNewPosts,
-    subscribeToNewVotes,
-    loading,
-    error,
-    data
-  } = props
+    useEffect(() => {
+        if (all_posts_loading || all_posts_error){ return; }
+        console.log(all_posts_ids)
+        const edges = all_posts_ids.postConnection.edges;
+        const ids = edges.map(edge => edge.node._id);
+        console.log(ids)
+        setList_of_postIDs(ids);
+        refetch();
+    }, [all_posts_ids])
 
-  useEffect(() => {
-      subscribeToNewPosts()
-      subscribeToNewVotes()
-  }, []);
+    if (error) return <h1>Something went wrong...</h1>
+    if (loading || !data) return <h1>Loading...</h1>
 
-  if (error) return <h1>Something went wrong...</h1>
-  if (loading || !data) return <h1>Loading...</h1>
+    const {
+        postConnection: {
+            edges,
+            pageInfo: { hasNextPage }
+        }
+    } = data
 
-  const {
-    postConnection: {
-      edges,
-      pageInfo: { hasNextPage }
+    if (all_posts_error) return <h1>Something went wrong retrieving all the IDs...</h1>
+    if (all_posts_loading) return <h1>Loading all the ids...</h1>
+
+    const {
+        postConnection: {
+            edges: id_edges
+        }
+    } = all_posts_ids
+
+    const ids = id_edges.map(edge => edge.node._id);
+
+
+    const process_date_filter = filter => {
+        const today = props.currentDate
+
+        if (filter.length == 0){
+            props.setEarlyDateBound(new Date(2000, 1, 1))
+        } else if (filter.includes('yesterday')) {
+            const yesterday_day = today.getDate() - 1
+            const yesterday = (d => new Date(d.setDate(yesterday_day)))(new Date())
+            props.setEarlyDateBound(yesterday)
+        } else if (filter.includes('week')) {
+            const week_ago_day = today.getDate() - 7
+            const week_ago = (d => new Date(d.setDate(week_ago_day)))(new Date())
+            props.setEarlyDateBound(week_ago)
+        } else if (filter.includes('month')) {
+            const month_ago_day = today.getMonth() - 1
+            const month_ago = (d => new Date(d.setMonth(month_ago_day)))(new Date())
+            props.setEarlyDateBound(month_ago)
+        }
     }
-  } = data
 
-  const process_date_filter = filter => {
-    const today = props.currentDate
-
-    if (filter.length == 0) return
-    if (filter.includes('yesterday')) {
-      const yesterday_day = today.getDate() - 1
-      const yesterday = (d => new Date(d.setDate(yesterday_day)))(new Date())
-      props.setEarlyDateBound(yesterday)
-    } else if (filter.includes('week')) {
-      const week_ago_day = today.getDate() - 7
-      const week_ago = (d => new Date(d.setDate(week_ago_day)))(new Date())
-      props.setEarlyDateBound(week_ago)
-    } else if (filter.includes('month')) {
-      const month_ago_day = today.getMonth() - 1
-      const month_ago = (d => new Date(d.setMonth(month_ago_day)))(new Date())
-      props.setEarlyDateBound(month_ago)
+    const generate_posts = edges => {
+        return edges.map((post, _i) => {
+            return (
+            <>
+                <PostChunk
+                userInfo={userInfo}
+                upvotePost={upvotePost}
+                downvotePost={downvotePost}
+                savePost={savePost}
+                post={post}
+                key={post.node._id}
+                />
+                <button
+                onClick={() =>
+                    getCommentsPost({
+                    variables: { post_id: post.node._id }
+                    })
+                }
+                >
+                Get Comments
+                </button>
+                <button onClick={() => refetch()}>Refresh Comments</button>
+                <CommentChunk {...result} />
+            </>
+            )
+        })
     }
-  }
-
-  const generate_posts = edges => {
-    return edges.map((post, _i) => {
-      return (
-        <>
-          <PostChunk
-            userInfo={userInfo}
-            upvotePost={upvotePost}
-            downvotePost={downvotePost}
-            savePost={savePost}
-            post={post}
-            key={post.node._id}
-          />
-          <button
-            onClick={() =>
-              getCommentsPost({
-                variables: { post_id: post.node._id }
-              })
-            }
-          >
-            Get Comments
-          </button>
-          <button onClick={() => refetch()}>Refresh Comments</button>
-          <CommentChunk {...result} />
-        </>
-      )
+    
+    let tags = new Set()
+    edges.forEach(edge => {
+        edge.node.tags.forEach(tag => {
+            tags.add(tag)
+        })
     })
-  }
 
-  let tags = new Set()
-  edges.forEach(edge => {
-    edge.node.tags.forEach(tag => {
-      tags.add(tag)
-    })
-  })
+    if (tags.size === 0) tags = ['No tags for these filters']
+    
+    const compare_upvote_lengths = (a, b) => {
+        return a.node.upvotes.length - a.node.downvotes.length <= 
+            b.node.upvotes.length - b.node.downvotes.length
+            ? -1 : 1
+    }
 
-  if (tags.size === 0) tags = ['No tags for these filters']
+    let posts;
+    if (sort_by_upvotes.length == 0) {
+        posts = generate_posts(edges)
+    } else if (sort_by_upvotes.includes('hot')) {
+        const sorted_edges = [...edges].sort(compare_upvote_lengths).reverse()
+        posts = generate_posts(sorted_edges)
+    } else if (sort_by_upvotes.includes('cold')) {
+        const sorted_edges = [...edges].sort(compare_upvote_lengths)
+        posts = generate_posts(sorted_edges)
+    }
 
-  const compare_upvote_lengths = (a, b) => {
-    return a.node.upvotes.length <= b.node.upvotes.length ? -1 : 1
-  }
-
-  let posts
-  if (sort_by_upvotes.length == 0) {
-    posts = generate_posts(edges)
-  } else if (sort_by_upvotes.includes('most')) {
-    const sorted_edges = [...edges].sort(compare_upvote_lengths).reverse()
-    posts = generate_posts(sorted_edges)
-  } else if (sort_by_upvotes.includes('least')) {
-    const sorted_edges = [...edges].sort(compare_upvote_lengths)
-    posts = generate_posts(sorted_edges)
-  }
-
-  posts = edges.map((post, _i) => {
+    posts = edges.map((post, _i) => {
     return (
-      <>
+        <>
         {/* <Banner /> */}
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={() => onLoadMore()}
-          hasMore={hasNextPage}
-          loader={<div key={uuid()}>Loading...</div>}
-        >
-          <Filters
+        <Filters
             processDate={process_date_filter}
             sort_by_upvotes={setSort_by_upvotes}
             setDateFilter={props.setDateFilter}
@@ -146,14 +161,23 @@ function PostFeed(props) {
             setTagFilter={props.setTagFilter}
             tagFilter={props.tagFilter}
             tagsList={[...tags]}
-          />
-          {posts}
-        </InfiniteScroll>
-      </>
-    )
-  })
+            setTags = {props.setTags}
+            />
 
-  return posts
+        <InfiniteScroll
+            pageStart={0}
+            loadMore={() => onLoadMore()}
+            hasMore={hasNextPage}
+            loader={<div key={uuid()}>Loading...</div>}
+        >
+            {posts}
+        </InfiniteScroll>
+        </>
+    )
+    })
+
+    if (posts.length == 0) return <h1>There are no posts lol</h1>
+    return posts
 }
 
 // PostFeed.propTypes = {
@@ -161,5 +185,4 @@ function PostFeed(props) {
 //   subscribeToNewPosts: PropTypes.func.isRequired,
 //   subscribeToNewVotes: PropTypes.func.isRequired
 // };
-
 export default PostFeed

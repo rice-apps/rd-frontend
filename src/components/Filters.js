@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation, useQuery, useLazyQuery } from '@apollo/client'
 import DropDownItem from './DropDownItem'
+import SearchBar from "./Search"
+import { GET_TAGS, FILTER_KIND, FILTER_TAGS, FILTER_DATES } from '../graphql/Queries'
 
 import {
   HorizontalDiv,
@@ -12,6 +14,7 @@ import {
   DDListItem,
   ArrowI
 } from './Filters.styles'
+import { getDefaultValues } from '@apollo/client/utilities'
 
 const Filters = props => {
   const [isPostTypeOpen, setPostMenuOpen] = useState(false)
@@ -24,17 +27,29 @@ const Filters = props => {
   const [dates, setDates] = useState('')
   const [upvotes, setUpvotes] = useState('')
 
+  const [tagDropDown, setTagDropDown] = useState([])
+
   const POST_TYPES = ['Discussion', 'Event', 'Notice', 'Job']
-  const TAGS = props.tagsList
   const DATES = ['yesterday', 'in the last week', 'in the last month']
-  const UPVOTES = ['most', 'least']
+  const UPVOTES = ['hot', 'cold']
+
+  const {data, loading, error} = useQuery(GET_TAGS);
+  const [kindFilter, {data: kind_post_ids, loading: kind_loading, error: kind_error}] = useLazyQuery(FILTER_KIND);
+  const [dateFilter, {data: date_post_ids, loading: date_loading, error: date_error}] = useLazyQuery(FILTER_DATES);
+  const [tagsFilter, {data: tags_post_ids, loading: tags_loading, error: tags_error}] = useLazyQuery(FILTER_TAGS);
 
   useEffect(() => {
     setDates(props.dateFilter)
     setUpvotes(props.upvoteFilter)
     setTags(props.tagFilter)
     setPostType(props.kindFilter)
+    setTagDropDown(props.tagList)
   }, [])
+
+  
+  if (loading) return <h1>Your tags are loading.</h1>
+  if (error) return <h1>oshit(git) MY FILTERS ARE DUCKED</h1>
+  console.log(data);
 
   const togglePost = () => {
     setPostMenuOpen(!isPostTypeOpen)
@@ -88,6 +103,7 @@ const Filters = props => {
     setUpvotes(index_of_upvote >= 0 ? '' : newValue)
   }
 
+  //fire the useLazyQuery
   const submitFilters = () => {
     props.processDate(dates)
     props.setDateFilter(dates)
@@ -97,6 +113,16 @@ const Filters = props => {
     props.setKindFilter(postType)
 
     props.setTagFilter(tags)
+    props.setTags(tags);
+
+    kindFilter(
+      
+    )
+    dateFilter(
+
+    )
+    tagsFilter()
+
   }
 
   return (
@@ -134,7 +160,7 @@ const Filters = props => {
           </DDHeader>
           {isTagOpen && (
             <DDList>
-              {TAGS.map(item => (
+              {data.getAllTags.map(item => (
                 <DDListItem key={item}>
                   <DropDownItem
                     name={item}
@@ -172,7 +198,7 @@ const Filters = props => {
         <DDWrapper>
           <DDHeader onClick={toggleUpvotes}>
             <DDHeaderTitle>
-              {upvotes === '' ? 'By Upvotes' : upvotes}
+              {upvotes === '' ? 'By Popularity' : upvotes}
               <ArrowI open={isUpvotesOpen} />
             </DDHeaderTitle>
           </DDHeader>
