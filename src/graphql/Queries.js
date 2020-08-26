@@ -138,15 +138,12 @@ const FILTER_TAGS = gql`
 const USER_EXISTS = gql`
   query GetData($username: String!) {
     doesUsernameExist(username: $username)
-<<<<<<< HEAD
   }
 `
 
 const GET_TAGS = gql`
   query GetTags{
     getAllTags
-=======
->>>>>>> 25557b993f31ef1c6968201c0752e4b454a42862
   }
 `
 
@@ -308,14 +305,10 @@ export {
   FETCH_COMMENTS_PARENT,
   FETCH_COMMENTS_POST,
   VERIFY_USER,
-<<<<<<< HEAD
   GET_TAGS,
   FILTER_DATES,
   FILTER_TAGS,
   FILTER_KIND,
-  GET_DEFAULT_IDS
-}
-=======
+  GET_DEFAULT_IDS,
   GET_POST
 }
->>>>>>> 25557b993f31ef1c6968201c0752e4b454a42862

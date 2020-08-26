@@ -249,12 +249,6 @@ const ProfilePage = () => {
           )}
         </DDWrapper>
 
-<<<<<<< HEAD
-        <PostingButton
-          type='submit'
-          disabled={userExists?.doesUsernameExist}
-        >
-=======
         <div>
           Your saved posts:
           {savedPosts.map(post => (
@@ -263,7 +257,6 @@ const ProfilePage = () => {
         </div>
 
         <PostingButton type='submit' disabled={userExists?.doesUsernameExist}>
->>>>>>> 25557b993f31ef1c6968201c0752e4b454a42862
           Save
         </PostingButton>
       </form>
