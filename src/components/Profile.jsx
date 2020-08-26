@@ -18,6 +18,8 @@ import {
 
 import { PostingButton } from './WritePost.styles'
 import { currentUser } from '../utils/apollo'
+import { Background, LeftSidebarContainer } from './PostFeedWithData.styles'
+import { SideNav } from './SideNav'
 
 const ProfilePage = () => {
   const navigator = useNavigate()
@@ -38,7 +40,8 @@ const ProfilePage = () => {
     username: currentUsername,
     major: currentMajor,
     minor: currentMinor,
-    college: currentCollege
+    college: currentCollege,
+    savedPosts: savedPosts
   } = currentUser()
 
   const [
@@ -165,6 +168,9 @@ const ProfilePage = () => {
 
   return (
     <>
+      <LeftSidebarContainer>
+        <SideNav />
+      </LeftSidebarContainer>
       <form onSubmit={saveData}>
         <p>{userStatement}</p>
         <FieldSetStyle>
@@ -243,10 +249,21 @@ const ProfilePage = () => {
           )}
         </DDWrapper>
 
+<<<<<<< HEAD
         <PostingButton
           type='submit'
           disabled={userExists?.doesUsernameExist}
         >
+=======
+        <div>
+          Your saved posts:
+          {savedPosts.map(post => (
+            <div>{'localhost:3000/posts/' + post._id}</div>
+          ))}
+        </div>
+
+        <PostingButton type='submit' disabled={userExists?.doesUsernameExist}>
+>>>>>>> 25557b993f31ef1c6968201c0752e4b454a42862
           Save
         </PostingButton>
       </form>

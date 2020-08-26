@@ -6,6 +6,7 @@ import Feed from './PostFeedWithData'
 import Login from './Login'
 import MoreInfo from './MoreInfo'
 import ProfilePage from './Profile'
+import PostFull from './PostFull'
 import { currentUser, loadToken } from '../utils/apollo'
 import { VERIFY_USER } from '../graphql/Queries'
 import { TOKEN_NAME } from '../config'
@@ -49,6 +50,10 @@ const routesArray = [
   {
     path: '/feed',
     element: <PrivateRoute element={<Feed />} />
+  },
+  {
+    path: '/posts/:postID',
+    element: <PrivateRoute element={<PostFull />} /> //test
   },
   {
     path: '/info',

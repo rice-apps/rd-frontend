@@ -2,13 +2,14 @@ import styled from 'styled-components'
 
 const HorizontalDiv = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  padding-right: 70px;
 `
 
 const TextField = styled.input`
-  padding: 5px;
-  width: 150px;
-  margin: 5px 0;
+  padding: .3vw;
+  width: 10vw;
+  margin: 1vw 0;
   border: 0;
   // border-radius: 6vw;
   border: 1px solid rgb(223, 223, 223);
@@ -54,8 +55,10 @@ const SubmitButton = styled.button`
 `
 
 const DDWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
   position: relative;
-  width: 222px;
+  max-width: 10vw;
   font-size: 1rem;
   user-select: none;
   margin-bottom: 15px;
@@ -63,23 +66,24 @@ const DDWrapper = styled.div`
 
 const DDHeader = styled.div`
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   position: relative;
-  border: 1px solid rgb(223, 223, 223);
+  /* border: 1px solid rgb(223, 223, 223); */
   background-color: white;
-  line-height: 38px;
+  line-height: 5vh;
   cursor: default;
   cursor: pointer;
-  // border-radius: 20px;
-  margin-left: 12px;
-  width: 16vw;
-  height: 5vh;
+  border-radius: 2vw;
+  margin-left: 1vw;
+  max-width: 15em;
+  max-height: 2.5em;
 `
 
 const DDHeaderTitle = styled.div`
-  margin: 0px 20px;
-  margin-right: 10px;
+  margin: 0 1.5vw;
+  margin-right: .5vw;
   font-weight: 600;
 `
 

@@ -14,9 +14,7 @@ import {
   PostWrapper,
   Button,
   ButtonWrapper,
-  PostHeaderType,
   Form,
-  TitleDescriptor,
   TitleWrapper,
   TitleBox,
   BodyWrapper,
@@ -25,8 +23,19 @@ import {
   ImageWrapper,
   ImageBox,
   ExitButton,
-  TitleFlex
+  TitleFlex,
+  DateWrapper,
+  PaidWrapper,
+  JobWrapper,
+  LocationWrapper,
+  LocationBox,
+  TagBox,
+  TagWrapper,
+  TagChosenWrapper,
+  TagChosen,
+  TagCircle
 } from './WritePost.styles'
+
 import { currentUser } from '../utils/apollo'
 
 function WritePost (props) {
@@ -42,6 +51,10 @@ function WritePost (props) {
   const [isPaid, setPaid] = useState(false)
   const [isClosed, setClosed] = useState(false)
   const [postType, setPostType] = useState('Discussion')
+
+  const userInfo = currentUser()
+
+  const [tags, setTags] = useState([])
 
   const [postCreate] = useMutation(POST_CREATE)
 
@@ -70,25 +83,61 @@ function WritePost (props) {
 
   const toggleClosed = () => setClosed(!isClosed)
 
+  function addTag (e) {
+    console.log('tag')
+    console.log(e.keyCode)
+    e.preventDefault()
+    // adds new todo to beginning of todos array
+    if (e.keyCode === 13) {
+      console.log('tag', e.target.value)
+      if (!tags.includes(document.getElementById('tag').innerText.trim())) {
+        setTags([...tags, document.getElementById('tag').innerText.trim()])
+      }
+      document.getElementById('tag').innerHTML = ''
+    }
+  }
+
+  function removeTag (old) {
+    setTags(tags.filter(tag => tag !== old))
+  }
+
   switch (postType) {
     case 'Discussion':
       form = (
         <Form>
           <TitleWrapper>
-            <TitleDescriptor>Title</TitleDescriptor>
-            <TitleBox id='title' contentEditable />
+            {/* <TitleDescriptor>Enter Title. . .</TitleDescriptor> */}
+            <TitleBox id='title' contentEditable={true}>
+              Enter Title. . .
+            </TitleBox>
           </TitleWrapper>
           <BodyWrapper>
-            <TitleDescriptor>Body</TitleDescriptor>
-            <BodyBox id='body' contentEditable />
+            {/* <TitleDescriptor>Body</TitleDescriptor> */}
+            <BodyBox id='body' contentEditable={true}>
+              Enter Description. . .
+            </BodyBox>
           </BodyWrapper>
           <ImageWrapper>
-            <TitleDescriptor>Images</TitleDescriptor>
+            {/* <TitleDescriptor>Images</TitleDescriptor> */}
             <ImageBox id='image'>
+              Add Image
               <UploadToPost parentUrlCallback={callbackURL} />
               {/* <p>{url}</p> */}
             </ImageBox>
           </ImageWrapper>
+          <TagWrapper>
+            Add Tag (press enter after each tag)
+            <TagBox id='tag' contentEditable={true} onKeyUp={addTag} />
+            <TagChosenWrapper>
+              Your tags:
+              {tags.map(tag => (
+                <TagChosen onClick={() => removeTag(tag)}>
+                  <TagCircle />
+                  {tag}
+                </TagChosen>
+              ))}
+            </TagChosenWrapper>
+          </TagWrapper>
           <PostingButton
             onClick={e => {
               e.preventDefault()
@@ -101,9 +150,12 @@ function WritePost (props) {
                     kind: postType,
                     title,
                     body,
-                    imageUrl: url === '' ? null : url
+                    creator: userInfo.netID,
+                    imageUrl: url === '' ? null : url,
+                    tags: tags
                   }
                 })
+                setTags([])
                 props.switchVisibility(false)
               } catch (error) {
                 log.error('error', error)
@@ -119,29 +171,49 @@ function WritePost (props) {
       form = (
         <Form>
           <TitleWrapper>
-            <TitleDescriptor>Title</TitleDescriptor>
-            <TitleBox id='title' contentEditable />
+            <TitleBox id='title' contentEditable={true}>
+              Enter Title. . .
+            </TitleBox>
+            <DateWrapper>
+              From
+              <DatePicker
+                selected={startDate}
+                onChange={changeStartDate}
+                style={{ width: 'inherit' }}
+              />
+              to
+              <DatePicker selected={endDate} onChange={changeEndDate} />
+            </DateWrapper>
           </TitleWrapper>
           <BodyWrapper>
-            <TitleDescriptor>Body</TitleDescriptor>
-            <BodyBox id='body' contentEditable />
+            <BodyBox id='body' contentEditable={true}>
+              Enter Description. . .
+            </BodyBox>
           </BodyWrapper>
-          <ImageWrapper>
-            <TitleDescriptor>Images</TitleDescriptor>
-            <ImageBox id='image'>
-              <UploadToPost parentUrlCallback={callbackURL} />
-            </ImageBox>
-          </ImageWrapper>
-          Start Date
-          <DatePicker selected={startDate} onChange={changeStartDate} />
-          End Date
-          <DatePicker selected={endDate} onChange={changeEndDate} />
-          <input
-            type='text'
-            name='Place of Event'
-            placeholder='Event Location'
-            onChange={e => setPlace(e.target.value)}
-          />
+          <ImageBox id='image'>
+            Add Image
+            <UploadToPost parentUrlCallback={callbackURL} />
+            {/* <p>{url}</p> */}
+          </ImageBox>
+          <TagWrapper>
+            Add Tag (press enter after each tag)
+            <TagBox id='tag' contentEditable={true} onKeyUp={addTag} />
+            <TagChosenWrapper>
+              Your tags:
+              {tags.map(tag => (
+                <TagChosen onClick={() => removeTag(tag)}>
+                  <TagCircle />
+                  {tag}
+                </TagChosen>
+              ))}
+            </TagChosenWrapper>
+          </TagWrapper>
+          <JobWrapper>
+            <LocationWrapper>
+              Location:
+              <LocationBox id='place' contentEditable={true} />
+            </LocationWrapper>
+          </JobWrapper>
           <PostingButton
             onClick={e => {
               e.preventDefault()
@@ -154,12 +226,15 @@ function WritePost (props) {
                     kind: postType,
                     title,
                     body,
+                    creator: userInfo.netID,
                     start: startDate,
                     end: endDate,
                     place,
-                    imageUrl: url === '' ? null : url
+                    imageUrl: url === '' ? null : url,
+                    tags: tags
                   }
                 })
+                setTags([])
                 props.switchVisibility(false)
               } catch (error) {
                 log.error('error', error)
@@ -176,38 +251,56 @@ function WritePost (props) {
         <>
           <Form>
             <TitleWrapper>
-              <TitleDescriptor>Title</TitleDescriptor>
-              <TitleBox id='title' contentEditable />
+              <TitleBox id='title' contentEditable={true}>
+                Enter Title. . .
+              </TitleBox>
+              <DateWrapper>
+                From
+                <DatePicker
+                  selected={startDate}
+                  onChange={changeStartDate}
+                  style={{ width: 'inherit' }}
+                />
+                to
+                <DatePicker selected={endDate} onChange={changeEndDate} />
+              </DateWrapper>
             </TitleWrapper>
             <BodyWrapper>
-              <TitleDescriptor>Body</TitleDescriptor>
-              <BodyBox id='body' contentEditable />
+              <BodyBox id='body' contentEditable={true}>
+                Enter Description. . .
+              </BodyBox>
             </BodyWrapper>
-            <ImageWrapper>
-              <TitleDescriptor>Images</TitleDescriptor>
-              <ImageBox id='image'>
-                <UploadToPost parentUrlCallback={callbackURL} />
-              </ImageBox>
-            </ImageWrapper>
-            <input
-              type='text'
-              name='Place of Job'
-              placeholder='Event Location'
-              onChange={e => setPlace(e.target.value)}
-            />
-            Start Date
-            <DatePicker
-              selected={startDate}
-              onChange={changeStartDate}
-              style={{ width: 'inherit' }}
-            />
-            End Date
-            <DatePicker selected={endDate} onChange={changeEndDate} />
-            <p>Is the job paid?</p>
-            {/* Documentation for these: https://material-ui.com/api/checkbox/ */}
-            <Checkbox id='isPaid' onChange={togglePaid} />
-            <p>Is the job open?</p>
-            <Checkbox id='isOpen' onChange={toggleClosed} />
+            <ImageBox id='image'>
+              Add Image
+              <UploadToPost parentUrlCallback={callbackURL} />
+              {/* <p>{url}</p> */}
+            </ImageBox>
+            <TagWrapper>
+              Add Tag (press enter after each tag)
+              <TagBox id='tag' contentEditable={true} onKeyUp={addTag} />
+              <TagChosenWrapper>
+                Your tags:
+                {tags.map(tag => (
+                  <TagChosen onClick={() => removeTag(tag)}>
+                    <TagCircle />
+                    {tag}
+                  </TagChosen>
+                ))}
+              </TagChosenWrapper>
+            </TagWrapper>
+            <JobWrapper>
+              <LocationWrapper>
+                Location:
+                <LocationBox id='place' contentEditable={true} />
+              </LocationWrapper>
+              <PaidWrapper>
+                <div>Is the job paid?</div>
+                {/* Documentation for these: https://material-ui.com/api/checkbox/ */}
+                <Checkbox id='isPaid' onChange={togglePaid} />
+                <div>Is the job open?</div>
+                <Checkbox id='isOpen' onChange={toggleClosed} />
+              </PaidWrapper>
+            </JobWrapper>
             <PostingButton
               onClick={e => {
                 e.preventDefault()
@@ -220,15 +313,18 @@ function WritePost (props) {
                       kind: postType,
                       title,
                       body,
+                      creator: userInfo.netID,
                       start: startDate,
                       end: endDate,
                       place,
                       isPaid,
                       isClosed,
-                      imageUrl: url === '' ? null : url
+                      imageUrl: url === '' ? null : url,
+                      tags: tags
                     }
                   })
                   log.info('Submitted and push!')
+                  setTags([])
                   props.switchVisibility(false)
                 } catch (error) {
                   log.error('error', error)
@@ -245,25 +341,38 @@ function WritePost (props) {
       form = (
         <Form>
           <TitleWrapper>
-            <TitleDescriptor>Title</TitleDescriptor>
-            <TitleBox id='title' contentEditable />
+            <TitleBox id='title' contentEditable={true}>
+              Enter Title. . .
+            </TitleBox>
+            <DateWrapper>
+              Deadline
+              <DatePicker selected={endDate} onChange={changeEndDate} />
+            </DateWrapper>
           </TitleWrapper>
+          {/* need to put the descriptor as a placeholder inside the box */}
           <BodyWrapper>
-            <TitleDescriptor>Body</TitleDescriptor>
-            <BodyBox id='body' contentEditable />
+            <BodyBox id='body' contentEditable={true}>
+              Enter Description. . .
+            </BodyBox>
           </BodyWrapper>
-          <ImageWrapper>
-            <TitleDescriptor>Images</TitleDescriptor>
-            <ImageBox id='image'>
-              <UploadToPost parentUrlCallback={callbackURL} />
-            </ImageBox>
-          </ImageWrapper>
-          Deadline Date
-          <DatePicker
-            selected={endDate}
-            onChange={changeEndDate}
-            style={{ width: 'inherit' }}
-          />
+          <ImageBox id='image'>
+            Add Image
+            <UploadToPost parentUrlCallback={callbackURL} />
+            {/* <p>{url}</p> */}
+          </ImageBox>
+          <TagWrapper>
+            Add Tag (press enter after each tag)
+            <TagBox id='tag' contentEditable={true} onKeyUp={addTag} />
+            <TagChosenWrapper>
+              Your tags:
+              {tags.map(tag => (
+                <TagChosen onClick={() => removeTag(tag)}>
+                  <TagCircle />
+                  {tag}
+                </TagChosen>
+              ))}
+            </TagChosenWrapper>
+          </TagWrapper>
           <PostingButton
             onClick={e => {
               e.preventDefault()
@@ -276,10 +385,13 @@ function WritePost (props) {
                     kind: postType,
                     title,
                     body,
+                    creator: userInfo.netID,
                     deadline: endDate,
-                    imageUrl: url === '' ? null : url
+                    imageUrl: url === '' ? null : url,
+                    tags: tags
                   }
                 })
+                setTags([])
                 props.switchVisibility(false)
               } catch (error) {
                 log.error('error', error)
@@ -291,7 +403,6 @@ function WritePost (props) {
         </Form>
       )
       break
-
     default:
       throw new Error('something went horribly wrong!')
   }
@@ -301,23 +412,24 @@ function WritePost (props) {
       <Helmet>
         <title>RiceDiscuss &middot; Compose post</title>
       </Helmet>
-      <ButtonWrapper>
-        <Button id='Discussion' onClick={changePostType}>
-          Discussion
-        </Button>
-        <Button id='Notice' onClick={changePostType}>
-          Notice
-        </Button>
-        <Button id='Event' onClick={changePostType}>
-          Event
-        </Button>
-        <Button id='Job' onClick={changePostType}>
-          Job
-        </Button>
-      </ButtonWrapper>
       <PostWrapper>
         <TitleFlex>
-          <PostHeaderType>{postType}</PostHeaderType>
+          Add New Post
+          <ButtonWrapper>
+            <Button id='Discussion' onClick={changePostType}>
+              Discussion
+            </Button>
+            <Button id='Notice' onClick={changePostType}>
+              Notice
+            </Button>
+            <Button id='Event' onClick={changePostType}>
+              Event
+            </Button>
+            <Button id='Job' onClick={changePostType}>
+              Job
+            </Button>
+          </ButtonWrapper>
+          {/* <PostHeaderType>{postType}</PostHeaderType> */}
           <ExitButton onClick={closeModal}>X</ExitButton>
         </TitleFlex>
         {form}
