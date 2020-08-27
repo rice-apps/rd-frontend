@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation, useQuery, useLazyQuery } from '@apollo/client'
-import IconButton from '@material-ui/core/IconButton';
-import TuneIcon from '@material-ui/icons/Tune';
+import IconButton from '@material-ui/core/IconButton'
+import TuneIcon from '@material-ui/icons/Tune'
 import DropDownItem from './DropDownItem'
 
 import {
@@ -191,7 +191,7 @@ const Filters = props => {
             </DDList>
           )}
         </DDWrapper>
-        <IconButton 
+        <IconButton
           onClick={submitFilters}
           style={{
             background: 'white',

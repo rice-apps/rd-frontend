@@ -7,7 +7,7 @@ const HorizontalDiv = styled.div`
 `
 
 const TextField = styled.input`
-  padding: .3vw;
+  padding: 0.3vw;
   width: 10vw;
   margin: 1vw 0;
   border: 0;
@@ -83,7 +83,7 @@ const DDHeader = styled.div`
 
 const DDHeaderTitle = styled.div`
   margin: 0 1.5vw;
-  margin-right: .5vw;
+  margin-right: 0.5vw;
   font-weight: 600;
 `
 

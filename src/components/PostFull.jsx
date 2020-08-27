@@ -79,9 +79,7 @@ function PostFull () {
   const [reportPost] = useMutation(REPORT_POST)
   const [removePost] = useMutation(REMOVE_POST)
   const [savePost] = useMutation(SAVE_POST)
-  const [, { refetch }] = useLazyQuery(
-    FETCH_COMMENTS_POST
-  )
+  const [, { refetch }] = useLazyQuery(FETCH_COMMENTS_POST)
 
   // *********** post full setup below
 
