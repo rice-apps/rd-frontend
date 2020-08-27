@@ -370,7 +370,7 @@ const DraftSubmitWrapper = styled.div`
 const RichIcons = styled.div`
   height: 4.4vh;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   padding: 0.5vh;
   width: 100%;
@@ -379,7 +379,11 @@ const RichIcons = styled.div`
 const IconButton = styled.div`
   // padding: 0.1vh;
   // background-color: green;
-  vertical-align: center;
+  // vertical-align: center;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
   
   cursor: pointer;
 `

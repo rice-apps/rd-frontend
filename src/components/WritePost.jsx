@@ -34,25 +34,17 @@ import {
   PostWrapper,
   Button,
   ButtonWrapper,
-  PostHeaderType,
   Form,
-  TitleDescriptor,
   TitleWrapper,
   TitleBox,
   BodyWrapper,
   PostingButton,
-  BodyBox,
-  ImageWrapper,
-  ImageBox,
   ExitButton,
-  ExtrasWrapper,
-  Banner,
   ModalTitle,
   FormWrapper,
   DatesWrapper,
   TagWrapper,
   SelectCategoryWrapper,
-  SuggestedTags,
   LocationJobInfoWrapper,
   DraftSubmitWrapper,
   RichIcons,
@@ -62,7 +54,6 @@ import {
   TagBox,
   Tag,
   SaveAsDraft,
-  DatePickerWrapper,
   DateBox,
   LocationBox,
   TagChosenWrapper,
@@ -70,6 +61,7 @@ import {
   TagCircle
 } from './WritePost.styles'
 import { currentUser } from '../utils/apollo'
+import UploadToPost from "./UploadToPost";
 
 const styleMap = {
   'STRIKETHROUGH': {
@@ -108,6 +100,7 @@ function WritePost (props) {
 
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
   const [textAlignment, setTextAlignment] = useState('left')
+  const [imgUploaderVisible, setImgUploaderVisible] = useState(false)
 
   // console.log(tags)
 
@@ -141,13 +134,18 @@ function WritePost (props) {
           return 'handled';
         }
         return 'not-handled';
-    }
+      } else if (props.op === 'IMAGE') {
+        if (url === '') {
+          setImgUploaderVisible(!imgUploaderVisible)
+        }
+      }
     }
 
     const backgroundBoolean = {
       'align': textAlignment === props.op,
       'style': editorState.getCurrentInlineStyle().has(props.op),
       'list': RichUtils.getCurrentBlockType(editorState) === props.op,
+      'image': url !== '',
       'default': false,
     }
 
@@ -364,7 +362,7 @@ function WritePost (props) {
 
     try {
       postCreate(postToCreate[postType])
-      console.log('made it here')
+      // console.log('made it here')
       setTags([])
       props.switchVisibility(false)
     } catch (error) {
@@ -430,11 +428,12 @@ function WritePost (props) {
                 <RichButton icon={<FormatAlignLeftIcon />} type={'align'} op={'left'} />
                 <RichButton icon={<FormatAlignCenterIcon />} type={'align'} op={'center'} />
                 <RichButton icon={<FormatAlignRightIcon />} type={'align'} op={'right'} />
-                {/*<RichButton icon={<FormatAlignJustifyIcon />} type={'align'} op={'justify'} />*/}
-                <RichButton icon={<InsertLinkIcon />} type={'insert'} op={'LINK'} />
-                <RichButton icon={<VideoLibraryIcon />} type={'insert'} op={'VIDEO'} />
-                <RichButton icon={<ImageIcon />} type={'insert'} op={'IMAGE'} />
+                <RichButton icon={<InsertLinkIcon />} type={'link'} op={'LINK'} />
+                <RichButton icon={<VideoLibraryIcon />} type={'video'} op={'VIDEO'} />
+                <RichButton icon={<ImageIcon />} type={'image'} op={'IMAGE'} />
               </RichIcons>
+              <UploadToPost parentUrlCallback={callbackURL} show={imgUploaderVisible}
+                            dismissSelf={() => { setImgUploaderVisible(false) }}/>
               <RichEditorWrapper>
                 <Editor placeholder={'Enter description...'} editorState={editorState}
                         onChange={ editorState => { setEditorState(editorState) }}
