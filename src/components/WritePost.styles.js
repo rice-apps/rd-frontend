@@ -8,10 +8,22 @@ const ExitButton = styled.div`
   border: 2px solid #CDCED2;
   opacity: 1;
   
-  width: 1vw;
-  height: 1vw;
+  // width: 1vw;
+  // height: 1vw;
+  
+  width: 20px;
+  height: 20px;
+  border: 2px solid #cdced2;
+  opacity: 1;
+  text-align: center;
   
   cursor: pointer;
+  
+  
+  &:hover {
+    background-color: red;
+    opacity: 70%;
+  }
 `
 
 const PostWrapper = styled.div`
@@ -86,7 +98,7 @@ const PostingButton = styled.button`
   // }
 `
 
-const Form = styled.form`
+const Form = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -405,6 +417,8 @@ const TagBox = styled.input`
   outline: none;
   padding-left: 0.5vw;
   border-radius: 0.5vw;
+  
+  margin-top: 0.7vh;
 `
 
 const Tag = styled.text`
@@ -450,7 +464,7 @@ const DateBox = styled.div`
   justify-content: center;
 `
 
-const LocationBox = styled.div`
+const LocationBox = styled.input`
   background: #F4F4F49A 0% 0% no-repeat padding-box;
   border-radius: 0.25vw;
   width: 8.6vw;
@@ -463,6 +477,52 @@ const LocationBox = styled.div`
   white-space: nowrap;
   
   outline: none;
+  border: none;
+`
+
+const TagChosenWrapper = styled.div`
+  // width: 741px;
+  // height: 30px;
+  text-align: left;
+  font: Roman 16px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
+  opacity: 1;
+  display: flex;
+  
+  position: relative;
+  left: 1.8vw;
+`
+
+const TagChosen = styled.div`
+  //width: 124px;
+  padding: 0px 10px 0px 5px;
+  height: 24px;
+  margin-left: 5px;
+  background: #9bbad1 0% 0% no-repeat padding-box;
+  opacity: 1;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 30px 10px 10px 30px;
+  text-align: left;
+  font: Heavy 14px/17px Avenir;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+  &:hover {
+    background-color: red;
+    opacity: 70%;
+  }
+`
+
+const TagCircle = styled.div`
+  width: 10px;
+  height: 10px;
+  margin-right: 10px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  opacity: 0.85;
+  border-radius: 75px;
 `
 
 
@@ -500,5 +560,8 @@ export {
   SaveAsDraft,
   DatePickerWrapper,
   DateBox,
-  LocationBox
+  LocationBox,
+  TagChosen,
+  TagChosenWrapper,
+  TagCircle
 }

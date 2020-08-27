@@ -57,7 +57,15 @@ import {
   DraftSubmitWrapper,
   RichIcons,
   IconButton,
-  RichEditorWrapper, SuggestedTagsWrapper, TagBox, Tag, SaveAsDraft, DatePickerWrapper, DateBox, LocationBox
+  RichEditorWrapper,
+  SuggestedTagsWrapper,
+  TagBox,
+  Tag,
+  SaveAsDraft,
+  DatePickerWrapper,
+  DateBox,
+  LocationBox,
+  TagChosenWrapper, TagChosen, TagCircle
 } from './WritePost.styles'
 import { currentUser } from '../utils/apollo'
 
@@ -77,7 +85,9 @@ function WritePost (props) {
 
   const userInfo = currentUser()
 
-  const [tags, setTags]
+  const [tags, setTags] = useState([])
+
+  const [postCreate] = useMutation(POST_CREATE)
 
   const [url, setUrl] = useState('')
 
@@ -97,11 +107,15 @@ function WritePost (props) {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
   const [textAlignment, setTextAlignment] = useState('left')
 
-  // const [dummyState, setDummyState] = useState(null)
+  // console.log(tags)
 
-  // console.log(RichUtils.getCurrentBlockType(editorState))
+  if (!props.show) {
+    return null
+  }
 
-  // console.log(dummyState)
+  if (userInfo === {}) {
+    return <Navigate to='/login' />
+  }
 
   const RichButton = props => {
 
@@ -154,32 +168,58 @@ function WritePost (props) {
     return 'not-handled';
   }
 
-  const [postCreate] = useMutation(POST_CREATE)
-
-  if (!props.show) {
-    return null
-  }
-
-  if (currentUser() === {}) {
-    return <Navigate to='/login' />
-  }
-
-  let form = <div>Something went wrong! Please report to riceapps.</div>
-
-  const changeStartDate = date => setStart(date)
-  const changeEndDate = date => setEnd(date)
+  const changeStartDate = date => setStart(date.getTime())
+  const changeEndDate = date => setEnd(date.getTime())
   const changePostType = e => setPostType(e.target.id)
+  const changeLocation = () => {
+    const location = document.getElementById('location').value.trim()
+    // console.log(location)
+    setPlace(location)
+  }
 
   const closeModal = () => {
     props.switchVisibility(false)
   }
 
-  const checkTitleAndBody = (title, body) =>
-    title.length <= 0 || body.length <= 0
+  const checkTitleBodyAndTag = (title, body, tagInput) =>
+    title.length <= 0 || body.length <= 0 || tagInput.length > 0
+
+  const checkExtras = {
+    'Discussion': () => { return false },
+    'Event': () => {
+      if (!startDate || !endDate || place === '') { return true }},
+    'Job': () => {
+      if (!startDate || !endDate || place === '') {
+        // console.log(startDate)
+        // console.log(endDate)
+        // console.log(place)
+        return true }},
+    'Notice': () => {
+      if (!endDate) { return true }}
+  }
 
   const togglePaid = () => setPaid(!isPaid)
 
   const toggleClosed = () => setClosed(!isClosed)
+
+  function addTag (e) {
+    // console.log('tag')
+    // console.log(e.keyCode)
+    e.preventDefault()
+    // adds new todo to beginning of todos array
+    if (e.keyCode === 13) {
+      // console.log('tag', e.target.value)
+      const text = document.getElementById('tag').value.trim()
+      if (!tags.includes(text)) {
+        setTags([...tags, text])
+      }
+      document.getElementById('tag').value = ''
+    }
+  }
+
+  function removeTag (old) {
+    setTags(tags.filter(tag => tag !== old))
+  }
 
   const datePossibilities = {
     'Discussion': <DatesWrapper />,
@@ -217,7 +257,7 @@ function WritePost (props) {
         </DatesWrapper>
     ),
 
-    'default': <DatesWrapper />,
+    'default': <div>Something went wrong! Please report to riceapps.</div>
   }
 
   const locationJobInfo = {
@@ -228,14 +268,14 @@ function WritePost (props) {
     'Event': (
       <LocationJobInfoWrapper>
         Location:
-        <LocationBox id={'location'} contentEditable />
+        <LocationBox id={'location'} contentEditable onChange={changeLocation} />
       </LocationJobInfoWrapper>
     ),
 
     'Job': (
       <LocationJobInfoWrapper>
         Location:
-        <LocationBox id={'location'} contentEditable />
+        <LocationBox id={'location'} contentEditable onKeyUp={changeLocation} />
         Paid
         <Checkbox id='isPaid' onChange={togglePaid} color={'dummy-color'} />
         Closed
@@ -248,7 +288,7 @@ function WritePost (props) {
     ),
 
     'default': (
-        <LocationJobInfoWrapper />
+        <div>Something went wrong! Please report to riceapps.</div>
     )
   }
 
@@ -257,78 +297,69 @@ function WritePost (props) {
 
     const title = document.getElementById('title').innerHTML
     const body = draftToMarkdown(convertToRaw(editorState.getCurrentContent()))
-    if (checkTitleAndBody(title, body)) return
+    const tagInput = document.getElementById('tag').value.trim()
+    console.log('here1')
+    if (checkTitleBodyAndTag(title, body, tagInput)) return
+    console.log('here2')
+    if (checkExtras[postType]()) return
+    console.log('here3')
 
     const postToCreate = {
-      'Discussion': (
-          {
-            variables: {
-              kind: postType,
-              title,
-              body,
-              imageUrl: url === '' ? null : url
-            }
-          }
-      ),
-      'Event': (
-          {
-            variables: {
-              kind: postType,
-              title,
-              body,
-              creator: userInfo.netID,
-              start: startDate,
-              end: endDate,
-              place,
-              imageUrl: url === '' ? null : url,
-              tags: tags
-            }
-          }
-      ),
-      'Job': (
-          {
-            variables: {
-              kind: postType,
-              title,
-              body,
-              creator: userInfo.netID,
-              start: startDate,
-              end: endDate,
-              place,
-              isPaid,
-              isClosed,
-              imageUrl: url === '' ? null : url,
-              tags: tags
-            }
-          }
-      ),
-      'Notice': (
-          {
-            variables: {
-              kind: postType,
-              title,
-              body,
-              creator: userInfo.netID,
-              deadline: endDate,
-              imageUrl: url === '' ? null : url,
-              tags: tags
-            }
-          }
-      ),
-      'default': (
-          {
-            variables: {
-              kind: postType,
-              title,
-              body,
-              imageUrl: url === '' ? null : url
-            }
-          }
-      ),
+      'Discussion': {
+        variables: {
+          kind: postType,
+          title,
+          body,
+          creator: userInfo.netID,
+          imageUrl: url === '' ? null : url,
+          tags: tags
+        }
+      },
+      'Event': {
+        variables: {
+          kind: postType,
+          title,
+          body,
+          creator: userInfo.netID,
+          start: startDate,
+          end: endDate,
+          place,
+          imageUrl: url === '' ? null : url,
+          tags: tags
+        }
+      },
+      'Job': {
+        variables: {
+          kind: postType,
+          title,
+          body,
+          creator: userInfo.netID,
+          start: startDate,
+          end: endDate,
+          place,
+          isPaid,
+          isClosed,
+          imageUrl: url === '' ? null : url,
+          tags: tags
+        }
+      },
+      'Notice': {
+        variables: {
+          kind: postType,
+          title,
+          body,
+          creator: userInfo.netID,
+          deadline: endDate,
+          imageUrl: url === '' ? null : url,
+          tags: tags
+        }
+      },
     }
 
     try {
-      postCreate(postToCreate[postType] || postToCreate['default'])
+      postCreate(postToCreate[postType])
+      console.log('made it here')
+      setTags([])
       props.switchVisibility(false)
     } catch (error) {
       log.error('error', error)
@@ -583,11 +614,6 @@ function WritePost (props) {
       <PostWrapper>
         <ModalTitle>
           Add New Post
-          {/*{dummyState && convertFromRaw(JSON.parse(dummyState))}*/}
-          {/*{dummyState &&*/}
-          {/*  <Editor readOnly={true} editorState={EditorState.createWithContent(convertFromRaw(JSON.parse(dummyState)))}*/}
-          {/*    customStyleMap={styleMap}*/}
-          {/*    textAlignment={textAlignment} />}*/}
         </ModalTitle>
 
         <ExitButton onClick={closeModal} > X </ExitButton>
@@ -642,7 +668,7 @@ function WritePost (props) {
                 <RichButton icon={<VideoLibraryIcon />} type={'insert'} op={'VIDEO'} />
                 <RichButton icon={<ImageIcon />} type={'insert'} op={'IMAGE'} />
               </RichIcons>
-              <RichEditorWrapper id={'body'}>
+              <RichEditorWrapper>
                 <Editor placeholder={'Enter description...'} editorState={editorState}
                         onChange={ editorState => { setEditorState(editorState) }}
                         handleKeyCommand={ handleKeyCommand }
@@ -651,9 +677,20 @@ function WritePost (props) {
               </RichEditorWrapper>
             </BodyWrapper>
             <TagWrapper>
-              <t style={{position: 'relative', bottom: '1.8vh', left: '1.8vw'}}> Add Tag </t>
-              <TagBox id={'tags'} contentEditable
+              <t style={{position: 'relative', bottom: '1vh', left: '1.8vw'}}>
+                Add Tag (press enter after each tag)
+              </t>
+              <TagBox id={'tag'} contentEditable={true} onKeyUp={addTag}
                       placeholder={'Ex. Internship, Externship, ...'} />
+              <TagChosenWrapper>
+                Your tags:
+                {tags.map(tag => (
+                    <TagChosen onClick={() => removeTag(tag)}>
+                      <TagCircle />
+                      {tag}
+                    </TagChosen>
+                ))}
+              </TagChosenWrapper>
             </TagWrapper>
             <SuggestedTagsWrapper>
               Suggested:
