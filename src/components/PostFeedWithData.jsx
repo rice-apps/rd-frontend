@@ -22,7 +22,7 @@ import {
 import { Banner } from './PostFeed.styles'
 import { SideNav } from './SideNav'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
-import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button'
 
 function PostFeedWithData () {
   const [today, setToday] = useState(null)
@@ -76,7 +76,7 @@ function PostFeedWithData () {
         <PostFeedContainer>
           <NewPostButtonContainer>
             <Button
-              variant="contained"
+              variant='contained'
               onClick={openModal}
               style={{
                 textTransform: 'none',
@@ -85,7 +85,11 @@ function PostFeedWithData () {
                 marginLeft: '-4.5vw',
                 marginTop: '3vw'
               }}
-              startIcon={<AddCircleIcon style={{ color: '#7380FF', width: '1.3vw', height: '1.3vw' }} />}
+              startIcon={
+                <AddCircleIcon
+                  style={{ color: '#7380FF', width: '1.3vw', height: '1.3vw' }}
+                />
+              }
             >
               Create Post
             </Button>

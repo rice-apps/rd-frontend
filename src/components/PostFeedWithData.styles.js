@@ -21,7 +21,7 @@ export const PostFeedContainer = styled.div`
   grid-column-start: 2;
   grid-column-end: 3;
 
-  background-color: #EFF0F8;
+  background-color: #eff0f8;
   /* border: 0.16vw solid #ffffff;
   border-radius: 1.6vw;
   backdrop-filter: blur(30px); */
@@ -43,8 +43,8 @@ export const LeftSidebarContainer = styled.div`
   grid-column-start: 1;
   grid-column-end: 2;
 
-  background-color: #FFFFFF;
-  box-shadow: 0px 0px .2vw white; 
+  background-color: #ffffff;
+  box-shadow: 0px 0px 0.2vw white;
   /* border-right: 0.16vw solid #ffffff; 
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px); */
@@ -57,8 +57,8 @@ export const RightSidebarContainer = styled.div`
   justify-self: center;
   width: 100%;
   height: 100%;
-  background-color: #FFFFFF;
-  box-shadow: 0px 0px .2vw white; 
+  background-color: #ffffff;
+  box-shadow: 0px 0px 0.2vw white;
 `
 export const NewPostButtonContainer = styled.div`
   padding-top: 1vh;
