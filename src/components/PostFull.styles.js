@@ -93,11 +93,11 @@ const DiscussionTitle = styled.text`
 `
 
 const MoreOptions = styled.div`
-    position: relative;
-    grid-area: moreoptions;
-    align-self: start;
-    justify-self: start;
-    margin-top: -2vw;
+  position: relative;
+  grid-area: moreoptions;
+  align-self: start;
+  justify-self: start;
+  margin-top: -2vw;
 `;
 
 const DDMenu = styled.div`
