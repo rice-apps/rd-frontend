@@ -69,32 +69,36 @@ const useStyles = makeStyles(theme => ({
 function PostChunk (props) {
   const classes = useStyles()
   let oneImage = <></>
+
   if (props.post.node.imageUrl) {
     oneImage = (
-        <img width={500} src={props.post.node.imageUrl} alt='Custom-thing' />
+      <img width={500} src={props.post.node.imageUrl} alt='Custom-thing' />
     )
   }
+
+
   const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
-      FETCH_COMMENTS_POST
+    FETCH_COMMENTS_POST
   )
+
   const myPostID = props.post.node._id;
   const myPostLink = "/posts/" + String(myPostID); // forming the url
 
   const listOfUpvoters = props.post.node.upvotes.map(
-      userObject => userObject.username
+    userObject => userObject.username
   )
 
   const listOfDownvoters = props.post.node.downvotes.map(
-      userObject => userObject.username
+    userObject => userObject.username
   )
 
   const [isDDOpen, setDDOpen] = useState(false)
   const [isTagsOpen, setTagsOpen] = useState(false)
   const [isUpvoted, setUpvoted] = useState(
-      listOfUpvoters.includes(props.userInfo.username)
+    listOfUpvoters.includes(props.userInfo.username)
   )
   const [isDownvoted, setDownvoted] = useState(
-      listOfDownvoters.includes(props.userInfo.username)
+    listOfDownvoters.includes(props.userInfo.username)
   )
 
   const toggleDD = () => {
@@ -131,214 +135,214 @@ function PostChunk (props) {
   }
 
   return (
-      <>
-        <DiscussionBoxSection>
-          {/* <OP>
+    <>
+      <DiscussionBoxSection>
+        {/* <OP>
           {props.post.node.creator.username} -{' '}
           <ReactTimeAgo date={props.post.node.date_created} />
         </OP> */}
-          <DiscussionBox>
-            <LeftComponent>
-              <Upvote className={classes.root}>
-                <IconButton
-                    style={isUpvoted ? { color: '#7380FF' } : { color: grey[700] }}
-                    onClick={e => {
-                      e.preventDefault()
-                      toggleUpvoted()
-                      props.upvotePost({
-                        variables: {
-                          netID: props.userInfo.netID,
-                          _id: props.post.node._id
-                        }
-                      })
-                    }}
-                >
-                  <ArrowDropUp fontSize='large' />
-                </IconButton>
-              </Upvote>
-              <Likes>
-                {props.post.node.upvotes.length -
+        <DiscussionBox>
+          <LeftComponent>
+            <Upvote className={classes.root}>
+              <IconButton
+                style={isUpvoted ? { color: '#7380FF' } : { color: grey[700] }}
+                onClick={e => {
+                  e.preventDefault()
+                  toggleUpvoted()
+                  props.upvotePost({
+                    variables: {
+                      netID: props.userInfo.netID,
+                      _id: props.post.node._id
+                    }
+                  })
+                }}
+              >
+                <ArrowDropUp fontSize='large' />
+              </IconButton>
+            </Upvote>
+            <Likes>
+              {props.post.node.upvotes.length -
                 props.post.node.downvotes.length}
-              </Likes>
-              <Downvote className={classes.root}>
-                <IconButton
-                    style={isDownvoted ? { color: '#7380FF' } : { color: grey[800] }}
+            </Likes>
+            <Downvote className={classes.root}>
+              <IconButton
+                style={isDownvoted ? { color: '#7380FF' } : { color: grey[800] }}
+                onClick={e => {
+                  e.preventDefault()
+                  toggleDownvoted()
+                  props.downvotePost({
+                    variables: {
+                      netID: props.userInfo.netID,
+                      _id: props.post.node._id
+                    }
+                  })
+                }}
+              >
+                <ArrowDropDown fontSize='large' />
+              </IconButton>
+            </Downvote>
+          </LeftComponent>
+          <OP>
+            <a>
+              {props.post.node.creator.username} -{' '}
+              <ReactTimeAgo date={props.post.node.date_created} />
+            </a>
+            <Divider style={{width: '51.5vw', maxWidth: '97%', marginTop: '1vh'}}/>
+          </OP>
+          <TopMiddleComponent>
+            <DiscussionTitleDiv>
+              <DiscussionTitle>{props.post.node.title}</DiscussionTitle>
+            </DiscussionTitleDiv>
+            <MoreOptions className={classes.root}>
+              <IconButton onClick={toggleDD}>
+                <MoreHorizIcon open={isDDOpen} />
+              </IconButton>
+              {isDDOpen && (
+                <DDMenu>
+                  <Save
                     onClick={e => {
                       e.preventDefault()
-                      toggleDownvoted()
-                      props.downvotePost({
+
+                      const currentSavedPosts = props.userInfo.savedPosts.map(
+                        tup => tup._id
+                      )
+                      props.savePost({
+                        variables: {
+                          netID: props.userInfo.netID,
+                          savedPosts: [
+                            ...currentSavedPosts,
+                            props.post.node._id
+                          ]
+                        }
+                      })
+
+                      console.log(props.userInfo.savedPosts)
+                    }}
+                  >
+                    Save Post
+                  </Save>
+                  {(props.post.node.kind === 'Event' ||
+                    props.post.node.kind === 'Job') && (
+                    <AddTo>
+                      <AddToCalendar
+                        event={calEvent}
+                        buttonLabel='Add to '
+                        buttonTemplate={calIcon}
+                        listItems={calDropDown}
+                      ></AddToCalendar>
+                    </AddTo>
+                  )}
+
+                  <Expand>
+                    <FullPostLink to={myPostLink}>Expand</FullPostLink>
+                  </Expand>
+
+                  <Report
+                    onClick={e => {
+                      e.preventDefault()
+
+                      props.reportPost({
                         variables: {
                           netID: props.userInfo.netID,
                           _id: props.post.node._id
                         }
                       })
                     }}
-                >
-                  <ArrowDropDown fontSize='large' />
-                </IconButton>
-              </Downvote>
-            </LeftComponent>
-            <OP>
-              <a>
-                {props.post.node.creator.username} -{' '}
-                <ReactTimeAgo date={props.post.node.date_created} />
-              </a>
-              <Divider style={{width: '51.5vw', maxWidth: '97%', marginTop: '1vh'}}/>
-            </OP>
-            <TopMiddleComponent>
-              <DiscussionTitleDiv>
-                <DiscussionTitle>{props.post.node.title}</DiscussionTitle>
-              </DiscussionTitleDiv>
-              <MoreOptions className={classes.root}>
-                <IconButton onClick={toggleDD}>
-                  <MoreHorizIcon open={isDDOpen} />
-                </IconButton>
-                {isDDOpen && (
-                    <DDMenu>
-                      <Save
-                          onClick={e => {
-                            e.preventDefault()
+                  >
+                    Report Post
+                  </Report>
 
-                            const currentSavedPosts = props.userInfo.savedPosts.map(
-                                tup => tup._id
-                            )
-                            props.savePost({
-                              variables: {
-                                netID: props.userInfo.netID,
-                                savedPosts: [
-                                  ...currentSavedPosts,
-                                  props.post.node._id
-                                ]
-                              }
-                            })
+                  {props.post.node.creator.username ===
+                    props.userInfo.username && (
+                    <Delete
+                      onClick={e => {
+                        e.preventDefault()
+                        window.location.reload(false)
+                        props.removePost({
+                          variables: {
+                            _id: props.post.node._id
+                          }
+                        })
+                      }}
+                    >
+                      Delete Post
+                    </Delete>
+                  )}
+                </DDMenu>
+              )}
+            </MoreOptions>
 
-                            console.log(props.userInfo.savedPosts)
-                          }}
-                      >
-                        Save Post
-                      </Save>
-                      {(props.post.node.kind === 'Event' ||
-                          props.post.node.kind === 'Job') && (
-                          <AddTo>
-                            <AddToCalendar
-                                event={calEvent}
-                                buttonLabel='Add to '
-                                buttonTemplate={calIcon}
-                                listItems={calDropDown}
-                            ></AddToCalendar>
-                          </AddTo>
-                      )}
+            <DiscussionBody>
+              {ReactHtmlParser(props.post.node.body)}
+            </DiscussionBody>
 
-                      <Expand>
-                        <FullPostLink to={myPostLink}>Expand</FullPostLink>
-                      </Expand>
+            {oneImage}
+          </TopMiddleComponent>
 
-                      <Report
-                          onClick={e => {
-                            e.preventDefault()
+          <BottomComponent>
+            <Tags>
+              {props.post.node.tags.length > 0 && (
+                <Tag>{props.post.node.tags[0]}</Tag>
+              )}
+              {props.post.node.tags.length > 1 && (
+                <Tag>{props.post.node.tags[1]}</Tag>
+              )}
+              {props.post.node.tags.length > 2 && (
+                <Tag>{props.post.node.tags[2]}</Tag>
+              )}
 
-                            props.reportPost({
-                              variables: {
-                                netID: props.userInfo.netID,
-                                _id: props.post.node._id
-                              }
-                            })
-                          }}
-                      >
-                        Report Post
-                      </Report>
-
-                      {props.post.node.creator.username ===
-                      props.userInfo.username && (
-                          <Delete
-                              onClick={e => {
-                                e.preventDefault()
-                                window.location.reload(false)
-                                props.removePost({
-                                  variables: {
-                                    _id: props.post.node._id
-                                  }
-                                })
-                              }}
-                          >
-                            Delete Post
-                          </Delete>
-                      )}
-                    </DDMenu>
-                )}
-              </MoreOptions>
-
-              <DiscussionBody>
-                {ReactHtmlParser(props.post.node.body)}
-              </DiscussionBody>
-
-              {oneImage}
-            </TopMiddleComponent>
-
-            <BottomComponent>
-              <Tags>
-                {props.post.node.tags.length > 0 && (
-                    <Tag>{props.post.node.tags[0]}</Tag>
-                )}
-                {props.post.node.tags.length > 1 && (
-                    <Tag>{props.post.node.tags[1]}</Tag>
-                )}
-                {props.post.node.tags.length > 2 && (
-                    <Tag>{props.post.node.tags[2]}</Tag>
-                )}
-
-                {isTagsOpen &&
+              {isTagsOpen &&
                 props.post.node.tags.slice(3).map(tag => <Tag>{tag}</Tag>)}
 
-                {props.post.node.tags.length > 3 && (
-                    <ViewTags onClick={toggleTags}>
-                      {isTagsOpen ? (
-                          <text>(View Less)</text>
-                      ) : (
-                          <text>(View All)</text>
-                      )}
-                    </ViewTags>
-                )}
-              </Tags>
-              {/* Insert Comments */}
-              <Comments>
-                <Button
-                    variant="contained"
-                    startIcon={<ChatIcon />}
-                    style={{
-                      backgroundColor: 'rgba(109, 200, 249, .3)',
-                      textTransform: 'none',
-                      maxWidth: '8vw',
-                      display: 'flex'
-                    }}
-                    onClick={() =>
-                        getCommentsPost({
-                          variables: { post_id: props.post.node._id }
-                        })
-                    }
-                >
-                  Comments
-                </Button>
-              </Comments>
-              <ShareFacebook>
-                <IconButton>
-                  <FacebookIcon />
-                </IconButton>
-              </ShareFacebook>
-              <ShareTwitter>
-                <IconButton>
-                  <TwitterIcon />
-                </IconButton>
-              </ShareTwitter>
-              <Share>
-                <IconButton>
-                  <ShareIcon />
-                </IconButton>
-              </Share>
-            </BottomComponent>
-          </DiscussionBox>
-        </DiscussionBoxSection>
-      </>
+              {props.post.node.tags.length > 3 && (
+                <ViewTags onClick={toggleTags}>
+                  {isTagsOpen ? (
+                    <text>(View Less)</text>
+                  ) : (
+                    <text>(View All)</text>
+                  )}
+                </ViewTags>
+              )}
+            </Tags>
+            {/* Insert Comments */}
+            <Comments>
+              <Button
+                variant="contained"
+                startIcon={<ChatIcon />}
+                style={{
+                  backgroundColor: 'rgba(109, 200, 249, .3)',
+                  textTransform: 'none',
+                  maxWidth: '8vw',
+                  display: 'flex'
+                }}
+                onClick={() =>
+                  getCommentsPost({
+                    variables: { post_id: props.post.node._id }
+                  })
+                }
+              >
+                Comments
+              </Button>
+            </Comments>
+            <ShareFacebook>
+              <IconButton>
+                <FacebookIcon />
+              </IconButton>
+            </ShareFacebook>
+            <ShareTwitter>
+              <IconButton>
+                <TwitterIcon />
+              </IconButton>
+            </ShareTwitter>
+            <Share>
+              <IconButton>
+                <ShareIcon />
+              </IconButton>
+            </Share>
+          </BottomComponent>
+        </DiscussionBox>
+      </DiscussionBoxSection>
+    </>
   )
 }
 
