@@ -272,7 +272,7 @@ function PostChunk (props) {
               )}
             </MoreOptions>
 
-            <DiscussionBody>
+            <DiscussionBody style={{ textAlign: props.post.node.text_align}}>
               {ReactHtmlParser(props.post.node.body)}
             </DiscussionBody>
 

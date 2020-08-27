@@ -310,9 +310,10 @@ function WritePost (props) {
           kind: postType,
           title,
           body,
+          text_align: textAlignment,
           creator: userInfo.netID,
           imageUrl: url === '' ? null : url,
-          tags: tags
+          tags: tags,
         }
       },
       'Event': {
@@ -320,6 +321,7 @@ function WritePost (props) {
           kind: postType,
           title,
           body,
+          text_align: textAlignment,
           creator: userInfo.netID,
           start: startDate,
           end: endDate,
@@ -333,6 +335,7 @@ function WritePost (props) {
           kind: postType,
           title,
           body,
+          text_align: textAlignment,
           creator: userInfo.netID,
           start: startDate,
           end: endDate,
@@ -348,6 +351,7 @@ function WritePost (props) {
           kind: postType,
           title,
           body,
+          text_align: textAlignment,
           creator: userInfo.netID,
           deadline: endDate,
           imageUrl: url === '' ? null : url,
@@ -365,245 +369,6 @@ function WritePost (props) {
       log.error('error', error)
     }
   }
-
-  // switch (postType) {
-  //   case 'discussion':
-  //     form = (
-  //       <Form>
-  //         <TitleWrapper>
-  //           <TitleDescriptor>Title</TitleDescriptor>
-  //           <TitleBox id='title' contentEditable />
-  //         </TitleWrapper>
-  //         <BodyWrapper>
-  //           <TitleDescriptor>Body</TitleDescriptor>
-  //           <BodyBox id='body' contentEditable />
-  //         </BodyWrapper>
-  //           <ExtrasWrapper>
-  //               <ImageWrapper>
-  //                   <TitleDescriptor>Images</TitleDescriptor>
-  //                   <ImageBox id='image'>
-  //                       <UploadToPost parentUrlCallback={callbackURL} />
-  //                       {/* <p>{url}</p> */}
-  //                   </ImageBox>
-  //               </ImageWrapper>
-  //
-  //               <Banner />
-  //
-  //               <PostingButton
-  //                   onClick={e => {
-  //                       e.preventDefault()
-  //                       const title = document.getElementById('title').innerHTML
-  //                       const body = document.getElementById('body').innerHTML
-  //                       if (checkTitleAndBody(title, body)) return
-  //                       try {
-  //                           postCreate({
-  //                               variables: {
-  //                                   kind: postType,
-  //                                   title,
-  //                                   body,
-  //                                   imageUrl: url === '' ? null : url
-  //                               }
-  //                           })
-  //                           props.switchVisibility(false)
-  //                       } catch (error) {
-  //                           log.error('error', error)
-  //                       }
-  //                   }}
-  //               >
-  //                   Post
-  //               </PostingButton>
-  //           </ExtrasWrapper>
-  //       </Form>
-  //     )
-  //     break
-  //   case 'event':
-  //     form = (
-  //       <Form>
-  //         <TitleWrapper>
-  //           <TitleDescriptor>Title</TitleDescriptor>
-  //           <TitleBox id='title' contentEditable />
-  //         </TitleWrapper>
-  //         <BodyWrapper>
-  //           <TitleDescriptor>Body</TitleDescriptor>
-  //           <BodyBox id='body' contentEditable />
-  //         </BodyWrapper>
-  //           <ExtrasWrapper>
-  //             <ImageWrapper>
-  //               <TitleDescriptor>Images</TitleDescriptor>
-  //               <ImageBox id='image'>
-  //                 <UploadToPost parentUrlCallback={callbackURL} />
-  //               </ImageBox>
-  //             </ImageWrapper>
-  //             Start Date
-  //             <DatePicker selected={startDate} onChange={changeStartDate} />
-  //             End Date
-  //             <DatePicker selected={endDate} onChange={changeEndDate} />
-  //             <input
-  //                 type='text'
-  //                 name='Place of Event'
-  //                 placeholder='Event Location'
-  //                 onChange={e => setPlace(e.target.value)}
-  //             />
-  //             <PostingButton
-  //               onClick={e => {
-  //                 e.preventDefault()
-  //                 try {
-  //                   const title = document.getElementById('title').innerHTML
-  //                   const body = document.getElementById('body').innerHTML
-  //                   if (checkTitleAndBody(title, body)) return
-  //                   postCreate({
-  //                     variables: {
-  //                       kind: postType,
-  //                       title,
-  //                       body,
-  //                       start: startDate,
-  //                       end: endDate,
-  //                       place,
-  //                       imageUrl: url === '' ? null : url
-  //                     }
-  //                   })
-  //                   props.switchVisibility(false)
-  //                 } catch (error) {
-  //                   log.error('error', error)
-  //                 }
-  //               }}
-  //             >
-  //               Post
-  //             </PostingButton>
-  //           </ExtrasWrapper>
-  //       </Form>
-  //     )
-  //     break
-  //   case 'job':
-  //     form = (
-  //       <>
-  //         <Form>
-  //           <TitleWrapper>
-  //             <TitleDescriptor>Title</TitleDescriptor>
-  //             <TitleBox id='title' contentEditable />
-  //           </TitleWrapper>
-  //           <BodyWrapper>
-  //             <TitleDescriptor>Body</TitleDescriptor>
-  //             <BodyBox id='body' contentEditable />
-  //           </BodyWrapper>
-  //             <ExtrasWrapper>
-  //               <ImageWrapper>
-  //                 <TitleDescriptor>Images</TitleDescriptor>
-  //                 <ImageBox id='image'>
-  //                   <UploadToPost parentUrlCallback={callbackURL} />
-  //                 </ImageBox>
-  //               </ImageWrapper>
-  //               <input
-  //                 type='text'
-  //                 name='Place of Job'
-  //                 placeholder='Event Location'
-  //                 onChange={e => setPlace(e.target.value)}
-  //               />
-  //               Start Date
-  //               <DatePicker
-  //                 selected={startDate}
-  //                 onChange={changeStartDate}
-  //                 style={{ width: 'inherit' }}
-  //               />
-  //               End Date
-  //               <DatePicker selected={endDate} onChange={changeEndDate} />
-  //               <p>Is the job paid?</p>
-  //               {/* Documentation for these: https://material-ui.com/api/checkbox/ */}
-  //               <Checkbox id='isPaid' onChange={togglePaid} />
-  //               <p>Is the job open?</p>
-  //               <Checkbox id='isOpen' onChange={toggleClosed} />
-  //               <PostingButton
-  //                 onClick={e => {
-  //                   e.preventDefault()
-  //                   try {
-  //                     const title = document.getElementById('title').innerHTML
-  //                     const body = document.getElementById('body').innerHTML
-  //                     if (checkTitleAndBody(title, body)) return
-  //                     postCreate({
-  //                       variables: {
-  //                         kind: postType,
-  //                         title,
-  //                         body,
-  //                         start: startDate,
-  //                         end: endDate,
-  //                         place,
-  //                         isPaid,
-  //                         isClosed,
-  //                         imageUrl: url === '' ? null : url
-  //                       }
-  //                     })
-  //                     log.info('Submitted and push!')
-  //                     props.switchVisibility(false)
-  //                   } catch (error) {
-  //                     log.error('error', error)
-  //                   }
-  //                 }}
-  //               >
-  //                 Post
-  //               </PostingButton>
-  //             </ExtrasWrapper>
-  //         </Form>
-  //       </>
-  //     )
-  //     break
-  //   case 'notice':
-  //     form = (
-  //       <Form>
-  //         <TitleWrapper>
-  //           <TitleDescriptor>Title</TitleDescriptor>
-  //           <TitleBox id='title' contentEditable />
-  //         </TitleWrapper>
-  //         <BodyWrapper>
-  //           <TitleDescriptor>Body</TitleDescriptor>
-  //           <BodyBox id='body' contentEditable />
-  //         </BodyWrapper>
-  //
-  //           <ExtrasWrapper>
-  //                 <ImageWrapper>
-  //                   <TitleDescriptor>Images</TitleDescriptor>
-  //                   <ImageBox id='image'>
-  //                     <UploadToPost parentUrlCallback={callbackURL} />
-  //                   </ImageBox>
-  //                 </ImageWrapper>
-  //                 Deadline Date
-  //                 <DatePicker
-  //                   selected={endDate}
-  //                   onChange={changeEndDate}
-  //                   style={{ width: 'inherit' }}
-  //                 />
-  //                 <PostingButton
-  //                   onClick={e => {
-  //                     e.preventDefault()
-  //                     try {
-  //                       const title = document.getElementById('title').innerHTML
-  //                       const body = document.getElementById('body').innerHTML
-  //                       if (checkTitleAndBody(title, body)) return
-  //                       postCreate({
-  //                         variables: {
-  //                           kind: postType,
-  //                           title,
-  //                           body,
-  //                           deadline: endDate,
-  //                           imageUrl: url === '' ? null : url
-  //                         }
-  //                       })
-  //                       props.switchVisibility(false)
-  //                     } catch (error) {
-  //                       log.error('error', error)
-  //                     }
-  //                   }}
-  //                 >
-  //                   Post
-  //                 </PostingButton>
-  //
-  //               </ExtrasWrapper>
-  //       </Form>
-  //     )
-  //     break
-  //
-  //   default:
-  //     form = null
-  // }
 
   return (
     <div>
