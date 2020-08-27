@@ -1,5 +1,22 @@
 import styled from 'styled-components'
-import LoginBackground from '../images/backgroundLogin.svg'
+
+const TitleFlex = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: inherit;
+  justify-content: space-around;
+
+  // top: 185px;
+  // left: 528px;
+  ///width: 231px;
+  // height: 54px;
+  margin: 25px;
+  text-align: left;
+  font: Roman 48px/44px Avenir;
+  letter-spacing: 0px;
+  color: #747886;
+  opacity: 1;
+`
 
 const ExitButton = styled.div`
   grid-row: 1/2;
@@ -18,8 +35,6 @@ const ExitButton = styled.div`
   text-align: center;
   
   cursor: pointer;
-  
-  
   &:hover {
     background-color: red;
     opacity: 70%;
@@ -164,7 +179,9 @@ const PostHeaderType = styled.p`
 
 const TitleDescriptor = styled.p`
   font-family: 'Courier New', Courier, monospace;
-  font-size: 1.5vw;
+  font-size: 22px;
+  letter-spacing: 1px;
+  word-spacing: 0px;
   color: #000000;
   font-weight: 700;
   text-decoration: none;
@@ -223,36 +240,59 @@ const BodyWrapper = styled.div`
 `
 
 const ImageWrapper = styled.div`
-  position: relative;
-  top: -2vh;
-  width: 15vw;
-  // left: -22vw;
-  height: 30vh;
+  display: flex;
+  //position: relative;
+  //top: -90px;
 `
 
 const ImageBox = styled.div`
   border: solid;
   position: relative;
-  height: 20vh;
-  padding: 0.6vw;
-  border-radius: 0.5vw;
+  // height: 10vh;
+  padding: 10px;
+
+  //top: 629px;
+  // left: 565px;
+  width: 790px;
+  height: 45px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 2px solid #cdced2;
+  border-radius: 15px;
+  opacity: 1;
+
+  text-align: left;
+  font: Roman 18px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
 `
 
-const ExtrasWrapper = styled.div`
-  position: relative;
-  flex-direction: row;
+const DateWrapper = styled.div`
+  margin: 10px;
   display: flex;
   justify-content: space-between;
-  width: 75vw;
-  // background-color: red;
-  left: -22.8vw;
-  top: -5vh;
+  text-align: left;
+  font: Medium 18px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
+  opacity: 1;
 `
 
-const Banner = styled.div`
-  // Image at the top
-  background: url(${LoginBackground});
-  background-color: #fffdfd;
+const PaidWrapper = styled.div`
+  display: flex;
+  text-align: left;
+  margin-left: 20px;
+  font: Roman 18px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
+`
+
+const LocationWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  text-align: left;
+  font: Medium 18px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
   opacity: 1;
   width: 40vw;
   height: 20vh;

@@ -74,9 +74,11 @@ function PostChunk (props) {
         <img width={500} src={props.post.node.imageUrl} alt='Custom-thing' />
     )
   }
+
   const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
-      FETCH_COMMENTS_POST
+    FETCH_COMMENTS_POST
   )
+  
   const myPostID = props.post.node._id;
   const myPostLink = "/posts/" + String(myPostID); // forming the url
 
@@ -131,17 +133,71 @@ function PostChunk (props) {
   }
 
   return (
-      <>
-        <DiscussionBoxSection>
-          {/* <OP>
+    <>
+      <DiscussionBoxSection>
+        {/* <OP>
           {props.post.node.creator.username} -{' '}
           <ReactTimeAgo date={props.post.node.date_created} />
         </OP> */}
-          <DiscussionBox>
-            <LeftComponent>
-              <Upvote className={classes.root}>
-                <IconButton
-                    style={isUpvoted ? { color: '#7380FF' } : { color: grey[700] }}
+        <DiscussionBox>
+          <LeftComponent>
+            <Upvote className={classes.root}>
+              <IconButton
+                style={isUpvoted ? { color: '#7380FF' } : { color: grey[700] }}
+                onClick={e => {
+                  e.preventDefault()
+                  toggleUpvoted()
+                  props.upvotePost({
+                    variables: {
+                      netID: props.userInfo.netID,
+                      _id: props.post.node._id
+                    }
+                  })
+                }}
+              >
+                <ArrowDropUp fontSize='large' />
+              </IconButton>
+            </Upvote>
+            <Likes>
+              {props.post.node.upvotes.length -
+                props.post.node.downvotes.length}
+            </Likes>
+            <Downvote className={classes.root}>
+              <IconButton
+                style={isDownvoted ? { color: '#7380FF' } : { color: grey[800] }}
+                onClick={e => {
+                  e.preventDefault()
+                  toggleDownvoted()
+                  props.downvotePost({
+                    variables: {
+                      netID: props.userInfo.netID,
+                      _id: props.post.node._id
+                    }
+                  })
+                }}
+              >
+                <ArrowDropDown fontSize='large' />
+              </IconButton>
+            </Downvote>
+          </LeftComponent>
+          <OP>
+            <a>
+              {props.post.node.creator.username} -{' '}
+              <ReactTimeAgo date={props.post.node.date_created} />
+            </a>
+            <Divider style={{width: '51.5vw', maxWidth: '97%', marginTop: '1vh'}}/>
+          </OP>
+          <TopMiddleComponent>
+            <DiscussionTitleDiv>
+              <DiscussionTitle>{props.post.node.title}</DiscussionTitle>
+            </DiscussionTitleDiv>
+            <MoreOptions className={classes.root}>
+              <IconButton onClick={toggleDD}>
+                <MoreHorizIcon open={isDDOpen} />
+              </IconButton>
+              {isDDOpen && (
+                <DDMenu>
+                  <Save
                     onClick={e => {
                       e.preventDefault()
                       toggleUpvoted()
@@ -290,55 +346,55 @@ function PostChunk (props) {
                 {isTagsOpen &&
                 props.post.node.tags.slice(3).map(tag => <Tag>{tag}</Tag>)}
 
-                {props.post.node.tags.length > 3 && (
-                    <ViewTags onClick={toggleTags}>
-                      {isTagsOpen ? (
-                          <text>(View Less)</text>
-                      ) : (
-                          <text>(View All)</text>
-                      )}
-                    </ViewTags>
-                )}
-              </Tags>
-              {/* Insert Comments */}
-              <Comments>
-                <Button
-                    variant="contained"
-                    startIcon={<ChatIcon />}
-                    style={{
-                      backgroundColor: 'rgba(109, 200, 249, .3)',
-                      textTransform: 'none',
-                      maxWidth: '8vw',
-                      display: 'flex'
-                    }}
-                    onClick={() =>
-                        getCommentsPost({
-                          variables: { post_id: props.post.node._id }
-                        })
-                    }
-                >
-                  Comments
-                </Button>
-              </Comments>
-              <ShareFacebook>
-                <IconButton>
-                  <FacebookIcon />
-                </IconButton>
-              </ShareFacebook>
-              <ShareTwitter>
-                <IconButton>
-                  <TwitterIcon />
-                </IconButton>
-              </ShareTwitter>
-              <Share>
-                <IconButton>
-                  <ShareIcon />
-                </IconButton>
-              </Share>
-            </BottomComponent>
-          </DiscussionBox>
-        </DiscussionBoxSection>
-      </>
+              {props.post.node.tags.length > 3 && (
+                <ViewTags onClick={toggleTags}>
+                  {isTagsOpen ? (
+                    <text>(View Less)</text>
+                  ) : (
+                    <text>(View All)</text>
+                  )}
+                </ViewTags>
+              )}
+            </Tags>
+            {/* Insert Comments */}
+            <Comments>
+              <Button
+                variant="contained"
+                startIcon={<ChatIcon />}
+                style={{
+                  backgroundColor: 'rgba(109, 200, 249, .3)',
+                  textTransform: 'none',
+                  maxWidth: '8vw',
+                  display: 'flex'
+                }}
+                onClick={() =>
+                  getCommentsPost({
+                    variables: { post_id: props.post.node._id }
+                  })
+                }
+              >
+                Comments
+              </Button>
+            </Comments>
+            <ShareFacebook>
+              <IconButton>
+                <FacebookIcon />
+              </IconButton>
+            </ShareFacebook>
+            <ShareTwitter>
+              <IconButton>
+                <TwitterIcon />
+              </IconButton>
+            </ShareTwitter>
+            <Share>
+              <IconButton>
+                <ShareIcon />
+              </IconButton>
+            </Share>
+          </BottomComponent>
+        </DiscussionBox>
+      </DiscussionBoxSection>
+    </>
   )
 }
 

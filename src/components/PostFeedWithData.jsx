@@ -22,6 +22,7 @@ import {
 import { Banner } from './PostFeed.styles'
 import { SideNav } from './SideNav'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
+import Button from '@material-ui/core/Button';
 
 function PostFeedWithData () {
   const [today, setToday] = useState(null)
@@ -74,17 +75,31 @@ function PostFeedWithData () {
         </LeftSidebarContainer>
         <PostFeedContainer>
           <NewPostButtonContainer>
-            <NewPostButton onClick={openModal}>
+            <Button
+              variant="contained"
+              onClick={openModal}
+              style={{
+                textTransform: 'none',
+                background: '#ffffff93 0% 0% no-repeat padding-box',
+                borderRadius: '0.7vw',
+                marginLeft: '-4.5vw',
+                marginTop: '3vw'
+              }}
+              startIcon={<AddCircleIcon style={{ color: '#7380FF', width: '1.3vw', height: '1.3vw' }} />}
+            >
+              Create Post
+            </Button>
+            {/* <NewPostButton onClick={openModal}>
               <AddCircleIcon
-                style={{ color: '#EAB4AC', width: '1.3vw', height: '1.3vw' }}
+                style={{ color: '#7380FF', width: '1.3vw', height: '1.3vw' }}
               />
               <ButtonText>Create Post</ButtonText>
-            </NewPostButton>
+            </NewPostButton> */}
           </NewPostButtonContainer>
 
-          <BannerContainer>
+          {/* <BannerContainer>
             <Banner />
-          </BannerContainer>
+          </BannerContainer> */}
           <PostFeed
             {...result}
             setEarlyDateBound={setEarlyDateBound}
