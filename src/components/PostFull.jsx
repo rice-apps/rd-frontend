@@ -85,9 +85,9 @@ function PostFull() {
   const [reportPost] = useMutation(REPORT_POST)
   const [removePost] = useMutation(REMOVE_POST)
   const [savePost] = useMutation(SAVE_POST)
-  const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
-    FETCH_COMMENTS_POST
-  )
+  // const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
+  //   FETCH_COMMENTS_POST
+  // )
 
   // *********** post full setup below
 
@@ -181,7 +181,7 @@ function PostFull() {
   thePost = resultPost.data.postById //real data
 
   console.log(resultComments)
-  let theComments = resultComments.data.commentByPost;
+  let theComments = resultComments.data.commentByPost; //array
   // are there comments?
 
 
@@ -364,26 +364,7 @@ function PostFull() {
               )}
             </Tags>
 
-            {/* Insert Comments */}
-            <Comments>
-              <Button
-                variant="contained"
-                startIcon={<ChatIcon />}
-                style={{
-                  backgroundColor: 'rgba(109, 200, 249, .3)',
-                  textTransform: 'none',
-                  maxWidth: '8vw',
-                  display: 'flex'
-                }}
-                onClick={() =>
-                  getCommentsPost({
-                    variables: { post_id: thePost._id }
-                  })
-                }
-              >
-                Comments
-              </Button>
-            </Comments>
+            {/* Location of Comments Button */}
 
             <ShareFacebook>
               <IconButton>
@@ -402,12 +383,38 @@ function PostFull() {
             </Share>
           </BottomComponent>
         </DiscussionBox>
-        {/* <h3>Comments:</h3> */}
-        {/* <ul>
-          {thePost.comments.map(comment => (
-            <li key={comment.id}>{comment}</li>
+        <h3>Comments:</h3>
+        <ul>
+          {/* level 1 */}
+          {theComments.map(comment => (
+            <li key={comment.id}>
+              {comment.body}
+              <ul>
+                {/* level 2 */}
+                {comment.children.map(child1 => (
+                  <li key={child1.id}>
+                    {child1.body}
+                    <ul>
+                      {/* level 3 */}
+                      {child1.children.map(child2 => (
+                        <li key={child2.id}>
+                          {child2.body}
+                          {/* dont nest any further */}
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            </li>
           ))}
-        </ul> */}
+          {/* <li>need to figure out comment nesting: rn the reply shows up as a reply and a comment in queries
+            <ul>
+              <li>Black tea</li>
+              <li>Green tea</li>
+            </ul>
+          </li> */}
+        </ul>
       </DiscussionBoxSection>
     </>
   )

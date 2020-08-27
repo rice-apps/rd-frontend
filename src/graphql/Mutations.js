@@ -44,6 +44,36 @@ const POST_CREATE = gql`
     }
   }
 `
+// wip
+// const CREATE_PARENT_COMMENT = gql`
+//   mutation {
+//     commentCreateOne(
+//       record: {
+//         creator: "sn45"
+//         post: "5f416e0fcf871f3b5c495fd6"
+//         parent: "5f47ead53f8042173e051ff0"
+//         date_created: "08/27/2020"
+//         body: "insert comment here"
+//         depth: 0
+//       }
+//     ) {
+//       record {
+//         parent {
+//           body
+//         }
+//         post {
+//           _id
+//           title
+//           body
+//           tags
+//           comments {
+//             body
+//           }
+//         }
+//       }
+//     }
+//   }
+// `
 
 const LOGIN = gql`
   mutation Login($ticket: String!) {
