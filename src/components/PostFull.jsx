@@ -64,7 +64,9 @@ import {
   ShareFacebook,
   ShareTwitter,
   Share,
-  BackToFeed
+  BackToFeed,
+  CommentInput,
+  CommentButton,
 } from './PostFull.styles'
 
 JavascriptTimeAgo.addLocale(en)
@@ -214,6 +216,8 @@ function PostFull() {
     startTime: thePost.start ? thePost.start : '',
     endTime: thePost.end ? thePost.end : ''
   }
+
+  const checkComment = (comment) => comment.length <= 0
 
   return (
     <>
@@ -412,10 +416,34 @@ function PostFull() {
           ))}
         </ul>
 
-        {/* <h3>-----------------------------------------------------------</h3>
+        <h3>-----------------------------------------------------------</h3>
         <CommentInput id='comment' contentEditable={true}>
           Enter Comment. . .
-        </CommentInput> */}
+        </CommentInput>
+
+        {/* based on write post post creation button */}
+        <CommentButton
+          onClick={e => {
+            e.preventDefault()
+            const cmt = document.getElementById('comment').innerHTML
+            if (checkComment(cmt)) return
+            try {
+              createComment({
+                variables: {
+                  creator: userInfo.netID,
+                  post: postID,
+                  parent: null,
+                  body: cmt,
+                }
+              })
+            } catch (error) {
+              console.log(error)
+              // log.error('error', error) // import log from 'loglevel' <-- to use
+            }
+          }}
+        >
+          Comment
+          </CommentButton>
 
       </DiscussionBoxSection>
     </>

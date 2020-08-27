@@ -182,22 +182,53 @@ const ShareTwitter = styled.div`
 const Share = styled.div`
   grid-area: share;
 `
+// based off title box in WritePost styles
+const CommentInput = styled.div`
+  border: solid;
 
-// const CommentInput = styled.div`
-//   border: solid;
+  width: 386px;
+  height: 42px;
+  background: #f4f4f49a 0% 0% no-repeat padding-box;
+  border-radius: 5px;
+  opacity: 1;
 
-//   width: 386px;
-//   height: 42px;
-//   background: #f4f4f49a 0% 0% no-repeat padding-box;
-//   border-radius: 5px;
-//   opacity: 1;
+  text-align: left;
+  vertical-align: middle;
+  font: Roman 21px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
+`
+// based off posting button in WritePost styles
+const CommentButton = styled.button`
+  position: relative;
+  // background-color: #fabed6; /* Light pink */
+  border: none;
+  // color: black;
+  padding: 15px 32px;
+  text-align: center;
+  // text-decoration: none;
+  display: inline-block;
+  // font-size: 16px;
+  cursor: pointer;
+  z-index: 5;
+  margin: 5px;
+  &:hover {
+    background-color: #e7c6c6;
+    opacity: 100%;
+  }
 
-//   text-align: left;
-//   vertical-align: middle;
-//   font: Roman 21px/24px Avenir;
-//   letter-spacing: 0px;
-//   color: #a9abb4;
-// `
+  //top: 849px;
+  //left: 1222px;
+  width: 114px;
+  height: 46px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  font: Medium 20px/17px Avenir;
+  letter-spacing: 0px;
+  color: #747886;
+  border: 2px solid #cdced2;
+  border-radius: 20px;
+  opacity: 1;
+`
 
 export {
   DiscussionBoxSection,
@@ -227,5 +258,6 @@ export {
   ShareTwitter,
   Share,
   BackToFeed,
-  // CommentInput
+  CommentInput,
+  CommentButton
 }
