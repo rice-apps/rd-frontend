@@ -183,6 +183,22 @@ const Share = styled.div`
   grid-area: share;
 `
 
+// const CommentInput = styled.div`
+//   border: solid;
+
+//   width: 386px;
+//   height: 42px;
+//   background: #f4f4f49a 0% 0% no-repeat padding-box;
+//   border-radius: 5px;
+//   opacity: 1;
+
+//   text-align: left;
+//   vertical-align: middle;
+//   font: Roman 21px/24px Avenir;
+//   letter-spacing: 0px;
+//   color: #a9abb4;
+// `
+
 export {
   DiscussionBoxSection,
   OP,
@@ -210,5 +226,6 @@ export {
   ShareFacebook,
   ShareTwitter,
   Share,
-  BackToFeed
+  BackToFeed,
+  // CommentInput
 }

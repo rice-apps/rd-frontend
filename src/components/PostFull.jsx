@@ -10,7 +10,8 @@ import {
   DOWNVOTE_POST,
   REPORT_POST,
   REMOVE_POST,
-  SAVE_POST
+  SAVE_POST,
+  CREATE_COMMENT
 } from '../graphql/Mutations'
 import { FETCH_COMMENTS_POST } from '../graphql/Queries'
 
@@ -85,6 +86,7 @@ function PostFull() {
   const [reportPost] = useMutation(REPORT_POST)
   const [removePost] = useMutation(REMOVE_POST)
   const [savePost] = useMutation(SAVE_POST)
+  const [createComment] = useMutation(CREATE_COMMENT)
   // const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
   //   FETCH_COMMENTS_POST
   // )
@@ -408,13 +410,13 @@ function PostFull() {
               </ul>
             </li>
           ))}
-          {/* <li>need to figure out comment nesting: rn the reply shows up as a reply and a comment in queries
-            <ul>
-              <li>Black tea</li>
-              <li>Green tea</li>
-            </ul>
-          </li> */}
         </ul>
+
+        {/* <h3>-----------------------------------------------------------</h3>
+        <CommentInput id='comment' contentEditable={true}>
+          Enter Comment. . .
+        </CommentInput> */}
+
       </DiscussionBoxSection>
     </>
   )

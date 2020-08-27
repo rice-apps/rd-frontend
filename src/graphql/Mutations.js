@@ -45,35 +45,40 @@ const POST_CREATE = gql`
   }
 `
 // wip
-// const CREATE_PARENT_COMMENT = gql`
-//   mutation {
-//     commentCreateOne(
-//       record: {
-//         creator: "sn45"
-//         post: "5f416e0fcf871f3b5c495fd6"
-//         parent: "5f47ead53f8042173e051ff0"
-//         date_created: "08/27/2020"
-//         body: "insert comment here"
-//         depth: 0
-//       }
-//     ) {
-//       record {
-//         parent {
-//           body
-//         }
-//         post {
-//           _id
-//           title
-//           body
-//           tags
-//           comments {
-//             body
-//           }
-//         }
-//       }
-//     }
-//   }
-// `
+// if making sep "comment" and "reply" mutations, 
+// make parent null/empty in comment, and require it in reply
+
+const CREATE_COMMENT = gql`
+  mutation CreateComment(
+    $creator: String!
+    $post: MongoID!
+    $parent: MongoID
+    $date_created: Date
+    $body: String!
+  ) {
+    commentCreateOne(
+      record: {
+        creator: $creator
+        post: $post
+        parent: $parent
+        date_created: $date_created
+        body: $body
+      }
+    ) {
+      record {
+        creator {
+          netID
+        }
+        post {
+          _id
+          title
+        }
+        date_created
+        body
+      }
+    }
+  }
+`
 
 const LOGIN = gql`
   mutation Login($ticket: String!) {
@@ -199,6 +204,7 @@ const S3_SIGN = gql`
 export {
   SET_INFO,
   POST_CREATE,
+  CREATE_COMMENT,
   LOGIN,
   UPVOTE_POST,
   DOWNVOTE_POST,

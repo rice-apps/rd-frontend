@@ -130,7 +130,7 @@ const FETCH_COMMENTS_PARENT = gql`
 
 const FETCH_COMMENTS_NESTED = gql`
   query FetchCommentsNested($post_id: ID!) {
-    commentByPost(post: $post_id) {
+    commentByPost(postID: $post_id) {
       _id
       body
       children {
