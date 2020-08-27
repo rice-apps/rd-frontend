@@ -6,12 +6,16 @@ import { Link } from 'react-router-dom'
 
 const DiscussionBoxSection = styled.section`
   // contains DiscussionBox
-  padding: 20px 140px;
-  max-width: 50vw;
+  padding: 20px 70px;
+  min-width: 55vw;
+  max-width: 65vw;
 `
 
 const OP = styled.div`
-  padding: 0px 0px 5px 5px;
+  display: grid;
+  grid-area: op;
+  white-space: nowrap;
+  margin-top: 1vh;
 `
 
 const Time = styled.div``
@@ -22,9 +26,10 @@ const DiscussionBox = styled.section`
   background: #ffffff;
   border-radius: 20px;
   display: grid;
-  grid-template-rows: 1fr 50px;
+  grid-template-rows: 3vh 1fr 50px;
   grid-template-columns: 65px 1fr;
   grid-template-areas:
+    'owo op'
     'left topmiddle'
     'left bottom';
 `
@@ -84,11 +89,13 @@ const FullPostLink = styled(Link)`
 `
 
 const MoreOptions = styled.div`
-  position: relative;
-  grid-area: moreoptions;
-  align-self: start;
-  justify-self: start;
-`
+    position: relative;
+    grid-area: moreoptions;
+    align-self: start;
+    justify-self: start;
+    margin-top: -2vw;
+`;
+
 
 const DDMenu = styled.div`
   position: relative;
@@ -132,8 +139,8 @@ const BottomComponent = styled.div`
   // contains Tags, ShareFacebook, ShareTwitter, Share
   grid-area: bottom;
   display: grid;
-  grid-template-columns: 1fr 40px 40px 40px 15px;
-  grid-template-areas: 'tags facebook twitter share .';
+  grid-template-columns: 1fr 8vw 2.5vw 2.5vw 2.5vw 1vw;
+  grid-template-areas: 'tags comments facebook twitter share .';
   justify-items: start;
   align-items: center;
 `
@@ -159,6 +166,10 @@ const Tag = styled.text`
 const ViewTags = styled.button`
   border: none;
   background-color: inherit;
+`
+
+const Comments = styled.div`
+  grid-area: comments;
 `
 
 const ShareFacebook = styled.div`
@@ -196,6 +207,7 @@ export {
   AddTo,
   Report,
   Delete,
+  Comments,
   ShareFacebook,
   ShareTwitter,
   Share,
