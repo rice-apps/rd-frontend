@@ -31,6 +31,7 @@ import {
 import { currentUser } from '../utils/apollo'
 
 function WritePost (props) {
+
   const [url, setUrl] = useState('')
 
   const callbackURL = childData => {

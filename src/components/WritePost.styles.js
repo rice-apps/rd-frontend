@@ -2,117 +2,117 @@ import styled from 'styled-components'
 import LoginBackground from '../images/backgroundLogin.svg'
 
 const ExitButton = styled.div`
-  cursor: pointer;
-  background-color: beige;
-  &:hover {
-    background-color: red;
-  }
-
-  position: relative;
-  left: 15vw;
-  bottom: 10vh;
-
-  transform: rotate(65deg);
   grid-row: 1/2;
-  grid-column: 3/3;
-
-  border-radius: 26vw;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 15vw;
-  height: 15vw;
-
-  font-family: Helvetica, Charcoal, sans-serif;
-  font-size: 10vw;
-  color: #000000;
-  font-weight: 700;
+  grid-column: 2/2;
+  
+  border: 2px solid #CDCED2;
+  opacity: 1;
+  
+  width: 1vw;
+  height: 1vw;
+  
+  cursor: pointer;
 `
 
 const PostWrapper = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  width: 80%;
-  height: 80%;
-  border-style: solid;
-  border-color: green;
+  position: fixed;
+  left: 14.6vw;
+  top: 13vh;
+  
+  width: 51vw;
+  height: 75vh;
+  
+  background: #FFFFFFE8 0% 0% no-repeat padding-box;
+  border: 0.2vw solid #000000;
+  border-radius: 1vw;
+  opacity: 1;
+  
+  box-shadow: 1px 1px 20px #9398C334;
+  border: 4px solid #FFFFFF;
+  border-radius: 20px;
 
   display: grid;
   // flex-direction: column;
   // align-items: center;
-
-  grid-template-columns: 1.2fr 1.75fr 2.25fr 1fr 1fr 1fr 0.5fr;
-  grid-template-rows: 12fr 12fr 1fr 1fr;
-
-  border-radius: 1.6vw;
+  
+  z-index: 1;
+  
+  
 `
 
 const Button = styled.button`
   background-color: lightpink; /* Green */
-  border: none;
+  border: 0.1vw solid #FFFFFF;
   color: black;
-  padding: 15px 32px;
+  // padding: 15px 32px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  // z-index: 5;
-  margin: 5px;
+  
+  font: Fira Sans;
+  font-size: 0.8vw;
+  padding-top: 0.5vh;
+  padding-bottom: 0.5vh;
+  padding-left: 1.6vw;
+  padding-right: 1.6vw;
   cursor: pointer;
-
-  &:hover {
-    background-color: #de4783;
-    opacity: 50%;
-  }
+  background: #F5F7FC 0% 0% no-repeat padding-box;
+  
+  outline: none;
 `
 
 const PostingButton = styled.button`
-  position: relative;
+  // position: relative;
   background-color: #fabed6; /* Light pink */
   border: none;
-  color: black;
+  color: white;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
-  font-size: 3vw;
+  // display: inline-block;
+  font-size: 1vw;
   cursor: pointer;
-
-  border-radius: 0.5vw;
-  width: 15vw;
-  height: 30vh;
-
-  &:hover {
-    background-color: #de4783;
-    opacity: 50%;
-  }
+  
+  background: #7380FF 0% 0% no-repeat padding-box;
+  border-radius: 0.8vw;
+  opacity: 1;
+  
+  width: 6.4vw;
+  height: 4.2vh;
+  
+  outline: none;
+  
+  //  &:hover {
+  //   background-color: #de4783;
+  //   opacity: 50%;
+  // }
 `
 
 const Form = styled.form`
-  // background-color: white;
-  position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  
   // flex-wrap: wrap;
-  width: 50vw;
-  height: 90vh;
-  top: -30vh;
-  left: 22vw;
-
-  grid-row: 2/2;
-  grid-column: 2/3;
+  // width: 50vw;
+  height: 55vh;
+  // top: -30vh;
+  // left: 22vw;
+  
+  // grid-row: 2/2;
+  // grid-column: 2/3;
 `
 
 const ButtonWrapper = styled.div`
-  position: absolute;
-  // left: 50%;
-  left: 42.5vw;
-  top: 0;
-  // transform: translate(-50%, 0%);
+  height: 3.2vh;
+  
+  border-radius: 0.7vw;
+  
+  margin-left: 1.4vw;
+  
+  display: flex;
+  // justify-content: space-between;
+  align-items: center;
+  
+  // background-color: blue;
 `
 
 const PostHeaderType = styled.p`
@@ -135,15 +135,15 @@ const PostHeaderType = styled.p`
   font-style: normal;
   font-variant: normal;
   text-transform: uppercase;
-
+  
   display: flex;
   align-items: center;
   justify-content: center;
-
+  
   transform: rotate(-38deg);
   grid-row: 1/2;
   grid-column: 1/3;
-
+  
   border-top-right-radius: 26vw;
   border-bottom-right-radius: 26vw;
   border-bottom-left-radius: 4vw;
@@ -164,31 +164,50 @@ const TitleDescriptor = styled.p`
 `
 
 const TitleWrapper = styled.div`
-  position: relative;
-  top: -4vh;
-  width: 40vw;
+  height: 3.9vh;
+  flex-direction: row;
+  display: flex;
+  align-self: flex-end;
 `
 
 const TitleBox = styled.div`
-  border: solid;
-  position: relative;
-  height: 7vh;
-  flex: 0 0 100%;
-  border-radius: 0.5vw;
+  background: #F4F4F49A 0% 0% no-repeat padding-box;
+  border-radius: 5px;
+  opacity: 1;
+  width: 16vw;
+  height: 3.5vh;
+  margin-left: 0.5vw;
+  margin-right: 2vw;
+  
+  outline: none;
+  
+  overflow: hidden;
+  white-space: nowrap;
+  padding-left: 0.5vw;
 `
 
-const BodyBox = styled.div`
-  border: solid;
-  position: relative;
-  height: 20vh;
-  width: 60vw;
-  border-radius: 0.5vw;
+const BodyBox = styled.textarea`
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: none;
+  
+  width: 40vw;
+  height: 14.8vh;
+  
+  resize: none;
 `
 
 const BodyWrapper = styled.div`
-  position: relative;
-  top: -5vh;
-  left: -8vw;
+  height: 21vh;
+  width: 43vw;
+  
+  background: #F5F7FC 0% 0% no-repeat padding-box;
+  // border: 2px solid #CDCED2;
+  border-radius: 15px;
+  opacity: 1;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `
 
 const ImageWrapper = styled.div`
@@ -227,10 +246,225 @@ const Banner = styled.div`
   height: 20vh;
   background-size: 40vw;
   background-repeat: no-repeat;
-
+  
   position: relative;
   top: 6vh;
 `
+
+const ModalTitle = styled.div`
+  grid-row: 1/2;
+  grid-column: 1/2;
+  
+  text-align: left;
+  // font: normal normal normal 28px/24px Avenir;
+  // letter-spacing: 0px;
+  color: #272848;
+  // opacity: 1;
+  font-size: 1.5vw;
+  
+  position: relative;
+  left: 4vw;
+  top: 4.7vh;
+`
+
+const FormWrapper = styled.div`
+  grid-row: 2/2;
+  grid-column: 1/2;
+  
+  width: 42vw;
+  height: 58vh;
+  
+  position: relative;
+  left: 4.5vw;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  
+  // background-color: green
+`
+
+const DatesWrapper = styled.div`
+  width: 21vw;
+  
+  // display: flex;
+  // justify-content: space-evenly;
+  // height: 2vh;
+  // background-color: blue;
+`
+
+const TagWrapper = styled.div`
+  height: 14.5vh;
+  width: 43vw;
+  
+  background: #F5F7FC 0% 0% no-repeat padding-box;
+  // border: 2px solid #CDCED2;
+  border-radius: 15px;
+  opacity: 1;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // align-items: center;
+  
+  // padding-left: 2.3vw;
+`
+
+const SelectCategoryWrapper = styled.div`
+  height: 3.2vh;
+  width: 43vw;
+  line-height: 3.2vh;
+  
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  
+  // text-align: baseline;
+  
+  // background-color: green;
+  // position: relative:
+  // bottom: 10vh;
+  margin-bottom: 2vh;
+`
+
+const SuggestedTags = styled.div`
+
+`
+
+const LocationJobInfoWrapper = styled.div`
+  height: 3.3vh;
+  width: 40.2vw;
+  
+  display: flex;
+  justify-content: flex-start;
+  
+  align-self: center;
+  // background-color: lightpink;
+  position: relative;
+  top: 1vh;
+`
+
+const DraftSubmitWrapper = styled.div`
+  height: 4.4vh;
+  // background-color: pink;
+  
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+`
+
+const RichIcons = styled.div`
+  height: 4.4vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.5vh;
+  width: 100%;
+`
+
+const IconButton = styled.div`
+  // padding: 0.1vh;
+  // background-color: green;
+  vertical-align: center;
+  
+  cursor: pointer;
+`
+
+const RichEditorWrapper = styled.div`
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: none;
+
+  width: 40vw;
+  height: 13vh;
+  
+  overflow-y: auto;
+  
+  padding-left: 0.5vw;
+  padding-top: 0.5vh;
+`
+
+const SuggestedTagsWrapper = styled.div`
+  height: 2.9vh;
+  
+  align-self: center;
+  width: 40.2vw;
+  // background-color: grey;
+`
+
+const TagBox = styled.input`
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: none;
+  
+  height: 4vh;
+  width: 40vw;
+  
+  align-self: center;
+  // left: 2.3vw;
+  
+  outline: none;
+  padding-left: 0.5vw;
+  border-radius: 0.5vw;
+`
+
+const Tag = styled.text`
+  // font-family: 'Avenir';
+  font-size: 1.75vh;
+  font-weight: bold;
+  color: white;
+  background-color: gray;
+  border: none;
+  border-radius: 5px;
+  margin-left: 0.5vw;
+  padding: 2px 5px;
+`
+
+const SaveAsDraft = styled.text`
+  text-decoration: underline;
+  // font: normal normal medium 19px/17px Avenir;
+  // letter-spacing: 0.47px;
+  color: #333B8B;
+  opacity: 1;
+  cursor: pointer;
+  margin-right: 1vw;
+`
+
+const DatePickerWrapper = styled.div`
+  width: 0.1vw;
+  fontSize: 0.5vw;
+  display: block;
+`
+
+const DateBox = styled.div`
+  background: #F5F7FC 0% 0% no-repeat padding-box;
+  border-radius: 0.2vw;
+  margin-left: 0.4vw;
+  margin-right: 0.4vw;
+  cursor: pointer;
+  font-size: 0.8vw;
+  width: 7.75vw;
+  height: 3.6vh;
+  
+  align-items: center;
+  display: flex;
+  justify-content: center;
+`
+
+const LocationBox = styled.div`
+  background: #F4F4F49A 0% 0% no-repeat padding-box;
+  border-radius: 0.25vw;
+  width: 8.6vw;
+  height: 3.2vh;
+  margin-left: 0.5vw;
+  margin-right: 2vw;
+  
+  padding-left: 0.5vw;
+  overflow: hidden;
+  white-space: nowrap;
+  
+  outline: none;
+`
+
 
 export {
   PostWrapper,
@@ -248,5 +482,23 @@ export {
   ImageBox,
   ExitButton,
   ExtrasWrapper,
-  Banner
+  Banner,
+  ModalTitle,
+  FormWrapper,
+  DatesWrapper,
+  TagWrapper,
+  SelectCategoryWrapper,
+  SuggestedTags,
+  LocationJobInfoWrapper,
+  DraftSubmitWrapper,
+  RichIcons,
+  IconButton,
+  RichEditorWrapper,
+  SuggestedTagsWrapper,
+  TagBox,
+  Tag,
+  SaveAsDraft,
+  DatePickerWrapper,
+  DateBox,
+  LocationBox
 }
