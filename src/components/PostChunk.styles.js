@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
+
 // note: PostFull.styles.js is based on this file
 // so please make relevant design updates to both places
 

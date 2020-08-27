@@ -65,7 +65,9 @@ import {
   DatePickerWrapper,
   DateBox,
   LocationBox,
-  TagChosenWrapper, TagChosen, TagCircle
+  TagChosenWrapper,
+  TagChosen,
+  TagCircle
 } from './WritePost.styles'
 import { currentUser } from '../utils/apollo'
 

@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import LoginBackground from '../images/backgroundLogin.svg'
 
+
 const ExitButton = styled.div`
   grid-row: 1/2;
   grid-column: 2/2;

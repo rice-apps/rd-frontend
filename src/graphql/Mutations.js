@@ -1,5 +1,6 @@
 import gql from 'graphql-tag.macro'
 
+
 const POST_CREATE = gql`
   mutation CreatePost(
     $kind: EnumDKeyPostKind!
