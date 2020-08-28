@@ -32,6 +32,9 @@ function PostFeedWithData () {
   const [upvoteFilter, setUpvoteFilter] = useState('')
   const [dateFilter, setDateFilter] = useState('')
   const [tagFilter, setTagFilter] = useState([])
+
+  // when we clear filter, this gets set to empty string and it will cause 
+  // a graphql bug within our GET_FILTER_ID query because "" is not a valid EnumPostKey
   const [kindFilter, setKindFilter] = useState("Discussion")
 
   const [postIDs, setPostIDs]= useState([])
@@ -78,7 +81,7 @@ function PostFeedWithData () {
     refetchFilter()
   }, [filterType])
 
-  //whenever the post_Ids change, we get the post_data
+  //whenever the post_Ids change, we set the post_id state
   useEffect(() => {
     if (filteredData){
       const IDs = filteredData.getFilteredData.map(post => post._id);
@@ -88,6 +91,7 @@ function PostFeedWithData () {
     }
   }, [filteredData])
 
+  // get the actual data from the post_Id
   useEffect(() => {
     console.log("REFETCH")
     refetch();
