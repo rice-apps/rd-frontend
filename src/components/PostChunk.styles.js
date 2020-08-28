@@ -77,10 +77,14 @@ const DiscussionTitleDiv = styled.div`
 `
 
 const DiscussionTitle = styled.text`
-  justify-self: start;
-  align-self: start;
+  grid-area: title;
+  padding: 20px 0px;
   font-size: 2.5vh;
   font-weight: bold;
+  max-height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const FullPostLink = styled(Link)`
@@ -186,6 +190,12 @@ const Share = styled.div`
   grid-area: share;
 `
 
+const ReadMore = styled.text`
+  color: #000080;
+  font-size: 1.75vh;
+  font-weight:normal
+`
+
 export {
   DiscussionBoxSection,
   OP,
@@ -214,5 +224,6 @@ export {
   ShareTwitter,
   Share,
   FullPostLink,
-  Expand
+  Expand,
+  ReadMore
 }

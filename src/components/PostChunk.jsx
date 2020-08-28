@@ -55,7 +55,8 @@ import {
   ShareTwitter,
   Share,
   FullPostLink,
-  Expand
+  Expand,
+  ReadMore
 } from './PostChunk.styles'
 
 JavascriptTimeAgo.addLocale(en)
@@ -190,9 +191,16 @@ function PostChunk (props) {
             <Divider style={{width: '51.5vw', maxWidth: '97%', marginTop: '1vh'}}/>
           </OP>
           <TopMiddleComponent>
-            <DiscussionTitleDiv>
-              <DiscussionTitle>{props.post.node.title}</DiscussionTitle>
-            </DiscussionTitleDiv>
+            <DiscussionTitle>
+              <Truncate lines={1} ellipsis={<span>... 
+                <FullPostLink to={myPostLink}>
+                  <ReadMore>
+                    (Read More)
+                  </ReadMore>
+                </FullPostLink></span>}>
+                {props.post.node.title}
+              </Truncate>
+            </DiscussionTitle>
             <MoreOptions className={classes.root}>
               <IconButton onClick={toggleDD}>
                 <MoreHorizIcon open={isDDOpen} />
@@ -215,8 +223,6 @@ function PostChunk (props) {
                           ]
                         }
                       })
-
-                      console.log(props.userInfo.savedPosts)
                     }}
                   >
                     Save Post
@@ -275,7 +281,9 @@ function PostChunk (props) {
             <DiscussionBody>
               <Truncate lines={3} ellipsis={<span>... 
                   <FullPostLink to={myPostLink}>
-                    (Read More)
+                    <ReadMore>
+                      (Read More)
+                    </ReadMore>
                   </FullPostLink></span>}>
                 {ReactHtmlParser(props.post.node.body)}
               </Truncate>
