@@ -123,7 +123,7 @@ function PostFeedWithData () {
                 }
               })
             }
-            subscribeToNewPosts={() => {
+            subscribeToNewPosts={() =>
               subscribeToMore({
                 document: POST_CREATED,
                 updateQuery: (prev, { subscriptionData }) => {
@@ -164,12 +164,12 @@ function PostFeedWithData () {
                   }
                 }
               })
-            }}
-            subscribeToNewVotes={() => {
+            }
+            subscribeToNewVotes={() =>
               subscribeToMore({
                 document: POST_VOTE_CHANGED
               })
-            }}
+            }
           />
         </PostFeedContainer>
         <RightSidebarContainer />
