@@ -70,7 +70,8 @@ const TopMiddleComponent = styled.div`
 
 const DiscussionTitle = styled.text`
   grid-area: title;
-  padding: 20px 0px 5px 0px;
+  padding: 20px 0px 0px 0px;
+  font-family: avenir;
   font-size: 2.3vh;
   font-weight: bold;
   max-height: 50px;
@@ -126,6 +127,7 @@ const Delete = styled.button`
 const DiscussionBody = styled.text`
   grid-area: body;
   padding: 10px 0px;
+  font-family: avenir;
   font-size: 2vh;
   max-height: 100px;
   overflow: hidden;
