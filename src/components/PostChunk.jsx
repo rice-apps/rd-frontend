@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { red, grey } from '@material-ui/core/colors'
-import Divider from '@material-ui/core/Divider';
+import Divider from '@material-ui/core/Divider'
 
 import AddToCalendar from 'react-add-to-calendar'
 
 import IconButton from '@material-ui/core/IconButton'
-import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button'
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp'
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
 import ChatIcon from '@material-ui/icons/Chat'
@@ -21,6 +21,8 @@ import ReactHtmlParser from 'react-html-parser'
 import JavascriptTimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import ReactTimeAgo from 'react-time-ago'
+
+import Truncate from 'react-truncate';
 
 import { useMutation, useLazyQuery } from '@apollo/client'
 import { FETCH_COMMENTS_POST, FETCH_COMMENTS_PARENT } from '../graphql/Queries'
@@ -80,6 +82,8 @@ function PostChunk (props) {
   const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
     FETCH_COMMENTS_POST
   )
+
+  console.log(props.post.node.comments)
 
   const myPostID = props.post.node._id;
   const myPostLink = "/posts/" + String(myPostID); // forming the url
@@ -267,16 +271,23 @@ function PostChunk (props) {
                 </DDMenu>
               )}
             </MoreOptions>
-
+            
             <DiscussionBody>
-              {ReactHtmlParser(props.post.node.body)}
+              <Truncate lines={3} ellipsis={<span>... 
+                  <FullPostLink to={myPostLink}>
+                    (Read More)
+                  </FullPostLink></span>}>
+                {ReactHtmlParser(props.post.node.body)}
+              </Truncate>
             </DiscussionBody>
+            
 
             {oneImage}
           </TopMiddleComponent>
 
           <BottomComponent>
             <Tags>
+              <Tag>{props.post.node.kind}</Tag>
               {props.post.node.tags.length > 0 && (
                 <Tag>{props.post.node.tags[0]}</Tag>
               )}

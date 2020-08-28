@@ -157,9 +157,6 @@ function PostFull () {
     return <p>Error</p>
   }
 
-  console.log(data)
-  console.log(data.postById)
-
   thePost = data.postById //real data
 
   // *********** post chunk things that require thePost below

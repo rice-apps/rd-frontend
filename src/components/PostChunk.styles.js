@@ -131,8 +131,10 @@ const DiscussionBody = styled.text`
   grid-area: body;
   padding: 10px 0px;
   font-size: 2vh;
-  word-wrap: break-word;
   max-height: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const BottomComponent = styled.div`
