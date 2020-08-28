@@ -65,21 +65,13 @@ const TopMiddleComponent = styled.div`
     'body moreoptions'
     'image moreoptions';
   grid-template-columns: 1fr 60px;
-  grid-template-rows: 50px 1fr auto;
-`
-
-const DiscussionTitleDiv = styled.div`
-  grid-area: title;
-  padding: 20px 0px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  grid-template-rows: auto auto auto;
 `
 
 const DiscussionTitle = styled.text`
   grid-area: title;
-  padding: 20px 0px;
-  font-size: 2.5vh;
+  padding: 20px 0px 5px 0px;
+  font-size: 2.3vh;
   font-weight: bold;
   max-height: 50px;
   overflow: hidden;
@@ -206,7 +198,6 @@ export {
   Upvote,
   Downvote,
   TopMiddleComponent,
-  DiscussionTitleDiv,
   DiscussionTitle,
   Tags,
   Tag,

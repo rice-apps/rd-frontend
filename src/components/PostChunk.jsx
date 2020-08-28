@@ -37,7 +37,6 @@ import {
   Upvote,
   Downvote,
   TopMiddleComponent,
-  DiscussionTitleDiv,
   DiscussionTitle,
   Tags,
   Tag,
@@ -192,7 +191,7 @@ function PostChunk (props) {
           </OP>
           <TopMiddleComponent>
             <DiscussionTitle>
-              <Truncate lines={1} ellipsis={<span>... 
+              <Truncate lines={2} ellipsis={<span>... 
                 <FullPostLink to={myPostLink}>
                   <ReadMore>
                     (Read More)
@@ -279,7 +278,7 @@ function PostChunk (props) {
             </MoreOptions>
             
             <DiscussionBody>
-              <Truncate lines={3} ellipsis={<span>... 
+              <Truncate lines={4} ellipsis={<span>... 
                   <FullPostLink to={myPostLink}>
                     <ReadMore>
                       (Read More)
