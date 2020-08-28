@@ -98,7 +98,7 @@ const MoreOptions = styled.div`
   align-self: start;
   justify-self: start;
   margin-top: -2vw;
-`;
+`
 
 const DDMenu = styled.div`
   position: relative;

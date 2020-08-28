@@ -45,7 +45,7 @@ const POST_CREATE = gql`
   }
 `
 // wip
-// if making sep "comment" and "reply" mutations, 
+// if making sep "comment" and "reply" mutations,
 // make parent null/empty in comment, and require it in reply
 
 const CREATE_COMMENT = gql`

@@ -17,12 +17,12 @@ import { FETCH_COMMENTS_POST } from '../graphql/Queries'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { red, grey } from '@material-ui/core/colors'
-import Divider from '@material-ui/core/Divider';
+import Divider from '@material-ui/core/Divider'
 
 import AddToCalendar from 'react-add-to-calendar'
 
 import IconButton from '@material-ui/core/IconButton'
-import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button'
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp'
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
 import ChatIcon from '@material-ui/icons/Chat'
@@ -66,7 +66,7 @@ import {
   Share,
   BackToFeed,
   CommentInput,
-  CommentButton,
+  CommentButton
 } from './PostFull.styles'
 
 JavascriptTimeAgo.addLocale(en)
@@ -79,7 +79,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function PostFull() {
+function PostFull () {
   // *********** post feed setup below
 
   const userInfo = currentUser()
@@ -185,9 +185,8 @@ function PostFull() {
   thePost = resultPost.data.postById //real data
 
   console.log(resultComments)
-  let theComments = resultComments.data.commentByPost; //array
+  let theComments = resultComments.data.commentByPost //array
   // are there comments?
-
 
   // *********** post chunk things that require thePost below
   // change to real data now that its available
@@ -217,7 +216,7 @@ function PostFull() {
     endTime: thePost.end ? thePost.end : ''
   }
 
-  const checkComment = (comment) => comment.length <= 0
+  const checkComment = comment => comment.length <= 0
 
   return (
     <>
@@ -249,7 +248,9 @@ function PostFull() {
             <Likes>{thePost.upvotes.length - thePost.downvotes.length}</Likes>
             <Downvote className={classes.root}>
               <IconButton
-                style={isDownvoted ? { color: '#7380FF' } : { color: grey[800] }}
+                style={
+                  isDownvoted ? { color: '#7380FF' } : { color: grey[800] }
+                }
                 onClick={e => {
                   e.preventDefault()
                   toggleDownvoted()
@@ -270,7 +271,9 @@ function PostFull() {
               {thePost.creator.username} -{' '}
               <ReactTimeAgo date={thePost.date_created} />
             </a>
-            <Divider style={{ width: '51.5vw', maxWidth: '97%', marginTop: '1vh' }} />
+            <Divider
+              style={{ width: '51.5vw', maxWidth: '97%', marginTop: '1vh' }}
+            />
           </OP>
           <TopMiddleComponent>
             <DiscussionTitleDiv>
@@ -364,8 +367,8 @@ function PostFull() {
                   {isTagsOpen ? (
                     <text>(View Less)</text>
                   ) : (
-                      <text>(View All)</text>
-                    )}
+                    <text>(View All)</text>
+                  )}
                 </ViewTags>
               )}
             </Tags>
@@ -433,7 +436,7 @@ function PostFull() {
                   creator: userInfo.netID,
                   post: postID,
                   parent: null,
-                  body: cmt,
+                  body: cmt
                 }
               })
             } catch (error) {
@@ -443,8 +446,7 @@ function PostFull() {
           }}
         >
           Comment
-          </CommentButton>
-
+        </CommentButton>
       </DiscussionBoxSection>
     </>
   )
