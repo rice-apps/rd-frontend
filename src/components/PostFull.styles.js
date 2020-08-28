@@ -15,12 +15,16 @@ const BackToFeed = styled(Link)`
 
 const DiscussionBoxSection = styled.section`
   // contains DiscussionBox
-  padding: 20px 140px;
-  max-width: 50vw;
+  padding: 20px 70px;
+  min-width: 55vw;
+  max-width: 65vw;
 `
 
 const OP = styled.div`
-  padding: 0px 0px 5px 5px;
+  display: grid;
+  grid-area: op;
+  white-space: nowrap;
+  margin-top: 1vh;
 `
 
 const Time = styled.div``
@@ -31,9 +35,10 @@ const DiscussionBox = styled.section`
   background: #ffffff;
   border-radius: 20px;
   display: grid;
-  grid-template-rows: 1fr 50px;
+  grid-template-rows: 3vh 1fr 50px;
   grid-template-columns: 65px 1fr;
   grid-template-areas:
+    'owo op'
     'left topmiddle'
     'left bottom';
 `
@@ -92,7 +97,8 @@ const MoreOptions = styled.div`
   grid-area: moreoptions;
   align-self: start;
   justify-self: start;
-`
+  margin-top: -2vw;
+`;
 
 const DDMenu = styled.div`
   position: relative;
@@ -132,8 +138,8 @@ const BottomComponent = styled.div`
   // contains Tags, ShareFacebook, ShareTwitter, Share
   grid-area: bottom;
   display: grid;
-  grid-template-columns: 1fr 40px 40px 40px 15px;
-  grid-template-areas: 'tags facebook twitter share .';
+  grid-template-columns: 1fr 8vw 2.5vw 2.5vw 2.5vw 1vw;
+  grid-template-areas: 'tags comments facebook twitter share .';
   justify-items: start;
   align-items: center;
 `
@@ -161,6 +167,10 @@ const ViewTags = styled.button`
   background-color: inherit;
 `
 
+const Comments = styled.div`
+  grid-area: comments;
+`
+
 const ShareFacebook = styled.div`
   grid-area: facebook;
 `
@@ -171,6 +181,53 @@ const ShareTwitter = styled.div`
 
 const Share = styled.div`
   grid-area: share;
+`
+// based off title box in WritePost styles
+const CommentInput = styled.div`
+  border: solid;
+
+  width: 386px;
+  height: 42px;
+  background: #f4f4f49a 0% 0% no-repeat padding-box;
+  border-radius: 5px;
+  opacity: 1;
+
+  text-align: left;
+  vertical-align: middle;
+  font: Roman 21px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
+`
+// based off posting button in WritePost styles
+const CommentButton = styled.button`
+  position: relative;
+  // background-color: #fabed6; /* Light pink */
+  border: none;
+  // color: black;
+  padding: 15px 32px;
+  text-align: center;
+  // text-decoration: none;
+  display: inline-block;
+  // font-size: 16px;
+  cursor: pointer;
+  z-index: 5;
+  margin: 5px;
+  &:hover {
+    background-color: #e7c6c6;
+    opacity: 100%;
+  }
+
+  //top: 849px;
+  //left: 1222px;
+  width: 114px;
+  height: 46px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  font: Medium 20px/17px Avenir;
+  letter-spacing: 0px;
+  color: #747886;
+  border: 2px solid #cdced2;
+  border-radius: 20px;
+  opacity: 1;
 `
 
 export {
@@ -196,8 +253,11 @@ export {
   AddTo,
   Report,
   Delete,
+  Comments,
   ShareFacebook,
   ShareTwitter,
   Share,
-  BackToFeed
+  BackToFeed,
+  CommentInput,
+  CommentButton
 }

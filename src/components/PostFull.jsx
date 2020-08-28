@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useMutation, useLazyQuery, useQuery } from '@apollo/client'
 import { GET_POST } from '../graphql/Queries'
+import { FETCH_COMMENTS_NESTED } from '../graphql/Queries'
 
 import { currentUser } from '../utils/apollo'
 import {
@@ -9,18 +10,22 @@ import {
   DOWNVOTE_POST,
   REPORT_POST,
   REMOVE_POST,
-  SAVE_POST
+  SAVE_POST,
+  CREATE_COMMENT
 } from '../graphql/Mutations'
 import { FETCH_COMMENTS_POST } from '../graphql/Queries'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { red, grey } from '@material-ui/core/colors'
+import Divider from '@material-ui/core/Divider';
 
 import AddToCalendar from 'react-add-to-calendar'
 
 import IconButton from '@material-ui/core/IconButton'
+import Button from '@material-ui/core/Button';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp'
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
+import ChatIcon from '@material-ui/icons/Chat'
 import FacebookIcon from '@material-ui/icons/Facebook'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import ShareIcon from '@material-ui/icons/Share'
@@ -55,10 +60,13 @@ import {
   AddTo,
   Report,
   Delete,
+  Comments,
   ShareFacebook,
   ShareTwitter,
   Share,
-  BackToFeed
+  BackToFeed,
+  CommentInput,
+  CommentButton,
 } from './PostFull.styles'
 
 JavascriptTimeAgo.addLocale(en)
@@ -71,7 +79,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function PostFull () {
+function PostFull() {
   // *********** post feed setup below
 
   const userInfo = currentUser()
@@ -80,26 +88,34 @@ function PostFull () {
   const [reportPost] = useMutation(REPORT_POST)
   const [removePost] = useMutation(REMOVE_POST)
   const [savePost] = useMutation(SAVE_POST)
-  const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
-    FETCH_COMMENTS_POST
-  )
+  const [createComment] = useMutation(CREATE_COMMENT)
+  // const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
+  //   FETCH_COMMENTS_POST
+  // )
 
   // *********** post full setup below
 
   let { postID } = useParams()
 
-  const { loading, error, data } = useQuery(GET_POST, {
+  const { ...resultPost } = useQuery(GET_POST, {
     variables: {
       id: postID
     }
   })
 
-  const dummyData = {
+  const { ...resultComments } = useQuery(FETCH_COMMENTS_NESTED, {
+    variables: {
+      post_id: postID
+    }
+  })
+  // shouldn't need dummy data
+
+  const dummyDataPost = {
     imageUrl: '',
     upvotes: [],
     downvotes: []
   }
-  let thePost = dummyData //for now
+  let thePost = dummyDataPost //for now
 
   // *********** post chunk setup below
 
@@ -149,18 +165,29 @@ function PostFull () {
 
   // *********** post full below
 
-  if (loading) {
-    return <p>Loading</p>
+  if (resultPost.loading) {
+    return <p>Loading Post</p>
   }
 
-  if (error) {
-    return <p>Error</p>
+  if (resultPost.error) {
+    return <p>Error Fetching Post</p>
   }
 
-  console.log(data)
-  console.log(data.postById)
+  if (resultComments.loading) {
+    return <p>Loading Comments</p>
+  }
 
-  thePost = data.postById //real data
+  if (resultComments.error) {
+    return <p>Error Fetching Comments</p>
+  }
+
+  console.log(resultPost.data.postById)
+  thePost = resultPost.data.postById //real data
+
+  console.log(resultComments)
+  let theComments = resultComments.data.commentByPost; //array
+  // are there comments?
+
 
   // *********** post chunk things that require thePost below
   // change to real data now that its available
@@ -190,19 +217,21 @@ function PostFull () {
     endTime: thePost.end ? thePost.end : ''
   }
 
+  const checkComment = (comment) => comment.length <= 0
+
   return (
     <>
       <BackToFeed to='/feed'>Back To Feed</BackToFeed>
       <DiscussionBoxSection>
-        <OP>
+        {/* <OP>
           {thePost.creator.username} -{' '}
           <ReactTimeAgo date={thePost.date_created} />
-        </OP>
+        </OP> */}
         <DiscussionBox>
           <LeftComponent>
             <Upvote className={classes.root}>
               <IconButton
-                style={isUpvoted ? { color: red[200] } : { color: grey[700] }}
+                style={isUpvoted ? { color: '#7380FF' } : { color: grey[700] }}
                 onClick={e => {
                   e.preventDefault()
                   toggleUpvoted()
@@ -220,7 +249,7 @@ function PostFull () {
             <Likes>{thePost.upvotes.length - thePost.downvotes.length}</Likes>
             <Downvote className={classes.root}>
               <IconButton
-                style={isDownvoted ? { color: red[200] } : { color: grey[800] }}
+                style={isDownvoted ? { color: '#7380FF' } : { color: grey[800] }}
                 onClick={e => {
                   e.preventDefault()
                   toggleDownvoted()
@@ -236,7 +265,13 @@ function PostFull () {
               </IconButton>
             </Downvote>
           </LeftComponent>
-
+          <OP>
+            <a>
+              {thePost.creator.username} -{' '}
+              <ReactTimeAgo date={thePost.date_created} />
+            </a>
+            <Divider style={{ width: '51.5vw', maxWidth: '97%', marginTop: '1vh' }} />
+          </OP>
           <TopMiddleComponent>
             <DiscussionTitleDiv>
               <DiscussionTitle>{thePost.title}</DiscussionTitle>
@@ -296,6 +331,7 @@ function PostFull () {
                     <Delete
                       onClick={e => {
                         e.preventDefault()
+                        window.location.reload(false)
                         removePost({
                           variables: {
                             _id: thePost._id
@@ -328,11 +364,13 @@ function PostFull () {
                   {isTagsOpen ? (
                     <text>(View Less)</text>
                   ) : (
-                    <text>(View All)</text>
-                  )}
+                      <text>(View All)</text>
+                    )}
                 </ViewTags>
               )}
             </Tags>
+
+            {/* Location of Comments Button */}
 
             <ShareFacebook>
               <IconButton>
@@ -351,6 +389,62 @@ function PostFull () {
             </Share>
           </BottomComponent>
         </DiscussionBox>
+        <h3>Comments:</h3>
+        <ul>
+          {/* level 1 */}
+          {theComments.map(comment => (
+            <li key={comment.id}>
+              {comment.body}
+              <ul>
+                {/* level 2 */}
+                {comment.children.map(child1 => (
+                  <li key={child1.id}>
+                    {child1.body}
+                    <ul>
+                      {/* level 3 */}
+                      {child1.children.map(child2 => (
+                        <li key={child2.id}>
+                          {child2.body}
+                          {/* dont nest any further */}
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+
+        <h3>-----------------------------------------------------------</h3>
+        <CommentInput id='comment' contentEditable={true}>
+          Enter Comment. . .
+        </CommentInput>
+
+        {/* based on write post post creation button */}
+        <CommentButton
+          onClick={e => {
+            e.preventDefault()
+            const cmt = document.getElementById('comment').innerHTML
+            if (checkComment(cmt)) return
+            try {
+              createComment({
+                variables: {
+                  creator: userInfo.netID,
+                  post: postID,
+                  parent: null,
+                  body: cmt,
+                }
+              })
+            } catch (error) {
+              console.log(error)
+              // log.error('error', error) // import log from 'loglevel' <-- to use
+            }
+          }}
+        >
+          Comment
+          </CommentButton>
+
       </DiscussionBoxSection>
     </>
   )

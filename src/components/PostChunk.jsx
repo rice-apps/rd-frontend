@@ -66,7 +66,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function PostChunk (props) {
+function PostChunk(props) {
   const classes = useStyles()
   let oneImage = <></>
 
@@ -226,15 +226,15 @@ function PostChunk (props) {
                   </Save>
                   {(props.post.node.kind === 'Event' ||
                     props.post.node.kind === 'Job') && (
-                    <AddTo>
-                      <AddToCalendar
-                        event={calEvent}
-                        buttonLabel='Add to '
-                        buttonTemplate={calIcon}
-                        listItems={calDropDown}
-                      ></AddToCalendar>
-                    </AddTo>
-                  )}
+                      <AddTo>
+                        <AddToCalendar
+                          event={calEvent}
+                          buttonLabel='Add to '
+                          buttonTemplate={calIcon}
+                          listItems={calDropDown}
+                        ></AddToCalendar>
+                      </AddTo>
+                    )}
 
                   <Expand>
                     <FullPostLink to={myPostLink}>Expand</FullPostLink>
@@ -257,20 +257,20 @@ function PostChunk (props) {
 
                   {props.post.node.creator.username ===
                     props.userInfo.username && (
-                    <Delete
-                      onClick={e => {
-                        e.preventDefault()
-                        window.location.reload(false)
-                        props.removePost({
-                          variables: {
-                            _id: props.post.node._id
-                          }
-                        })
-                      }}
-                    >
-                      Delete Post
-                    </Delete>
-                  )}
+                      <Delete
+                        onClick={e => {
+                          e.preventDefault()
+                          window.location.reload(false)
+                          props.removePost({
+                            variables: {
+                              _id: props.post.node._id
+                            }
+                          })
+                        }}
+                      >
+                        Delete Post
+                      </Delete>
+                    )}
                 </DDMenu>
               )}
             </MoreOptions>
@@ -302,8 +302,8 @@ function PostChunk (props) {
                   {isTagsOpen ? (
                     <text>(View Less)</text>
                   ) : (
-                    <text>(View All)</text>
-                  )}
+                      <text>(View All)</text>
+                    )}
                 </ViewTags>
               )}
             </Tags>
