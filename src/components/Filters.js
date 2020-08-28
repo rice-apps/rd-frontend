@@ -29,29 +29,22 @@ const Filters = props => {
   const [dates, setDates] = useState('')
   const [upvotes, setUpvotes] = useState('')
 
-  const [tagDropDown, setTagDropDown] = useState([])
-
   const POST_TYPES = ['Discussion', 'Event', 'Notice', 'Job']
   const DATES = ['yesterday', 'in the last week', 'in the last month']
   const UPVOTES = ['hot', 'cold']
 
   const {data, loading, error} = useQuery(GET_TAGS);
-  const [kindFilter, {data: kind_post_ids, loading: kind_loading, error: kind_error}] = useLazyQuery(FILTER_KIND);
-  const [dateFilter, {data: date_post_ids, loading: date_loading, error: date_error}] = useLazyQuery(FILTER_DATES);
-  const [tagsFilter, {data: tags_post_ids, loading: tags_loading, error: tags_error}] = useLazyQuery(FILTER_TAGS);
 
   useEffect(() => {
     setDates(props.dateFilter)
     setUpvotes(props.upvoteFilter)
     setTags(props.tagFilter)
-    setPostType(props.kindFilter)
-    setTagDropDown(props.tagList)
+    if (!props.firstTime) setPostType(props.kindFilter)
   }, [])
 
   
   if (loading) return <h1>Your tags are loading.</h1>
   if (error) return <h1>oshit(git) MY FILTERS ARE DUCKED</h1>
-  console.log(data);
 
   const togglePost = () => {
     setPostMenuOpen(!isPostTypeOpen)
@@ -82,6 +75,7 @@ const Filters = props => {
   }
 
   const handlePostTypeChange = newValue => {
+    props.setFirstTime(false);
     const index_of_postType = postType.indexOf(newValue)
     setPostType(index_of_postType >= 0 ? '' : newValue)
   }
@@ -105,26 +99,22 @@ const Filters = props => {
     setUpvotes(index_of_upvote >= 0 ? '' : newValue)
   }
 
-  //fire the useLazyQuery
   const submitFilters = () => {
     props.processDate(dates)
+
+    let filterType = "";
+    if (postType.length > 0 && !props.firstTime){ 
+      filterType += " kind" 
+    }
+    if (tags.length > 0) filterType += " tags"
+    if (dates.length > 0) filterType += " date"
+    if (upvotes.length > 0) filterType += " popularity"
+    props.setTypeofFilter(filterType);
+
     props.setDateFilter(dates)
-    props.sort_by_upvotes(upvotes)
     props.setUpvoteFilter(upvotes)
-
-    props.setKindFilter(postType)
-
-    props.setTagFilter(tags)
-    props.setTags(tags);
-
-    kindFilter(
-      
-    )
-    dateFilter(
-
-    )
-    tagsFilter()
-
+    props.firstTime ? props.setKindFilter("Discussion") : props.setKindFilter(postType);
+    props.setTagFilter(tags);
   }
 
   return (

@@ -4,7 +4,7 @@ import { useQuery, useLazyQuery } from '@apollo/client'
 
 import { Helmet } from 'react-helmet'
 import PostFeed from './PostFeed'
-import { POST_PAGE } from '../graphql/Queries'
+import { POST_PAGE, GET_FILTERED_IDS } from '../graphql/Queries'
 import { POST_CREATED, POST_VOTE_CHANGED } from '../graphql/Subscriptions'
 import WritePost from './WritePost'
 
@@ -27,41 +27,86 @@ import Button from '@material-ui/core/Button';
 function PostFeedWithData () {
   const [today, setToday] = useState(null)
   const [earlyDateBound, setEarlyDateBound] = useState(new Date(2000, 1, 1))
-  const [kind, setKind] = useState('')
 
   // these set states are there so we can remember our filters upon filter.jsx remount
   const [upvoteFilter, setUpvoteFilter] = useState('')
   const [dateFilter, setDateFilter] = useState('')
   const [tagFilter, setTagFilter] = useState([])
-  const [kindFilter, setKindFilter] = useState('')
+  const [kindFilter, setKindFilter] = useState("Discussion")
+
+  const [postIDs, setPostIDs]= useState([])
+  const [filterType, setFilterType] = useState("")
+  const [firstTime, setFirstTime] = useState(true)
 
   const { subscribeToMore, fetchMore, refetch, ...result } = useQuery(
     POST_PAGE,
     {
       variables: {
         after: '',
-        today: today,
-        earlyDate: earlyDateBound
-        // kind: kind,
+        listOfIDs: postIDs
       },
       fetchPolicy: 'cache-and-network',
       nextFetchPolicy: 'cache-first'
     }
   )
 
-  const [modalVisible, setVisibility] = useState(false)
+  //change filterStyle to activate the backend
+  const { refetch: refetchFilter, data: filteredData, error: filter_error, loading: loading_error  } = useQuery(
+    GET_FILTERED_IDS,
+    {
+      variables: {
+        filterStyle: filterType,
+        tags: tagFilter,
+        beginDate: earlyDateBound,
+        endDate: today,
+        upvoteType: upvoteFilter,
+        kind: kindFilter
+      },
+      fetchPolicy: 'cache-and-network',
+      nextFetchPolicy: 'cache-first'
+    }
+  )
 
   // by default we set latest day to be today
   useEffect(() => {
     setToday(new Date())
   }, [])
 
+  // get the post_ids
   useEffect(() => {
-    refetch()
-    console.log('refetched!')
-  }, [today, earlyDateBound])
+    console.log("FILTER", filterType)
+    refetchFilter()
+  }, [filterType])
 
-  // const [modalVisible, setVisibility] = useState(false);
+  //whenever the post_Ids change, we get the post_data
+  useEffect(() => {
+    if (filteredData){
+      const IDs = filteredData.getFilteredData.map(post => post._id);
+      setPostIDs(IDs);
+    } else{
+      setPostIDs(filteredData);
+    }
+  }, [filteredData])
+
+  useEffect(() => {
+    console.log("REFETCH")
+    refetch();
+  }, [postIDs])
+
+// --- start
+  // 1) POST_PAGE will use empty post_ids array --> empty discussion feed
+  // 2) FILTER query will also fire and without any restrictions, get all the post_ids
+  // 3) set post_id state --> cause useEffect to fire.  useEffect will contain the refetch
+  // 4) POST_PAGE will query the backend with all the post_ids and return the default look
+
+  // 5) Apply a filter --> refetch the FILTER query --> refetch the POST_PAGE
+  // 6) Clear all filters --> refetch FILTER --> refetch POST_PAGE
+// ---
+
+  // STEMS From the fact that we need the cursor info, empty post_id parameter will return no posts
+  // postConnection is too hard to modify
+
+  const [modalVisible, setVisibility] = useState(false)
   const openModal = () => setVisibility(true)
 
   return (
@@ -112,6 +157,11 @@ function PostFeedWithData () {
             upvoteFilter={upvoteFilter}
             kindFilter={kindFilter}
             tagFilter={tagFilter}
+            setTypeofFilter={setFilterType}
+
+            refetch={refetchFilter}
+            firstTime={firstTime}
+            setFirstTime={setFirstTime}
             onLoadMore={() =>
               fetchMore({
                 variables: {

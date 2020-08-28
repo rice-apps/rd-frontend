@@ -106,25 +106,10 @@ function PostFeed (props) {
       )
     })
   }
-  let tags = new Set()
-  edges.forEach(edge => {
-    edge.node.tags.forEach(tag => {
-      tags.add(tag)
-    })
-  })
-  if (tags.size === 0) tags = ['No tags for these filters']
-  const compare_upvote_lengths = (a, b) => {
-    return a.node.upvotes.length <= b.node.upvotes.length ? -1 : 1
-  }
+
   let posts
   if (sort_by_upvotes.length == 0) {
     posts = generate_posts(edges)
-  } else if (sort_by_upvotes.includes('most')) {
-    const sorted_edges = [...edges].sort(compare_upvote_lengths).reverse()
-    posts = generate_posts(sorted_edges)
-  } else if (sort_by_upvotes.includes('least')) {
-    const sorted_edges = [...edges].sort(compare_upvote_lengths)
-    posts = generate_posts(sorted_edges)
   }
   posts = edges.map((post, _i) => {
     return (
@@ -147,13 +132,18 @@ function PostFeed (props) {
             upvoteFilter={props.upvoteFilter}
             setTagFilter={props.setTagFilter}
             tagFilter={props.tagFilter}
-            tagsList={[...tags]}
+
+            setTypeofFilter={props.setTypeofFilter}
+            firstTime={props.firstTime}
+            setFirstTime={props.setFirstTime}
           />
           {posts}
         </InfiniteScroll>
       </>
     )
   })
+
+  if (posts.length == 0) return (<h1>No posts oops... imma add a go-back to clear things</h1>);
   return posts
 }
 // PostFeed.propTypes = {

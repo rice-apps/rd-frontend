@@ -67,15 +67,24 @@ const POST_PAGE = gql`
   }
 `
 
-const GET_DEFAULT_IDS = gql`
-  query GetDefaultIDs($after: String!){
-    query postConnection(after: $after){
-      count
-      edges{
-        node{
-          _id
-        }
-      }
+const GET_FILTERED_IDS = gql`
+  query GetFilteredIDs(
+    $filterStyle: String!
+    $tags: [String!]
+    $beginDate: Date
+    $endDate: Date
+    $upvoteType: String
+    $kind: EnumDKeyPostKind
+  ){
+    getFilteredData(
+      filterStyle: $filterStyle
+      tags: $tags
+      beginDate: $beginDate
+      endDate: $endDate
+      upvoteType: $upvoteType
+      kind: $kind
+    ) {
+      _id
     }
   }
 `
@@ -309,6 +318,6 @@ export {
   FILTER_DATES,
   FILTER_TAGS,
   FILTER_KIND,
-  GET_DEFAULT_IDS,
-  GET_POST
+  GET_FILTERED_IDS,
+  GET_POST,
 }
