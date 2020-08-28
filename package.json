@@ -41,7 +41,7 @@
     "react-infinite-scroller": "^1.2.4",
     "react-is": "^16.13.1",
     "react-router-dom": "^6.0.0-beta.0",
-    "react-scripts": "3.4.1",
+    "react-scripts": "3.4.3",
     "react-time-ago": "^6.0.1",
     "styled-components": "^5.1.1",
     "subscriptions-transport-ws": "^0.9.16"
@@ -52,6 +52,6 @@
     "@types/react-html-parser": "^2.0.1",
     "@types/uuid": "^8.0.1",
     "graphql-tag.macro": "^2.0.1",
-    "typescript": "^3.2.1"
+    "typescript": "^3.9.7"
   }
 }
