@@ -124,7 +124,6 @@ const DiscussionBody = styled.text`
   padding: 10px 0px;
   font-size: 2vh;
   word-wrap: break-word;
-  max-height: 100px;
 `
 
 const BottomComponent = styled.div`
