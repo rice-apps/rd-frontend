@@ -62,6 +62,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:3.0.5"
       ],
       [
+        "draft-js",
+        "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:0.11.7"
+      ],
+      [
+        "draftjs-to-markdown",
+        "npm:0.6.0"
+      ],
+      [
         "graphql",
         "npm:14.7.0"
       ],
@@ -165,6 +173,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react-html-parser", "npm:2.0.1"],
             ["@types/uuid", "npm:8.3.0"],
             ["cross-fetch", "npm:3.0.5"],
+            ["draft-js", "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:0.11.7"],
+            ["draftjs-to-markdown", "npm:0.6.0"],
             ["graphql", "npm:14.7.0"],
             ["graphql-tag.macro", "npm:2.1.0"],
             ["history", "npm:5.0.0"],
@@ -6398,6 +6408,33 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["draft-js", [
+        ["virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:0.11.7", {
+          "packageLocation": "./.yarn/$$virtual/draft-js-virtual-2abe25fb23/0/cache/draft-js-npm-0.11.7-ea66f83002-b16acd275d.zip/node_modules/draft-js/",
+          "packageDependencies": [
+            ["draft-js", "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:0.11.7"],
+            ["fbjs", "npm:2.0.0"],
+            ["immutable", "npm:3.7.6"],
+            ["object-assign", "npm:4.1.1"],
+            ["react", "npm:16.13.1"],
+            ["react-dom", "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:16.13.1"]
+          ],
+          "packagePeers": [
+            "react",
+            "react-dom"
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["draftjs-to-markdown", [
+        ["npm:0.6.0", {
+          "packageLocation": "./.yarn/cache/draftjs-to-markdown-npm-0.6.0-13b6973218-dc103fedc7.zip/node_modules/draftjs-to-markdown/",
+          "packageDependencies": [
+            ["draftjs-to-markdown", "npm:0.6.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["duplexer", [
         ["npm:0.1.2", {
           "packageLocation": "./.yarn/cache/duplexer-npm-0.1.2-952c810235-5c2ccea7c8.zip/node_modules/duplexer/",
@@ -7339,6 +7376,32 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["fb-watchman", "npm:2.0.1"],
             ["bser", "npm:2.1.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["fbjs", [
+        ["npm:2.0.0", {
+          "packageLocation": "./.yarn/cache/fbjs-npm-2.0.0-2574cfbe40-8f88a34384.zip/node_modules/fbjs/",
+          "packageDependencies": [
+            ["fbjs", "npm:2.0.0"],
+            ["core-js", "npm:3.6.5"],
+            ["cross-fetch", "npm:3.0.5"],
+            ["fbjs-css-vars", "npm:1.0.2"],
+            ["loose-envify", "npm:1.4.0"],
+            ["object-assign", "npm:4.1.1"],
+            ["promise", "npm:7.3.1"],
+            ["setimmediate", "npm:1.0.5"],
+            ["ua-parser-js", "npm:0.7.21"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["fbjs-css-vars", [
+        ["npm:1.0.2", {
+          "packageLocation": "./.yarn/cache/fbjs-css-vars-npm-1.0.2-c233f16598-2f0c717cc2.zip/node_modules/fbjs-css-vars/",
+          "packageDependencies": [
+            ["fbjs-css-vars", "npm:1.0.2"]
           ],
           "linkType": "HARD",
         }]
@@ -8533,6 +8596,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/immer-npm-1.10.0-cc9a99ae9e-9cec946ed0.zip/node_modules/immer/",
           "packageDependencies": [
             ["immer", "npm:1.10.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["immutable", [
+        ["npm:3.7.6", {
+          "packageLocation": "./.yarn/cache/immutable-npm-3.7.6-1c13b39359-33fb106a33.zip/node_modules/immutable/",
+          "packageDependencies": [
+            ["immutable", "npm:3.7.6"]
           ],
           "linkType": "HARD",
         }]
@@ -13173,6 +13245,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["promise", [
+        ["npm:7.3.1", {
+          "packageLocation": "./.yarn/cache/promise-npm-7.3.1-5d81d474c0-23267a4b07.zip/node_modules/promise/",
+          "packageDependencies": [
+            ["promise", "npm:7.3.1"],
+            ["asap", "npm:2.0.6"]
+          ],
+          "linkType": "HARD",
+        }],
         ["npm:8.1.0", {
           "packageLocation": "./.yarn/cache/promise-npm-8.1.0-09977f1805-ec94008d8a.zip/node_modules/promise/",
           "packageDependencies": [
@@ -13442,6 +13522,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react-html-parser", "npm:2.0.1"],
             ["@types/uuid", "npm:8.3.0"],
             ["cross-fetch", "npm:3.0.5"],
+            ["draft-js", "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:0.11.7"],
+            ["draftjs-to-markdown", "npm:0.6.0"],
             ["graphql", "npm:14.7.0"],
             ["graphql-tag.macro", "npm:2.1.0"],
             ["history", "npm:5.0.0"],
@@ -16098,6 +16180,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/typescript-patch-ba0dbfd217-f0d3d9c987.zip/node_modules/typescript/",
           "packageDependencies": [
             ["typescript", "patch:typescript@npm%3A3.9.7#builtin<compat/typescript>::version=3.9.7&hash=5b02a2"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["ua-parser-js", [
+        ["npm:0.7.21", {
+          "packageLocation": "./.yarn/cache/ua-parser-js-npm-0.7.21-b6acc81503-5bd2d949e2.zip/node_modules/ua-parser-js/",
+          "packageDependencies": [
+            ["ua-parser-js", "npm:0.7.21"]
           ],
           "linkType": "HARD",
         }]
