@@ -179,8 +179,10 @@ function PostChunk (props) {
             </Downvote>
           </LeftComponent>
           <OP>
-            {props.post.node.creator.username} -{' '}
-            <ReactTimeAgo date={props.post.node.date_created} />
+            <a>
+              {props.post.node.creator.username} -{' '}
+              <ReactTimeAgo date={props.post.node.date_created} />
+            </a>
             <Divider
               style={{ width: '51.5vw', maxWidth: '97%', marginTop: '1vh' }}
             />

@@ -174,9 +174,6 @@ function PostFull () {
     return <p>Loading Comments</p>
   }
 
-<<<<<<< HEAD
-  thePost = data.postById //real data
-=======
   if (resultComments.error) {
     return <p>Error Fetching Comments</p>
   }
@@ -185,7 +182,6 @@ function PostFull () {
 
   let theComments = resultComments.data.commentByPost //array
   // are there comments?
->>>>>>> ef5d2edad764dd121105d2d11a33a6d31cb5b994
 
   // *********** post chunk things that require thePost below
   // change to real data now that its available
