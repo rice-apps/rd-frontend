@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useMutation, useLazyQuery, useQuery } from '@apollo/client'
-import { GET_POST } from '../graphql/Queries'
-import { FETCH_COMMENTS_NESTED } from '../graphql/Queries'
+import { useMutation, useQuery } from '@apollo/client'
+import { GET_POST, FETCH_COMMENTS_NESTED } from '../graphql/Queries'
 
 import { currentUser } from '../utils/apollo'
 import {
@@ -13,23 +12,21 @@ import {
   SAVE_POST,
   CREATE_COMMENT
 } from '../graphql/Mutations'
-import { FETCH_COMMENTS_POST } from '../graphql/Queries'
 
 import { makeStyles } from '@material-ui/core/styles'
-import { red, grey } from '@material-ui/core/colors'
+import { grey } from '@material-ui/core/colors'
 import Divider from '@material-ui/core/Divider'
 
 import AddToCalendar from 'react-add-to-calendar'
 
 import IconButton from '@material-ui/core/IconButton'
-import Button from '@material-ui/core/Button'
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp'
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
-import ChatIcon from '@material-ui/icons/Chat'
 import FacebookIcon from '@material-ui/icons/Facebook'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import ShareIcon from '@material-ui/icons/Share'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
+import log from 'loglevel'
 
 import ReactHtmlParser from 'react-html-parser'
 
@@ -59,7 +56,6 @@ import {
   AddTo,
   Report,
   Delete,
-  Comments,
   ShareFacebook,
   ShareTwitter,
   Share,
@@ -89,18 +85,20 @@ function PostFull () {
   const [savePost] = useMutation(SAVE_POST)
   const [createComment] = useMutation(CREATE_COMMENT)
 
-  let { postID } = useParams()
+  const { postID } = useParams()
 
-  const { ...resultPost } = useQuery(GET_POST, {
+  const resultPost = useQuery(GET_POST, {
     variables: {
       id: postID
-    }
+    },
+    fetchPolicy: 'network-only'
   })
 
-  const { ...resultComments } = useQuery(FETCH_COMMENTS_NESTED, {
+  const resultComments = useQuery(FETCH_COMMENTS_NESTED, {
     variables: {
       post_id: postID
-    }
+    },
+    fetchPolicy: 'network-only'
   })
   // shouldn't need dummy data
 
@@ -175,10 +173,8 @@ function PostFull () {
     return <p>Error Fetching Comments</p>
   }
 
-  console.log(resultPost.data.postById)
   thePost = resultPost.data.postById //real data
 
-  console.log(resultComments)
   let theComments = resultComments.data.commentByPost //array
   // are there comments?
 
@@ -261,7 +257,7 @@ function PostFull () {
             </Downvote>
           </LeftComponent>
           <OP>
-            <a>
+            <a href='.'>
               {thePost.creator.username} -{' '}
               <ReactTimeAgo date={thePost.date_created} />
             </a>
@@ -292,8 +288,6 @@ function PostFull () {
                           savedPosts: [...currentSavedPosts, thePost._id]
                         }
                       })
-
-                      console.log(userInfo.savedPosts)
                     }}
                   >
                     Save Post
@@ -305,7 +299,7 @@ function PostFull () {
                         buttonLabel='Add to '
                         buttonTemplate={calIcon}
                         listItems={calDropDown}
-                      ></AddToCalendar>
+                      />
                     </AddTo>
                   )}
 
@@ -354,8 +348,8 @@ function PostFull () {
               {thePost.tags.length > 1 && <Tag>{thePost.tags[1]}</Tag>}
               {thePost.tags.length > 2 && <Tag>{thePost.tags[2]}</Tag>}
 
-              {isTagsOpen && thePost.tags.slice(3).map(tag => <Tag>{tag}</Tag>)}
-
+              {isTagsOpen &&
+                thePost.tags.slice(3).map(tag => <Tag key={tag}>{tag}</Tag>)}
               {thePost.tags.length > 3 && (
                 <ViewTags onClick={toggleTags}>
                   {isTagsOpen ? (
@@ -414,7 +408,7 @@ function PostFull () {
         </ul>
 
         <h3>-----------------------------------------------------------</h3>
-        <CommentInput id='comment' contentEditable={true}>
+        <CommentInput id='comment' contentEditable>
           Enter Comment. . .
         </CommentInput>
 
@@ -434,8 +428,7 @@ function PostFull () {
                 }
               })
             } catch (error) {
-              console.log(error)
-              // log.error('error', error) // import log from 'loglevel' <-- to use
+              log.error(error)
             }
           }}
         >

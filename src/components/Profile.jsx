@@ -41,7 +41,7 @@ const ProfilePage = () => {
     major: currentMajor,
     minor: currentMinor,
     college: currentCollege,
-    savedPosts: savedPosts
+    savedPosts
   } = currentUser()
 
   const [
@@ -252,7 +252,7 @@ const ProfilePage = () => {
         <div>
           Your saved posts:
           {savedPosts.map(post => (
-            <div>{'localhost:3000/posts/' + post._id}</div>
+            <div key={post._id}>{'localhost:3000/posts/' + post._id}</div>
           ))}
         </div>
 

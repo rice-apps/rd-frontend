@@ -36,12 +36,8 @@ export const SideNav = () => {
       <NavList>
         {pages.map((page, i) => {
           return (
-            <Link to={'/' + page}>
-              <NavElement
-                key={window.btoa(page)}
-                first={i === 0}
-                selected={page === location.pathname}
-              >
+            <Link key={window.btoa(page)} to={'/' + page}>
+              <NavElement first={i === 0} selected={page === location.pathname}>
                 <SvgIcon
                   htmlColor={page === location.pathname ? `#FFFFFF` : `#A9ABB4`}
                   style={{ fontSize: '1.6vw' }}

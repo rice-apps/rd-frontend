@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
-import { red, grey } from '@material-ui/core/colors'
+import { grey } from '@material-ui/core/colors'
 import Divider from '@material-ui/core/Divider'
 
 import AddToCalendar from 'react-add-to-calendar'
@@ -22,13 +22,12 @@ import JavascriptTimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import ReactTimeAgo from 'react-time-ago'
 
-import { useMutation, useLazyQuery } from '@apollo/client'
-import { FETCH_COMMENTS_POST, FETCH_COMMENTS_PARENT } from '../graphql/Queries'
+import { useLazyQuery } from '@apollo/client'
+import { FETCH_COMMENTS_POST } from '../graphql/Queries'
 
 import {
   DiscussionBoxSection,
   OP,
-  Time,
   DiscussionBox,
   LeftComponent,
   Likes,
@@ -76,9 +75,7 @@ function PostChunk (props) {
     )
   }
 
-  const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
-    FETCH_COMMENTS_POST
-  )
+  const [getCommentsPost] = useLazyQuery(FETCH_COMMENTS_POST)
 
   const myPostID = props.post.node._id
   const myPostLink = '/posts/' + String(myPostID) // forming the url
@@ -184,10 +181,8 @@ function PostChunk (props) {
             </Downvote>
           </LeftComponent>
           <OP>
-            <a>
-              {props.post.node.creator.username} -{' '}
-              <ReactTimeAgo date={props.post.node.date_created} />
-            </a>
+            {props.post.node.creator.username} -{' '}
+            <ReactTimeAgo date={props.post.node.date_created} />
             <Divider
               style={{ width: '51.5vw', maxWidth: '97%', marginTop: '1vh' }}
             />
@@ -218,8 +213,6 @@ function PostChunk (props) {
                           ]
                         }
                       })
-
-                      console.log(props.userInfo.savedPosts)
                     }}
                   >
                     Save Post
@@ -295,7 +288,9 @@ function PostChunk (props) {
               )}
 
               {isTagsOpen &&
-                props.post.node.tags.slice(3).map(tag => <Tag>{tag}</Tag>)}
+                props.post.node.tags
+                  .slice(3)
+                  .map(tag => <Tag key={tag}>{tag}</Tag>)}
 
               {props.post.node.tags.length > 3 && (
                 <ViewTags onClick={toggleTags}>

@@ -11,15 +11,11 @@ import WritePost from './WritePost'
 import {
   Background,
   PostFeedContainer,
-  BannerContainer,
   RightSidebarContainer,
   LeftSidebarContainer,
-  NewPostButtonContainer,
-  NewPostButton,
-  ButtonText
+  NewPostButtonContainer
 } from './PostFeedWithData.styles'
 
-import { Banner } from './PostFeed.styles'
 import { SideNav } from './SideNav'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import Button from '@material-ui/core/Button'
@@ -57,7 +53,6 @@ function PostFeedWithData () {
 
   useEffect(() => {
     refetch()
-    console.log('refetched!')
   }, [today, earlyDateBound])
 
   // const [modalVisible, setVisibility] = useState(false);
@@ -122,7 +117,7 @@ function PostFeedWithData () {
                 }
               })
             }
-            subscribeToNewPosts={() => {
+            subscribeToNewPosts={() =>
               subscribeToMore({
                 document: POST_CREATED,
                 updateQuery: (prev, { subscriptionData }) => {
@@ -163,12 +158,12 @@ function PostFeedWithData () {
                   }
                 }
               })
-            }}
-            subscribeToNewVotes={() => {
+            }
+            subscribeToNewVotes={() =>
               subscribeToMore({
                 document: POST_VOTE_CHANGED
               })
-            }}
+            }
           />
         </PostFeedContainer>
         <RightSidebarContainer />
