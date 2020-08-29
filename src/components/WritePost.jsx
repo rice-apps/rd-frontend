@@ -182,7 +182,7 @@ function WritePost (props) {
   }
 
   const checkTitleBodyAndTag = (title, body, tagInput) =>
-    title.length <= 0 || body.length <= 0 || tagInput.length > 0
+      title.length <= 0 || body.length <= 0 || tagInput.length > 0
 
   const checkExtras = {
     'Discussion': () => { return false },
@@ -225,14 +225,14 @@ function WritePost (props) {
     'Discussion': <DatesWrapper />,
 
     'Event': (
-      <DatesWrapper>
-        From
-        <DatePicker selected={startDate} onChange={changeStartDate}
-                    customInput={<DateBox> {numToDateString(startDate)} </DateBox>} />
-        to
-        <DatePicker selected={endDate} onChange={changeEndDate}
-                    customInput={<DateBox> {numToDateString(endDate)} </DateBox>} />
-      </DatesWrapper>
+        <DatesWrapper>
+          From
+          <DatePicker selected={startDate} onChange={changeStartDate}
+                      customInput={<DateBox> {numToDateString(startDate)} </DateBox>} />
+          to
+          <DatePicker selected={endDate} onChange={changeEndDate}
+                      customInput={<DateBox> {numToDateString(endDate)} </DateBox>} />
+        </DatesWrapper>
     ),
 
     'Job': (
@@ -262,29 +262,29 @@ function WritePost (props) {
 
   const locationJobInfo = {
     'Discussion': (
-      <LocationJobInfoWrapper />
+        <LocationJobInfoWrapper />
     ),
 
     'Event': (
-      <LocationJobInfoWrapper>
-        Location:
-        <LocationBox id={'location'} contentEditable onChange={changeLocation} />
-      </LocationJobInfoWrapper>
+        <LocationJobInfoWrapper>
+          Location:
+          <LocationBox id={'location'} contentEditable onChange={changeLocation} />
+        </LocationJobInfoWrapper>
     ),
 
     'Job': (
-      <LocationJobInfoWrapper>
-        Location:
-        <LocationBox id={'location'} contentEditable onKeyUp={changeLocation} />
-        Paid
-        <Checkbox id='isPaid' onChange={togglePaid} color={'dummy-color'} />
-        Closed
-        <Checkbox id='isClosed' onChange={toggleClosed} color={'dummy-color'} />
-      </LocationJobInfoWrapper>
+        <LocationJobInfoWrapper>
+          Location:
+          <LocationBox id={'location'} contentEditable onKeyUp={changeLocation} />
+          Paid
+          <Checkbox id='isPaid' onChange={togglePaid} color={'dummy-color'} />
+          Closed
+          <Checkbox id='isClosed' onChange={toggleClosed} color={'dummy-color'} />
+        </LocationJobInfoWrapper>
     ),
 
     'Notice': (
-      <LocationJobInfoWrapper />
+        <LocationJobInfoWrapper />
     ),
 
     'default': (
@@ -371,118 +371,118 @@ function WritePost (props) {
   }
 
   return (
-    <div>
-      <Helmet>
-        <title>RiceDiscuss &middot; Compose post</title>
-      </Helmet>
+      <div>
+        <Helmet>
+          <title>RiceDiscuss &middot; Compose post</title>
+        </Helmet>
 
-      <PostWrapper>
-        <ModalTitle>
-          Add New Post
-        </ModalTitle>
+        <PostWrapper>
+          <ModalTitle>
+            Add New Post
+          </ModalTitle>
 
-        <ExitButton onClick={closeModal} > X </ExitButton>
+          <ExitButton onClick={closeModal} > X </ExitButton>
 
-        <FormWrapper>
+          <FormWrapper>
 
-          <SelectCategoryWrapper>
-            Select Category:
-            <ButtonWrapper>
-              <Button id='Notice' onClick={changePostType}
-                      style={ postType === 'Notice' ?
-                          { borderTopLeftRadius: '1.4vh', borderBottomLeftRadius: '1.4vh', fontWeight: 'bold' } :
-                          { borderTopLeftRadius: '1.4vh', borderBottomLeftRadius: '1.4vh' }}>
-                NOTICE
-              </Button>
-              <Button id='Event' onClick={changePostType}
-                      style={ postType === 'Event' ? { fontWeight: 'bold' } : null }>
-                EVENT
-              </Button>
-              <Button id='Job' onClick={changePostType}
-                      style={ postType === 'Job' ? { fontWeight: 'bold' } : null }>
-                JOB
-              </Button>
-              <Button id='Discussion' onClick={changePostType}
-                      style={ postType === 'Discussion' ?
-                          { borderTopRightRadius: '1.4vh', borderBottomRightRadius: '1.4vh', fontWeight: 'bold' } :
-                          { borderTopRightRadius: '1.4vh', borderBottomRightRadius: '1.4vh' }}>
-                DISCUSSION
-              </Button>
-            </ButtonWrapper>
-          </SelectCategoryWrapper>
+            <SelectCategoryWrapper>
+              Select Category:
+              <ButtonWrapper>
+                <Button id='Notice' onClick={changePostType}
+                        style={ postType === 'Notice' ?
+                            { borderTopLeftRadius: '1.4vh', borderBottomLeftRadius: '1.4vh', fontWeight: 'bold' } :
+                            { borderTopLeftRadius: '1.4vh', borderBottomLeftRadius: '1.4vh' }}>
+                  NOTICE
+                </Button>
+                <Button id='Event' onClick={changePostType}
+                        style={ postType === 'Event' ? { fontWeight: 'bold' } : null }>
+                  EVENT
+                </Button>
+                <Button id='Job' onClick={changePostType}
+                        style={ postType === 'Job' ? { fontWeight: 'bold' } : null }>
+                  JOB
+                </Button>
+                <Button id='Discussion' onClick={changePostType}
+                        style={ postType === 'Discussion' ?
+                            { borderTopRightRadius: '1.4vh', borderBottomRightRadius: '1.4vh', fontWeight: 'bold' } :
+                            { borderTopRightRadius: '1.4vh', borderBottomRightRadius: '1.4vh' }}>
+                  DISCUSSION
+                </Button>
+              </ButtonWrapper>
+            </SelectCategoryWrapper>
 
-          <Form>
-            <TitleWrapper>
-              Title:
-              <TitleBox id={'title'} contentEditable />
-              { datePossibilities[postType] || datePossibilities['default'] }
-            </TitleWrapper>
-            <BodyWrapper>
-              <RichIcons>
-                <RichButton icon={<FormatBoldIcon />} type={'style'} op={'BOLD'} />
-                <RichButton icon={<FormatItalicIcon />} type={'style'} op={'ITALIC'} />
-                <RichButton icon={<FormatUnderlinedIcon />} type={'style'} op={'UNDERLINE'} />
-                <RichButton icon={<StrikethroughSIcon />} type={'style'} op={'STRIKETHROUGH'} />
-                <RichButton icon={<FormatListBulletedIcon />} type={'list'} op={'unordered-list-item'} />
-                <RichButton icon={<FormatListNumberedIcon />} type={'list'} op={'ordered-list-item'} />
-                <RichButton icon={<FormatAlignLeftIcon />} type={'align'} op={'left'} />
-                <RichButton icon={<FormatAlignCenterIcon />} type={'align'} op={'center'} />
-                <RichButton icon={<FormatAlignRightIcon />} type={'align'} op={'right'} />
-                <RichButton icon={<InsertLinkIcon />} type={'link'} op={'LINK'} />
-                {/*<RichButton icon={<VideoLibraryIcon />} type={'video'} op={'VIDEO'} />*/}
-                <RichButton icon={<ImageIcon />} type={'image'} op={'IMAGE'} />
-              </RichIcons>
-              <UploadToPost parentUrlCallback={callbackURL} show={imgUploaderVisible}
-                            dismissSelf={() => { setImgUploaderVisible(false) }}/>
-              <RichEditorWrapper>
-                <Editor placeholder={'Enter description...'} editorState={editorState}
-                        onChange={ editorState => { setEditorState(editorState) }}
-                        handleKeyCommand={ handleKeyCommand }
-                        ref={editorRef} customStyleMap={styleMap}
-                        textAlignment={textAlignment} />
-              </RichEditorWrapper>
-            </BodyWrapper>
-            <TagWrapper>
-              <t style={{position: 'relative', bottom: '1vh', left: '1.8vw'}}>
-                Add Tag (press enter after each tag)
-              </t>
-              <TagBox id={'tag'} contentEditable={true} onKeyUp={addTag}
-                      placeholder={'Ex. Internship, Externship, ...'} />
-              <TagChosenWrapper>
-                Your tags:
-                {tags.map(tag => (
-                    <TagChosen onClick={() => removeTag(tag)}>
-                      <TagCircle />
-                      {tag}
-                    </TagChosen>
-                ))}
-              </TagChosenWrapper>
-            </TagWrapper>
-            <SuggestedTagsWrapper>
-              Suggested:
-              <Tag style={{backgroundColor: '#EAEAFA', color: '#6D71F9'}}>Rice</Tag>
-              <Tag style={{backgroundColor: '#E8F6FF', color: '#54C1FB'}}>CS</Tag>
-              <Tag style={{backgroundColor: '#FEEFEF', color: '#FF7070'}}>Engineering</Tag>
-              <Tag style={{backgroundColor: '#EAEAFA', color: '#6D71F9'}}>STEM</Tag>
-              <Tag style={{backgroundColor: '#E8F6FF', color: '#54C1FB'}}>Career Fair</Tag>
-            </SuggestedTagsWrapper>
+            <Form>
+              <TitleWrapper>
+                Title:
+                <TitleBox id={'title'} contentEditable />
+                { datePossibilities[postType] || datePossibilities['default'] }
+              </TitleWrapper>
+              <BodyWrapper>
+                <RichIcons>
+                  <RichButton icon={<FormatBoldIcon />} type={'style'} op={'BOLD'} />
+                  <RichButton icon={<FormatItalicIcon />} type={'style'} op={'ITALIC'} />
+                  <RichButton icon={<FormatUnderlinedIcon />} type={'style'} op={'UNDERLINE'} />
+                  <RichButton icon={<StrikethroughSIcon />} type={'style'} op={'STRIKETHROUGH'} />
+                  <RichButton icon={<FormatListBulletedIcon />} type={'list'} op={'unordered-list-item'} />
+                  <RichButton icon={<FormatListNumberedIcon />} type={'list'} op={'ordered-list-item'} />
+                  <RichButton icon={<FormatAlignLeftIcon />} type={'align'} op={'left'} />
+                  <RichButton icon={<FormatAlignCenterIcon />} type={'align'} op={'center'} />
+                  <RichButton icon={<FormatAlignRightIcon />} type={'align'} op={'right'} />
+                  <RichButton icon={<InsertLinkIcon />} type={'link'} op={'LINK'} />
+                  {/*<RichButton icon={<VideoLibraryIcon />} type={'video'} op={'VIDEO'} />*/}
+                  <RichButton icon={<ImageIcon />} type={'image'} op={'IMAGE'} />
+                </RichIcons>
+                <UploadToPost parentUrlCallback={callbackURL} show={imgUploaderVisible}
+                              dismissSelf={() => { setImgUploaderVisible(false) }}/>
+                <RichEditorWrapper>
+                  <Editor placeholder={'Enter description...'} editorState={editorState}
+                          onChange={ editorState => { setEditorState(editorState) }}
+                          handleKeyCommand={ handleKeyCommand }
+                          ref={editorRef} customStyleMap={styleMap}
+                          textAlignment={textAlignment} />
+                </RichEditorWrapper>
+              </BodyWrapper>
+              <TagWrapper>
+                <t style={{position: 'relative', bottom: '1vh', left: '1.8vw'}}>
+                  Add Tag (press enter after each tag)
+                </t>
+                <TagBox id={'tag'} contentEditable={true} onKeyUp={addTag}
+                        placeholder={'Ex. Internship, Externship, ...'} />
+                <TagChosenWrapper>
+                  Your tags:
+                  {tags.map(tag => (
+                      <TagChosen onClick={() => removeTag(tag)}>
+                        <TagCircle />
+                        {tag}
+                      </TagChosen>
+                  ))}
+                </TagChosenWrapper>
+              </TagWrapper>
+              <SuggestedTagsWrapper>
+                Suggested:
+                <Tag style={{backgroundColor: '#EAEAFA', color: '#6D71F9'}}>Rice</Tag>
+                <Tag style={{backgroundColor: '#E8F6FF', color: '#54C1FB'}}>CS</Tag>
+                <Tag style={{backgroundColor: '#FEEFEF', color: '#FF7070'}}>Engineering</Tag>
+                <Tag style={{backgroundColor: '#EAEAFA', color: '#6D71F9'}}>STEM</Tag>
+                <Tag style={{backgroundColor: '#E8F6FF', color: '#54C1FB'}}>Career Fair</Tag>
+              </SuggestedTagsWrapper>
 
-            {locationJobInfo[postType] || locationJobInfo['default']}
+              {locationJobInfo[postType] || locationJobInfo['default']}
 
-            <DraftSubmitWrapper>
-              <SaveAsDraft onClick={null} >
-                Save As Draft
-              </SaveAsDraft>
-              <PostingButton onClick={handleSubmit} >
-                Submit
-              </PostingButton>
+              <DraftSubmitWrapper>
+                <SaveAsDraft onClick={null} >
+                  Save As Draft
+                </SaveAsDraft>
+                <PostingButton onClick={handleSubmit} >
+                  Submit
+                </PostingButton>
 
-            </DraftSubmitWrapper>
+              </DraftSubmitWrapper>
 
-          </Form>
-        </FormWrapper>
-      </PostWrapper>
-    </div>
+            </Form>
+          </FormWrapper>
+        </PostWrapper>
+      </div>
   )
 }
 
