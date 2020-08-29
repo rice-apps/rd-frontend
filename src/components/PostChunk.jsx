@@ -27,7 +27,7 @@ import { FETCH_COMMENTS_POST } from '../graphql/Queries'
 
 import {
   DiscussionBoxSection,
-  OP,
+  OriginalPoster,
   DiscussionBox,
   LeftComponent,
   Likes,
@@ -133,10 +133,10 @@ function PostChunk (props) {
   return (
     <>
       <DiscussionBoxSection>
-        {/* <OP>
+        {/* <OriginalPoster>
           {props.post.node.creator.username} -{' '}
           <ReactTimeAgo date={props.post.node.date_created} />
-        </OP> */}
+        </OriginalPoster> */}
         <DiscussionBox>
           <LeftComponent>
             <Upvote className={classes.root}>
@@ -180,13 +180,13 @@ function PostChunk (props) {
               </IconButton>
             </Downvote>
           </LeftComponent>
-          <OP>
+          <OriginalPoster>
             {props.post.node.creator.username} -{' '}
             <ReactTimeAgo date={props.post.node.date_created} />
             <Divider
               style={{ width: '51.5vw', maxWidth: '97%', marginTop: '1vh' }}
             />
-          </OP>
+          </OriginalPoster>
           <TopMiddleComponent>
             <DiscussionTitleDiv>
               <DiscussionTitle>{props.post.node.title}</DiscussionTitle>
@@ -225,7 +225,7 @@ function PostChunk (props) {
                         buttonLabel='Add to '
                         buttonTemplate={calIcon}
                         listItems={calDropDown}
-                      ></AddToCalendar>
+                      />
                     </AddTo>
                   )}
 

@@ -11,7 +11,7 @@ const DiscussionBoxSection = styled.section`
   max-width: 65vw;
 `
 
-const OP = styled.div`
+const OriginalPoster = styled.div`
   display: grid;
   grid-area: op;
   white-space: nowrap;
@@ -185,7 +185,7 @@ const Share = styled.div`
 
 export {
   DiscussionBoxSection,
-  OP,
+  OriginalPoster,
   Time,
   DiscussionBox,
   LeftComponent,

@@ -21,7 +21,7 @@ const POST_PAGE = gql`
           }
         ]
       }
-    ) @connection(key: "feed"){
+    ) @connection(key: "feed") {
       count
       edges {
         cursor
