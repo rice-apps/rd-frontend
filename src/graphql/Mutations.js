@@ -5,6 +5,7 @@ const POST_CREATE = gql`
     $kind: EnumDKeyPostKind!
     $title: String!
     $body: String!
+    $text_align: String
     $creator: String!
     $deadline: Date
     $start: Date
@@ -21,6 +22,7 @@ const POST_CREATE = gql`
         kind: $kind
         title: $title
         body: $body
+        text_align: $text_align
         creator: $creator
         deadline: $deadline
         start: $start
