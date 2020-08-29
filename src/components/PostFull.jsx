@@ -43,7 +43,6 @@ import {
   Upvote,
   Downvote,
   TopMiddleComponent,
-  DiscussionTitleDiv,
   DiscussionTitle,
   Tags,
   Tag,
@@ -262,7 +261,7 @@ function PostFull () {
             </Downvote>
           </LeftComponent>
           <OP>
-            <a href='.'>
+            <a>
               {thePost.creator.username} -{' '}
               <ReactTimeAgo date={thePost.date_created} />
             </a>
@@ -271,9 +270,7 @@ function PostFull () {
             />
           </OP>
           <TopMiddleComponent>
-            <DiscussionTitleDiv>
-              <DiscussionTitle>{thePost.title}</DiscussionTitle>
-            </DiscussionTitleDiv>
+            <DiscussionTitle>{thePost.title}</DiscussionTitle>
             <MoreOptions className={classes.root}>
               <IconButton onClick={toggleDD}>
                 <MoreHorizIcon open={isDDOpen} />
