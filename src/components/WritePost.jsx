@@ -21,7 +21,7 @@ import FormatAlignCenterIcon from '@material-ui/icons/FormatAlignCenter';
 import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight';
 // import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
 import InsertLinkIcon from '@material-ui/icons/InsertLink';
-import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
+// import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
 import ImageIcon from '@material-ui/icons/Image';
 
 
@@ -429,7 +429,7 @@ function WritePost (props) {
                 <RichButton icon={<FormatAlignCenterIcon />} type={'align'} op={'center'} />
                 <RichButton icon={<FormatAlignRightIcon />} type={'align'} op={'right'} />
                 <RichButton icon={<InsertLinkIcon />} type={'link'} op={'LINK'} />
-                <RichButton icon={<VideoLibraryIcon />} type={'video'} op={'VIDEO'} />
+                {/*<RichButton icon={<VideoLibraryIcon />} type={'video'} op={'VIDEO'} />*/}
                 <RichButton icon={<ImageIcon />} type={'image'} op={'IMAGE'} />
               </RichIcons>
               <UploadToPost parentUrlCallback={callbackURL} show={imgUploaderVisible}
