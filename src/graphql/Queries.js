@@ -129,6 +129,23 @@ const FETCH_COMMENTS_PARENT = gql`
   }
 `
 
+const FETCH_COMMENTS_NESTED = gql`
+  query FetchCommentsNested($post_id: ID!) {
+    commentByPost(postID: $post_id) {
+      _id
+      body
+      children {
+        _id
+        body
+        children {
+          _id
+          body
+        }
+      }
+    }
+  }
+`
+
 const VERIFY_USER = gql`
   query VerifyUser($token: String!) {
     verifyToken(token: $token) {
@@ -243,6 +260,7 @@ export {
   USER_EXISTS,
   FETCH_COMMENTS_PARENT,
   FETCH_COMMENTS_POST,
+  FETCH_COMMENTS_NESTED,
   VERIFY_USER,
   GET_POST
 }

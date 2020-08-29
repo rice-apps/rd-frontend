@@ -91,7 +91,7 @@ function WritePost (props) {
 
   const [startDate, setStart] = useState(new Date().getTime())
   const [endDate, setEnd] = useState(new Date().getTime())
-  const [place, setPlace] = useState('')
+  const [place] = useState('')
   const [isPaid, setPaid] = useState(false)
   const [isClosed, setClosed] = useState(false)
   const [postType, setPostType] = useState('Discussion')
@@ -212,7 +212,6 @@ function WritePost (props) {
       const text = document.getElementById('tag').value.trim()
       if (!tags.includes(text)) {
         setTags([...tags, text])
-      }
       document.getElementById('tag').value = ''
     }
   }
