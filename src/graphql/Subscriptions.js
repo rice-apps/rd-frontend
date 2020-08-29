@@ -1,6 +1,5 @@
 import gql from 'graphql-tag.macro'
 
-
 const POST_CREATED = gql`
   subscription {
     postCreated {
@@ -12,7 +11,6 @@ const POST_CREATED = gql`
         username
       }
       body
-      text_align
       date_created
       reports {
         _id

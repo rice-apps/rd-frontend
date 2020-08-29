@@ -1,6 +1,5 @@
 import gql from 'graphql-tag.macro'
 
-
 const POST_PAGE = gql`
   query PostPage(
     $after: String!
@@ -65,7 +64,7 @@ const POST_PAGE = gql`
           ... on Notice {
             deadline
           }
-          text_align
+
           imageUrl
         }
       }
@@ -124,6 +123,23 @@ const FETCH_COMMENTS_PARENT = gql`
       }
       reports {
         username
+      }
+    }
+  }
+`
+
+const FETCH_COMMENTS_NESTED = gql`
+  query FetchCommentsNested($post_id: ID!) {
+    commentByPost(postID: $post_id) {
+      _id
+      body
+      children {
+        _id
+        body
+        children {
+          _id
+          body
+        }
       }
     }
   }
@@ -233,7 +249,6 @@ const GET_POST = gql`
         username
       }
       tags
-      text_align
     }
   }
 `
@@ -243,6 +258,7 @@ export {
   USER_EXISTS,
   FETCH_COMMENTS_PARENT,
   FETCH_COMMENTS_POST,
+  FETCH_COMMENTS_NESTED,
   VERIFY_USER,
   GET_POST
 }

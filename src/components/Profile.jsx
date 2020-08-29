@@ -18,7 +18,7 @@ import {
 
 import { PostingButton } from './WritePost.styles'
 import { currentUser } from '../utils/apollo'
-import { Background, LeftSidebarContainer } from './PostFeedWithData.styles'
+import { LeftSidebarContainer } from './PostFeedWithData.styles'
 import { SideNav } from './SideNav'
 
 const ProfilePage = () => {
@@ -41,7 +41,7 @@ const ProfilePage = () => {
     major: currentMajor,
     minor: currentMinor,
     college: currentCollege,
-    savedPosts: savedPosts
+    savedPosts
   } = currentUser()
 
   const [
@@ -252,7 +252,7 @@ const ProfilePage = () => {
         <div>
           Your saved posts:
           {savedPosts.map(post => (
-            <div>{'localhost:3000/posts/' + post._id}</div>
+            <div key={post._id}>{'localhost:3000/posts/' + post._id}</div>
           ))}
         </div>
 

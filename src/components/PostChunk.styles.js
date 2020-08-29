@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-
 // note: PostFull.styles.js is based on this file
 // so please make relevant design updates to both places
 
@@ -90,13 +89,12 @@ const FullPostLink = styled(Link)`
 `
 
 const MoreOptions = styled.div`
-    position: relative;
-    grid-area: moreoptions;
-    align-self: start;
-    justify-self: start;
-    margin-top: -2vw;
-`;
-
+  position: relative;
+  grid-area: moreoptions;
+  align-self: start;
+  justify-self: start;
+  margin-top: -2vw;
+`
 
 const DDMenu = styled.div`
   position: relative;
