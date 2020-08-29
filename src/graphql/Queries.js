@@ -86,7 +86,7 @@ const USER_EXISTS = gql`
 
 const FETCH_COMMENTS_POST = gql`
   query FetchCommentsPost($post_id: ID!) {
-    commentByPost(post: $post_id) {
+    commentByPost(postID: $post_id) {
       _id
       creator {
         username
