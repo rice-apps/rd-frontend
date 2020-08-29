@@ -1,131 +1,161 @@
 import styled from 'styled-components'
-import LoginBackground from '../images/backgroundLogin.svg'
 
+const TitleFlex = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: inherit;
+  justify-content: space-around;
+
+  // top: 185px;
+  // left: 528px;
+  ///width: 231px;
+  // height: 54px;
+  margin: 25px;
+  text-align: left;
+  font: Roman 48px/44px Avenir;
+  letter-spacing: 0px;
+  color: #747886;
+  opacity: 1;
+`
 
 const ExitButton = styled.div`
-  grid-row: 1/2;
-  grid-column: 2/2;
-  
-  border: 2px solid #CDCED2;
-  opacity: 1;
-  
-  // width: 1vw;
-  // height: 1vw;
-  
+  align-self: flex-start;
+  cursor: pointer;
+  &:hover {
+    background-color: red;
+    opacity: 70%;
+  }
+
+  // top: 177px;
+  // left: 1392px;
   width: 20px;
   height: 20px;
   border: 2px solid #cdced2;
   opacity: 1;
   text-align: center;
-  
-  cursor: pointer;
-  
-  
-  &:hover {
-    background-color: red;
-    opacity: 70%;
-  }
 `
 
 const PostWrapper = styled.div`
-  position: fixed;
-  left: 14.6vw;
-  top: 13vh;
-  
-  width: 51vw;
-  height: 75vh;
-  
-  background: #FFFFFFE8 0% 0% no-repeat padding-box;
-  border: 0.2vw solid #000000;
-  border-radius: 1vw;
-  opacity: 1;
-  
-  box-shadow: 1px 1px 20px #9398C334;
-  border: 4px solid #FFFFFF;
-  border-radius: 20px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  // background-color: white;
+  // width: 98.4%;
+  // height: 80.9%;
+  // border-style: solid;
+  // border-color: green;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: space-between;
 
-  display: grid;
-  // flex-direction: column;
-  // align-items: center;
-  
-  z-index: 1;
-  
-  
+  // top: 144px;
+  // left: 468px;
+  width: 984px;
+  height: 90vh;
+  background: #ffffffe8 0% 0% no-repeat padding-box;
+  border: 4px solid #ffffff;
+  border-radius: 20px;
+  opacity: 1;
 `
 
 const Button = styled.button`
-  background-color: lightpink; /* Green */
-  border: 0.1vw solid #FFFFFF;
-  color: black;
+  // background-color: lightpink; /* Green */
+  border: none;
+  // color: black;
   // padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  
-  font: Fira Sans;
-  font-size: 0.8vw;
-  padding-top: 0.5vh;
-  padding-bottom: 0.5vh;
-  padding-left: 1.6vw;
-  padding-right: 1.6vw;
+  // text-align: center;
+  // text-decoration: none;
+  // display: inline-block;
+  // font-size: 16px;
+  // z-index: 5;
+  margin: 5px;
   cursor: pointer;
-  background: #F5F7FC 0% 0% no-repeat padding-box;
-  
-  outline: none;
+  &:hover {
+    font: Heavy 14px/17px Avenir;
+    color: #a86565;
+  }
+
+  // top: 263px;
+  // left: 757px;
+  width: 59px;
+  height: 21px;
+  text-align: center;
+  font: Medium 14px/17px Avenir;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+  background-color: #e7c6c6;
 `
 
 const PostingButton = styled.button`
-  // position: relative;
-  background-color: #fabed6; /* Light pink */
+  position: relative;
+  // background-color: #fabed6; /* Light pink */
   border: none;
-  color: white;
+  // color: black;
+  padding: 15px 32px;
   text-align: center;
-  text-decoration: none;
-  // display: inline-block;
-  font-size: 1vw;
+  // text-decoration: none;
+  display: inline-block;
+  // font-size: 16px;
   cursor: pointer;
-  
-  background: #7380FF 0% 0% no-repeat padding-box;
-  border-radius: 0.8vw;
+  z-index: 5;
+  margin: 5px;
+  &:hover {
+    background-color: #e7c6c6;
+    opacity: 100%;
+  }
+
+  //top: 849px;
+  //left: 1222px;
+  width: 114px;
+  height: 46px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  font: Medium 20px/17px Avenir;
+  letter-spacing: 0px;
+  color: #747886;
+  border: 2px solid #cdced2;
+  border-radius: 20px;
   opacity: 1;
-  
-  width: 6.4vw;
-  height: 4.2vh;
-  
-  outline: none;
-  
-  //  &:hover {
-  //   background-color: #de4783;
-  //   opacity: 50%;
-  // }
 `
 
-const Form = styled.div`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
+  align-content: space-around;
+  align-items: flex-start;
   justify-content: space-between;
-  
+  height: 100%;
+  //width: 850px;
+  // background-color: green;
+  // background-color: white;
+  // position: relative;
+  // display: flex;
+  // flex-direction: column;
   // flex-wrap: wrap;
-  // width: 50vw;
-  height: 55vh;
-  // top: -30vh;
-  // left: 22vw;
-  
-  // grid-row: 2/2;
-  // grid-column: 2/3;
+  // width: 95%;
+  // height: 90%;
+  // top: -5%;
 `
 
 const ButtonWrapper = styled.div`
-  height: 3.2vh;
-  
-  border-radius: 0.7vw;
-  
-  margin-left: 1.4vw;
-  
+  // position: absolute;
+  // left: 50%;
+  // top: 0%;
+  // transform: translate(-50%, 0%);
+
+  // top: 257px;
+  // left: 733px;
+  width: 382px;
+  height: 31px;
+  background: #e7c6c6 0% 0% no-repeat padding-box;
+  border-radius: 15px;
+  opacity: 1;
+
   display: flex;
-  // justify-content: space-between;
-  align-items: center;
-  
-  // background-color: blue;
+  flex-direction: row;
+  justify-content: space-around;
 `
 
 const PostHeaderType = styled.p`
@@ -148,15 +178,15 @@ const PostHeaderType = styled.p`
   font-style: normal;
   font-variant: normal;
   text-transform: uppercase;
-  
+
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   transform: rotate(-38deg);
   grid-row: 1/2;
   grid-column: 1/3;
-  
+
   border-top-right-radius: 26vw;
   border-bottom-right-radius: 26vw;
   border-bottom-left-radius: 4vw;
@@ -165,7 +195,9 @@ const PostHeaderType = styled.p`
 
 const TitleDescriptor = styled.p`
   font-family: 'Courier New', Courier, monospace;
-  font-size: 1.5vw;
+  font-size: 22px;
+  letter-spacing: 1px;
+  word-spacing: 0px;
   color: #000000;
   font-weight: 700;
   text-decoration: none;
@@ -177,326 +209,177 @@ const TitleDescriptor = styled.p`
 `
 
 const TitleWrapper = styled.div`
-  height: 3.9vh;
-  flex-direction: row;
+  position: relative;
+  //top: -30px;
   display: flex;
-  align-self: flex-end;
+  justify-content: space-between;
 `
 
 const TitleBox = styled.div`
-  background: #F4F4F49A 0% 0% no-repeat padding-box;
+  border: solid;
+  //position: relative;
+  // height: 5vh;
+  //flex: 0 0 100%;
+
+  //top: 315px;
+  // left: 574px;
+  width: 386px;
+  height: 42px;
+  background: #f4f4f49a 0% 0% no-repeat padding-box;
   border-radius: 5px;
   opacity: 1;
-  width: 16vw;
-  height: 3.5vh;
-  margin-left: 0.5vw;
-  margin-right: 2vw;
-  
-  outline: none;
-  
-  overflow: hidden;
-  white-space: nowrap;
-  padding-left: 0.5vw;
+
+  text-align: left;
+  vertical-align: middle;
+  font: Roman 21px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
 `
 
-const BodyBox = styled.textarea`
-  background: #FFFFFF 0% 0% no-repeat padding-box;
-  border: none;
-  
-  width: 40vw;
-  height: 14.8vh;
-  
-  resize: none;
+const BodyBox = styled.div`
+  border: solid;
+  position: relative;
+  // height: 10vh;
+
+  //top: 427px;
+  // left: 587px;
+  width: 741px;
+  height: 160px;
+  background: #f8f8f8 0% 0% no-repeat padding-box;
+  border-radius: 5px;
+  opacity: 1;
+
+  text-align: left;
+  font: Roman 18px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
 `
 
 const BodyWrapper = styled.div`
-  height: 21vh;
-  width: 43vw;
-  
-  background: #F5F7FC 0% 0% no-repeat padding-box;
-  // border: 2px solid #CDCED2;
+  position: relative;
+  //top: -60px;
+  //top: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // left: 565px;
+  width: 790px;
+  height: 229px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 2px solid #cdced2;
   border-radius: 15px;
   opacity: 1;
-  
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 `
 
 const ImageWrapper = styled.div`
-  position: relative;
-  top: -2vh;
-  width: 15vw;
-  // left: -22vw;
-  height: 30vh;
+  display: flex;
+  //position: relative;
+  //top: -90px;
 `
 
 const ImageBox = styled.div`
   border: solid;
   position: relative;
-  height: 20vh;
-  padding: 0.6vw;
-  border-radius: 0.5vw;
+  // height: 10vh;
+  padding: 10px;
+
+  //top: 629px;
+  // left: 565px;
+  width: 790px;
+  height: 45px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 2px solid #cdced2;
+  border-radius: 15px;
+  opacity: 1;
+
+  text-align: left;
+  font: Roman 18px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
 `
 
-const ExtrasWrapper = styled.div`
-  position: relative;
-  flex-direction: row;
+const DateWrapper = styled.div`
+  margin: 10px;
   display: flex;
   justify-content: space-between;
-  width: 75vw;
-  // background-color: red;
-  left: -22.8vw;
-  top: -5vh;
-`
-
-const Banner = styled.div`
-  // Image at the top
-  background: url(${LoginBackground});
-  background-color: #fffdfd;
-  opacity: 1;
-  width: 40vw;
-  height: 20vh;
-  background-size: 40vw;
-  background-repeat: no-repeat;
-  
-  position: relative;
-  top: 6vh;
-`
-
-const ModalTitle = styled.div`
-  grid-row: 1/2;
-  grid-column: 1/2;
-  
   text-align: left;
-  // font: normal normal normal 28px/24px Avenir;
-  // letter-spacing: 0px;
-  color: #272848;
-  // opacity: 1;
-  font-size: 1.5vw;
-  
-  position: relative;
-  left: 4vw;
-  top: 4.7vh;
+  font: Medium 18px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
+  opacity: 1;
 `
 
-const FormWrapper = styled.div`
-  grid-row: 2/2;
-  grid-column: 1/2;
-  
-  width: 42vw;
-  height: 58vh;
-  
-  position: relative;
-  left: 4.5vw;
-  
+const PaidWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  
-  // background-color: green
+  text-align: left;
+  margin-left: 20px;
+  font: Roman 18px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
 `
 
-const DatesWrapper = styled.div`
-  width: 21vw;
-  
-  // display: flex;
-  // justify-content: space-evenly;
-  // height: 2vh;
-  // background-color: blue;
+const LocationWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  text-align: left;
+  font: Medium 18px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
+  opacity: 1;
+`
+
+const LocationBox = styled.div`
+  width: 166px;
+  height: 39px;
+  margin-left: 5px;
+  background: #f4f4f49a 0% 0% no-repeat padding-box;
+  border-radius: 5px;
+  opacity: 1;
+`
+
+const JobWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
 `
 
 const TagWrapper = styled.div`
-  height: 14.5vh;
-  width: 43vw;
-  
-  background: #F5F7FC 0% 0% no-repeat padding-box;
-  // border: 2px solid #CDCED2;
+  width: 790px;
+  height: 150px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 2px solid #cdced2;
   border-radius: 15px;
   opacity: 1;
-  
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  // align-items: center;
-  
-  // padding-left: 2.3vw;
-`
-
-const SelectCategoryWrapper = styled.div`
-  height: 3.2vh;
-  width: 43vw;
-  line-height: 3.2vh;
-  
-  display: flex;
-  justify-content: flex-start;
-  align-items: baseline;
-  
-  // text-align: baseline;
-  
-  // background-color: green;
-  // position: relative:
-  // bottom: 10vh;
-  margin-bottom: 2vh;
-`
-
-const SuggestedTags = styled.div`
-
-`
-
-const LocationJobInfoWrapper = styled.div`
-  height: 3.3vh;
-  width: 40.2vw;
-  
-  display: flex;
-  justify-content: flex-start;
-  
-  align-self: center;
-  // background-color: lightpink;
-  position: relative;
-  top: 1vh;
-`
-
-const DraftSubmitWrapper = styled.div`
-  height: 4.4vh;
-  // background-color: pink;
-  
-  display: flex;
-  justify-content: flex-end;
-  align-items: baseline;
-`
-
-const RichIcons = styled.div`
-  height: 4.4vh;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  padding: 0.5vh;
-  width: 100%;
-`
-
-const IconButton = styled.div`
-  // padding: 0.1vh;
-  // background-color: green;
-  // vertical-align: center;
-  
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
-  cursor: pointer;
-`
-
-const RichEditorWrapper = styled.div`
-  background: #FFFFFF 0% 0% no-repeat padding-box;
-  border: none;
-
-  width: 40vw;
-  height: 13vh;
-  
-  overflow-y: auto;
-  
-  padding-left: 0.5vw;
-  padding-top: 0.5vh;
-`
-
-const SuggestedTagsWrapper = styled.div`
-  height: 2.9vh;
-  
-  align-self: center;
-  width: 40.2vw;
-  // background-color: grey;
-`
-
-const TagBox = styled.input`
-  background: #FFFFFF 0% 0% no-repeat padding-box;
-  border: none;
-  
-  height: 4vh;
-  width: 40vw;
-  
-  align-self: center;
-  // left: 2.3vw;
-  
-  outline: none;
-  padding-left: 0.5vw;
-  border-radius: 0.5vw;
-  
-  margin-top: 0.7vh;
-`
-
-const Tag = styled.text`
-  // font-family: 'Avenir';
-  font-size: 1.75vh;
-  font-weight: bold;
-  color: white;
-  background-color: gray;
-  border: none;
-  border-radius: 5px;
-  margin-left: 0.5vw;
-  padding: 2px 5px;
-`
-
-const SaveAsDraft = styled.text`
-  text-decoration: underline;
-  // font: normal normal medium 19px/17px Avenir;
-  // letter-spacing: 0.47px;
-  color: #333B8B;
+  justify-content: space-around;
+  align-content: center;
+  text-align: left;
+  font: Roman 18px/24px Avenir;
+  letter-spacing: 0px;
+  color: #a9abb4;
   opacity: 1;
-  cursor: pointer;
-  margin-right: 1vw;
 `
 
-const DatePickerWrapper = styled.div`
-  width: 0.1vw;
-  fontSize: 0.5vw;
-  display: block;
-`
-
-const DateBox = styled.div`
-  background: #F5F7FC 0% 0% no-repeat padding-box;
-  border-radius: 0.2vw;
-  margin-left: 0.4vw;
-  margin-right: 0.4vw;
-  cursor: pointer;
-  font-size: 0.8vw;
-  width: 7.75vw;
-  height: 3.6vh;
-  
-  align-items: center;
-  display: flex;
-  justify-content: center;
-`
-
-const LocationBox = styled.input`
-  background: #F4F4F49A 0% 0% no-repeat padding-box;
-  border-radius: 0.25vw;
-  width: 8.6vw;
-  height: 3.2vh;
-  margin-left: 0.5vw;
-  margin-right: 2vw;
-  
-  padding-left: 0.5vw;
-  overflow: hidden;
-  white-space: nowrap;
-  
-  outline: none;
-  border: none;
+const TagBox = styled.div`
+  width: 740px;
+  height: 44px;
+  background: #f8f8f8 0% 0% no-repeat padding-box;
+  margin-left: 25px;
+  border-radius: 10px;
+  opacity: 1;
 `
 
 const TagChosenWrapper = styled.div`
-  // width: 741px;
-  // height: 30px;
+  width: 741px;
+  height: 30px;
+  text-align: left;
   text-align: left;
   font: Roman 16px/24px Avenir;
   letter-spacing: 0px;
   color: #a9abb4;
   opacity: 1;
   display: flex;
-  
-  position: relative;
-  left: 1.8vw;
 `
 
 const TagChosen = styled.div`
@@ -515,6 +398,7 @@ const TagChosen = styled.div`
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 1;
+
   &:hover {
     background-color: red;
     opacity: 70%;
@@ -529,7 +413,6 @@ const TagCircle = styled.div`
   opacity: 0.85;
   border-radius: 75px;
 `
-
 
 export {
   PostWrapper,
@@ -546,26 +429,14 @@ export {
   ImageWrapper,
   ImageBox,
   ExitButton,
-  ExtrasWrapper,
-  Banner,
-  ModalTitle,
-  FormWrapper,
-  DatesWrapper,
-  TagWrapper,
-  SelectCategoryWrapper,
-  SuggestedTags,
-  LocationJobInfoWrapper,
-  DraftSubmitWrapper,
-  RichIcons,
-  IconButton,
-  RichEditorWrapper,
-  SuggestedTagsWrapper,
-  TagBox,
-  Tag,
-  SaveAsDraft,
-  DatePickerWrapper,
-  DateBox,
+  TitleFlex,
+  DateWrapper,
+  PaidWrapper,
+  JobWrapper,
   LocationBox,
+  LocationWrapper,
+  TagBox,
+  TagWrapper,
   TagChosen,
   TagChosenWrapper,
   TagCircle
