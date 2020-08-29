@@ -8,7 +8,7 @@ const POST_PAGE = gql`
     $kind: EnumDKeyPostKind
   ) {
     postConnection(
-      first: 5
+      first: 20
       after: $after
       filter: {
         OR: [

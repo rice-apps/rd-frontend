@@ -34,8 +34,8 @@ function UploadToPost (props) {
   const formatFilename = filename => {
     const date = moment().format('YYYYMMDD')
     const randomString = Math.random()
-        .toString(36)
-        .substring(2, 7)
+      .toString(36)
+      .substring(2, 7)
     const cleanFileName = filename.toLowerCase().replace(/[^a-z0-9]/g, '-')
     const newFilename = `images/${date}-${randomString}-${cleanFileName}`
     return newFilename.substring(0, 60)
@@ -65,18 +65,18 @@ function UploadToPost (props) {
   }
 
   return props.show ? (
-      <div>
-        <label htmlFor='img'>Choose an image: </label>
-        <input
-            type='file'
-            onChange={onDrop}
-            id='img'
-            name='imgFile'
-            accept='image/*'
-        />
-        <button onClick={e => submit(e)}>Confirm</button>
-        <button onClick={handleCancel}>Cancel</button>
-      </div>
+    <div>
+      <label htmlFor='img'>Choose an image: </label>
+      <input
+        type='file'
+        onChange={onDrop}
+        id='img'
+        name='imgFile'
+        accept='image/*'
+      />
+      <button onClick={e => submit(e)}>Confirm</button>
+      <button onClick={handleCancel}>Cancel</button>
+    </div>
   ) : null
 }
 

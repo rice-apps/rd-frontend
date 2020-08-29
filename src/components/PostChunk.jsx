@@ -18,9 +18,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
 import ReactHtmlParser from 'react-html-parser'
 
-import JavascriptTimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
-import ReactTimeAgo from 'react-time-ago'
+import TimeAgo from 'react-timeago'
 
 import { useLazyQuery } from '@apollo/client'
 import { FETCH_COMMENTS_POST } from '../graphql/Queries'
@@ -54,8 +52,6 @@ import {
   FullPostLink,
   Expand
 } from './PostChunk.styles'
-
-JavascriptTimeAgo.addLocale(en)
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -135,7 +131,7 @@ function PostChunk (props) {
       <DiscussionBoxSection>
         {/* <OP>
           {props.post.node.creator.username} -{' '}
-          <ReactTimeAgo date={props.post.node.date_created} />
+          <TimeAgo date={props.post.node.date_created} />
         </OP> */}
         <DiscussionBox>
           <LeftComponent>
@@ -182,7 +178,7 @@ function PostChunk (props) {
           </LeftComponent>
           <OP>
             {props.post.node.creator.username} -{' '}
-            <ReactTimeAgo date={props.post.node.date_created} />
+            <TimeAgo date={props.post.node.date_created} />
             <Divider
               style={{ width: '51.5vw', maxWidth: '97%', marginTop: '1vh' }}
             />

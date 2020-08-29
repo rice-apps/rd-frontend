@@ -8126,15 +8126,6 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"javascript-time-ago@npm:^2.0.13, javascript-time-ago@npm:^2.0.2":
-  version: 2.0.13
-  resolution: "javascript-time-ago@npm:2.0.13"
-  dependencies:
-    relative-time-format: ^0.1.3
-  checksum: f11df6fdf776e1a5e9ecb691fce0f40072bce44fe9bffdc1d6e6c9d5e7c153bfaa393efc071005e3842903d1bc1384467cc7c786b1d8ddb7bb1c03479675afed
-  languageName: node
-  linkType: hard
-
 "jest-changed-files@npm:^24.9.0":
   version: 24.9.0
   resolution: "jest-changed-files@npm:24.9.0"
@@ -11633,7 +11624,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"prop-types@npm:*, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
+"prop-types@npm:^15.5.8, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
   version: 15.7.2
   resolution: "prop-types@npm:15.7.2"
   dependencies:
@@ -11850,7 +11841,6 @@ fsevents@^1.2.7:
     graphql: ^14.7.0
     graphql-tag.macro: ^2.0.1
     history: ^5.0.0
-    javascript-time-ago: ^2.0.13
     loglevel: ^1.6.8
     moment: ^2.27.0
     react: ^16.13.1
@@ -11865,7 +11855,7 @@ fsevents@^1.2.7:
     react-is: ^16.13.1
     react-router-dom: ^6.0.0-beta.0
     react-scripts: 3.4.3
-    react-time-ago: ^6.0.1
+    react-timeago: ^4.4.0
     styled-components: ^5.1.1
     subscriptions-transport-ws: ^0.9.16
     typescript: ^3.9.7
@@ -12179,16 +12169,12 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-time-ago@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "react-time-ago@npm:6.0.1"
-  dependencies:
-    javascript-time-ago: ^2.0.2
-    prop-types: ^15.6.0
+"react-timeago@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "react-timeago@npm:4.4.0"
   peerDependencies:
-    react: ">=0.16.8"
-    react-dom: ">=0.16.8"
-  checksum: c886beaf83c3329966d49dbe56c3c7adc26e48c14ab5cdeabfd226d2aaa923eefca8fea2699da387b6f67dba03f8c58dbd8ed69a4f13470e35769b1efca1cab4
+    react: ^15.0.0 || ^16.0.0
+  checksum: 34b5e0adde81aebcd513b54203b834b8a0ade0b61c63e45a447e10d3caed9afc90cdcea9ce43b23b5a2594416f42205c903648f3813fb02cc07b56cd6bf4d239
   languageName: node
   linkType: hard
 
@@ -12440,13 +12426,6 @@ fsevents@^1.2.7:
   version: 0.2.7
   resolution: "relateurl@npm:0.2.7"
   checksum: 856db0385d82022042584c14702ce58cb4d74c6b6a6d98ba85357638e64c081e6cb85adbbadebc82eec87b6e70ba43ae02d8655e565dbd4baffdc405a1b0b614
-  languageName: node
-  linkType: hard
-
-"relative-time-format@npm:^0.1.3":
-  version: 0.1.3
-  resolution: "relative-time-format@npm:0.1.3"
-  checksum: a04072fe547f1b2af11ed316a656e3304b564ed9955286e44178a990f427612553756f5fa9c934e1f11ca3ada428ca58b20ba376f81bd0ead2667a103d54cd82
   languageName: node
   linkType: hard
 

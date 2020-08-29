@@ -74,7 +74,7 @@ function PostFeed (props) {
   const generate_posts = edges => {
     return edges.map((post, _i) => {
       return (
-        <>
+        <React.Fragment key={post.node._id}>
           <PostChunk
             userInfo={userInfo}
             upvotePost={upvotePost}
@@ -83,7 +83,6 @@ function PostFeed (props) {
             removePost={removePost}
             savePost={savePost}
             post={post}
-            key={post.node._id}
           />
           {/* <button
             onClick={() =>
@@ -96,7 +95,7 @@ function PostFeed (props) {
           </button>
           <button onClick={() => refetch()}>Refresh Comments</button>
           <CommentChunk {...result} /> */}
-        </>
+        </React.Fragment>
       )
     })
   }

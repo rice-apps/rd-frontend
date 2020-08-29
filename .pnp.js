@@ -82,10 +82,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:5.0.0"
       ],
       [
-        "javascript-time-ago",
-        "npm:2.0.13"
-      ],
-      [
         "loglevel",
         "npm:1.7.0"
       ],
@@ -142,8 +138,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:3.4.3"
       ],
       [
-        "react-time-ago",
-        "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:6.0.1"
+        "react-timeago",
+        "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:4.4.0"
       ],
       [
         "styled-components",
@@ -178,7 +174,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["graphql", "npm:14.7.0"],
             ["graphql-tag.macro", "npm:2.1.0"],
             ["history", "npm:5.0.0"],
-            ["javascript-time-ago", "npm:2.0.13"],
             ["loglevel", "npm:1.7.0"],
             ["moment", "npm:2.27.0"],
             ["react", "npm:16.13.1"],
@@ -193,7 +188,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-is", "npm:16.13.1"],
             ["react-router-dom", "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:6.0.0-beta.0"],
             ["react-scripts", "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:3.4.3"],
-            ["react-time-ago", "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:6.0.1"],
+            ["react-timeago", "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:4.4.0"],
             ["styled-components", "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:5.1.1"],
             ["subscriptions-transport-ws", "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:0.9.18"],
             ["typescript", "patch:typescript@npm%3A3.9.7#builtin<compat/typescript>::version=3.9.7&hash=5b02a2"]
@@ -9428,17 +9423,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
-      ["javascript-time-ago", [
-        ["npm:2.0.13", {
-          "packageLocation": "./.yarn/cache/javascript-time-ago-npm-2.0.13-a73b0f794d-f11df6fdf7.zip/node_modules/javascript-time-ago/",
-          "packageDependencies": [
-            ["javascript-time-ago", "npm:2.0.13"],
-            ["prop-types", "npm:15.7.2"],
-            ["relative-time-format", "npm:0.1.3"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
       ["jest", [
         ["npm:24.9.0", {
           "packageLocation": "./.yarn/cache/jest-npm-24.9.0-8ddb425e99-d5cc3c0b51.zip/node_modules/jest/",
@@ -13527,7 +13511,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["graphql", "npm:14.7.0"],
             ["graphql-tag.macro", "npm:2.1.0"],
             ["history", "npm:5.0.0"],
-            ["javascript-time-ago", "npm:2.0.13"],
             ["loglevel", "npm:1.7.0"],
             ["moment", "npm:2.27.0"],
             ["react", "npm:16.13.1"],
@@ -13542,7 +13525,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-is", "npm:16.13.1"],
             ["react-router-dom", "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:6.0.0-beta.0"],
             ["react-scripts", "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:3.4.3"],
-            ["react-time-ago", "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:6.0.1"],
+            ["react-timeago", "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:4.4.0"],
             ["styled-components", "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:5.1.1"],
             ["subscriptions-transport-ws", "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:0.9.18"],
             ["typescript", "patch:typescript@npm%3A3.9.7#builtin<compat/typescript>::version=3.9.7&hash=5b02a2"]
@@ -13917,19 +13900,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
-      ["react-time-ago", [
-        ["virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:6.0.1", {
-          "packageLocation": "./.yarn/$$virtual/react-time-ago-virtual-5549ac453a/0/cache/react-time-ago-npm-6.0.1-5ecbbd7f10-c886beaf83.zip/node_modules/react-time-ago/",
+      ["react-timeago", [
+        ["virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:4.4.0", {
+          "packageLocation": "./.yarn/$$virtual/react-timeago-virtual-32df201004/0/cache/react-timeago-npm-4.4.0-71d0541302-34b5e0adde.zip/node_modules/react-timeago/",
           "packageDependencies": [
-            ["react-time-ago", "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:6.0.1"],
-            ["javascript-time-ago", "npm:2.0.13"],
-            ["prop-types", "npm:15.7.2"],
-            ["react", "npm:16.13.1"],
-            ["react-dom", "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:16.13.1"]
+            ["react-timeago", "virtual:19745f4be67d46a67d31c355b88a3e7ec27e20e2c46587792f9fb825d27681f9d4625ea68219df8e1bebe36f96d314e275bcc61181d855428f7aa93b35703b72#npm:4.4.0"],
+            ["react", "npm:16.13.1"]
           ],
           "packagePeers": [
-            "react",
-            "react-dom"
+            "react"
           ],
           "linkType": "HARD",
         }]
@@ -14192,15 +14171,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/relateurl-npm-0.2.7-7687cc0a2a-856db0385d.zip/node_modules/relateurl/",
           "packageDependencies": [
             ["relateurl", "npm:0.2.7"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["relative-time-format", [
-        ["npm:0.1.3", {
-          "packageLocation": "./.yarn/cache/relative-time-format-npm-0.1.3-75038b9390-a04072fe54.zip/node_modules/relative-time-format/",
-          "packageDependencies": [
-            ["relative-time-format", "npm:0.1.3"]
           ],
           "linkType": "HARD",
         }]
