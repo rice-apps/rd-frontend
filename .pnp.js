@@ -2738,7 +2738,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["@types/glob", "npm:7.1.3"],
             ["@types/minimatch", "npm:3.0.3"],
-            ["@types/node", "npm:14.6.1"]
+            ["@types/node", "npm:14.6.2"]
           ],
           "linkType": "HARD",
         }]
@@ -2750,7 +2750,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/htmlparser2", "npm:3.10.1"],
             ["@types/domhandler", "npm:2.4.1"],
             ["@types/domutils", "npm:1.7.2"],
-            ["@types/node", "npm:14.6.1"]
+            ["@types/node", "npm:14.6.2"]
           ],
           "linkType": "HARD",
         }]
@@ -2804,10 +2804,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@types/node", [
-        ["npm:14.6.1", {
-          "packageLocation": "./.yarn/cache/@types-node-npm-14.6.1-01808a7f4a-0cc38a56a4.zip/node_modules/@types/node/",
+        ["npm:14.6.2", {
+          "packageLocation": "./.yarn/cache/@types-node-npm-14.6.2-8d443058b2-e88f4749fd.zip/node_modules/@types/node/",
           "packageDependencies": [
-            ["@types/node", "npm:14.6.1"]
+            ["@types/node", "npm:14.6.2"]
           ],
           "linkType": "HARD",
         }]
@@ -4476,7 +4476,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["browserslist", "npm:4.10.0"],
             ["caniuse-lite", "npm:1.0.30001119"],
-            ["electron-to-chromium", "npm:1.3.553"],
+            ["electron-to-chromium", "npm:1.3.555"],
             ["node-releases", "npm:1.1.60"],
             ["pkg-up", "npm:3.1.0"]
           ],
@@ -4487,7 +4487,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["browserslist", "npm:4.14.0"],
             ["caniuse-lite", "npm:1.0.30001119"],
-            ["electron-to-chromium", "npm:1.3.553"],
+            ["electron-to-chromium", "npm:1.3.555"],
             ["escalade", "npm:3.0.2"],
             ["node-releases", "npm:1.1.60"]
           ],
@@ -4794,7 +4794,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["chalk", "npm:4.1.0"],
             ["ansi-styles", "npm:4.2.1"],
-            ["supports-color", "npm:7.1.0"]
+            ["supports-color", "npm:7.2.0"]
           ],
           "linkType": "HARD",
         }]
@@ -6441,10 +6441,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["electron-to-chromium", [
-        ["npm:1.3.553", {
-          "packageLocation": "./.yarn/cache/electron-to-chromium-npm-1.3.553-d1689bddc9-e874e0c8e5.zip/node_modules/electron-to-chromium/",
+        ["npm:1.3.555", {
+          "packageLocation": "./.yarn/cache/electron-to-chromium-npm-1.3.555-4a098c7a7f-519752eb11.zip/node_modules/electron-to-chromium/",
           "packageDependencies": [
-            ["electron-to-chromium", "npm:1.3.553"]
+            ["electron-to-chromium", "npm:1.3.555"]
           ],
           "linkType": "HARD",
         }]
@@ -9847,7 +9847,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["jest-worker", "npm:25.5.0"],
             ["merge-stream", "npm:2.0.0"],
-            ["supports-color", "npm:7.1.0"]
+            ["supports-color", "npm:7.2.0"]
           ],
           "linkType": "HARD",
         }]
@@ -11553,10 +11553,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["open", [
-        ["npm:7.2.0", {
-          "packageLocation": "./.yarn/cache/open-npm-7.2.0-0b6fba3fd3-c2f4a018e2.zip/node_modules/open/",
+        ["npm:7.2.1", {
+          "packageLocation": "./.yarn/cache/open-npm-7.2.1-b32e527915-ff35ebbfb2.zip/node_modules/open/",
           "packageDependencies": [
-            ["open", "npm:7.2.0"],
+            ["open", "npm:7.2.1"],
             ["is-docker", "npm:2.1.1"],
             ["is-wsl", "npm:2.2.0"]
           ],
@@ -13570,7 +13570,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["inquirer", "npm:7.0.4"],
             ["is-root", "npm:2.1.0"],
             ["loader-utils", "npm:1.2.3"],
-            ["open", "npm:7.2.0"],
+            ["open", "npm:7.2.1"],
             ["pkg-up", "npm:3.1.0"],
             ["react-error-overlay", "npm:6.0.7"],
             ["recursive-readdir", "npm:2.2.2"],
@@ -15569,10 +15569,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "HARD",
         }],
-        ["npm:7.1.0", {
-          "packageLocation": "./.yarn/cache/supports-color-npm-7.1.0-df2ba1e338-6130f36b2a.zip/node_modules/supports-color/",
+        ["npm:7.2.0", {
+          "packageLocation": "./.yarn/cache/supports-color-npm-7.2.0-606bfcf7da-8e57067c39.zip/node_modules/supports-color/",
           "packageDependencies": [
-            ["supports-color", "npm:7.1.0"],
+            ["supports-color", "npm:7.2.0"],
             ["has-flag", "npm:4.0.0"]
           ],
           "linkType": "HARD",
