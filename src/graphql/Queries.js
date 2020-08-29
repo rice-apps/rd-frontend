@@ -1,5 +1,6 @@
 import gql from 'graphql-tag.macro'
 
+
 const POST_PAGE = gql`
   query PostPage(
     $after: String!
@@ -64,7 +65,7 @@ const POST_PAGE = gql`
           ... on Notice {
             deadline
           }
-
+          text_align
           imageUrl
         }
       }
@@ -249,6 +250,7 @@ const GET_POST = gql`
         username
       }
       tags
+      text_align
     }
   }
 `
