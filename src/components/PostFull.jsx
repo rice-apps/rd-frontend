@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useMutation, useLazyQuery, useQuery } from '@apollo/client'
-import { GET_POST } from '../graphql/Queries'
+import { useMutation, useQuery } from '@apollo/client'
+import { GET_POST, FETCH_COMMENTS_NESTED } from '../graphql/Queries'
 
 import { currentUser } from '../utils/apollo'
 import {
@@ -9,12 +9,13 @@ import {
   DOWNVOTE_POST,
   REPORT_POST,
   REMOVE_POST,
-  SAVE_POST
+  SAVE_POST,
+  CREATE_COMMENT
 } from '../graphql/Mutations'
-import { FETCH_COMMENTS_POST } from '../graphql/Queries'
 
 import { makeStyles } from '@material-ui/core/styles'
-import { red, grey } from '@material-ui/core/colors'
+import { grey } from '@material-ui/core/colors'
+import Divider from '@material-ui/core/Divider'
 
 import AddToCalendar from 'react-add-to-calendar'
 
@@ -25,6 +26,7 @@ import FacebookIcon from '@material-ui/icons/Facebook'
 import TwitterIcon from '@material-ui/icons/Twitter'
 import ShareIcon from '@material-ui/icons/Share'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
+import log from 'loglevel'
 
 import ReactHtmlParser from 'react-html-parser'
 
@@ -35,7 +37,6 @@ import ReactTimeAgo from 'react-time-ago'
 import {
   DiscussionBoxSection,
   OP,
-  Time,
   DiscussionBox,
   LeftComponent,
   Likes,
@@ -58,7 +59,9 @@ import {
   ShareFacebook,
   ShareTwitter,
   Share,
-  BackToFeed
+  BackToFeed,
+  CommentInput,
+  CommentButton
 } from './PostFull.styles'
 
 JavascriptTimeAgo.addLocale(en)
@@ -80,26 +83,36 @@ function PostFull () {
   const [reportPost] = useMutation(REPORT_POST)
   const [removePost] = useMutation(REMOVE_POST)
   const [savePost] = useMutation(SAVE_POST)
-  const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
-    FETCH_COMMENTS_POST
-  )
+  const [createComment] = useMutation(CREATE_COMMENT)
+  // const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
+  //   FETCH_COMMENTS_POST
+  // )
 
   // *********** post full setup below
 
-  let { postID } = useParams()
+  const { postID } = useParams()
 
-  const { loading, error, data } = useQuery(GET_POST, {
+  const resultPost = useQuery(GET_POST, {
     variables: {
       id: postID
-    }
+    },
+    fetchPolicy: 'network-only'
   })
 
-  const dummyData = {
+  const resultComments = useQuery(FETCH_COMMENTS_NESTED, {
+    variables: {
+      post_id: postID
+    },
+    fetchPolicy: 'network-only'
+  })
+  // shouldn't need dummy data
+
+  const dummyDataPost = {
     imageUrl: '',
     upvotes: [],
     downvotes: []
   }
-  let thePost = dummyData //for now
+  let thePost = dummyDataPost //for now
 
   // *********** post chunk setup below
 
@@ -149,15 +162,30 @@ function PostFull () {
 
   // *********** post full below
 
-  if (loading) {
-    return <p>Loading</p>
+  if (resultPost.loading) {
+    return <p>Loading Post</p>
   }
 
-  if (error) {
-    return <p>Error</p>
+  if (resultPost.error) {
+    return <p>Error Fetching Post</p>
   }
 
+  if (resultComments.loading) {
+    return <p>Loading Comments</p>
+  }
+
+<<<<<<< HEAD
   thePost = data.postById //real data
+=======
+  if (resultComments.error) {
+    return <p>Error Fetching Comments</p>
+  }
+
+  thePost = resultPost.data.postById //real data
+
+  let theComments = resultComments.data.commentByPost //array
+  // are there comments?
+>>>>>>> ef5d2edad764dd121105d2d11a33a6d31cb5b994
 
   // *********** post chunk things that require thePost below
   // change to real data now that its available
@@ -187,19 +215,21 @@ function PostFull () {
     endTime: thePost.end ? thePost.end : ''
   }
 
+  const checkComment = comment => comment.length <= 0
+
   return (
     <>
       <BackToFeed to='/feed'>Back To Feed</BackToFeed>
       <DiscussionBoxSection>
-        <OP>
+        {/* <OP>
           {thePost.creator.username} -{' '}
           <ReactTimeAgo date={thePost.date_created} />
-        </OP>
+        </OP> */}
         <DiscussionBox>
           <LeftComponent>
             <Upvote className={classes.root}>
               <IconButton
-                style={isUpvoted ? { color: red[200] } : { color: grey[700] }}
+                style={isUpvoted ? { color: '#7380FF' } : { color: grey[700] }}
                 onClick={e => {
                   e.preventDefault()
                   toggleUpvoted()
@@ -217,7 +247,9 @@ function PostFull () {
             <Likes>{thePost.upvotes.length - thePost.downvotes.length}</Likes>
             <Downvote className={classes.root}>
               <IconButton
-                style={isDownvoted ? { color: red[200] } : { color: grey[800] }}
+                style={
+                  isDownvoted ? { color: '#7380FF' } : { color: grey[800] }
+                }
                 onClick={e => {
                   e.preventDefault()
                   toggleDownvoted()
@@ -233,7 +265,15 @@ function PostFull () {
               </IconButton>
             </Downvote>
           </LeftComponent>
-
+          <OP>
+            <a href='.'>
+              {thePost.creator.username} -{' '}
+              <ReactTimeAgo date={thePost.date_created} />
+            </a>
+            <Divider
+              style={{ width: '51.5vw', maxWidth: '97%', marginTop: '1vh' }}
+            />
+          </OP>
           <TopMiddleComponent>
             <DiscussionTitleDiv>
               <DiscussionTitle>{thePost.title}</DiscussionTitle>
@@ -257,8 +297,6 @@ function PostFull () {
                           savedPosts: [...currentSavedPosts, thePost._id]
                         }
                       })
-
-                      console.log(userInfo.savedPosts)
                     }}
                   >
                     Save Post
@@ -270,7 +308,7 @@ function PostFull () {
                         buttonLabel='Add to '
                         buttonTemplate={calIcon}
                         listItems={calDropDown}
-                      ></AddToCalendar>
+                      />
                     </AddTo>
                   )}
 
@@ -293,6 +331,7 @@ function PostFull () {
                     <Delete
                       onClick={e => {
                         e.preventDefault()
+                        window.location.reload(false)
                         removePost({
                           variables: {
                             _id: thePost._id
@@ -318,8 +357,8 @@ function PostFull () {
               {thePost.tags.length > 1 && <Tag>{thePost.tags[1]}</Tag>}
               {thePost.tags.length > 2 && <Tag>{thePost.tags[2]}</Tag>}
 
-              {isTagsOpen && thePost.tags.slice(3).map(tag => <Tag>{tag}</Tag>)}
-
+              {isTagsOpen &&
+                thePost.tags.slice(3).map(tag => <Tag key={tag}>{tag}</Tag>)}
               {thePost.tags.length > 3 && (
                 <ViewTags onClick={toggleTags}>
                   {isTagsOpen ? (
@@ -330,6 +369,8 @@ function PostFull () {
                 </ViewTags>
               )}
             </Tags>
+
+            {/* Location of Comments Button */}
 
             <ShareFacebook>
               <IconButton>
@@ -348,6 +389,60 @@ function PostFull () {
             </Share>
           </BottomComponent>
         </DiscussionBox>
+        <h3>Comments:</h3>
+        <ul>
+          {/* level 1 */}
+          {theComments.map(comment => (
+            <li key={comment.id}>
+              {comment.body}
+              <ul>
+                {/* level 2 */}
+                {comment.children.map(child1 => (
+                  <li key={child1.id}>
+                    {child1.body}
+                    <ul>
+                      {/* level 3 */}
+                      {child1.children.map(child2 => (
+                        <li key={child2.id}>
+                          {child2.body}
+                          {/* dont nest any further */}
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+
+        <h3>-----------------------------------------------------------</h3>
+        <CommentInput id='comment' contentEditable>
+          Enter Comment. . .
+        </CommentInput>
+
+        {/* based on write post post creation button */}
+        <CommentButton
+          onClick={e => {
+            e.preventDefault()
+            const cmt = document.getElementById('comment').innerHTML
+            if (checkComment(cmt)) return
+            try {
+              createComment({
+                variables: {
+                  creator: userInfo.netID,
+                  post: postID,
+                  parent: null,
+                  body: cmt
+                }
+              })
+            } catch (error) {
+              log.error(error)
+            }
+          }}
+        >
+          Comment
+        </CommentButton>
       </DiscussionBoxSection>
     </>
   )

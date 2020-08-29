@@ -52,8 +52,6 @@ function UploadToPost (props) {
 
     const { signedRequest, url } = response.data.signS3Url
 
-    console.log(signedRequest)
-
     uploadToS3(file, signedRequest)
     sendData(url) // make accessible to WritePost
   }

@@ -47,7 +47,7 @@ function WritePost (props) {
 
   const [startDate, setStart] = useState(new Date().getTime())
   const [endDate, setEnd] = useState(new Date().getTime())
-  const [place, setPlace] = useState('')
+  const [place] = useState('')
   const [isPaid, setPaid] = useState(false)
   const [isClosed, setClosed] = useState(false)
   const [postType, setPostType] = useState('Discussion')
@@ -84,12 +84,9 @@ function WritePost (props) {
   const toggleClosed = () => setClosed(!isClosed)
 
   function addTag (e) {
-    console.log('tag')
-    console.log(e.keyCode)
     e.preventDefault()
     // adds new todo to beginning of todos array
     if (e.keyCode === 13) {
-      console.log('tag', e.target.value)
       if (!tags.includes(document.getElementById('tag').innerText.trim())) {
         setTags([...tags, document.getElementById('tag').innerText.trim()])
       }
@@ -107,13 +104,13 @@ function WritePost (props) {
         <Form>
           <TitleWrapper>
             {/* <TitleDescriptor>Enter Title. . .</TitleDescriptor> */}
-            <TitleBox id='title' contentEditable={true}>
+            <TitleBox id='title' contentEditable>
               Enter Title. . .
             </TitleBox>
           </TitleWrapper>
           <BodyWrapper>
             {/* <TitleDescriptor>Body</TitleDescriptor> */}
-            <BodyBox id='body' contentEditable={true}>
+            <BodyBox id='body' contentEditable>
               Enter Description. . .
             </BodyBox>
           </BodyWrapper>
@@ -127,11 +124,11 @@ function WritePost (props) {
           </ImageWrapper>
           <TagWrapper>
             Add Tag (press enter after each tag)
-            <TagBox id='tag' contentEditable={true} onKeyUp={addTag} />
+            <TagBox id='tag' contentEditable onKeyUp={addTag} />
             <TagChosenWrapper>
               Your tags:
               {tags.map(tag => (
-                <TagChosen onClick={() => removeTag(tag)}>
+                <TagChosen key={tag} onClick={() => removeTag(tag)}>
                   <TagCircle />
                   {tag}
                 </TagChosen>
@@ -171,7 +168,7 @@ function WritePost (props) {
       form = (
         <Form>
           <TitleWrapper>
-            <TitleBox id='title' contentEditable={true}>
+            <TitleBox id='title' contentEditable>
               Enter Title. . .
             </TitleBox>
             <DateWrapper>
@@ -186,7 +183,7 @@ function WritePost (props) {
             </DateWrapper>
           </TitleWrapper>
           <BodyWrapper>
-            <BodyBox id='body' contentEditable={true}>
+            <BodyBox id='body' contentEditable>
               Enter Description. . .
             </BodyBox>
           </BodyWrapper>
@@ -197,11 +194,11 @@ function WritePost (props) {
           </ImageBox>
           <TagWrapper>
             Add Tag (press enter after each tag)
-            <TagBox id='tag' contentEditable={true} onKeyUp={addTag} />
+            <TagBox id='tag' contentEditable onKeyUp={addTag} />
             <TagChosenWrapper>
               Your tags:
               {tags.map(tag => (
-                <TagChosen onClick={() => removeTag(tag)}>
+                <TagChosen key={tag} onClick={() => removeTag(tag)}>
                   <TagCircle />
                   {tag}
                 </TagChosen>
@@ -211,7 +208,7 @@ function WritePost (props) {
           <JobWrapper>
             <LocationWrapper>
               Location:
-              <LocationBox id='place' contentEditable={true} />
+              <LocationBox id='place' contentEditable />
             </LocationWrapper>
           </JobWrapper>
           <PostingButton
@@ -251,7 +248,7 @@ function WritePost (props) {
         <>
           <Form>
             <TitleWrapper>
-              <TitleBox id='title' contentEditable={true}>
+              <TitleBox id='title' contentEditable>
                 Enter Title. . .
               </TitleBox>
               <DateWrapper>
@@ -266,7 +263,7 @@ function WritePost (props) {
               </DateWrapper>
             </TitleWrapper>
             <BodyWrapper>
-              <BodyBox id='body' contentEditable={true}>
+              <BodyBox id='body' contentEditable>
                 Enter Description. . .
               </BodyBox>
             </BodyWrapper>
@@ -277,11 +274,11 @@ function WritePost (props) {
             </ImageBox>
             <TagWrapper>
               Add Tag (press enter after each tag)
-              <TagBox id='tag' contentEditable={true} onKeyUp={addTag} />
+              <TagBox id='tag' contentEditable onKeyUp={addTag} />
               <TagChosenWrapper>
                 Your tags:
                 {tags.map(tag => (
-                  <TagChosen onClick={() => removeTag(tag)}>
+                  <TagChosen key={tag} onClick={() => removeTag(tag)}>
                     <TagCircle />
                     {tag}
                   </TagChosen>
@@ -291,7 +288,7 @@ function WritePost (props) {
             <JobWrapper>
               <LocationWrapper>
                 Location:
-                <LocationBox id='place' contentEditable={true} />
+                <LocationBox id='place' contentEditable />
               </LocationWrapper>
               <PaidWrapper>
                 <div>Is the job paid?</div>
@@ -341,7 +338,7 @@ function WritePost (props) {
       form = (
         <Form>
           <TitleWrapper>
-            <TitleBox id='title' contentEditable={true}>
+            <TitleBox id='title' contentEditable>
               Enter Title. . .
             </TitleBox>
             <DateWrapper>
@@ -351,7 +348,7 @@ function WritePost (props) {
           </TitleWrapper>
           {/* need to put the descriptor as a placeholder inside the box */}
           <BodyWrapper>
-            <BodyBox id='body' contentEditable={true}>
+            <BodyBox id='body' contentEditable>
               Enter Description. . .
             </BodyBox>
           </BodyWrapper>
@@ -362,11 +359,11 @@ function WritePost (props) {
           </ImageBox>
           <TagWrapper>
             Add Tag (press enter after each tag)
-            <TagBox id='tag' contentEditable={true} onKeyUp={addTag} />
+            <TagBox id='tag' contentEditable onKeyUp={addTag} />
             <TagChosenWrapper>
               Your tags:
               {tags.map(tag => (
-                <TagChosen onClick={() => removeTag(tag)}>
+                <TagChosen key={tag} onClick={() => removeTag(tag)}>
                   <TagCircle />
                   {tag}
                 </TagChosen>

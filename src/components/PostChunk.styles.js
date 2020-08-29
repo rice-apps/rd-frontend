@@ -86,11 +86,11 @@ const FullPostLink = styled(Link)`
 `
 
 const MoreOptions = styled.div`
-    position: relative;
-    grid-area: moreoptions;
-    align-self: start;
-    justify-self: start;
-    margin-top: -4.5vh;
+  position: relative;
+  grid-area: moreoptions;
+  align-self: start;
+  justify-self: start;
+  margin-top: -4.5vh;
 `;
 
 
