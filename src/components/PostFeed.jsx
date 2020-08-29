@@ -14,6 +14,7 @@ import {
 import { currentUser } from '../utils/apollo'
 
 function PostFeed (props) {
+  const date = new Date()
   const userInfo = currentUser()
   const [upvotePost] = useMutation(UPVOTE_POST)
   const [downvotePost] = useMutation(DOWNVOTE_POST)
@@ -131,7 +132,7 @@ function PostFeed (props) {
         pageStart={0}
         loadMore={() => onLoadMore()}
         hasMore={hasNextPage}
-        loader={<div key={uuid()}>Loading...</div>}
+        loader={<div key={date.getTime()}>Loading...</div>}
       >
         <Filters
           processDate={process_date_filter}
