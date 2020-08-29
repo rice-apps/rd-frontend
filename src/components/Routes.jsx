@@ -53,7 +53,7 @@ const routesArray = [
   },
   {
     path: '/posts/:postID',
-    element: <PrivateRoute element={<PostFull />} /> //test
+    element: <PrivateRoute element={<PostFull />} />
   },
   {
     path: '/info',

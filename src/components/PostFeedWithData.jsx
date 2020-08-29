@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { useQuery, useLazyQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 
 import { Helmet } from 'react-helmet'
 import PostFeed from './PostFeed'
@@ -11,15 +11,11 @@ import WritePost from './WritePost'
 import {
   Background,
   PostFeedContainer,
-  BannerContainer,
   RightSidebarContainer,
   LeftSidebarContainer,
-  NewPostButtonContainer,
-  NewPostButton,
-  ButtonText
+  NewPostButtonContainer
 } from './PostFeedWithData.styles'
 
-import { Banner } from './PostFeed.styles'
 import { SideNav } from './SideNav'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import Button from '@material-ui/core/Button'
@@ -27,7 +23,6 @@ import Button from '@material-ui/core/Button'
 function PostFeedWithData () {
   const [today, setToday] = useState(null)
   const [earlyDateBound, setEarlyDateBound] = useState(new Date(2000, 1, 1))
-  const [kind, setKind] = useState('')
 
   // these set states are there so we can remember our filters upon filter.jsx remount
   const [upvoteFilter, setUpvoteFilter] = useState('')
@@ -58,7 +53,6 @@ function PostFeedWithData () {
 
   useEffect(() => {
     refetch()
-    console.log('refetched!')
   }, [today, earlyDateBound])
 
   // const [modalVisible, setVisibility] = useState(false);

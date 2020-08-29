@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { useMutation, useQuery, useLazyQuery } from '@apollo/client'
 import IconButton from '@material-ui/core/IconButton'
 import TuneIcon from '@material-ui/icons/Tune'
 import DropDownItem from './DropDownItem'
 
 import {
   HorizontalDiv,
-  SubmitButton,
   DDWrapper,
   DDHeader,
   DDHeaderTitle,
