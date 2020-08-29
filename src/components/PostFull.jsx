@@ -97,16 +97,18 @@ function PostFull () {
 
   let { postID } = useParams()
 
-  const { ...resultPost } = useQuery(GET_POST, {
+  const resultPost = useQuery(GET_POST, {
     variables: {
       id: postID
-    }
+    },
+    fetchPolicy: 'network-only',
   })
 
-  const { ...resultComments } = useQuery(FETCH_COMMENTS_NESTED, {
+  const resultComments = useQuery(FETCH_COMMENTS_NESTED, {
     variables: {
       post_id: postID
-    }
+    },
+    fetchPolicy: 'network-only',
   })
   // shouldn't need dummy data
 

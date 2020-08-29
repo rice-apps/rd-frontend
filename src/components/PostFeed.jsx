@@ -136,36 +136,32 @@ function PostFeed (props) {
     posts = generate_posts(sorted_edges)
   }
 
-  posts = edges.map((post, _i) => {
-    return (
-      <>
-        {/* <Banner /> */}
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={() => onLoadMore()}
-          hasMore={hasNextPage}
-          loader={<div key={uuid()}>Loading...</div>}
-        >
-          <Filters
-            processDate={process_date_filter}
-            sort_by_upvotes={setSort_by_upvotes}
-            setDateFilter={props.setDateFilter}
-            dateFilter={props.dateFilter}
-            setKindFilter={props.setKindFilter}
-            kindFilter={props.kindFilter}
-            setUpvoteFilter={props.setUpvoteFilter}
-            upvoteFilter={props.upvoteFilter}
-            setTagFilter={props.setTagFilter}
-            tagFilter={props.tagFilter}
-            tagsList={[...tags]}
-          />
-          {posts}
-        </InfiniteScroll>
-      </>
-    )
-  })
-
-  return posts
+  return (
+    <>
+      {/* <Banner /> */}
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={() => onLoadMore()}
+        hasMore={hasNextPage}
+        loader={<div key={uuid()}>Loading...</div>}
+      >
+        <Filters
+          processDate={process_date_filter}
+          sort_by_upvotes={setSort_by_upvotes}
+          setDateFilter={props.setDateFilter}
+          dateFilter={props.dateFilter}
+          setKindFilter={props.setKindFilter}
+          kindFilter={props.kindFilter}
+          setUpvoteFilter={props.setUpvoteFilter}
+          upvoteFilter={props.upvoteFilter}
+          setTagFilter={props.setTagFilter}
+          tagFilter={props.tagFilter}
+          tagsList={[...tags]}
+        />
+        {posts}
+      </InfiniteScroll>
+    </>
+  )
 }
 
 // PostFeed.propTypes = {
