@@ -1,5 +1,6 @@
 import gql from 'graphql-tag.macro'
 
+// sort the iDs
 const POST_PAGE = gql`
   query PostPage(
     $after: String!

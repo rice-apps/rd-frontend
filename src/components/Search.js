@@ -1,11 +1,14 @@
 import React, { useState, useCallback, useEffect } from 'react';
 
-const SearchBar = ({ items, setList }) => {
+const SearchBar = ({ items, setList, setActive }) => {
     const [searchText, setSearchText] = useState('');
 
     useEffect(() => {
-        const filtered_items = items.filter(item => 
-            item.toLowerCase().includes(searchText.toLowerCase())
+        if (searchText.length === 0) setActive(false);
+        else setActive(true);
+
+        let filtered_items = items.filter(item => 
+            item.toLowerCase().includes(searchText.toLowerCase().trim())
         );
 
         if (filtered_items.length === 0){ filtered_items = ["No results for the search"]}

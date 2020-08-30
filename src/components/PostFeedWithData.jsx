@@ -78,6 +78,7 @@ function PostFeedWithData () {
   // get the post_ids
   useEffect(() => {
     console.log("FILTER", filterType)
+    console.log("KIND", kindFilter)
     refetchFilter()
   }, [filterType])
 
@@ -86,6 +87,7 @@ function PostFeedWithData () {
     if (filteredData){
       const IDs = filteredData.getFilteredData.map(post => post._id);
       setPostIDs(IDs);
+      console.log(IDs);
     } else{
       setPostIDs(filteredData);
     }

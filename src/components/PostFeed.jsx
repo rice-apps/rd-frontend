@@ -75,6 +75,7 @@ function PostFeed (props) {
       const month_ago = (d => new Date(d.setMonth(month_ago_day)))(new Date())
       props.setEarlyDateBound(month_ago)
     }
+    console.log("FUCCCKED")
   }
 
   const generate_posts = edges => {
@@ -107,21 +108,28 @@ function PostFeed (props) {
     })
   }
 
+  const compare_upvote_lengths = (a, b) => {
+    return a.node.upvotes.length - a.node.downvotes.length 
+          <= b.node.upvotes.length - b.node.downvotes.length ? -1 : 1
+  }
+
   let posts
   if (sort_by_upvotes.length == 0) {
     posts = generate_posts(edges)
+  } else if (sort_by_upvotes.includes('hot')) {
+    const sorted_edges = [...edges].sort(compare_upvote_lengths).reverse()
+    console.log(sorted_edges)
+    posts = generate_posts(sorted_edges)
+  } else if (sort_by_upvotes.includes('cold')) {
+    const sorted_edges = [...edges].sort(compare_upvote_lengths)
+    posts = generate_posts(sorted_edges)
   }
-  posts = edges.map((post, _i) => {
-    return (
+
+  const formatted_posts = 
+    (
       <>
         {/* <Banner /> */}
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={() => onLoadMore()}
-          hasMore={hasNextPage}
-          loader={<div key={uuid()}>Loading...</div>}
-        >
-          <Filters
+        <Filters
             processDate={process_date_filter}
             sort_by_upvotes={setSort_by_upvotes}
             setDateFilter={props.setDateFilter}
@@ -137,14 +145,21 @@ function PostFeed (props) {
             firstTime={props.firstTime}
             setFirstTime={props.setFirstTime}
           />
+        <InfiniteScroll
+          pageStart={0}
+          loadMore={() => onLoadMore()}
+          hasMore={hasNextPage}
+          loader={<div key={uuid()}>Loading...</div>}
+        >
           {posts}
         </InfiniteScroll>
+        
       </>
     )
-  })
+  
 
-  if (posts.length == 0) return (<h1>No posts oops... imma add a go-back to clear things</h1>);
-  return posts
+  if (formatted_posts.length == 0) return (<h1>No posts oops... imma add a go-back to clear things</h1>);
+  return formatted_posts
 }
 // PostFeed.propTypes = {
 //   onLoadMore: PropTypes.func.isRequired,

@@ -28,6 +28,8 @@ const Filters = props => {
   const [tags, setTags] = useState([])
   const [dates, setDates] = useState('')
   const [upvotes, setUpvotes] = useState('')
+  const [searchActivated, setActive] = useState(false);
+  const [filteredTags, setFilteredTags] = useState([])
 
   const POST_TYPES = ['Discussion', 'Event', 'Notice', 'Job']
   const DATES = ['yesterday', 'in the last week', 'in the last month']
@@ -45,6 +47,9 @@ const Filters = props => {
   
   if (loading) return <h1>Your tags are loading.</h1>
   if (error) return <h1>oshit(git) MY FILTERS ARE DUCKED</h1>
+  
+  const tag_list = data.getAllTags;
+  const finalized_tags = searchActivated ? filteredTags : tag_list
 
   const togglePost = () => {
     setPostMenuOpen(!isPostTypeOpen)
@@ -103,13 +108,18 @@ const Filters = props => {
     props.processDate(dates)
 
     let filterType = "";
-    if (postType.length > 0 && !props.firstTime){ 
-      filterType += " kind" 
-    }
+    if (postType.length > 0 && !props.firstTime) filterType += " kind" 
     if (tags.length > 0) filterType += " tags"
     if (dates.length > 0) filterType += " date"
     if (upvotes.length > 0) filterType += " popularity"
+
+    if (postType.length === 0) filterType = filterType.replace('kind', ''); 
+    if (tags.length === 0) filterType = filterType.replace('tags', ''); 
+    if (dates.length === 0) filterType = filterType.replace('date', ''); 
+    if (upvotes.length === 0) filterType = filterType.replace('popularity', ''); 
     props.setTypeofFilter(filterType);
+    // props.sort_by_upvotes(upvotes)
+    console.log("fuck")
 
     props.setDateFilter(dates)
     props.setUpvoteFilter(upvotes)
@@ -119,6 +129,7 @@ const Filters = props => {
 
   return (
     <>
+      <SearchBar items={tag_list} setList={setFilteredTags} setActive={setActive}/>
       <HorizontalDiv>
         <DDWrapper>
           <DDHeader onClick={togglePost}>
@@ -142,6 +153,7 @@ const Filters = props => {
           )}
         </DDWrapper>
 
+      
         <DDWrapper>
           <DDHeader onClick={toggleTag}>
             <DDHeaderTitle>
@@ -151,7 +163,7 @@ const Filters = props => {
           </DDHeader>
           {isTagOpen && (
             <DDList>
-              {data.getAllTags.map(item => (
+              {finalized_tags.map(item => (
                 <DDListItem key={item}>
                   <DropDownItem
                     name={item}
