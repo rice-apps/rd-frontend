@@ -17,6 +17,7 @@ import ShareIcon from '@material-ui/icons/Share'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
 import ReactHtmlParser from 'react-html-parser'
+import { Remarkable } from 'remarkable'
 
 import JavascriptTimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
@@ -64,6 +65,8 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }))
+
+const md = new Remarkable()
 
 function PostChunk (props) {
   const classes = useStyles()
@@ -269,7 +272,7 @@ function PostChunk (props) {
             </MoreOptions>
 
             <DiscussionBody style={{ textAlign: props.post.node.text_align }}>
-              {ReactHtmlParser(props.post.node.body)}
+              {ReactHtmlParser(md.render(props.post.node.body))}
             </DiscussionBody>
 
             {oneImage}

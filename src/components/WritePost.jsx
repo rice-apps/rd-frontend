@@ -5,8 +5,8 @@ import { useMutation } from '@apollo/client'
 
 import { Checkbox } from '@material-ui/core'
 
-import { Editor, EditorState, RichUtils, Modifier, CompositeDecorator } from 'draft-js'
-import { stateToMarkdown } from 'draft-js-export-markdown'
+import { Editor, EditorState, RichUtils, Modifier, CompositeDecorator, convertToRaw } from 'draft-js'
+import { draftToMarkdown } from 'markdown-draft-js'
 
 import 'draft-js/dist/Draft.css'
 
@@ -97,10 +97,13 @@ function WritePost (props) {
   const linkAdderCallback = link => {
 
     const contentState = editorState.getCurrentContent();
+    const absoluteLink = link.slice(0, 7) === 'http://' || link.slice(0, 8) === 'https://' ?
+        link :
+        'http://' + link
     const contentStateWithEntity = contentState.createEntity('LINK', 'MUTABLE', {
-      url: link,
+      url: absoluteLink,
     });
-    console.log('here')
+    // console.log('here')
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
     const contentStateWithLink = Modifier.applyEntity(
         contentStateWithEntity,
@@ -111,17 +114,6 @@ function WritePost (props) {
       contentStateWithLink, 'apply-entity')
 
     setEditorState(newEditorState)
-
-    // const newEditorState = EditorState.set(editorState, {
-    //   currentContent: contentStateWithEntity
-    // })
-    // setEditorState(RichUtils.toggleLink(
-    //     newEditorState,
-    //     newEditorState.getSelection(),
-    //     entityKey
-    // ))
-    // console.log('here4')
-    // // EditorState.push(editorState, contentStateWithLink, 'apply-entity');
   }
 
   const [startDate, setStart] = useState(new Date().getTime())
@@ -134,10 +126,10 @@ function WritePost (props) {
   const editorRef = useRef(null)
 
   const Link = props => {
-    console.log(props.entityKey)
+    // console.log(props.entityKey)
     const [tooltipVisible, setTooltipVisible] = useState(false)
     const address = editorState.getCurrentContent().getEntity(props.entityKey).getData().url;
-    console.log(address)
+    // console.log(address)
     return (
         <StyledLink href={address} onMouseOver={setTooltipVisible.bind(this,true)}
                     onMouseOut={setTooltipVisible.bind(this, false)} >
@@ -177,10 +169,6 @@ function WritePost (props) {
   const [textAlignment, setTextAlignment] = useState('left')
   const [imgUploaderVisible, setImgUploaderVisible] = useState(false)
   const [linkAdderVisible, setLinkAdderVisible] = useState(false)
-
-  // console.log(tags)
-
-  // console.log(editorState.getCurrentContent().getEntityMap())
 
   if (!props.show) {
     return null
@@ -393,13 +381,14 @@ function WritePost (props) {
     e.preventDefault()
 
     const title = document.getElementById('title').innerHTML
-    const body = stateToMarkdown(editorState.getCurrentContent())
+    // const body = stateToMarkdown(editorState.getCurrentContent())
+    const body = draftToMarkdown(convertToRaw(editorState.getCurrentContent()))
     const tagInput = document.getElementById('tag').value.trim()
-    console.log('here1')
+    // console.log('here1')
     if (checkTitleBodyAndTag(title, body, tagInput)) return
-    console.log('here2')
+    // console.log('here2')
     if (checkExtras[postType]()) return
-    console.log('here3')
+    // console.log('here3')
 
     const postToCreate = {
       Discussion: {
