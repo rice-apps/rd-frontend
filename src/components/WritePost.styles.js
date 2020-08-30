@@ -524,6 +524,11 @@ const TagCircle = styled.div`
   border-radius: 75px;
 `
 
+const StyledLink = styled.a`
+  color: '#3b5998',
+  textDecoration: 'underline',
+`
+
 export {
   PostWrapper,
   Button,
@@ -561,5 +566,6 @@ export {
   LocationBox,
   TagChosen,
   TagChosenWrapper,
-  TagCircle
+  TagCircle,
+  StyledLink
 }
