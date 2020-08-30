@@ -126,12 +126,13 @@ const Delete = styled.button`
 const DiscussionBody = styled.text`
   grid-area: body;
   padding: 10px 0px;
-  font-family: avenir;
+  // font-family: Avenir;
   font-size: 2vh;
   max-height: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  // word-wrap: break-word
 `
 
 const BottomComponent = styled.div`
