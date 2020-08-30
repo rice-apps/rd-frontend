@@ -43,7 +43,6 @@ import {
   Upvote,
   Downvote,
   TopMiddleComponent,
-  DiscussionTitleDiv,
   DiscussionTitle,
   Tags,
   Tag,
@@ -271,9 +270,7 @@ function PostFull () {
             />
           </OriginalPoster>
           <TopMiddleComponent>
-            <DiscussionTitleDiv>
-              <DiscussionTitle>{thePost.title}</DiscussionTitle>
-            </DiscussionTitleDiv>
+            <DiscussionTitle>{thePost.title}</DiscussionTitle>
             <MoreOptions className={classes.root}>
               <IconButton onClick={toggleDD}>
                 <MoreHorizIcon open={isDDOpen} />
@@ -349,6 +346,7 @@ function PostFull () {
 
           <BottomComponent>
             <Tags>
+              <Tag>{thePost.kind}</Tag>
               {thePost.tags.length > 0 && <Tag>{thePost.tags[0]}</Tag>}
               {thePost.tags.length > 1 && <Tag>{thePost.tags[1]}</Tag>}
               {thePost.tags.length > 2 && <Tag>{thePost.tags[2]}</Tag>}

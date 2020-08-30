@@ -203,6 +203,35 @@ const S3_SIGN = gql`
   }
 `
 
+const COMMENT_CREATE = gql`
+  mutation CreateComment(
+    $creator: String!
+    $post: ID!
+    $parent: ID!
+    $body: String!
+  ) {
+    currentNetID @client @export(as: "creator")
+    commentCreateOne(
+      record: {
+        creator: $creator
+        post: $post
+        parent: $parent
+        body: $body
+      }
+    ){
+      record {
+        creator{
+          netID
+        }
+        post
+        parent
+        body
+      }
+    }
+
+  }
+`
+
 export {
   SET_INFO,
   POST_CREATE,
