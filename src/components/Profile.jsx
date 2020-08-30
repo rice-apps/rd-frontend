@@ -147,8 +147,9 @@ const ProfilePage = () => {
     setCollege(indexOfCollege >= 0 ? '' : newValue)
   }, [])
 
+  console.log(major);
   const saveData = async () => {
-    if (userExistLoading || userExists?.doesUsernameExist) {
+    if (userExistLoading || (userExists?.doesUsernameExist && originalUsername !== username) ) {
       return
     }
 
@@ -263,7 +264,7 @@ const ProfilePage = () => {
           ))}
         </div>
 
-        <PostingButton type='submit' onClick={saveData} disabled={userExists?.doesUsernameExist}>
+        <PostingButton type='submit' disabled={userExists?.doesUsernameExist && originalUsername !== username}>
           Save
         </PostingButton>
       </form>
