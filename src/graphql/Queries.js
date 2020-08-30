@@ -8,7 +8,7 @@ const POST_PAGE = gql`
     $kind: EnumDKeyPostKind
   ) {
     postConnection(
-      first: 5
+      first: 20
       after: $after
       filter: {
         OR: [
@@ -21,7 +21,7 @@ const POST_PAGE = gql`
           }
         ]
       }
-    ) {
+    ) @connection(key: "feed") {
       count
       edges {
         cursor
@@ -64,7 +64,7 @@ const POST_PAGE = gql`
           ... on Notice {
             deadline
           }
-
+          text_align
           imageUrl
         }
       }
@@ -86,7 +86,7 @@ const USER_EXISTS = gql`
 
 const FETCH_COMMENTS_POST = gql`
   query FetchCommentsPost($post_id: ID!) {
-    commentByPost(post: $post_id) {
+    commentByPost(postID: $post_id) {
       _id
       creator {
         username
@@ -249,6 +249,7 @@ const GET_POST = gql`
         username
       }
       tags
+      text_align
     }
   }
 `

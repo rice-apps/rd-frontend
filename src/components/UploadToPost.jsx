@@ -52,11 +52,19 @@ function UploadToPost (props) {
 
     const { signedRequest, url } = response.data.signS3Url
 
+    console.log(signedRequest)
+
     uploadToS3(file, signedRequest)
     sendData(url) // make accessible to WritePost
+    props.dismissSelf()
   }
 
-  return (
+  const handleCancel = () => {
+    sendData('')
+    props.dismissSelf()
+  }
+
+  return props.show ? (
     <div>
       <label htmlFor='img'>Choose an image: </label>
       <input
@@ -66,9 +74,10 @@ function UploadToPost (props) {
         name='imgFile'
         accept='image/*'
       />
-      <button onClick={e => submit(e)}>Confirm Image</button>
+      <button onClick={e => submit(e)}>Confirm</button>
+      <button onClick={handleCancel}>Cancel</button>
     </div>
-  )
+  ) : null
 }
 
 export default UploadToPost

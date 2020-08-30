@@ -29,7 +29,7 @@ import { FETCH_COMMENTS_POST } from '../graphql/Queries'
 
 import {
   DiscussionBoxSection,
-  OP,
+  OriginalPoster,
   DiscussionBox,
   LeftComponent,
   Likes,
@@ -178,15 +178,13 @@ function PostChunk (props) {
               </IconButton>
             </Downvote>
           </LeftComponent>
-          <OP>
-            <a>
-              {props.post.node.creator.username} -{' '}
-              <ReactTimeAgo date={props.post.node.date_created} />
-            </a>
+          <OriginalPoster>
+            {props.post.node.creator.username} -{' '}
+            <ReactTimeAgo date={props.post.node.date_created} />
             <Divider
               style={{ width: '51.5vw', maxWidth: '97%', marginTop: '1vh' }}
             />
-          </OP>
+          </OriginalPoster>
           <TopMiddleComponent>
             <DiscussionTitle>
               <Truncate lines={2} ellipsis={<span>... 
@@ -232,7 +230,7 @@ function PostChunk (props) {
                         buttonLabel='Add to '
                         buttonTemplate={calIcon}
                         listItems={calDropDown}
-                      ></AddToCalendar>
+                      />
                     </AddTo>
                   )}
 
@@ -274,7 +272,6 @@ function PostChunk (props) {
                 </DDMenu>
               )}
             </MoreOptions>
-            
             <DiscussionBody>
               <Truncate lines={4} ellipsis={<span>... 
                   <FullPostLink to={myPostLink}>

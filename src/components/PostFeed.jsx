@@ -21,7 +21,7 @@ function PostFeed (props) {
   const [reportPost] = useMutation(REPORT_POST)
   const [removePost] = useMutation(REMOVE_POST)
   const [savePost] = useMutation(SAVE_POST)
-  const [sort_by_upvotes, setSort_by_upvotes] = useState('')
+  const [sorByUpvotes, setSortByUpvotes] = useState('')
 
   const {
     onLoadMore,
@@ -52,26 +52,26 @@ function PostFeed (props) {
     }
   } = data
 
-  const process_date_filter = filter => {
+  const processDateFilter = filter => {
     const today = props.currentDate
 
     if (filter.length === 0) return
     if (filter.includes('yesterday')) {
-      const yesterday_day = today.getDate() - 1
-      const yesterday = (d => new Date(d.setDate(yesterday_day)))(new Date())
+      const yesterdayDay = today.getDate() - 1
+      const yesterday = (d => new Date(d.setDate(yesterdayDay)))(new Date())
       props.setEarlyDateBound(yesterday)
     } else if (filter.includes('week')) {
-      const week_ago_day = today.getDate() - 7
-      const week_ago = (d => new Date(d.setDate(week_ago_day)))(new Date())
-      props.setEarlyDateBound(week_ago)
+      const weekAgoDay = today.getDate() - 7
+      const weekAgo = (d => new Date(d.setDate(weekAgoDay)))(new Date())
+      props.setEarlyDateBound(weekAgo)
     } else if (filter.includes('month')) {
-      const month_ago_day = today.getMonth() - 1
-      const month_ago = (d => new Date(d.setMonth(month_ago_day)))(new Date())
-      props.setEarlyDateBound(month_ago)
+      const monthAgoDay = today.getMonth() - 1
+      const monthAgo = (d => new Date(d.setMonth(monthAgoDay)))(new Date())
+      props.setEarlyDateBound(monthAgo)
     }
   }
 
-  const generate_posts = edges => {
+  const generatePosts = edges => {
     return edges.map((post, _i) => {
       return (
         <>
@@ -110,19 +110,19 @@ function PostFeed (props) {
 
   if (tags.size === 0) tags = ['No tags for these filters']
 
-  const compare_upvote_lengths = (a, b) => {
+  const compareUpvoteLengths = (a, b) => {
     return a.node.upvotes.length <= b.node.upvotes.length ? -1 : 1
   }
 
   let posts
-  if (sort_by_upvotes.length === 0) {
-    posts = generate_posts(edges)
-  } else if (sort_by_upvotes.includes('most')) {
-    const sorted_edges = [...edges].sort(compare_upvote_lengths).reverse()
-    posts = generate_posts(sorted_edges)
-  } else if (sort_by_upvotes.includes('least')) {
-    const sorted_edges = [...edges].sort(compare_upvote_lengths)
-    posts = generate_posts(sorted_edges)
+  if (sorByUpvotes.length === 0) {
+    posts = generatePosts(edges)
+  } else if (sorByUpvotes.includes('most')) {
+    const sortedEdges = [...edges].sort(compareUpvoteLengths).reverse()
+    posts = generatePosts(sortedEdges)
+  } else if (sorByUpvotes.includes('least')) {
+    const sortedEdges = [...edges].sort(compareUpvoteLengths)
+    posts = generatePosts(sortedEdges)
   }
 
   return (
@@ -135,8 +135,8 @@ function PostFeed (props) {
         loader={<div key={uuid()}>Loading...</div>}
       >
         <Filters
-          processDate={process_date_filter}
-          sort_by_upvotes={setSort_by_upvotes}
+          processDate={processDateFilter}
+          sort_by_upvotes={setSortByUpvotes}
           setDateFilter={props.setDateFilter}
           dateFilter={props.dateFilter}
           setKindFilter={props.setKindFilter}
