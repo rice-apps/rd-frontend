@@ -23,6 +23,8 @@ import JavascriptTimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import ReactTimeAgo from 'react-time-ago'
 
+import Truncate from 'react-truncate';
+
 import { useLazyQuery } from '@apollo/client'
 import { FETCH_COMMENTS_POST } from '../graphql/Queries'
 
@@ -35,7 +37,6 @@ import {
   Upvote,
   Downvote,
   TopMiddleComponent,
-  DiscussionTitleDiv,
   DiscussionTitle,
   Tags,
   Tag,
@@ -53,7 +54,8 @@ import {
   ShareTwitter,
   Share,
   FullPostLink,
-  Expand
+  Expand,
+  ReadMore
 } from './PostChunk.styles'
 
 JavascriptTimeAgo.addLocale(en)
@@ -136,10 +138,6 @@ function PostChunk (props) {
   return (
     <>
       <DiscussionBoxSection>
-        {/* <OriginalPoster>
-          {props.post.node.creator.username} -{' '}
-          <ReactTimeAgo date={props.post.node.date_created} />
-        </OriginalPoster> */}
         <DiscussionBox>
           <LeftComponent>
             <Upvote className={classes.root}>
@@ -191,9 +189,16 @@ function PostChunk (props) {
             />
           </OriginalPoster>
           <TopMiddleComponent>
-            <DiscussionTitleDiv>
-              <DiscussionTitle>{props.post.node.title}</DiscussionTitle>
-            </DiscussionTitleDiv>
+            <DiscussionTitle>
+              <Truncate lines={2} ellipsis={<span>...
+                <FullPostLink to={myPostLink}>
+                  <ReadMore>
+                    (Read More)
+                  </ReadMore>
+                </FullPostLink></span>}>
+                {props.post.node.title}
+              </Truncate>
+            </DiscussionTitle>
             <MoreOptions className={classes.root}>
               <IconButton onClick={toggleDD}>
                 <MoreHorizIcon open={isDDOpen} />
@@ -270,16 +275,24 @@ function PostChunk (props) {
                 </DDMenu>
               )}
             </MoreOptions>
-
             <DiscussionBody style={{ textAlign: props.post.node.text_align }}>
-              {ReactHtmlParser(md.render(props.post.node.body))}
+              <Truncate lines={4} ellipsis={<span>...
+                  <FullPostLink to={myPostLink}>
+                    <ReadMore>
+                      (Read More)
+                    </ReadMore>
+                  </FullPostLink></span>}>
+                {ReactHtmlParser(md.render(props.post.node.body))}
+              </Truncate>
             </DiscussionBody>
+
 
             {oneImage}
           </TopMiddleComponent>
 
           <BottomComponent>
             <Tags>
+              <Tag>{props.post.node.kind}</Tag>
               {props.post.node.tags.length > 0 && (
                 <Tag>{props.post.node.tags[0]}</Tag>
               )}

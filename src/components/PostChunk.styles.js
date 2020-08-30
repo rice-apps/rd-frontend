@@ -37,7 +37,7 @@ const DiscussionBox = styled.section`
 const LeftComponent = styled.div`
   // contains Upvote, Downvote, Likes
   display: grid;
-  grid-template-rows: 1fr 30px 40px 30px 1fr;
+  grid-template-rows: 20px 30px 40px 30px 1fr;
   grid-area: left;
   justify-items: center;
   align-items: center;
@@ -65,22 +65,19 @@ const TopMiddleComponent = styled.div`
     'body moreoptions'
     'image moreoptions';
   grid-template-columns: 1fr 60px;
-  grid-template-rows: 50px 1fr auto;
-`
-
-const DiscussionTitleDiv = styled.div`
-  grid-area: title;
-  padding: 20px 0px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  grid-template-rows: auto auto auto;
 `
 
 const DiscussionTitle = styled.text`
-  justify-self: start;
-  align-self: start;
-  font-size: 2.5vh;
+  grid-area: title;
+  padding: 20px 0px 0px 0px;
+  font-family: avenir;
+  font-size: 2.3vh;
   font-weight: bold;
+  max-height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const FullPostLink = styled(Link)`
@@ -93,8 +90,9 @@ const MoreOptions = styled.div`
   grid-area: moreoptions;
   align-self: start;
   justify-self: start;
-  margin-top: -2vw;
-`
+  margin-top: -4.5vh;
+`;
+
 
 const DDMenu = styled.div`
   position: relative;
@@ -129,9 +127,12 @@ const Delete = styled.button`
 const DiscussionBody = styled.text`
   grid-area: body;
   padding: 10px 0px;
+  font-family: avenir;
   font-size: 2vh;
-  word-wrap: break-word;
   max-height: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const BottomComponent = styled.div`
@@ -183,6 +184,12 @@ const Share = styled.div`
   grid-area: share;
 `
 
+const ReadMore = styled.text`
+  color: #000080;
+  font-size: 1.75vh;
+  font-weight:normal
+`
+
 export {
   DiscussionBoxSection,
   OriginalPoster,
@@ -193,7 +200,6 @@ export {
   Upvote,
   Downvote,
   TopMiddleComponent,
-  DiscussionTitleDiv,
   DiscussionTitle,
   Tags,
   Tag,
@@ -211,5 +217,6 @@ export {
   ShareTwitter,
   Share,
   FullPostLink,
-  Expand
+  Expand,
+  ReadMore
 }
