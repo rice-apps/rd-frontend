@@ -5,7 +5,7 @@ import { SET_INFO } from '../graphql/Mutations'
 import { USER_EXISTS } from '../graphql/Queries'
 import DropDownItem from './DropDownItem'
 import majorMinorJson from '../utils/MajorMinor.json'
-import SearchBar from "./Search"
+import SearchBar from './Search'
 import {
   DDWrapper,
   DDHeader,
@@ -27,7 +27,7 @@ const ProfilePage = () => {
   const [userStatement, setStatement] = useState('Valid!')
   const [originalUsername, setOriginal] = useState('')
   const [username, setUsername] = useState('')
-  
+
   // current major, minors, and college
   const [major, setMajor] = useState([])
   const [minor, setMinor] = useState([])
@@ -38,8 +38,8 @@ const ProfilePage = () => {
   const [isMinorOpen, setMinorOpen] = useState(false)
   const [isCollegeOpen, setCollegeOpen] = useState(false)
 
-  const [majorSearchActivated, setMajorsActive] = useState(false);
-  const [minorSearchActivated, setMinorsActive] = useState(false);
+  const [majorSearchActivated, setMajorsActive] = useState(false)
+  const [minorSearchActivated, setMinorsActive] = useState(false)
   const [filteredMajors, setFilteredMajors] = useState([])
   const [filteredMinors, setFilteredMinors] = useState([])
 
@@ -89,11 +89,11 @@ const ProfilePage = () => {
 
   const majors = majorMinorJson.majors.split(';')
 
-  const finalized_majors = majorSearchActivated ? filteredMajors : majors
+  const finalizedMajors = majorSearchActivated ? filteredMajors : majors
 
   const minors = majorMinorJson.minors.split(';')
 
-  const finalized_minors = minorSearchActivated ? filteredMinors : minors
+  const finalizedMinors = minorSearchActivated ? filteredMinors : minors
 
   const colleges = majorMinorJson.colleges.split(';')
 
@@ -147,9 +147,12 @@ const ProfilePage = () => {
     setCollege(indexOfCollege >= 0 ? '' : newValue)
   }, [])
 
-  console.log(major);
+  console.log(major)
   const saveData = async () => {
-    if (userExistLoading || (userExists?.doesUsernameExist && originalUsername !== username) ) {
+    if (
+      userExistLoading ||
+      (userExists?.doesUsernameExist && originalUsername !== username)
+    ) {
       return
     }
 
@@ -170,7 +173,7 @@ const ProfilePage = () => {
   if (currentUser() === {}) {
     return <Navigate to='/login' />
   }
-  
+
   // known bug, data won't save if we change the drop-downs
   return (
     <>
@@ -188,7 +191,11 @@ const ProfilePage = () => {
           />
         </FieldSetStyle>
         <p>Current Majors: {major.toString()}</p>
-        <SearchBar items={majors} setList={setFilteredMajors} setActive={setMajorsActive}/>
+        <SearchBar
+          items={majors}
+          setList={setFilteredMajors}
+          setActive={setMajorsActive}
+        />
         <DDWrapper>
           <DDHeader onClick={toggleMajor}>
             <DDHeaderTitle>
@@ -198,7 +205,7 @@ const ProfilePage = () => {
           </DDHeader>
           {isMajorOpen && (
             <DDList>
-              {finalized_majors.map(item => (
+              {finalizedMajors.map(item => (
                 <DDListItem key={item}>
                   <DropDownItem
                     name={item}
@@ -212,7 +219,11 @@ const ProfilePage = () => {
         </DDWrapper>
 
         <p>Current Minors: {minor.toString()}</p>
-        <SearchBar items={minors} setList={setFilteredMinors} setActive={setMinorsActive}/>
+        <SearchBar
+          items={minors}
+          setList={setFilteredMinors}
+          setActive={setMinorsActive}
+        />
         <DDWrapper>
           <DDHeader onClick={toggleMinor}>
             <DDHeaderTitle>
@@ -222,7 +233,7 @@ const ProfilePage = () => {
           </DDHeader>
           {isMinorOpen && (
             <DDList>
-              {finalized_minors.map(item => (
+              {finalizedMinors.map(item => (
                 <DDListItem key={item}>
                   <DropDownItem
                     name={item}
@@ -264,7 +275,12 @@ const ProfilePage = () => {
           ))}
         </div>
 
-        <PostingButton type='submit' disabled={userExists?.doesUsernameExist && originalUsername !== username}>
+        <PostingButton
+          type='submit'
+          disabled={
+            userExists?.doesUsernameExist && originalUsername !== username
+          }
+        >
           Save
         </PostingButton>
       </form>

@@ -91,8 +91,7 @@ const MoreOptions = styled.div`
   align-self: start;
   justify-self: start;
   margin-top: -4.5vh;
-`;
-
+`
 
 const DDMenu = styled.div`
   position: relative;
@@ -188,7 +187,7 @@ const Share = styled.div`
 const ReadMore = styled.text`
   color: #000080;
   font-size: 1.75vh;
-  font-weight:normal
+  font-weight: normal;
 `
 
 export {

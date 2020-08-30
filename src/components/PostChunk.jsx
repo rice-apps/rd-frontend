@@ -19,9 +19,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import ReactHtmlParser from 'react-html-parser'
 import remarkable from "../utils/remarkable";
 
-import JavascriptTimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
-import ReactTimeAgo from 'react-time-ago'
+import TimeAgo from 'react-timeago'
 
 import Truncate from 'react-truncate';
 import TruncateMarkup from "react-truncate-markup";
@@ -58,8 +56,6 @@ import {
   Expand,
   ReadMore
 } from './PostChunk.styles'
-
-JavascriptTimeAgo.addLocale(en)
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -182,7 +178,7 @@ function PostChunk (props) {
           </LeftComponent>
           <OriginalPoster>
             {props.post.node.creator.username} -{' '}
-            <ReactTimeAgo date={props.post.node.date_created} />
+            <TimeAgo date={props.post.node.date_created} />
             <Divider
               style={{ width: '51.5vw', maxWidth: '97%', marginTop: '1vh' }}
             />
@@ -288,8 +284,6 @@ function PostChunk (props) {
                   {/*</div>*/}
                 </DiscussionBody>
               </TruncateMarkup>
-
-
             {oneImage}
           </TopMiddleComponent>
 

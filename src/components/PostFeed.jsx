@@ -21,7 +21,7 @@ function PostFeed (props) {
   const [reportPost] = useMutation(REPORT_POST)
   const [removePost] = useMutation(REMOVE_POST)
   const [savePost] = useMutation(SAVE_POST)
-  const [sort_by_upvotes, setSort_by_upvotes] = useState('')
+  const [sortByUpvotes, setSortByUpvotes] = useState('')
 
   const {
     onLoadMore,
@@ -52,7 +52,7 @@ function PostFeed (props) {
     }
   } = data
 
-  const process_date_filter = filter => {
+  const processDateFilter = filter => {
     const today = props.currentDate
 
     if (filter.length === 0) return
@@ -69,10 +69,10 @@ function PostFeed (props) {
       const monthAgo = (d => new Date(d.setMonth(monthAgoDay)))(new Date())
       props.setEarlyDateBound(monthAgo)
     }
-    console.log("FUCCCKED")
+    console.log('FUCCCKED')
   }
 
-  const generate_posts = edges => {
+  const generatePosts = edges => {
     return edges.map((post, _i) => {
       return (
         <>
@@ -102,58 +102,57 @@ function PostFeed (props) {
     })
   }
 
-  const compare_upvote_lengths = (a, b) => {
-    return a.node.upvotes.length - a.node.downvotes.length 
-          <= b.node.upvotes.length - b.node.downvotes.length ? -1 : 1
+  const compareUpvoteLengths = (a, b) => {
+    return a.node.upvotes.length - a.node.downvotes.length <=
+      b.node.upvotes.length - b.node.downvotes.length
+      ? -1
+      : 1
   }
 
   let posts
-  if (sort_by_upvotes.length == 0) {
-    posts = generate_posts(edges)
-  } else if (sort_by_upvotes.includes('hot')) {
-    const sorted_edges = [...edges].sort(compare_upvote_lengths).reverse()
-    console.log(sorted_edges)
-    posts = generate_posts(sorted_edges)
-  } else if (sort_by_upvotes.includes('cold')) {
-    const sorted_edges = [...edges].sort(compare_upvote_lengths)
-    posts = generate_posts(sorted_edges)
+  if (sortByUpvotes.length === 0) {
+    posts = generatePosts(edges)
+  } else if (sortByUpvotes.includes('hot')) {
+    const sortedEdges = [...edges].sort(compareUpvoteLengths).reverse()
+    console.log(sortedEdges)
+    posts = generatePosts(sortedEdges)
+  } else if (sortByUpvotes.includes('cold')) {
+    const sortedEdges = [...edges].sort(compareUpvoteLengths)
+    posts = generatePosts(sortedEdges)
   }
 
-  const formatted_posts = 
-    (
-      <>
-        {/* <Banner /> */}
-        <Filters
-            processDate={process_date_filter}
-            sort_by_upvotes={setSort_by_upvotes}
-            setDateFilter={props.setDateFilter}
-            dateFilter={props.dateFilter}
-            setKindFilter={props.setKindFilter}
-            kindFilter={props.kindFilter}
-            setUpvoteFilter={props.setUpvoteFilter}
-            upvoteFilter={props.upvoteFilter}
-            setTagFilter={props.setTagFilter}
-            tagFilter={props.tagFilter}
+  const formattedPosts = (
+    <>
+      {/* <Banner /> */}
+      <Filters
+        processDate={processDateFilter}
+        sort_by_upvotes={setSortByUpvotes}
+        setDateFilter={props.setDateFilter}
+        dateFilter={props.dateFilter}
+        setKindFilter={props.setKindFilter}
+        kindFilter={props.kindFilter}
+        setUpvoteFilter={props.setUpvoteFilter}
+        upvoteFilter={props.upvoteFilter}
+        setTagFilter={props.setTagFilter}
+        tagFilter={props.tagFilter}
+        setTypeofFilter={props.setTypeofFilter}
+        firstTime={props.firstTime}
+        setFirstTime={props.setFirstTime}
+      />
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={() => onLoadMore()}
+        hasMore={hasNextPage}
+        loader={<div key={uuid()}>Loading...</div>}
+      >
+        {posts}
+      </InfiniteScroll>
+    </>
+  )
 
-            setTypeofFilter={props.setTypeofFilter}
-            firstTime={props.firstTime}
-            setFirstTime={props.setFirstTime}
-          />
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={() => onLoadMore()}
-          hasMore={hasNextPage}
-          loader={<div key={uuid()}>Loading...</div>}
-        >
-          {posts}
-        </InfiniteScroll>
-        
-      </>
-    )
-  
-
-  if (formatted_posts.length == 0) return (<h1>No posts oops... imma add a go-back to clear things</h1>);
-  return formatted_posts
+  if (formattedPosts.length === 0)
+    return <h1>No posts oops... imma add a go-back to clear things</h1>
+  return formattedPosts
 }
 // PostFeed.propTypes = {
 //   onLoadMore: PropTypes.func.isRequired,

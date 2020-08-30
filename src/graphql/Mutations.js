@@ -212,15 +212,10 @@ const COMMENT_CREATE = gql`
   ) {
     currentNetID @client @export(as: "creator")
     commentCreateOne(
-      record: {
-        creator: $creator
-        post: $post
-        parent: $parent
-        body: $body
-      }
-    ){
+      record: { creator: $creator, post: $post, parent: $parent, body: $body }
+    ) {
       record {
-        creator{
+        creator {
           netID
         }
         post
@@ -228,7 +223,6 @@ const COMMENT_CREATE = gql`
         body
       }
     }
-
   }
 `
 
@@ -236,6 +230,7 @@ export {
   SET_INFO,
   POST_CREATE,
   CREATE_COMMENT,
+  COMMENT_CREATE,
   LOGIN,
   UPVOTE_POST,
   DOWNVOTE_POST,
