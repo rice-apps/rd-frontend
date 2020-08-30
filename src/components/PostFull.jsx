@@ -29,7 +29,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import log from 'loglevel'
 
 import ReactHtmlParser from 'react-html-parser'
-import remarkable from "../utils/remarkable";
+import remarkable from '../utils/remarkable'
 
 import TimeAgo from 'react-timeago'
 
@@ -336,7 +336,9 @@ function PostFull () {
               )}
             </MoreOptions>
 
-            <DiscussionBody>{ReactHtmlParser(remarkable.render(thePost.body))}</DiscussionBody>
+            <DiscussionBody>
+              {ReactHtmlParser(remarkable.render(thePost.body))}
+            </DiscussionBody>
 
             {oneImage}
           </TopMiddleComponent>

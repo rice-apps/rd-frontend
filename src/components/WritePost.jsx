@@ -5,7 +5,14 @@ import { useMutation } from '@apollo/client'
 
 import { Checkbox } from '@material-ui/core'
 
-import { Editor, EditorState, RichUtils, Modifier, CompositeDecorator, convertToRaw } from 'draft-js'
+import {
+  Editor,
+  EditorState,
+  RichUtils,
+  Modifier,
+  CompositeDecorator,
+  convertToRaw
+} from 'draft-js'
 import { draftToMarkdown } from 'markdown-draft-js'
 
 import 'draft-js/dist/Draft.css'
@@ -57,11 +64,12 @@ import {
   LocationBox,
   TagChosenWrapper,
   TagChosen,
-  TagCircle, StyledLink
+  TagCircle,
+  StyledLink
 } from './WritePost.styles'
 import { currentUser } from '../utils/apollo'
 import UploadToPost from './UploadToPost'
-import LinkAdder from "./LinkAdder";
+import LinkAdder from './LinkAdder'
 
 const styleMap = {
   STRIKETHROUGH: {
@@ -95,23 +103,30 @@ function WritePost (props) {
   }
 
   const linkAdderCallback = link => {
-
-    const contentState = editorState.getCurrentContent();
-    const absoluteLink = link.slice(0, 7) === 'http://' || link.slice(0, 8) === 'https://' ?
-        link :
-        'http://' + link
-    const contentStateWithEntity = contentState.createEntity('LINK', 'MUTABLE', {
-      url: absoluteLink,
-    });
+    const contentState = editorState.getCurrentContent()
+    const absoluteLink =
+      link.slice(0, 7) === 'http://' || link.slice(0, 8) === 'https://'
+        ? link
+        : 'http://' + link
+    const contentStateWithEntity = contentState.createEntity(
+      'LINK',
+      'MUTABLE',
+      {
+        url: absoluteLink
+      }
+    )
     // console.log('here')
-    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+    const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
     const contentStateWithLink = Modifier.applyEntity(
-        contentStateWithEntity,
-        editorState.getSelection(),
-        entityKey,
-    );
-    const newEditorState = EditorState.push(editorState,
-      contentStateWithLink, 'apply-entity')
+      contentStateWithEntity,
+      editorState.getSelection(),
+      entityKey
+    )
+    const newEditorState = EditorState.push(
+      editorState,
+      contentStateWithLink,
+      'apply-entity'
+    )
 
     setEditorState(newEditorState)
   }
@@ -128,40 +143,51 @@ function WritePost (props) {
   const Link = props => {
     // console.log(props.entityKey)
     const [tooltipVisible, setTooltipVisible] = useState(false)
-    const address = editorState.getCurrentContent().getEntity(props.entityKey).getData().url;
+    const address = editorState
+      .getCurrentContent()
+      .getEntity(props.entityKey)
+      .getData().url
     // console.log(address)
     return (
-        <StyledLink href={address} onMouseOver={setTooltipVisible.bind(this,true)}
-                    onMouseOut={setTooltipVisible.bind(this, false)} >
-          <div style={tooltipVisible ? {display: 'inline', backgroundColor: '#f4efef',
-            position: 'absolute'} : {display: 'none'}}
-          >
-            {address}
-          </div>
-          {props.children}
-        </StyledLink>
-    );
-  };
+      <StyledLink
+        href={address}
+        onMouseOver={setTooltipVisible.bind(this, true)}
+        onMouseOut={setTooltipVisible.bind(this, false)}
+      >
+        <div
+          style={
+            tooltipVisible
+              ? {
+                  display: 'inline',
+                  backgroundColor: '#f4efef',
+                  position: 'absolute'
+                }
+              : { display: 'none' }
+          }
+        >
+          {address}
+        </div>
+        {props.children}
+      </StyledLink>
+    )
+  }
 
-  function findLinkEntities(contentBlock, callback, contentState) {
-    contentBlock.findEntityRanges(
-        (character) => {
-          const entityKey = character.getEntity();
-          return (
-              entityKey !== null &&
-              contentState.getEntity(entityKey).getType() === 'LINK'
-          );
-        },
-        callback
-    );
+  function findLinkEntities (contentBlock, callback, contentState) {
+    contentBlock.findEntityRanges(character => {
+      const entityKey = character.getEntity()
+      return (
+        entityKey !== null &&
+        contentState.getEntity(entityKey).getType() === 'LINK'
+      )
+    }, callback)
   }
 
   const decorator = new CompositeDecorator([
     {
       strategy: findLinkEntities,
-      component: Link,
-    },
-  ]);
+      component: Link
+    }
+  ])
 
   const [editorState, setEditorState] = useState(
     EditorState.createEmpty(decorator)
@@ -580,14 +606,14 @@ function WritePost (props) {
               <UploadToPost
                 parentUrlCallback={callbackURL}
                 show={imgUploaderVisible}
-                dismissSelf={() => {
+                handleDismissSelf={() => {
                   setImgUploaderVisible(false)
                 }}
               />
               <LinkAdder
                 callback={linkAdderCallback}
                 show={linkAdderVisible}
-                dismissSelf={() => {
+                handleDismissSelf={() => {
                   setLinkAdderVisible(false)
                 }}
               />

@@ -56,12 +56,12 @@ function UploadToPost (props) {
 
     uploadToS3(file, signedRequest)
     sendData(url) // make accessible to WritePost
-    props.dismissSelf()
+    props.handleDismissSelf()
   }
 
   const handleCancel = () => {
     sendData('')
-    props.dismissSelf()
+    props.handleDismissSelf()
   }
 
   return props.show ? (
