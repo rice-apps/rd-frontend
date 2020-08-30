@@ -41,9 +41,9 @@ export const NavElement = styled.div`
     css`
       transition: background-color 0.3s ease-in-out;
       &:hover {
-        background-color: rgba(229, 230, 247, .7);
+        background-color: rgba(229, 230, 247, 0.7);
       }
-  `}
+    `}
 
   ${props =>
     props.selected &&
@@ -52,7 +52,7 @@ export const NavElement = styled.div`
         0% 0% no-repeat padding-box;
       opacity: 0.8;
       box-shadow: 0.15vw 0.15vw 3vw #ffa99c7b; */
-      background-color: #7380FF;
-      box-shadow: 0 .7vh 1vh -1vh black;
+      background-color: #7380ff;
+      box-shadow: 0 0.7vh 1vh -1vh black;
     `}
 `

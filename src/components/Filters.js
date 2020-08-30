@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { useMutation, useQuery, useLazyQuery } from '@apollo/client'
-import IconButton from '@material-ui/core/IconButton';
-import TuneIcon from '@material-ui/icons/Tune';
+import IconButton from '@material-ui/core/IconButton'
+import TuneIcon from '@material-ui/icons/Tune'
 import DropDownItem from './DropDownItem'
 import SearchBar from "./Search"
 import { GET_TAGS, FILTER_KIND, FILTER_TAGS, FILTER_DATES } from '../graphql/Queries'
 
 import {
   HorizontalDiv,
-  SubmitButton,
   DDWrapper,
   DDHeader,
   DDHeaderTitle,
@@ -86,22 +84,22 @@ const Filters = props => {
   }
 
   const handleTagsChange = newValue => {
-    const index_of_tag = tags.indexOf(newValue)
+    const indexOfTag = tags.indexOf(newValue)
     setTags(
-      index_of_tag >= 0
+      indexOfTag >= 0
         ? tags.filter(tag => newValue !== tag)
         : [...tags, newValue]
     )
   }
 
   const handleDateChange = newValue => {
-    const index_of_date = dates.indexOf(newValue)
-    setDates(index_of_date >= 0 ? '' : newValue)
+    const indexOfDate = dates.indexOf(newValue)
+    setDates(indexOfDate >= 0 ? '' : newValue)
   }
 
   const handleUpvoteChange = newValue => {
-    const index_of_upvote = upvotes.indexOf(newValue)
-    setUpvotes(index_of_upvote >= 0 ? '' : newValue)
+    const indexOfUpvote = upvotes.indexOf(newValue)
+    setUpvotes(indexOfUpvote >= 0 ? '' : newValue)
   }
 
   const submitFilters = () => {
@@ -219,7 +217,7 @@ const Filters = props => {
             </DDList>
           )}
         </DDWrapper>
-        <IconButton 
+        <IconButton
           onClick={submitFilters}
           style={{
             background: 'white',

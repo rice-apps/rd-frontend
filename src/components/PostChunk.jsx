@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
-import { red, grey } from '@material-ui/core/colors'
-import Divider from '@material-ui/core/Divider';
+import { grey } from '@material-ui/core/colors'
+import Divider from '@material-ui/core/Divider'
 
 import AddToCalendar from 'react-add-to-calendar'
 
 import IconButton from '@material-ui/core/IconButton'
-import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button'
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp'
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
 import ChatIcon from '@material-ui/icons/Chat'
@@ -22,20 +22,20 @@ import JavascriptTimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import ReactTimeAgo from 'react-time-ago'
 
-import { useMutation, useLazyQuery } from '@apollo/client'
-import { FETCH_COMMENTS_POST, FETCH_COMMENTS_PARENT } from '../graphql/Queries'
+import Truncate from 'react-truncate';
+
+import { useLazyQuery } from '@apollo/client'
+import { FETCH_COMMENTS_POST } from '../graphql/Queries'
 
 import {
   DiscussionBoxSection,
-  OP,
-  Time,
+  OriginalPoster,
   DiscussionBox,
   LeftComponent,
   Likes,
   Upvote,
   Downvote,
   TopMiddleComponent,
-  DiscussionTitleDiv,
   DiscussionTitle,
   Tags,
   Tag,
@@ -53,7 +53,8 @@ import {
   ShareTwitter,
   Share,
   FullPostLink,
-  Expand
+  Expand,
+  ReadMore
 } from './PostChunk.styles'
 
 JavascriptTimeAgo.addLocale(en)
@@ -76,13 +77,10 @@ function PostChunk (props) {
     )
   }
 
+  const [getCommentsPost] = useLazyQuery(FETCH_COMMENTS_POST)
 
-  const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
-    FETCH_COMMENTS_POST
-  )
-
-  const myPostID = props.post.node._id;
-  const myPostLink = "/posts/" + String(myPostID); // forming the url
+  const myPostID = props.post.node._id
+  const myPostLink = '/posts/' + String(myPostID) // forming the url
 
   const listOfUpvoters = props.post.node.upvotes.map(
     userObject => userObject.username
@@ -137,10 +135,6 @@ function PostChunk (props) {
   return (
     <>
       <DiscussionBoxSection>
-        {/* <OP>
-          {props.post.node.creator.username} -{' '}
-          <ReactTimeAgo date={props.post.node.date_created} />
-        </OP> */}
         <DiscussionBox>
           <LeftComponent>
             <Upvote className={classes.root}>
@@ -166,7 +160,9 @@ function PostChunk (props) {
             </Likes>
             <Downvote className={classes.root}>
               <IconButton
-                style={isDownvoted ? { color: '#7380FF' } : { color: grey[800] }}
+                style={
+                  isDownvoted ? { color: '#7380FF' } : { color: grey[800] }
+                }
                 onClick={e => {
                   e.preventDefault()
                   toggleDownvoted()
@@ -182,17 +178,24 @@ function PostChunk (props) {
               </IconButton>
             </Downvote>
           </LeftComponent>
-          <OP>
-            <a>
-              {props.post.node.creator.username} -{' '}
-              <ReactTimeAgo date={props.post.node.date_created} />
-            </a>
-            <Divider style={{width: '51.5vw', maxWidth: '97%', marginTop: '1vh'}}/>
-          </OP>
+          <OriginalPoster>
+            {props.post.node.creator.username} -{' '}
+            <ReactTimeAgo date={props.post.node.date_created} />
+            <Divider
+              style={{ width: '51.5vw', maxWidth: '97%', marginTop: '1vh' }}
+            />
+          </OriginalPoster>
           <TopMiddleComponent>
-            <DiscussionTitleDiv>
-              <DiscussionTitle>{props.post.node.title}</DiscussionTitle>
-            </DiscussionTitleDiv>
+            <DiscussionTitle>
+              <Truncate lines={2} ellipsis={<span>... 
+                <FullPostLink to={myPostLink}>
+                  <ReadMore>
+                    (Read More)
+                  </ReadMore>
+                </FullPostLink></span>}>
+                {props.post.node.title}
+              </Truncate>
+            </DiscussionTitle>
             <MoreOptions className={classes.root}>
               <IconButton onClick={toggleDD}>
                 <MoreHorizIcon open={isDDOpen} />
@@ -215,8 +218,6 @@ function PostChunk (props) {
                           ]
                         }
                       })
-
-                      console.log(props.userInfo.savedPosts)
                     }}
                   >
                     Save Post
@@ -229,7 +230,7 @@ function PostChunk (props) {
                         buttonLabel='Add to '
                         buttonTemplate={calIcon}
                         listItems={calDropDown}
-                      ></AddToCalendar>
+                      />
                     </AddTo>
                   )}
 
@@ -271,16 +272,24 @@ function PostChunk (props) {
                 </DDMenu>
               )}
             </MoreOptions>
-
             <DiscussionBody>
-              {ReactHtmlParser(props.post.node.body)}
+              <Truncate lines={4} ellipsis={<span>... 
+                  <FullPostLink to={myPostLink}>
+                    <ReadMore>
+                      (Read More)
+                    </ReadMore>
+                  </FullPostLink></span>}>
+                {ReactHtmlParser(props.post.node.body)}
+              </Truncate>
             </DiscussionBody>
+            
 
             {oneImage}
           </TopMiddleComponent>
 
           <BottomComponent>
             <Tags>
+              <Tag>{props.post.node.kind}</Tag>
               {props.post.node.tags.length > 0 && (
                 <Tag>{props.post.node.tags[0]}</Tag>
               )}
@@ -292,7 +301,9 @@ function PostChunk (props) {
               )}
 
               {isTagsOpen &&
-                props.post.node.tags.slice(3).map(tag => <Tag>{tag}</Tag>)}
+                props.post.node.tags
+                  .slice(3)
+                  .map(tag => <Tag key={tag}>{tag}</Tag>)}
 
               {props.post.node.tags.length > 3 && (
                 <ViewTags onClick={toggleTags}>
@@ -307,7 +318,7 @@ function PostChunk (props) {
             {/* Insert Comments */}
             <Comments>
               <Button
-                variant="contained"
+                variant='contained'
                 startIcon={<ChatIcon />}
                 style={{
                   backgroundColor: 'rgba(109, 200, 249, .3)',

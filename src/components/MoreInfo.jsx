@@ -8,6 +8,7 @@ import { USER_EXISTS } from '../graphql/Queries'
 import laptopGirl from '../images/Page 2.svg'
 import majorMinorJson from '../utils/MajorMinor.json'
 import DropDownItem from './DropDownItem'
+import SearchBar from "./Search"
 import {
   FullGrid,
   PinkShape,

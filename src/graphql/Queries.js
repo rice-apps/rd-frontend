@@ -159,7 +159,7 @@ const GET_TAGS = gql`
 
 const FETCH_COMMENTS_POST = gql`
   query FetchCommentsPost($post_id: ID!) {
-    commentByPost(post: $post_id) {
+    commentByPost(postID: $post_id) {
       _id
       creator {
         username
@@ -196,6 +196,23 @@ const FETCH_COMMENTS_PARENT = gql`
       }
       reports {
         username
+      }
+    }
+  }
+`
+
+const FETCH_COMMENTS_NESTED = gql`
+  query FetchCommentsNested($post_id: ID!) {
+    commentByPost(postID: $post_id) {
+      _id
+      body
+      children {
+        _id
+        body
+        children {
+          _id
+          body
+        }
       }
     }
   }
@@ -305,6 +322,7 @@ const GET_POST = gql`
         username
       }
       tags
+      text_align
     }
   }
 `
@@ -314,6 +332,7 @@ export {
   USER_EXISTS,
   FETCH_COMMENTS_PARENT,
   FETCH_COMMENTS_POST,
+  FETCH_COMMENTS_NESTED,
   VERIFY_USER,
   GET_TAGS,
   FILTER_DATES,

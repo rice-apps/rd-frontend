@@ -5,6 +5,7 @@ const POST_CREATE = gql`
     $kind: EnumDKeyPostKind!
     $title: String!
     $body: String!
+    $text_align: String
     $creator: String!
     $deadline: Date
     $start: Date
@@ -21,6 +22,7 @@ const POST_CREATE = gql`
         kind: $kind
         title: $title
         body: $body
+        text_align: $text_align
         creator: $creator
         deadline: $deadline
         start: $start
@@ -40,6 +42,41 @@ const POST_CREATE = gql`
         creator {
           netID
         }
+      }
+    }
+  }
+`
+// wip
+// if making sep "comment" and "reply" mutations,
+// make parent null/empty in comment, and require it in reply
+
+const CREATE_COMMENT = gql`
+  mutation CreateComment(
+    $creator: String!
+    $post: MongoID!
+    $parent: MongoID
+    $date_created: Date
+    $body: String!
+  ) {
+    commentCreateOne(
+      record: {
+        creator: $creator
+        post: $post
+        parent: $parent
+        date_created: $date_created
+        body: $body
+      }
+    ) {
+      record {
+        creator {
+          netID
+        }
+        post {
+          _id
+          title
+        }
+        date_created
+        body
       }
     }
   }
@@ -166,9 +203,39 @@ const S3_SIGN = gql`
   }
 `
 
+const COMMENT_CREATE = gql`
+  mutation CreateComment(
+    $creator: String!
+    $post: ID!
+    $parent: ID!
+    $body: String!
+  ) {
+    currentNetID @client @export(as: "creator")
+    commentCreateOne(
+      record: {
+        creator: $creator
+        post: $post
+        parent: $parent
+        body: $body
+      }
+    ){
+      record {
+        creator{
+          netID
+        }
+        post
+        parent
+        body
+      }
+    }
+
+  }
+`
+
 export {
   SET_INFO,
   POST_CREATE,
+  CREATE_COMMENT,
   LOGIN,
   UPVOTE_POST,
   DOWNVOTE_POST,

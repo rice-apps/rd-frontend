@@ -5,6 +5,7 @@ import { SET_INFO } from '../graphql/Mutations'
 import { USER_EXISTS } from '../graphql/Queries'
 import DropDownItem from './DropDownItem'
 import majorMinorJson from '../utils/MajorMinor.json'
+import SearchBar from "./Search"
 import {
   DDWrapper,
   DDHeader,
@@ -18,7 +19,7 @@ import {
 
 import { PostingButton } from './WritePost.styles'
 import { currentUser } from '../utils/apollo'
-import { Background, LeftSidebarContainer } from './PostFeedWithData.styles'
+import { LeftSidebarContainer } from './PostFeedWithData.styles'
 import { SideNav } from './SideNav'
 
 const ProfilePage = () => {
@@ -33,6 +34,11 @@ const ProfilePage = () => {
   const [isMinorOpen, setMinorOpen] = useState(false)
   const [isCollegeOpen, setCollegeOpen] = useState(false)
 
+  const [majorSearchActivated, setMajorsActive] = useState(false);
+  const [minorSearchActivated, setMinorsActive] = useState(false);
+  const [filteredMajors, setFilteredMajors] = useState([])
+  const [filteredMinors, setFilteredMinors] = useState([])
+
   const { netID } = currentUser()
   const [addInfo] = useMutation(SET_INFO)
 
@@ -41,7 +47,7 @@ const ProfilePage = () => {
     major: currentMajor,
     minor: currentMinor,
     college: currentCollege,
-    savedPosts: savedPosts
+    savedPosts
   } = currentUser()
 
   const [
@@ -84,12 +90,16 @@ const ProfilePage = () => {
     return majorObj
   })
 
+  const finalized_majors = majorSearchActivated ? filteredMajors : majors
+
   const minors = majorMinorJson.minors.split(';').map(minor => {
     const minorObj = {
       name: minor
     }
     return minorObj
   })
+
+  const finalized_minors = minorSearchActivated ? filteredMinors : minors
 
   const colleges = majorMinorJson.colleges.split(';')
 
@@ -182,6 +192,7 @@ const ProfilePage = () => {
           />
         </FieldSetStyle>
         <p>Current Majors: {major.toString()}</p>
+        <SearchBar items={majors} setList={setFilteredMajors} setActive={setMajorsActive}/>
         <DDWrapper>
           <DDHeader onClick={toggleMajor}>
             <DDHeaderTitle>
@@ -191,7 +202,7 @@ const ProfilePage = () => {
           </DDHeader>
           {isMajorOpen && (
             <DDList>
-              {majors.map(item => (
+              {finalized_majors.map(item => (
                 <DDListItem key={item.name}>
                   <DropDownItem
                     name={item.name}
@@ -205,6 +216,7 @@ const ProfilePage = () => {
         </DDWrapper>
 
         <p>Current Minors: {minor.toString()}</p>
+        <SearchBar items={minors} setList={setFilteredMinors} setActive={setMinorsActive}/>
         <DDWrapper>
           <DDHeader onClick={toggleMinor}>
             <DDHeaderTitle>
@@ -214,7 +226,7 @@ const ProfilePage = () => {
           </DDHeader>
           {isMinorOpen && (
             <DDList>
-              {minors.map(item => (
+              {finalized_minors.map(item => (
                 <DDListItem key={item.name}>
                   <DropDownItem
                     name={item.name}
@@ -252,7 +264,7 @@ const ProfilePage = () => {
         <div>
           Your saved posts:
           {savedPosts.map(post => (
-            <div>{'localhost:3000/posts/' + post._id}</div>
+            <div key={post._id}>{'localhost:3000/posts/' + post._id}</div>
           ))}
         </div>
 
