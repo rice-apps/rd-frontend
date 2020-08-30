@@ -18,11 +18,9 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
 import ReactHtmlParser from 'react-html-parser'
 
-import JavascriptTimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
-import ReactTimeAgo from 'react-time-ago'
+import TimeAgo from 'react-timeago'
 
-import Truncate from 'react-truncate';
+import Truncate from 'react-truncate'
 
 import { useLazyQuery } from '@apollo/client'
 import { FETCH_COMMENTS_POST } from '../graphql/Queries'
@@ -56,8 +54,6 @@ import {
   Expand,
   ReadMore
 } from './PostChunk.styles'
-
-JavascriptTimeAgo.addLocale(en)
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -180,19 +176,24 @@ function PostChunk (props) {
           </LeftComponent>
           <OriginalPoster>
             {props.post.node.creator.username} -{' '}
-            <ReactTimeAgo date={props.post.node.date_created} />
+            <TimeAgo date={props.post.node.date_created} />
             <Divider
               style={{ width: '51.5vw', maxWidth: '97%', marginTop: '1vh' }}
             />
           </OriginalPoster>
           <TopMiddleComponent>
             <DiscussionTitle>
-              <Truncate lines={2} ellipsis={<span>... 
-                <FullPostLink to={myPostLink}>
-                  <ReadMore>
-                    (Read More)
-                  </ReadMore>
-                </FullPostLink></span>}>
+              <Truncate
+                lines={2}
+                ellipsis={
+                  <span>
+                    ...
+                    <FullPostLink to={myPostLink}>
+                      <ReadMore>(Read More)</ReadMore>
+                    </FullPostLink>
+                  </span>
+                }
+              >
                 {props.post.node.title}
               </Truncate>
             </DiscussionTitle>
@@ -273,16 +274,20 @@ function PostChunk (props) {
               )}
             </MoreOptions>
             <DiscussionBody>
-              <Truncate lines={4} ellipsis={<span>... 
-                  <FullPostLink to={myPostLink}>
-                    <ReadMore>
-                      (Read More)
-                    </ReadMore>
-                  </FullPostLink></span>}>
+              <Truncate
+                lines={4}
+                ellipsis={
+                  <span>
+                    ...
+                    <FullPostLink to={myPostLink}>
+                      <ReadMore>(Read More)</ReadMore>
+                    </FullPostLink>
+                  </span>
+                }
+              >
                 {ReactHtmlParser(props.post.node.body)}
               </Truncate>
             </DiscussionBody>
-            
 
             {oneImage}
           </TopMiddleComponent>

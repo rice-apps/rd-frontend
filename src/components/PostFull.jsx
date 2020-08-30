@@ -30,9 +30,7 @@ import log from 'loglevel'
 
 import ReactHtmlParser from 'react-html-parser'
 
-import JavascriptTimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
-import ReactTimeAgo from 'react-time-ago'
+import TimeAgo from 'react-timeago'
 
 import {
   DiscussionBoxSection,
@@ -62,8 +60,6 @@ import {
   CommentInput,
   CommentButton
 } from './PostFull.styles'
-
-JavascriptTimeAgo.addLocale(en)
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -218,7 +214,7 @@ function PostFull () {
       <DiscussionBoxSection>
         {/* <OriginalPoster>
           {thePost.creator.username} -{' '}
-          <ReactTimeAgo date={thePost.date_created} />
+          <TimeAgo date={thePost.date_created} />
         </OriginalPoster> */}
         <DiscussionBox>
           <LeftComponent>
@@ -263,7 +259,7 @@ function PostFull () {
           <OriginalPoster>
             <a href='.'>
               {thePost.creator.username} -{' '}
-              <ReactTimeAgo date={thePost.date_created} />
+              <TimeAgo date={thePost.date_created} />
             </a>
             <Divider
               style={{ width: '51.5vw', maxWidth: '97%', marginTop: '1vh' }}
