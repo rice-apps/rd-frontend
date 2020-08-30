@@ -17,13 +17,14 @@ import ShareIcon from '@material-ui/icons/Share'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
 import ReactHtmlParser from 'react-html-parser'
-import { Remarkable } from 'remarkable'
+import remarkable from "../utils/remarkable";
 
 import JavascriptTimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import ReactTimeAgo from 'react-time-ago'
 
 import Truncate from 'react-truncate';
+import TruncateMarkup from "react-truncate-markup";
 
 import { useLazyQuery } from '@apollo/client'
 import { FETCH_COMMENTS_POST } from '../graphql/Queries'
@@ -67,8 +68,6 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }))
-
-const md = new Remarkable()
 
 function PostChunk (props) {
   const classes = useStyles()
@@ -275,16 +274,20 @@ function PostChunk (props) {
                 </DDMenu>
               )}
             </MoreOptions>
-            <DiscussionBody style={{ textAlign: props.post.node.text_align }}>
-              <Truncate lines={4} ellipsis={<span>...
+              <TruncateMarkup lines={4}
+                  ellipsis={<span>...
                   <FullPostLink to={myPostLink}>
                     <ReadMore>
                       (Read More)
                     </ReadMore>
-                  </FullPostLink></span>}>
-                {ReactHtmlParser(md.render(props.post.node.body))}
-              </Truncate>
-            </DiscussionBody>
+                  </FullPostLink></span>}
+                  >
+                <DiscussionBody style={{ textAlign: props.post.node.text_align }}>
+                  {/*<div>*/}
+                    {ReactHtmlParser(remarkable.render(props.post.node.body))}
+                  {/*</div>*/}
+                </DiscussionBody>
+              </TruncateMarkup>
 
 
             {oneImage}
