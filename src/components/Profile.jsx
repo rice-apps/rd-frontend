@@ -87,21 +87,11 @@ const ProfilePage = () => {
     }
   }, [userExists?.doesUsernameExist])
 
-  const majors = majorMinorJson.majors.split(';').map(major => {
-    const majorObj = {
-      name: major
-    }
-    return majorObj
-  })
+  const majors = majorMinorJson.majors.split(';')
 
   const finalized_majors = majorSearchActivated ? filteredMajors : majors
 
-  const minors = majorMinorJson.minors.split(';').map(minor => {
-    const minorObj = {
-      name: minor
-    }
-    return minorObj
-  })
+  const minors = majorMinorJson.minors.split(';')
 
   const finalized_minors = minorSearchActivated ? filteredMinors : minors
 
@@ -179,7 +169,8 @@ const ProfilePage = () => {
   if (currentUser() === {}) {
     return <Navigate to='/login' />
   }
-
+  
+  // known bug, data won't save if we change the drop-downs
   return (
     <>
       <LeftSidebarContainer>
@@ -196,7 +187,7 @@ const ProfilePage = () => {
           />
         </FieldSetStyle>
         <p>Current Majors: {major.toString()}</p>
-        {/* <SearchBar items={majors} setList={setFilteredMajors} setActive={setMajorsActive}/> */}
+        <SearchBar items={majors} setList={setFilteredMajors} setActive={setMajorsActive}/>
         <DDWrapper>
           <DDHeader onClick={toggleMajor}>
             <DDHeaderTitle>
@@ -207,9 +198,9 @@ const ProfilePage = () => {
           {isMajorOpen && (
             <DDList>
               {finalized_majors.map(item => (
-                <DDListItem key={item.name}>
+                <DDListItem key={item}>
                   <DropDownItem
-                    name={item.name}
+                    name={item}
                     setInfo={handleMajorChange}
                     selectedItems={major}
                   />
@@ -220,7 +211,7 @@ const ProfilePage = () => {
         </DDWrapper>
 
         <p>Current Minors: {minor.toString()}</p>
-        {/* <SearchBar items={minors} setList={setFilteredMinors} setActive={setMinorsActive}/> */}
+        <SearchBar items={minors} setList={setFilteredMinors} setActive={setMinorsActive}/>
         <DDWrapper>
           <DDHeader onClick={toggleMinor}>
             <DDHeaderTitle>
@@ -231,9 +222,9 @@ const ProfilePage = () => {
           {isMinorOpen && (
             <DDList>
               {finalized_minors.map(item => (
-                <DDListItem key={item.name}>
+                <DDListItem key={item}>
                   <DropDownItem
-                    name={item.name}
+                    name={item}
                     setInfo={handleMinorChange}
                     selectedItems={minor}
                   />
@@ -272,7 +263,7 @@ const ProfilePage = () => {
           ))}
         </div>
 
-        <PostingButton type='submit' disabled={userExists?.doesUsernameExist}>
+        <PostingButton type='submit' onClick={saveData} disabled={userExists?.doesUsernameExist}>
           Save
         </PostingButton>
       </form>
