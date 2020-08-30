@@ -105,9 +105,6 @@ function PostFeedWithData () {
   // 6) Clear all filters --> refetch FILTER --> refetch POST_PAGE
 // ---
 
-  // STEMS From the fact that we need the cursor info, empty post_id parameter will return no posts
-  // postConnection is too hard to modify
-
   const [modalVisible, setVisibility] = useState(false)
   const openModal = () => setVisibility(true)
 

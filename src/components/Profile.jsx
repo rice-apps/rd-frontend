@@ -27,9 +27,13 @@ const ProfilePage = () => {
   const [userStatement, setStatement] = useState('Valid!')
   const [originalUsername, setOriginal] = useState('')
   const [username, setUsername] = useState('')
+  
+  // current major, minors, and college
   const [major, setMajor] = useState([])
   const [minor, setMinor] = useState([])
   const [college, setCollege] = useState('')
+
+  // if the drop_down is open
   const [isMajorOpen, setMajorOpen] = useState(false)
   const [isMinorOpen, setMinorOpen] = useState(false)
   const [isCollegeOpen, setCollegeOpen] = useState(false)
@@ -192,7 +196,7 @@ const ProfilePage = () => {
           />
         </FieldSetStyle>
         <p>Current Majors: {major.toString()}</p>
-        <SearchBar items={majors} setList={setFilteredMajors} setActive={setMajorsActive}/>
+        {/* <SearchBar items={majors} setList={setFilteredMajors} setActive={setMajorsActive}/> */}
         <DDWrapper>
           <DDHeader onClick={toggleMajor}>
             <DDHeaderTitle>
@@ -216,7 +220,7 @@ const ProfilePage = () => {
         </DDWrapper>
 
         <p>Current Minors: {minor.toString()}</p>
-        <SearchBar items={minors} setList={setFilteredMinors} setActive={setMinorsActive}/>
+        {/* <SearchBar items={minors} setList={setFilteredMinors} setActive={setMinorsActive}/> */}
         <DDWrapper>
           <DDHeader onClick={toggleMinor}>
             <DDHeaderTitle>

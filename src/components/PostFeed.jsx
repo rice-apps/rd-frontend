@@ -21,7 +21,7 @@ function PostFeed (props) {
   const [reportPost] = useMutation(REPORT_POST)
   const [removePost] = useMutation(REMOVE_POST)
   const [savePost] = useMutation(SAVE_POST)
-  const [sorByUpvotes, setSortByUpvotes] = useState('')
+  const [sort_by_upvotes, setSort_by_upvotes] = useState('')
 
   const {
     onLoadMore,
@@ -52,7 +52,7 @@ function PostFeed (props) {
     }
   } = data
 
-  const processDateFilter = filter => {
+  const process_date_filter = filter => {
     const today = props.currentDate
 
     if (filter.length === 0) return
@@ -72,7 +72,7 @@ function PostFeed (props) {
     console.log("FUCCCKED")
   }
 
-  const generatePosts = edges => {
+  const generate_posts = edges => {
     return edges.map((post, _i) => {
       return (
         <>

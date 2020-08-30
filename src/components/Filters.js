@@ -3,7 +3,8 @@ import IconButton from '@material-ui/core/IconButton'
 import TuneIcon from '@material-ui/icons/Tune'
 import DropDownItem from './DropDownItem'
 import SearchBar from "./Search"
-import { GET_TAGS, FILTER_KIND, FILTER_TAGS, FILTER_DATES } from '../graphql/Queries'
+import { GET_TAGS } from '../graphql/Queries'
+import { useQuery } from '@apollo/client'
 
 import {
   HorizontalDiv,
