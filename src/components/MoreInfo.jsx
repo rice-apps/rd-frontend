@@ -8,6 +8,7 @@ import { USER_EXISTS } from '../graphql/Queries'
 import laptopGirl from '../images/Page 2.svg'
 import majorMinorJson from '../utils/MajorMinor.json'
 import DropDownItem from './DropDownItem'
+import SearchBar from "./Search"
 import {
   FullGrid,
   PinkShape,
@@ -40,6 +41,11 @@ const MoreInfo = () => {
   const [isMinorOpen, setMinorOpen] = useState(false)
   const [isCollegeOpen, setCollegeOpen] = useState(false)
 
+  const [majorSearchActivated, setMajorsActive] = useState(false);
+  const [minorSearchActivated, setMinorsActive] = useState(false);
+  const [filteredMajors, setFilteredMajors] = useState([])
+  const [filteredMinors, setFilteredMinors] = useState([])
+
   const [addInfo] = useMutation(SET_INFO)
   const [
     checkUser,
@@ -47,19 +53,13 @@ const MoreInfo = () => {
   ] = useLazyQuery(USER_EXISTS)
   const data = currentUser()
 
-  const majors = majorMinorJson.majors.split(';').map(major => {
-    const majorObj = {
-      name: major
-    }
-    return majorObj
-  })
+  const majors = majorMinorJson.majors.split(';')
 
-  const minors = majorMinorJson.minors.split(';').map(minor => {
-    const minorObj = {
-      name: minor
-    }
-    return minorObj
-  })
+  const finalized_majors = majorSearchActivated ? filteredMajors : majors
+
+  const minors = majorMinorJson.minors.split(';')
+
+  const finalized_minors = minorSearchActivated ? filteredMinors : minors
 
   const colleges = majorMinorJson.colleges.split(';')
 
@@ -195,6 +195,7 @@ const MoreInfo = () => {
                 />
               </FieldSetStyle>
 
+              <SearchBar items={majors} setList={setFilteredMajors} setActive={setMajorsActive}/>
               <DDWrapper>
                 <DDHeader onClick={toggleMajor}>
                   <DDHeaderTitle>
@@ -204,10 +205,10 @@ const MoreInfo = () => {
                 </DDHeader>
                 {isMajorOpen && (
                   <DDList>
-                    {majors.map(item => (
-                      <DDListItem key={item.name}>
+                    {finalized_majors.map(item => (
+                      <DDListItem key={item}>
                         <DropDownItem
-                          name={item.name}
+                          name={item}
                           setInfo={handleMajorChange}
                           selectedItems={major}
                         />
@@ -217,6 +218,7 @@ const MoreInfo = () => {
                 )}
               </DDWrapper>
 
+              <SearchBar items={minors} setList={setFilteredMinors} setActive={setMinorsActive}/>
               <DDWrapper>
                 <DDHeader onClick={toggleMinor}>
                   <DDHeaderTitle>
@@ -226,10 +228,10 @@ const MoreInfo = () => {
                 </DDHeader>
                 {isMinorOpen && (
                   <DDList>
-                    {minors.map(item => (
-                      <DDListItem key={item.name}>
+                    {finalized_minors.map(item => (
+                      <DDListItem key={item}>
                         <DropDownItem
-                          name={item.name}
+                          name={item}
                           setInfo={handleMinorChange}
                           selectedItems={minor}
                         />
