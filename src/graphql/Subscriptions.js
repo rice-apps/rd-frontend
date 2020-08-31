@@ -11,6 +11,7 @@ const POST_CREATED = gql`
         username
       }
       body
+      text_align
       date_created
       reports {
         _id

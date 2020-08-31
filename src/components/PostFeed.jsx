@@ -1,26 +1,39 @@
 import InfiniteScroll from 'react-infinite-scroller'
 import React, { useEffect, useState } from 'react'
-import { useMutation } from '@apollo/client'
+import PropTypes from 'prop-types'
+import { useMutation, useLazyQuery } from '@apollo/client'
 
 import uuid from 'uuid/v4'
 import PostChunk from './PostChunk'
 import Filters from './Filters'
+import CommentChunk from './CommentChunk'
+import { TOKEN_NAME } from '../config'
 import {
   UPVOTE_POST,
   DOWNVOTE_POST,
   REPORT_POST,
   REMOVE_POST,
-  SAVE_POST
+  SAVE_POST,
+  CREATE_COMMENT
 } from '../graphql/Mutations'
+import { FETCH_COMMENTS_POST, FETCH_COMMENTS_PARENT } from '../graphql/Queries'
+import { COMMENT_CREATED, COMMENT_UPDATED } from '../graphql/Queries'
 import { currentUser } from '../utils/apollo'
 
 function PostFeed (props) {
+  const date = new Date()
+
   const userInfo = currentUser()
   const [upvotePost] = useMutation(UPVOTE_POST)
   const [downvotePost] = useMutation(DOWNVOTE_POST)
   const [reportPost] = useMutation(REPORT_POST)
   const [removePost] = useMutation(REMOVE_POST)
   const [savePost] = useMutation(SAVE_POST)
+  const [createComment] = useMutation(CREATE_COMMENT)
+  const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
+    FETCH_COMMENTS_POST
+  )
+
   const [sort_by_upvotes, setSort_by_upvotes] = useState('')
 
   const {
@@ -33,13 +46,8 @@ function PostFeed (props) {
   } = props
 
   useEffect(() => {
-    const unsubscribeFromPosts = subscribeToNewPosts()
-    const unsubscribeFromVotes = subscribeToNewVotes()
-
-    return () => {
-      unsubscribeFromPosts()
-      unsubscribeFromVotes()
-    }
+    subscribeToNewPosts()
+    subscribeToNewVotes()
   }, [])
 
   if (error) return <h1>Something went wrong...</h1>
@@ -55,7 +63,7 @@ function PostFeed (props) {
   const process_date_filter = filter => {
     const today = props.currentDate
 
-    if (filter.length === 0) return
+    if (filter.length == 0) return
     if (filter.includes('yesterday')) {
       const yesterday_day = today.getDate() - 1
       const yesterday = (d => new Date(d.setDate(yesterday_day)))(new Date())
@@ -115,7 +123,7 @@ function PostFeed (props) {
   }
 
   let posts
-  if (sort_by_upvotes.length === 0) {
+  if (sort_by_upvotes.length == 0) {
     posts = generate_posts(edges)
   } else if (sort_by_upvotes.includes('most')) {
     const sorted_edges = [...edges].sort(compare_upvote_lengths).reverse()
@@ -125,32 +133,36 @@ function PostFeed (props) {
     posts = generate_posts(sorted_edges)
   }
 
-  return (
-    <>
-      {/* <Banner /> */}
-      <InfiniteScroll
-        pageStart={0}
-        loadMore={() => onLoadMore()}
-        hasMore={hasNextPage}
-        loader={<div key={uuid()}>Loading...</div>}
-      >
-        <Filters
-          processDate={process_date_filter}
-          sort_by_upvotes={setSort_by_upvotes}
-          setDateFilter={props.setDateFilter}
-          dateFilter={props.dateFilter}
-          setKindFilter={props.setKindFilter}
-          kindFilter={props.kindFilter}
-          setUpvoteFilter={props.setUpvoteFilter}
-          upvoteFilter={props.upvoteFilter}
-          setTagFilter={props.setTagFilter}
-          tagFilter={props.tagFilter}
-          tagsList={[...tags]}
-        />
-        {posts}
-      </InfiniteScroll>
-    </>
-  )
+  posts = edges.map((post, _i) => {
+    return (
+      <>
+        {/* <Banner /> */}
+        <InfiniteScroll
+          pageStart={0}
+          loadMore={() => onLoadMore()}
+          hasMore={hasNextPage}
+          loader={<div key={uuid()}>Loading...</div>}
+        >
+          <Filters
+            processDate={process_date_filter}
+            sort_by_upvotes={setSort_by_upvotes}
+            setDateFilter={props.setDateFilter}
+            dateFilter={props.dateFilter}
+            setKindFilter={props.setKindFilter}
+            kindFilter={props.kindFilter}
+            setUpvoteFilter={props.setUpvoteFilter}
+            upvoteFilter={props.upvoteFilter}
+            setTagFilter={props.setTagFilter}
+            tagFilter={props.tagFilter}
+            tagsList={[...tags]}
+          />
+          {posts}
+        </InfiniteScroll>
+      </>
+    )
+  })
+
+  return posts
 }
 
 // PostFeed.propTypes = {

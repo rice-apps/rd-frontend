@@ -36,7 +36,7 @@ import ReactTimeAgo from 'react-time-ago'
 
 import {
   DiscussionBoxSection,
-  OP,
+  OriginalPoster,
   DiscussionBox,
   LeftComponent,
   Likes,
@@ -111,7 +111,7 @@ function PostFull () {
     upvotes: [],
     downvotes: []
   }
-  let thePost = dummyDataPost //for now
+  let thePost = dummyDataPost // for now
 
   // *********** post chunk setup below
 
@@ -177,9 +177,9 @@ function PostFull () {
     return <p>Error Fetching Comments</p>
   }
 
-  thePost = resultPost.data.postById //real data
+  thePost = resultPost.data.postById // real data
 
-  let theComments = resultComments.data.commentByPost //array
+  const theComments = resultComments.data.commentByPost // array
   // are there comments?
 
   // *********** post chunk things that require thePost below
@@ -216,10 +216,10 @@ function PostFull () {
     <>
       <BackToFeed to='/feed'>Back To Feed</BackToFeed>
       <DiscussionBoxSection>
-        {/* <OP>
+        {/* <OriginalPoster>
           {thePost.creator.username} -{' '}
           <ReactTimeAgo date={thePost.date_created} />
-        </OP> */}
+        </OriginalPoster> */}
         <DiscussionBox>
           <LeftComponent>
             <Upvote className={classes.root}>
@@ -260,7 +260,7 @@ function PostFull () {
               </IconButton>
             </Downvote>
           </LeftComponent>
-          <OP>
+          <OriginalPoster>
             <a>
               {thePost.creator.username} -{' '}
               <ReactTimeAgo date={thePost.date_created} />
@@ -268,7 +268,7 @@ function PostFull () {
             <Divider
               style={{ width: '51.5vw', maxWidth: '97%', marginTop: '1vh' }}
             />
-          </OP>
+          </OriginalPoster>
           <TopMiddleComponent>
             <DiscussionTitle>{thePost.title}</DiscussionTitle>
             <MoreOptions className={classes.root}>

@@ -65,27 +65,27 @@ const Filters = props => {
   }
 
   const handlePostTypeChange = newValue => {
-    const index_of_postType = postType.indexOf(newValue)
-    setPostType(index_of_postType >= 0 ? '' : newValue)
+    const indexOfPostType = postType.indexOf(newValue)
+    setPostType(indexOfPostType >= 0 ? '' : newValue)
   }
 
   const handleTagsChange = newValue => {
-    const index_of_tag = tags.indexOf(newValue)
+    const indexOfTag = tags.indexOf(newValue)
     setTags(
-      index_of_tag >= 0
+      indexOfTag >= 0
         ? tags.filter(tag => newValue !== tag)
         : [...tags, newValue]
     )
   }
 
   const handleDateChange = newValue => {
-    const index_of_date = dates.indexOf(newValue)
-    setDates(index_of_date >= 0 ? '' : newValue)
+    const indexOfDate = dates.indexOf(newValue)
+    setDates(indexOfDate >= 0 ? '' : newValue)
   }
 
   const handleUpvoteChange = newValue => {
-    const index_of_upvote = upvotes.indexOf(newValue)
-    setUpvotes(index_of_upvote >= 0 ? '' : newValue)
+    const indexOfUpvote = upvotes.indexOf(newValue)
+    setUpvotes(indexOfUpvote >= 0 ? '' : newValue)
   }
 
   const submitFilters = () => {
