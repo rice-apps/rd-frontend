@@ -227,7 +227,6 @@ function PostFull () {
                   toggleUpvoted()
                   upvotePost({
                     variables: {
-                      netID: userInfo.netID,
                       _id: thePost._id
                     }
                   })
@@ -247,7 +246,6 @@ function PostFull () {
                   toggleDownvoted()
                   downvotePost({
                     variables: {
-                      netID: userInfo.netID,
                       _id: thePost._id
                     }
                   })
@@ -283,7 +281,6 @@ function PostFull () {
                       )
                       savePost({
                         variables: {
-                          netID: userInfo.netID,
                           savedPosts: [...currentSavedPosts, thePost._id]
                         }
                       })
@@ -308,7 +305,6 @@ function PostFull () {
 
                       reportPost({
                         variables: {
-                          netID: userInfo.netID,
                           _id: thePost._id
                         }
                       })
@@ -423,7 +419,6 @@ function PostFull () {
             try {
               createComment({
                 variables: {
-                  creator: userInfo.netID,
                   post: postID,
                   parent: null,
                   body: cmt

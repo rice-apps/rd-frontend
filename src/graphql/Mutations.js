@@ -58,6 +58,7 @@ const CREATE_COMMENT = gql`
     $date_created: Date
     $body: String!
   ) {
+    currentNetID @client @export(as: "creator")
     commentCreateOne(
       record: {
         creator: $creator
