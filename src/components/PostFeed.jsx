@@ -52,10 +52,9 @@ function PostFeed (props) {
     }
   } = data
 
-  console.log("how many posts actually show up", edges.length);
+  console.log('how many posts actually show up', edges.length)
 
-  const process_date_filter = filter => {
-
+  const processDateFilter = filter => {
     const today = props.currentDate
 
     if (filter.length === 0) return
@@ -64,7 +63,7 @@ function PostFeed (props) {
       const yesterday = (d => new Date(d.setDate(yesterdayDay)))(new Date())
       props.setEarlyDateBound(yesterday)
     } else if (filter.includes('week')) {
-      console.log("broken?")
+      console.log('broken?')
       const weekAgoDay = today.getDate() - 7
       const weekAgo = (d => new Date(d.setDate(weekAgoDay)))(new Date())
       props.setEarlyDateBound(weekAgo)
@@ -152,25 +151,10 @@ function PostFeed (props) {
       </InfiniteScroll>
     </>
   )
-            setTypeofFilter={props.setTypeofFilter}
-            kindInactive={props.firstTime}
-            kindFilterActive={props.setFirstTime}
-          />
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={() => onLoadMore()}
-          hasMore={hasNextPage}
-          loader={<div key={uuid()}>Loading...</div>}
-        >
-          {posts}
-        </InfiniteScroll>
-        
-      </>
-    )
-  
 
-  if (formatted_posts.length == 0) return (<h1>No posts oops... imma add a go-back to clear things</h1>);
-  return formatted_posts
+  if (formattedPosts.length === 0)
+    return <h1>No posts oops... imma add a go-back to clear things</h1>
+  return formattedPosts
 }
 // PostFeed.propTypes = {
 //   onLoadMore: PropTypes.func.isRequired,

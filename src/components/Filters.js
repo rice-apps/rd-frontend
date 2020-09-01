@@ -77,9 +77,9 @@ const Filters = props => {
   }
 
   const handlePostTypeChange = newValue => {
-    const index_of_postType = postType.indexOf(newValue)
-    props.kindFilterActive(index_of_postType >= 0); 
-    setPostType(index_of_postType >= 0 ? '' : newValue)
+    const indexOfPostType = postType.indexOf(newValue)
+    props.kindFilterActive(indexOfPostType >= 0)
+    setPostType(indexOfPostType >= 0 ? '' : newValue)
   }
 
   const handleTagsChange = newValue => {
@@ -104,24 +104,31 @@ const Filters = props => {
   const submitFilters = () => {
     props.processDate(dates)
 
-    let filterType = "";
-    if (postType.length > 0 && !props.kindInactive && !filterType.includes("kind")) filterType += " kind" 
-    if (tags.length > 0 && !filterType.includes("tags")) filterType += " tags"
-    if (dates.length > 0 && !filterType.includes("date")) filterType += " date"
-    if (upvotes.length > 0&& !filterType.includes("popularity")) filterType += " popularity"
+    let filterType = ''
+    if (
+      postType.length > 0 &&
+      !props.kindInactive &&
+      !filterType.includes('kind')
+    )
+      filterType += ' kind'
+    if (tags.length > 0 && !filterType.includes('tags')) filterType += ' tags'
+    if (dates.length > 0 && !filterType.includes('date')) filterType += ' date'
+    if (upvotes.length > 0 && !filterType.includes('popularity'))
+      filterType += ' popularity'
 
-    if (postType.length === 0) filterType = filterType.replace('kind', ''); 
-    if (tags.length === 0) filterType = filterType.replace('tags', ''); 
-    if (dates.length === 0) filterType = filterType.replace('date', ''); 
-    if (upvotes.length === 0) filterType = filterType.replace('popularity', ''); 
-    props.setTypeofFilter(filterType);
+    if (postType.length === 0) filterType = filterType.replace('kind', '')
+    if (tags.length === 0) filterType = filterType.replace('tags', '')
+    if (dates.length === 0) filterType = filterType.replace('date', '')
+    if (upvotes.length === 0) filterType = filterType.replace('popularity', '')
+    props.setTypeofFilter(filterType)
     // props.sort_by_upvotes(upvotes)
 
     props.setDateFilter(dates)
     props.setUpvoteFilter(upvotes)
-    props.kindInactive ? props.setKindFilter("Discussion") : props.setKindFilter(postType);
-    props.setTagFilter(tags);
-
+    props.kindInactive
+      ? props.setKindFilter('Discussion')
+      : props.setKindFilter(postType)
+    props.setTagFilter(tags)
   }
 
   return (
