@@ -29,10 +29,9 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import log from 'loglevel'
 
 import ReactHtmlParser from 'react-html-parser'
+import remarkable from '../utils/remarkable'
 
-import JavascriptTimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
-import ReactTimeAgo from 'react-time-ago'
+import TimeAgo from 'react-timeago'
 
 import {
   DiscussionBoxSection,
@@ -62,8 +61,6 @@ import {
   CommentInput,
   CommentButton
 } from './PostFull.styles'
-
-JavascriptTimeAgo.addLocale(en)
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -218,7 +215,7 @@ function PostFull () {
       <DiscussionBoxSection>
         {/* <OriginalPoster>
           {thePost.creator.username} -{' '}
-          <ReactTimeAgo date={thePost.date_created} />
+          <TimeAgo date={thePost.date_created} />
         </OriginalPoster> */}
         <DiscussionBox>
           <LeftComponent>
@@ -230,7 +227,6 @@ function PostFull () {
                   toggleUpvoted()
                   upvotePost({
                     variables: {
-                      netID: userInfo.netID,
                       _id: thePost._id
                     }
                   })
@@ -250,7 +246,6 @@ function PostFull () {
                   toggleDownvoted()
                   downvotePost({
                     variables: {
-                      netID: userInfo.netID,
                       _id: thePost._id
                     }
                   })
@@ -263,7 +258,7 @@ function PostFull () {
           <OriginalPoster>
             <a href='.'>
               {thePost.creator.username} -{' '}
-              <ReactTimeAgo date={thePost.date_created} />
+              <TimeAgo date={thePost.date_created} />
             </a>
             <Divider
               style={{ width: '51.5vw', maxWidth: '97%', marginTop: '1vh' }}
@@ -286,7 +281,6 @@ function PostFull () {
                       )
                       savePost({
                         variables: {
-                          netID: userInfo.netID,
                           savedPosts: [...currentSavedPosts, thePost._id]
                         }
                       })
@@ -311,7 +305,6 @@ function PostFull () {
 
                       reportPost({
                         variables: {
-                          netID: userInfo.netID,
                           _id: thePost._id
                         }
                       })
@@ -339,7 +332,9 @@ function PostFull () {
               )}
             </MoreOptions>
 
-            <DiscussionBody>{ReactHtmlParser(thePost.body)}</DiscussionBody>
+            <DiscussionBody>
+              {ReactHtmlParser(remarkable.render(thePost.body))}
+            </DiscussionBody>
 
             {oneImage}
           </TopMiddleComponent>
@@ -424,7 +419,6 @@ function PostFull () {
             try {
               createComment({
                 variables: {
-                  creator: userInfo.netID,
                   post: postID,
                   parent: null,
                   body: cmt

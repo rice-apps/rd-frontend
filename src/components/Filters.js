@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import IconButton from '@material-ui/core/IconButton'
 import TuneIcon from '@material-ui/icons/Tune'
 import DropDownItem from './DropDownItem'
-import SearchBar from "./Search"
+import SearchBar from './Search'
 import { GET_TAGS } from '../graphql/Queries'
 import { useQuery } from '@apollo/client'
 
@@ -15,7 +15,6 @@ import {
   DDListItem,
   ArrowI
 } from './Filters.styles'
-import { getDefaultValues } from '@apollo/client/utilities'
 
 const Filters = props => {
   const [isPostTypeOpen, setPostMenuOpen] = useState(false)
@@ -27,14 +26,14 @@ const Filters = props => {
   const [tags, setTags] = useState([])
   const [dates, setDates] = useState('')
   const [upvotes, setUpvotes] = useState('')
-  const [searchActivated, setActive] = useState(false);
+  const [searchActivated, setActive] = useState(false)
   const [filteredTags, setFilteredTags] = useState([])
 
   const POST_TYPES = ['Discussion', 'Event', 'Notice', 'Job']
   const DATES = ['yesterday', 'in the last week', 'in the last month']
   const UPVOTES = ['hot', 'cold']
 
-  const {data, loading, error} = useQuery(GET_TAGS);
+  const { data, loading, error } = useQuery(GET_TAGS)
 
   useEffect(() => {
     setDates(props.dateFilter)
@@ -43,12 +42,11 @@ const Filters = props => {
     if (!props.kindInactive) setPostType(props.kindFilter)
   }, [])
 
-  
   if (loading) return <h1>Your tags are loading.</h1>
   if (error) return <h1>oshit(git) MY FILTERS ARE DUCKED</h1>
-  
-  const tag_list = data.getAllTags;
-  const finalized_tags = searchActivated ? filteredTags : tag_list
+
+  const tagList = data.getAllTags
+  const finalizedTags = searchActivated ? filteredTags : tagList
 
   const togglePost = () => {
     setPostMenuOpen(!isPostTypeOpen)
@@ -123,11 +121,16 @@ const Filters = props => {
     props.setUpvoteFilter(upvotes)
     props.kindInactive ? props.setKindFilter("Discussion") : props.setKindFilter(postType);
     props.setTagFilter(tags);
+
   }
 
   return (
     <>
-      <SearchBar items={tag_list} setList={setFilteredTags} setActive={setActive}/>
+      <SearchBar
+        items={tagList}
+        setList={setFilteredTags}
+        setActive={setActive}
+      />
       <HorizontalDiv>
         <DDWrapper>
           <DDHeader onClick={togglePost}>
@@ -151,7 +154,6 @@ const Filters = props => {
           )}
         </DDWrapper>
 
-      
         <DDWrapper>
           <DDHeader onClick={toggleTag}>
             <DDHeaderTitle>
@@ -161,7 +163,7 @@ const Filters = props => {
           </DDHeader>
           {isTagOpen && (
             <DDList>
-              {finalized_tags.map(item => (
+              {finalizedTags.map(item => (
                 <DDListItem key={item}>
                   <DropDownItem
                     name={item}

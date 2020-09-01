@@ -17,12 +17,12 @@ import ShareIcon from '@material-ui/icons/Share'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
 import ReactHtmlParser from 'react-html-parser'
+import remarkable from '../utils/remarkable'
 
-import JavascriptTimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
-import ReactTimeAgo from 'react-time-ago'
+import TimeAgo from 'react-timeago'
 
-import Truncate from 'react-truncate';
+import Truncate from 'react-truncate'
+import TruncateMarkup from 'react-truncate-markup'
 
 import { useLazyQuery } from '@apollo/client'
 import { FETCH_COMMENTS_POST } from '../graphql/Queries'
@@ -56,8 +56,6 @@ import {
   Expand,
   ReadMore
 } from './PostChunk.styles'
-
-JavascriptTimeAgo.addLocale(en)
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -145,7 +143,6 @@ function PostChunk (props) {
                   toggleUpvoted()
                   props.upvotePost({
                     variables: {
-                      netID: props.userInfo.netID,
                       _id: props.post.node._id
                     }
                   })
@@ -168,7 +165,6 @@ function PostChunk (props) {
                   toggleDownvoted()
                   props.downvotePost({
                     variables: {
-                      netID: props.userInfo.netID,
                       _id: props.post.node._id
                     }
                   })
@@ -180,19 +176,24 @@ function PostChunk (props) {
           </LeftComponent>
           <OriginalPoster>
             {props.post.node.creator.username} -{' '}
-            <ReactTimeAgo date={props.post.node.date_created} />
+            <TimeAgo date={props.post.node.date_created} />
             <Divider
               style={{ width: '51.5vw', maxWidth: '97%', marginTop: '1vh' }}
             />
           </OriginalPoster>
           <TopMiddleComponent>
             <DiscussionTitle>
-              <Truncate lines={2} ellipsis={<span>... 
-                <FullPostLink to={myPostLink}>
-                  <ReadMore>
-                    (Read More)
-                  </ReadMore>
-                </FullPostLink></span>}>
+              <Truncate
+                lines={2}
+                ellipsis={
+                  <span>
+                    ...
+                    <FullPostLink to={myPostLink}>
+                      <ReadMore>(Read More)</ReadMore>
+                    </FullPostLink>
+                  </span>
+                }
+              >
                 {props.post.node.title}
               </Truncate>
             </DiscussionTitle>
@@ -211,7 +212,6 @@ function PostChunk (props) {
                       )
                       props.savePost({
                         variables: {
-                          netID: props.userInfo.netID,
                           savedPosts: [
                             ...currentSavedPosts,
                             props.post.node._id
@@ -244,7 +244,6 @@ function PostChunk (props) {
 
                       props.reportPost({
                         variables: {
-                          netID: props.userInfo.netID,
                           _id: props.post.node._id
                         }
                       })
@@ -272,18 +271,23 @@ function PostChunk (props) {
                 </DDMenu>
               )}
             </MoreOptions>
-            <DiscussionBody>
-              <Truncate lines={4} ellipsis={<span>... 
+            <TruncateMarkup
+              lines={4}
+              ellipsis={
+                <span>
+                  ...
                   <FullPostLink to={myPostLink}>
-                    <ReadMore>
-                      (Read More)
-                    </ReadMore>
-                  </FullPostLink></span>}>
-                {ReactHtmlParser(props.post.node.body)}
-              </Truncate>
-            </DiscussionBody>
-            
-
+                    <ReadMore>(Read More)</ReadMore>
+                  </FullPostLink>
+                </span>
+              }
+            >
+              <DiscussionBody style={{ textAlign: props.post.node.text_align }}>
+                {/* <div> */}
+                {ReactHtmlParser(remarkable.render(props.post.node.body))}
+                {/* </div> */}
+              </DiscussionBody>
+            </TruncateMarkup>
             {oneImage}
           </TopMiddleComponent>
 

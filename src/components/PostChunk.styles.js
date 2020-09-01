@@ -91,8 +91,7 @@ const MoreOptions = styled.div`
   align-self: start;
   justify-self: start;
   margin-top: -4.5vh;
-`;
-
+`
 
 const DDMenu = styled.div`
   position: relative;
@@ -127,12 +126,13 @@ const Delete = styled.button`
 const DiscussionBody = styled.text`
   grid-area: body;
   padding: 10px 0px;
-  font-family: avenir;
+  // font-family: Avenir;
   font-size: 2vh;
   max-height: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  // word-wrap: break-word
 `
 
 const BottomComponent = styled.div`
@@ -187,7 +187,7 @@ const Share = styled.div`
 const ReadMore = styled.text`
   color: #000080;
   font-size: 1.75vh;
-  font-weight:normal
+  font-weight: normal;
 `
 
 export {

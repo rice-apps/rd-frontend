@@ -2,68 +2,59 @@ import gql from 'graphql-tag.macro'
 
 // sort the iDs
 const POST_PAGE = gql`
-  query PostPage(
-    $after: String!
-    $listOfIDs: [MongoID]
-  ) {
-    postConnection(
-        first: 5
-        after: $after
-        filter: {
-            _ids: $listOfIDs 
-        }
-    ) {
-        count
-        edges {
-          cursor
-          node {
-              _id
-              __typename
-              kind
-              title
-              creator {
-              _id
-              username
-              }
-              date_created
-              body
-              tags
-              upvotes {
-              _id
-              username
-              }
-              downvotes {
-              _id
-              username
-              }
-              reports {
-              _id
-              username
-              }
-              ... on Event {
-              start
-              end
-              location: place
-              }
-              ... on Job {
-              start
-              end
-              workplace: place
-              isPaid
-              isClosed
-              }
-              ... on Notice {
-              deadline
-              }
-              imageUrl
+  query PostPage($after: String!, $listOfIDs: [MongoID]) {
+    postConnection(first: 5, after: $after, filter: { _ids: $listOfIDs }) {
+      count
+      edges {
+        cursor
+        node {
+          _id
+          __typename
+          kind
+          title
+          creator {
+            _id
+            username
           }
+          date_created
+          body
+          tags
+          upvotes {
+            _id
+            username
+          }
+          downvotes {
+            _id
+            username
+          }
+          reports {
+            _id
+            username
+          }
+          ... on Event {
+            start
+            end
+            location: place
+          }
+          ... on Job {
+            start
+            end
+            workplace: place
+            isPaid
+            isClosed
+          }
+          ... on Notice {
+            deadline
+          }
+          imageUrl
         }
-        pageInfo {
+      }
+      pageInfo {
         startCursor
         endCursor
         hasPreviousPage
         hasNextPage
-        }
+      }
     }
   }
 `
@@ -76,7 +67,7 @@ const GET_FILTERED_IDS = gql`
     $endDate: Date
     $upvoteType: String
     $kind: EnumDKeyPostKind
-  ){
+  ) {
     getFilteredData(
       filterStyle: $filterStyle
       tags: $tags
@@ -91,7 +82,7 @@ const GET_FILTERED_IDS = gql`
 `
 
 const FILTER_KIND = gql`
-  query FilterKind($kind: EnumDKeyPostKind){
+  query FilterKind($kind: EnumDKeyPostKind) {
     postConnection(
       filter: {
         AND: [
@@ -99,10 +90,10 @@ const FILTER_KIND = gql`
           { _operators: { date_created: { lt: $today } } }
         ]
       }
-    ){
+    ) {
       count
-      edges{
-        node{
+      edges {
+        node {
           _id
         }
       }
@@ -110,21 +101,18 @@ const FILTER_KIND = gql`
   }
 `
 const FILTER_DATES = gql`
-  query FilterKind(
-      $today: Date!
-      $ealryDateBound: Date!
-    ){
+  query FilterKind($today: Date!, $ealryDateBound: Date!) {
     postConnection(
-      filter: { 
+      filter: {
         AND: [
           { _operators: { date_created: { gt: $earlyDate } } }
           { _operators: { date_created: { lt: $today } } }
         ]
       }
-    ){
+    ) {
       count
-      edges{
-        node{
+      edges {
+        node {
           _id
         }
       }
@@ -133,11 +121,11 @@ const FILTER_DATES = gql`
 `
 
 const FILTER_TAGS = gql`
-  query FilterTags($tags: [String]!){
-    postConnection(filter: {tags: $tags}){
+  query FilterTags($tags: [String]!) {
+    postConnection(filter: { tags: $tags }) {
       count
-      edges{
-        node{
+      edges {
+        node {
           _id
         }
       }
@@ -152,7 +140,7 @@ const USER_EXISTS = gql`
 `
 
 const GET_TAGS = gql`
-  query GetTags{
+  query GetTags {
     getAllTags
   }
 `
@@ -339,5 +327,5 @@ export {
   FILTER_TAGS,
   FILTER_KIND,
   GET_FILTERED_IDS,
-  GET_POST,
+  GET_POST
 }

@@ -29,12 +29,12 @@ function PostFeedWithData () {
   const [dateFilter, setDateFilter] = useState('')
   const [tagFilter, setTagFilter] = useState([])
 
-  // when we clear filter, this gets set to empty string and it will cause 
+  // when we clear filter, this gets set to empty string and it will cause
   // a graphql bug within our GET_FILTER_ID query because "" is not a valid EnumPostKey
-  const [kindFilter, setKindFilter] = useState("Discussion")
+  const [kindFilter, setKindFilter] = useState('Discussion')
 
-  const [postIDs, setPostIDs]= useState([])
-  const [filterType, setFilterType] = useState("")
+  const [postIDs, setPostIDs] = useState([])
+  const [filterType, setFilterType] = useState('')
   const [firstTime, setFirstTime] = useState(true)
 
   const { subscribeToMore, fetchMore, refetch, ...result } = useQuery(
@@ -49,8 +49,8 @@ function PostFeedWithData () {
     }
   )
 
-  //change filterStyle to activate the backend
-  const { refetch: refetchFilter, data: filteredData, error: filter_error, loading: loading_error  } = useQuery(
+  // change filterStyle to activate the backend
+  const { refetch: refetchFilter, data: filteredData } = useQuery(
     GET_FILTERED_IDS,
     {
       variables: {
@@ -80,8 +80,9 @@ function PostFeedWithData () {
     refetchFilter()
   }, [filterType])
 
-  //whenever the post_Ids change, we set the post_id state
+  // whenever the post_Ids change, we set the post_id state
   useEffect(() => {
+
     if (filteredData){
       const IDs = filteredData.getFilteredData.map(post => post._id);
       setPostIDs(IDs);
@@ -97,7 +98,7 @@ function PostFeedWithData () {
     refetch();
   }, [postIDs])
 
-// --- start
+  // --- start
   // 1) POST_PAGE will use empty post_ids array --> empty discussion feed
   // 2) FILTER query will also fire and without any restrictions, get all the post_ids
   // 3) set post_id state --> cause useEffect to fire.  useEffect will contain the refetch
@@ -105,7 +106,7 @@ function PostFeedWithData () {
 
   // 5) Apply a filter --> refetch the FILTER query --> refetch the POST_PAGE
   // 6) Clear all filters --> refetch FILTER --> refetch POST_PAGE
-// ---
+  // ---
 
   const [modalVisible, setVisibility] = useState(false)
   const openModal = () => setVisibility(true)
@@ -163,7 +164,6 @@ function PostFeedWithData () {
             kindFilter={kindFilter}
             tagFilter={tagFilter}
             setTypeofFilter={setFilterType}
-
             refetch={refetchFilter}
             firstTime={firstTime}
             setFirstTime={setFirstTime}
