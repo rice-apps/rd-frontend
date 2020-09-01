@@ -52,6 +52,8 @@ function PostFeed (props) {
     }
   } = data
 
+  console.log("how many posts actually show up", edges.length);
+
   const process_date_filter = filter => {
     const today = props.currentDate
 
@@ -61,6 +63,7 @@ function PostFeed (props) {
       const yesterday = (d => new Date(d.setDate(yesterdayDay)))(new Date())
       props.setEarlyDateBound(yesterday)
     } else if (filter.includes('week')) {
+      console.log("broken?")
       const weekAgoDay = today.getDate() - 7
       const weekAgo = (d => new Date(d.setDate(weekAgoDay)))(new Date())
       props.setEarlyDateBound(weekAgo)
@@ -69,7 +72,6 @@ function PostFeed (props) {
       const monthAgo = (d => new Date(d.setMonth(monthAgoDay)))(new Date())
       props.setEarlyDateBound(monthAgo)
     }
-    console.log("FUCCCKED")
   }
 
   const generate_posts = edges => {
@@ -136,8 +138,8 @@ function PostFeed (props) {
             tagFilter={props.tagFilter}
 
             setTypeofFilter={props.setTypeofFilter}
-            firstTime={props.firstTime}
-            setFirstTime={props.setFirstTime}
+            kindInactive={props.firstTime}
+            kindFilterActive={props.setFirstTime}
           />
         <InfiniteScroll
           pageStart={0}

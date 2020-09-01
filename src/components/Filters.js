@@ -40,7 +40,7 @@ const Filters = props => {
     setDates(props.dateFilter)
     setUpvotes(props.upvoteFilter)
     setTags(props.tagFilter)
-    if (!props.firstTime) setPostType(props.kindFilter)
+    if (!props.kindInactive) setPostType(props.kindFilter)
   }, [])
 
   
@@ -79,8 +79,8 @@ const Filters = props => {
   }
 
   const handlePostTypeChange = newValue => {
-    props.setFirstTime(false);
     const index_of_postType = postType.indexOf(newValue)
+    props.kindFilterActive(index_of_postType >= 0); 
     setPostType(index_of_postType >= 0 ? '' : newValue)
   }
 
@@ -107,10 +107,10 @@ const Filters = props => {
     props.processDate(dates)
 
     let filterType = "";
-    if (postType.length > 0 && !props.firstTime) filterType += " kind" 
-    if (tags.length > 0) filterType += " tags"
-    if (dates.length > 0) filterType += " date"
-    if (upvotes.length > 0) filterType += " popularity"
+    if (postType.length > 0 && !props.kindInactive && !filterType.includes("kind")) filterType += " kind" 
+    if (tags.length > 0 && !filterType.includes("tags")) filterType += " tags"
+    if (dates.length > 0 && !filterType.includes("date")) filterType += " date"
+    if (upvotes.length > 0&& !filterType.includes("popularity")) filterType += " popularity"
 
     if (postType.length === 0) filterType = filterType.replace('kind', ''); 
     if (tags.length === 0) filterType = filterType.replace('tags', ''); 
@@ -118,11 +118,10 @@ const Filters = props => {
     if (upvotes.length === 0) filterType = filterType.replace('popularity', ''); 
     props.setTypeofFilter(filterType);
     // props.sort_by_upvotes(upvotes)
-    console.log("fuck")
 
     props.setDateFilter(dates)
     props.setUpvoteFilter(upvotes)
-    props.firstTime ? props.setKindFilter("Discussion") : props.setKindFilter(postType);
+    props.kindInactive ? props.setKindFilter("Discussion") : props.setKindFilter(postType);
     props.setTagFilter(tags);
   }
 

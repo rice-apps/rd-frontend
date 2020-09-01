@@ -73,8 +73,10 @@ function PostFeedWithData () {
 
   // get the post_ids
   useEffect(() => {
-    console.log("FILTER", filterType)
-    console.log("KIND", kindFilter)
+    console.log("filter type: ", filterType)
+    console.log("kind of post: ", kindFilter)
+    // just in case
+    if (kindFilter==="") setKindFilter("Discussion");
     refetchFilter()
   }, [filterType])
 
@@ -83,7 +85,7 @@ function PostFeedWithData () {
     if (filteredData){
       const IDs = filteredData.getFilteredData.map(post => post._id);
       setPostIDs(IDs);
-      console.log(IDs);
+      console.log("IDs that were retrieved", IDs);
     } else{
       setPostIDs(filteredData);
     }
@@ -91,7 +93,7 @@ function PostFeedWithData () {
 
   // get the actual data from the post_Id
   useEffect(() => {
-    console.log("REFETCH")
+    console.log("Refetched for post data")
     refetch();
   }, [postIDs])
 
@@ -165,6 +167,8 @@ function PostFeedWithData () {
             refetch={refetchFilter}
             firstTime={firstTime}
             setFirstTime={setFirstTime}
+
+            post_ids = {postIDs}
             onLoadMore={() =>
               fetchMore({
                 variables: {
