@@ -73,26 +73,29 @@ function PostFeedWithData () {
 
   // get the post_ids
   useEffect(() => {
-    console.log('FILTER', filterType)
-    console.log('KIND', kindFilter)
+    console.log("filter type: ", filterType)
+    console.log("kind of post: ", kindFilter)
+    // just in case
+    if (kindFilter==="") setKindFilter("Discussion");
     refetchFilter()
   }, [filterType])
 
   // whenever the post_Ids change, we set the post_id state
   useEffect(() => {
-    if (filteredData) {
-      const IDs = filteredData.getFilteredData.map(post => post._id)
-      setPostIDs(IDs)
-      console.log(IDs)
-    } else {
-      setPostIDs(filteredData)
+
+    if (filteredData){
+      const IDs = filteredData.getFilteredData.map(post => post._id);
+      setPostIDs(IDs);
+      console.log("IDs that were retrieved", IDs);
+    } else{
+      setPostIDs(filteredData);
     }
   }, [filteredData])
 
   // get the actual data from the post_Id
   useEffect(() => {
-    console.log('REFETCH')
-    refetch()
+    console.log("Refetched for post data")
+    refetch();
   }, [postIDs])
 
   // --- start
@@ -164,6 +167,8 @@ function PostFeedWithData () {
             refetch={refetchFilter}
             firstTime={firstTime}
             setFirstTime={setFirstTime}
+
+            post_ids = {postIDs}
             onLoadMore={() =>
               fetchMore({
                 variables: {
