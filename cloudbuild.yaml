@@ -1,7 +1,9 @@
 steps:
-  - name: 'gcr.io/cloud-builders/yarn'
+  - name: node
+    entrypoint: yarn
     args: ['install']
-  - name: 'gcr.io/cloud-builders/yarn'
+  - name: node
+    entrypoint: yarn
     args: ['run', 'create-env']
     env:
       - 'REACT_APP_SERVICE_URL=${_REACT_APP_SERVICE_URL}'
@@ -10,7 +12,9 @@ steps:
       - 'REACT_APP_GQL_URL=${_REACT_APP_GQL_URL}'
       - 'REACT_APP_WS_URL=${_REACT_APP_GRAPHQL_WS_URL}'
       - 'REACT_APP_TOKEN_NAME=${_REACT_APP_TOKEN_NAME}'
-  - name: 'gcr.io/cloud-builders/yarn'
+  - name: node
+    entrypoint: yarn
     args: ['run', 'build']
-  - name: 'gcr.io/cloud-builders/gcloud'
+  - name: node
+    entrypoint: yarn
     args: ['app', 'deploy', '--version=1']
