@@ -24,8 +24,8 @@ import ReactTimeAgo from 'react-time-ago'
 
 import Truncate from 'react-truncate';
 
-import { useLazyQuery } from '@apollo/client'
-import { FETCH_COMMENTS_POST } from '../graphql/Queries'
+import { useLazyQuery, useQuery } from '@apollo/client'
+import { FETCH_COMMENTS_POST, FETCH_COMMENTS_NESTED } from '../graphql/Queries'
 
 import {
   DiscussionBoxSection,
@@ -63,9 +63,11 @@ import {
   ShowCommentsDiv,
   NewCommentDiv,
   PostCommentDiv,  
+  CommentsDiv,
   CommentInput,
   CommentButton
 } from './PostChunk.styles'
+import CommentChunk from './CommentChunk'
 
 JavascriptTimeAgo.addLocale(en)
 
@@ -146,6 +148,18 @@ function PostChunk (props) {
     startTime: props.post.node.start ? props.post.node.start : '',
     endTime: props.post.node.end ? props.post.node.end : ''
   }
+
+  const resultComments = useQuery(FETCH_COMMENTS_NESTED, {
+    variables: {
+      post_id: props.post.node._id
+    },
+    fetchPolicy: 'network-only'
+  })
+
+  const checkComment = comment => comment.length <= 0
+  const theComments = resultComments.data.commentByPost
+
+  
 
   return (
     <>
@@ -424,12 +438,36 @@ function PostChunk (props) {
             </ShowCommentsDiv>
 
             <NewCommentDiv>
-              New Comment
+              <CommentInput id='comment' contentEditable={true}>
+                Enter Comment. . .
+              </CommentInput>
             </NewCommentDiv>
 
             <PostCommentDiv>
-              Post Comment
+              {/* based on write post post creation button */}
+              <CommentButton
+                onClick={e => {
+                  e.preventDefault()
+                  const cmt = document.getElementById('comment').innerHTML
+                  if (checkComment(cmt)) return
+                  try {
+                    props.createComment({
+                      variables: {
+                        post: props.post.node._id,
+                        parent: null,
+                        body: cmt
+                      }
+                    })
+                  } catch (error) {
+                    console.log.error(error)
+                  }
+                }}
+              >
+                Post Comment
+              </CommentButton>
             </PostCommentDiv>
+
+            
 
           </CommentComponent>
 

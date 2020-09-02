@@ -30,13 +30,14 @@ const TopComponent = styled.div`
   grid-area: top;
   display: grid;
   grid-template-columns: auto auto;
-  grid-template-rows: 3vh 1vh;
+  grid-template-rows: auto 1vh;
   grid-template-areas: 'op tags'
                        'line line';
   margin-top: 1vh;
 `
 
 const OriginalPoster = styled.div`
+  min-height: 3vh;
   grid-area: op;
   white-space: nowrap;
 `
@@ -106,7 +107,7 @@ const TopMiddleComponent = styled.div`
 const DiscussionTitle = styled.text`
   grid-area: title;
   padding: 20px 0px 0px 0px;
-  min-height: 30px;
+  min-height: 4vh;
   font-family: avenir-heavy;
   font-size: 2.3vh;
   font-weight: bold;
@@ -175,7 +176,7 @@ const Delete = styled.button`
 
 const DiscussionBody = styled.text`
   grid-area: body;
-  padding: 10px 0px;
+  padding: 0px 0px 10px 0px;
   font-family: avenir-roman;
   font-size: 2vh;
   max-height: 100px;
@@ -220,15 +221,16 @@ const ReadMore = styled.text`
 `
 
 const CommentComponent = styled.div`
-  // contains DividerBottom, ShowCommentsDiv, NewCommentDiv, PostCommentDiv
+  // contains DividerBottom, ShowCommentsDiv, NewCommentDiv, PostCommentDiv, CommentsDiv
   grid-area: comments;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1vh 40px 60px 40px;
+  grid-template-rows: 1vh 3vh 4vh 3vh auto;
   grid-template-areas: 'dividerbottom'
                        'showcomments'
                        'newcomment'
-                       'postcomment';
+                       'postcomment'
+                       'commentsdiv';
 `
 const DividerBottom = styled.div`
   grid-area: dividerbottom
@@ -242,17 +244,18 @@ const NewCommentDiv = styled.div`
 const PostCommentDiv = styled.div`
   grid-area: postcomment
 `
+const CommentsDiv = styled.div`
+  grid-area: commentsdiv
+`
 
 // based off title box in WritePost styles
 const CommentInput = styled.div`
   border: solid;
-
-  width: 386px;
+  width: 70%;
   height: 42px;
   background: #f4f4f49a 0% 0% no-repeat padding-box;
   border-radius: 5px;
   opacity: 1;
-
   text-align: left;
   vertical-align: middle;
   font: Roman 21px/24px Avenir;
@@ -265,11 +268,10 @@ const CommentButton = styled.button`
   // background-color: #fabed6; /* Light pink */
   border: none;
   // color: black;
-  padding: 15px 32px;
+  padding: 5px 10px;
   text-align: center;
   // text-decoration: none;
   display: inline-block;
-  // font-size: 16px;
   cursor: pointer;
   z-index: 5;
   margin: 5px;
@@ -277,10 +279,9 @@ const CommentButton = styled.button`
     background-color: #e7c6c6;
     opacity: 100%;
   }
-
   //top: 849px;
   //left: 1222px;
-  width: 114px;
+  width: 150px;
   height: 46px;
   background: #ffffff 0% 0% no-repeat padding-box;
   font: Medium 20px/17px Avenir;
@@ -326,7 +327,8 @@ export {
   DividerBottom,
   ShowCommentsDiv,
   NewCommentDiv,
-  PostCommentDiv,  
+  PostCommentDiv, 
+  CommentsDiv, 
   CommentInput,
   CommentButton
 }

@@ -90,6 +90,7 @@ function PostFeed (props) {
             reportPost={reportPost}
             removePost={removePost}
             savePost={savePost}
+            createComment={createComment}
             post={post}
             key={post.node._id}
           />
