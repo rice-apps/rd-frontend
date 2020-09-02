@@ -15,5 +15,5 @@ steps:
   - name: node
     entrypoint: yarn
     args: ['run', 'build']
-- name: 'gcr.io/cloud-builders/gcloud'
+  - name: 'gcr.io/cloud-builders/gcloud'
     args: ['app', 'deploy', '--version=1']
