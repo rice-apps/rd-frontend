@@ -17,12 +17,12 @@ import ShareIcon from '@material-ui/icons/Share'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
 import ReactHtmlParser from 'react-html-parser'
+import remarkable from '../utils/remarkable'
 
-import JavascriptTimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
-import ReactTimeAgo from 'react-time-ago'
+import TimeAgo from 'react-timeago'
 
-import Truncate from 'react-truncate';
+import Truncate from 'react-truncate'
+import TruncateMarkup from 'react-truncate-markup'
 
 import { useLazyQuery, useQuery } from '@apollo/client'
 import { FETCH_COMMENTS_POST, FETCH_COMMENTS_NESTED } from '../graphql/Queries'
@@ -69,8 +69,6 @@ import {
 } from './PostChunk.styles'
 import CommentChunk from './CommentChunk'
 
-JavascriptTimeAgo.addLocale(en)
-
 const useStyles = makeStyles(theme => ({
   root: {
     '& > *': {
@@ -88,8 +86,6 @@ function PostChunk (props) {
       <img width={500} src={props.post.node.imageUrl} alt='Custom-thing' />
     )
   }
-
-  const [getCommentsPost] = useLazyQuery(FETCH_COMMENTS_POST)
 
   const myPostID = props.post.node._id
   const myPostLink = '/posts/' + String(myPostID) // forming the url
@@ -156,9 +152,9 @@ function PostChunk (props) {
     fetchPolicy: 'network-only'
   })
 
-  const checkComment = comment => comment.length <= 0
-  const theComments = resultComments.data.commentByPost
+  const theComments = resultComments.data.commentByPost // array
 
+  const checkComment = comment => comment.length <= 0
   
 
   return (
@@ -174,7 +170,6 @@ function PostChunk (props) {
                   toggleUpvoted()
                   props.upvotePost({
                     variables: {
-                      netID: props.userInfo.netID,
                       _id: props.post.node._id
                     }
                   })
@@ -197,7 +192,6 @@ function PostChunk (props) {
                   toggleDownvoted()
                   props.downvotePost({
                     variables: {
-                      netID: props.userInfo.netID,
                       _id: props.post.node._id
                     }
                   })
@@ -212,7 +206,7 @@ function PostChunk (props) {
             <OriginalPoster>
               <a>
                 {props.post.node.creator.username} |{' '}
-                <ReactTimeAgo date={props.post.node.date_created} />
+                <TimeAgo date={props.post.node.date_created} />
               </a>
             </OriginalPoster>
 
@@ -278,7 +272,6 @@ function PostChunk (props) {
                       )
                       props.savePost({
                         variables: {
-                          netID: props.userInfo.netID,
                           savedPosts: [
                             ...currentSavedPosts,
                             props.post.node._id
@@ -311,7 +304,6 @@ function PostChunk (props) {
 
                       props.reportPost({
                         variables: {
-                          netID: props.userInfo.netID,
                           _id: props.post.node._id
                         }
                       })
@@ -467,7 +459,15 @@ function PostChunk (props) {
               </CommentButton>
             </PostCommentDiv>
 
-            
+            <ul>
+              {/* level 1 */}
+              {theComments.map(comment => (
+                <CommentChunk
+                  comment={comment}
+                >
+                </CommentChunk>
+              ))}
+            </ul>
 
           </CommentComponent>
 

@@ -1,27 +1,9 @@
 import gql from 'graphql-tag.macro'
 
+// sort the iDs
 const POST_PAGE = gql`
-  query PostPage(
-    $after: String!
-    $today: Date
-    $earlyDate: Date
-    $kind: EnumDKeyPostKind
-  ) {
-    postConnection(
-      first: 20
-      after: $after
-      filter: {
-        OR: [
-          { kind: $kind }
-          {
-            AND: [
-              { _operators: { date_created: { gt: $earlyDate } } }
-              { _operators: { date_created: { lt: $today } } }
-            ]
-          }
-        ]
-      }
-    ) @connection(key: "feed") {
+  query PostPage($after: String!, $listOfIDs: [MongoID]) {
+    postConnection(first: 5, after: $after, filter: { _ids: $listOfIDs }) {
       count
       edges {
         cursor
@@ -64,7 +46,6 @@ const POST_PAGE = gql`
           ... on Notice {
             deadline
           }
-          text_align
           imageUrl
         }
       }
@@ -78,9 +59,89 @@ const POST_PAGE = gql`
   }
 `
 
+const GET_FILTERED_IDS = gql`
+  query GetFilteredIDs(
+    $filterStyle: String!
+    $tags: [String!]
+    $beginDate: Date
+    $endDate: Date
+    $upvoteType: String
+    $kind: EnumDKeyPostKind
+  ) {
+    getFilteredData(
+      filterStyle: $filterStyle
+      tags: $tags
+      beginDate: $beginDate
+      endDate: $endDate
+      upvoteType: $upvoteType
+      kind: $kind
+    ) {
+      _id
+    }
+  }
+`
+
+const FILTER_KIND = gql`
+  query FilterKind($kind: EnumDKeyPostKind) {
+    postConnection(
+      filter: {
+        AND: [
+          { _operators: { date_created: { gt: $earlyDate } } }
+          { _operators: { date_created: { lt: $today } } }
+        ]
+      }
+    ) {
+      count
+      edges {
+        node {
+          _id
+        }
+      }
+    }
+  }
+`
+const FILTER_DATES = gql`
+  query FilterKind($today: Date!, $ealryDateBound: Date!) {
+    postConnection(
+      filter: {
+        AND: [
+          { _operators: { date_created: { gt: $earlyDate } } }
+          { _operators: { date_created: { lt: $today } } }
+        ]
+      }
+    ) {
+      count
+      edges {
+        node {
+          _id
+        }
+      }
+    }
+  }
+`
+
+const FILTER_TAGS = gql`
+  query FilterTags($tags: [String]!) {
+    postConnection(filter: { tags: $tags }) {
+      count
+      edges {
+        node {
+          _id
+        }
+      }
+    }
+  }
+`
+
 const USER_EXISTS = gql`
   query GetData($username: String!) {
     doesUsernameExist(username: $username)
+  }
+`
+
+const GET_TAGS = gql`
+  query GetTags {
+    getAllTags
   }
 `
 
@@ -261,5 +322,10 @@ export {
   FETCH_COMMENTS_POST,
   FETCH_COMMENTS_NESTED,
   VERIFY_USER,
+  GET_TAGS,
+  FILTER_DATES,
+  FILTER_TAGS,
+  FILTER_KIND,
+  GET_FILTERED_IDS,
   GET_POST
 }

@@ -143,7 +143,6 @@ const MoreOptions = styled.div`
   margin-top: -4.5vh;
 `
 
-
 const DDMenu = styled.div`
   position: relative;
   align-self: start;
@@ -183,6 +182,7 @@ const DiscussionBody = styled.text`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  // word-wrap: break-word
 `
 
 const BottomComponent = styled.div`
