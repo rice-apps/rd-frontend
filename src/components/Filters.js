@@ -101,6 +101,17 @@ const Filters = props => {
     setUpvotes(indexOfUpvote >= 0 ? '' : newValue)
   }
 
+  const clearFilters = () => {
+    props.setTagFilter([]);
+    props.setUpvoteFilter('');
+    props.setDateFilter('');
+
+    props.kindFilterActive(true);
+    props.setKindFilter("Discussion");
+
+    props.setTypeofFilter('');
+  }
+
   const submitFilters = () => {
     props.processDate(dates)
 
@@ -232,6 +243,7 @@ const Filters = props => {
           <TuneIcon />
         </IconButton>
         {/* <SubmitButton onClick={submitFilters}> Filter! </SubmitButton> */}
+        <button onClick={clearFilters}>Clear filters</button>
       </HorizontalDiv>
     </>
   )
