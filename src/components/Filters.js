@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import IconButton from '@material-ui/core/IconButton'
 import TuneIcon from '@material-ui/icons/Tune'
 import DropDownItem from './DropDownItem'
-import SearchBar from './Search'
+import SearchBar from "./Search"
 import { GET_TAGS } from '../graphql/Queries'
 import { useQuery } from '@apollo/client'
 
@@ -15,6 +15,7 @@ import {
   DDListItem,
   ArrowI
 } from './Filters.styles'
+import { getDefaultValues } from '@apollo/client/utilities'
 
 const Filters = props => {
   const [isPostTypeOpen, setPostMenuOpen] = useState(false)
@@ -26,14 +27,14 @@ const Filters = props => {
   const [tags, setTags] = useState([])
   const [dates, setDates] = useState('')
   const [upvotes, setUpvotes] = useState('')
-  const [searchActivated, setActive] = useState(false)
+  const [searchActivated, setActive] = useState(false);
   const [filteredTags, setFilteredTags] = useState([])
 
   const POST_TYPES = ['Discussion', 'Event', 'Notice', 'Job']
   const DATES = ['yesterday', 'in the last week', 'in the last month']
   const UPVOTES = ['hot', 'cold']
 
-  const { data, loading, error } = useQuery(GET_TAGS)
+  const {data, loading, error} = useQuery(GET_TAGS);
 
   useEffect(() => {
     setDates(props.dateFilter)
@@ -42,11 +43,12 @@ const Filters = props => {
     if (!props.kindInactive) setPostType(props.kindFilter)
   }, [])
 
+  
   if (loading) return <h1>Your tags are loading.</h1>
   if (error) return <h1>oshit(git) MY FILTERS ARE DUCKED</h1>
-
-  const tagList = data.getAllTags
-  const finalizedTags = searchActivated ? filteredTags : tagList
+  
+  const tag_list = data.getAllTags;
+  const finalized_tags = searchActivated ? filteredTags : tag_list
 
   const togglePost = () => {
     setPostMenuOpen(!isPostTypeOpen)
@@ -77,9 +79,9 @@ const Filters = props => {
   }
 
   const handlePostTypeChange = newValue => {
-    const indexOfPostType = postType.indexOf(newValue)
-    props.kindFilterActive(indexOfPostType >= 0)
-    setPostType(indexOfPostType >= 0 ? '' : newValue)
+    const index_of_postType = postType.indexOf(newValue)
+    props.kindFilterActive(index_of_postType >= 0); 
+    setPostType(index_of_postType >= 0 ? '' : newValue)
   }
 
   const handleTagsChange = newValue => {
@@ -101,43 +103,42 @@ const Filters = props => {
     setUpvotes(indexOfUpvote >= 0 ? '' : newValue)
   }
 
+  const clearFilters = () => {
+    props.setTagFilter([]);
+    props.setUpvoteFilter('');
+    props.setDateFilter('');
+
+    props.kindFilterActive(true);
+    props.setKindFilter("Discussion");
+
+    props.setTypeofFilter('');
+  }
+
   const submitFilters = () => {
     props.processDate(dates)
 
-    let filterType = ''
-    if (
-      postType.length > 0 &&
-      !props.kindInactive &&
-      !filterType.includes('kind')
-    )
-      filterType += ' kind'
-    if (tags.length > 0 && !filterType.includes('tags')) filterType += ' tags'
-    if (dates.length > 0 && !filterType.includes('date')) filterType += ' date'
-    if (upvotes.length > 0 && !filterType.includes('popularity'))
-      filterType += ' popularity'
+    let filterType = "";
+    if (postType.length > 0 && !props.kindInactive && !filterType.includes("kind")) filterType += " kind" 
+    if (tags.length > 0 && !filterType.includes("tags")) filterType += " tags"
+    if (dates.length > 0 && !filterType.includes("date")) filterType += " date"
+    if (upvotes.length > 0&& !filterType.includes("popularity")) filterType += " popularity"
 
-    if (postType.length === 0) filterType = filterType.replace('kind', '')
-    if (tags.length === 0) filterType = filterType.replace('tags', '')
-    if (dates.length === 0) filterType = filterType.replace('date', '')
-    if (upvotes.length === 0) filterType = filterType.replace('popularity', '')
-    props.setTypeofFilter(filterType)
+    if (postType.length === 0) filterType = filterType.replace('kind', ''); 
+    if (tags.length === 0) filterType = filterType.replace('tags', ''); 
+    if (dates.length === 0) filterType = filterType.replace('date', ''); 
+    if (upvotes.length === 0) filterType = filterType.replace('popularity', ''); 
+    props.setTypeofFilter(filterType);
     // props.sort_by_upvotes(upvotes)
 
     props.setDateFilter(dates)
     props.setUpvoteFilter(upvotes)
-    props.kindInactive
-      ? props.setKindFilter('Discussion')
-      : props.setKindFilter(postType)
-    props.setTagFilter(tags)
+    props.kindInactive ? props.setKindFilter("Discussion") : props.setKindFilter(postType);
+    props.setTagFilter(tags);
   }
 
   return (
     <>
-      <SearchBar
-        items={tagList}
-        setList={setFilteredTags}
-        setActive={setActive}
-      />
+      <SearchBar items={tag_list} setList={setFilteredTags} setActive={setActive}/>
       <HorizontalDiv>
         <DDWrapper>
           <DDHeader onClick={togglePost}>
@@ -161,6 +162,7 @@ const Filters = props => {
           )}
         </DDWrapper>
 
+      
         <DDWrapper>
           <DDHeader onClick={toggleTag}>
             <DDHeaderTitle>
@@ -170,7 +172,7 @@ const Filters = props => {
           </DDHeader>
           {isTagOpen && (
             <DDList>
-              {finalizedTags.map(item => (
+              {finalized_tags.map(item => (
                 <DDListItem key={item}>
                   <DropDownItem
                     name={item}
@@ -239,6 +241,7 @@ const Filters = props => {
           <TuneIcon />
         </IconButton>
         {/* <SubmitButton onClick={submitFilters}> Filter! </SubmitButton> */}
+        <button onClick={clearFilters}>Clear filters</button>
       </HorizontalDiv>
     </>
   )
