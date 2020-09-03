@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { Link } from 'react-router-dom'
 
 // note: this is a copy of PostChunk.styles.js
@@ -12,9 +12,8 @@ import { Link } from 'react-router-dom'
 const BackToFeed = styled(Link)`
   color: black;
 `
-
+// Contains Discussion Box
 const DiscussionBoxSection = styled.section`
-  // contains DiscussionBox
   padding: 20px 70px;
   min-width: 55vw;
   max-width: 65vw;
@@ -29,8 +28,9 @@ const OriginalPoster = styled.div`
 
 const Time = styled.div``
 
+// contains LeftComponent, TopMiddleComponent, BottomComponent
+
 const DiscussionBox = styled.section`
-  // contains LeftComponent, TopMiddleComponent, BottomComponent
   padding: 5px;
   background: #ffffff;
   border-radius: 20px;
@@ -42,9 +42,9 @@ const DiscussionBox = styled.section`
     'left topmiddle'
     'left bottom';
 `
+// contains Upvote, Downvote, Likes
 
 const LeftComponent = styled.div`
-  // contains Upvote, Downvote, Likes
   display: grid;
   grid-template-rows: 20px 30px 40px 30px 1fr;
   grid-area: left;
@@ -63,9 +63,9 @@ const Likes = styled.div`
 const Downvote = styled.div`
   grid-row: 4/5;
 `
+// contains DiscussionTitle, MoreOptions, DiscussionBody
 
 const TopMiddleComponent = styled.div`
-  // contains DiscussionTitle, MoreOptions, DiscussionBody
   position: relative;
   grid-area: topmiddle;
   display: grid;
@@ -125,9 +125,9 @@ const DiscussionBody = styled.text`
   font-size: 2vh;
   word-wrap: break-word;
 `
+// contains Tags, ShareFacebook, ShareTwitter, Share
 
 const BottomComponent = styled.div`
-  // contains Tags, ShareFacebook, ShareTwitter, Share
   grid-area: bottom;
   display: grid;
   grid-template-columns: 1fr 8vw 2.5vw 2.5vw 2.5vw 1vw;
@@ -135,9 +135,9 @@ const BottomComponent = styled.div`
   justify-items: start;
   align-items: center;
 `
+// contains Tag, ViewTags
 
 const Tags = styled.div`
-  // contains Tag, ViewTags
   grid-area: tags;
   word-wrap: break-word;
 `
@@ -193,14 +193,9 @@ const CommentInput = styled.div`
 // based off posting button in WritePost styles
 const CommentButton = styled.button`
   position: relative;
-  // background-color: #fabed6; /* Light pink */
-  border: none;
-  // color: black;
   padding: 15px 32px;
   text-align: center;
-  // text-decoration: none;
   display: inline-block;
-  // font-size: 16px;
   cursor: pointer;
   z-index: 5;
   margin: 5px;
@@ -209,8 +204,6 @@ const CommentButton = styled.button`
     opacity: 100%;
   }
 
-  //top: 849px;
-  //left: 1222px;
   width: 114px;
   height: 46px;
   background: #ffffff 0% 0% no-repeat padding-box;

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import LoginBackground from '../images/backgroundLogin.svg'
 
 const ExitButton = styled.div`
@@ -8,15 +8,9 @@ const ExitButton = styled.div`
   border: 2px solid #cdced2;
   opacity: 1;
 
-  // width: 1vw;
-  // height: 1vw;
-
   width: 20px;
   height: 20px;
-  border: 2px solid #cdced2;
-  opacity: 1;
   text-align: center;
-
   cursor: pointer;
 
   &:hover {
@@ -34,8 +28,6 @@ const PostWrapper = styled.div`
   height: 75vh;
 
   background: #ffffffe8 0% 0% no-repeat padding-box;
-  border: 0.2vw solid #000000;
-  border-radius: 1vw;
   opacity: 1;
 
   box-shadow: 1px 1px 20px #9398c334;
@@ -43,17 +35,13 @@ const PostWrapper = styled.div`
   border-radius: 20px;
 
   display: grid;
-  // flex-direction: column;
-  // align-items: center;
 
   z-index: 1;
 `
 
 const Button = styled.button`
-  background-color: lightpink; /* Green */
   border: 0.1vw solid #ffffff;
   color: black;
-  // padding: 15px 32px;
   text-align: center;
   text-decoration: none;
 
@@ -70,13 +58,10 @@ const Button = styled.button`
 `
 
 const PostingButton = styled.button`
-  // position: relative;
-  background-color: #fabed6; /* Light pink */
   border: none;
   color: white;
   text-align: center;
   text-decoration: none;
-  // display: inline-block;
   font-size: 1vw;
   cursor: pointer;
 
@@ -88,26 +73,13 @@ const PostingButton = styled.button`
   height: 4.2vh;
 
   outline: none;
-
-  //  &:hover {
-  //   background-color: #de4783;
-  //   opacity: 50%;
-  // }
 `
 
 const Form = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  // flex-wrap: wrap;
-  // width: 50vw;
   height: 55vh;
-  // top: -30vh;
-  // left: 22vw;
-
-  // grid-row: 2/2;
-  // grid-column: 2/3;
 `
 
 const ButtonWrapper = styled.div`
@@ -118,19 +90,13 @@ const ButtonWrapper = styled.div`
   margin-left: 1.4vw;
 
   display: flex;
-  // justify-content: space-between;
   align-items: center;
-
-  // background-color: blue;
 `
 
 const PostHeaderType = styled.p`
   position: relative;
   top: -5vh;
-  // right: 10vw;
   text-align: center;
-  // color: blue;
-  font-size: 2em;
   background-color: #fabed6;
   width: 25vw;
   height: 10vw;
@@ -210,7 +176,6 @@ const BodyWrapper = styled.div`
   width: 43vw;
 
   background: #f5f7fc 0% 0% no-repeat padding-box;
-  // border: 2px solid #CDCED2;
   border-radius: 15px;
   opacity: 1;
 
@@ -223,7 +188,6 @@ const ImageWrapper = styled.div`
   position: relative;
   top: -2vh;
   width: 15vw;
-  // left: -22vw;
   height: 30vh;
 `
 
@@ -241,13 +205,11 @@ const ExtrasWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 75vw;
-  // background-color: red;
   left: -22.8vw;
   top: -5vh;
 `
 
 const Banner = styled.div`
-  // Image at the top
   background: url(${LoginBackground});
   background-color: #fffdfd;
   opacity: 1;
@@ -265,10 +227,7 @@ const ModalTitle = styled.div`
   grid-column: 1/2;
 
   text-align: left;
-  // font: normal normal normal 28px/24px Avenir;
-  // letter-spacing: 0px;
   color: #272848;
-  // opacity: 1;
   font-size: 1.5vw;
 
   position: relative;
@@ -290,17 +249,10 @@ const FormWrapper = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-
-  // background-color: green
 `
 
 const DatesWrapper = styled.div`
   width: 21vw;
-
-  // display: flex;
-  // justify-content: space-evenly;
-  // height: 2vh;
-  // background-color: blue;
 `
 
 const TagWrapper = styled.div`
@@ -308,16 +260,12 @@ const TagWrapper = styled.div`
   width: 43vw;
 
   background: #f5f7fc 0% 0% no-repeat padding-box;
-  // border: 2px solid #CDCED2;
   border-radius: 15px;
   opacity: 1;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // align-items: center;
-
-  // padding-left: 2.3vw;
 `
 
 const SelectCategoryWrapper = styled.div`
@@ -328,12 +276,6 @@ const SelectCategoryWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: baseline;
-
-  // text-align: baseline;
-
-  // background-color: green;
-  // position: relative:
-  // bottom: 10vh;
   margin-bottom: 2vh;
 `
 
@@ -347,14 +289,12 @@ const LocationJobInfoWrapper = styled.div`
   justify-content: flex-start;
 
   align-self: center;
-  // background-color: lightpink;
   position: relative;
   top: 1vh;
 `
 
 const DraftSubmitWrapper = styled.div`
   height: 4.4vh;
-  // background-color: pink;
 
   display: flex;
   justify-content: flex-end;
@@ -371,10 +311,6 @@ const RichIcons = styled.div`
 `
 
 const IconButton = styled.div`
-  // padding: 0.1vh;
-  // background-color: green;
-  // vertical-align: center;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -400,7 +336,6 @@ const SuggestedTagsWrapper = styled.div`
 
   align-self: center;
   width: 40.2vw;
-  // background-color: grey;
 `
 
 const TagBox = styled.input`
@@ -411,7 +346,6 @@ const TagBox = styled.input`
   width: 40vw;
 
   align-self: center;
-  // left: 2.3vw;
 
   outline: none;
   padding-left: 0.5vw;
@@ -421,7 +355,6 @@ const TagBox = styled.input`
 `
 
 const Tag = styled.text`
-  // font-family: 'Avenir';
   font-size: 1.75vh;
   font-weight: bold;
   color: white;
@@ -434,8 +367,6 @@ const Tag = styled.text`
 
 const SaveAsDraft = styled.text`
   text-decoration: underline;
-  // font: normal normal medium 19px/17px Avenir;
-  // letter-spacing: 0.47px;
   color: #333b8b;
   opacity: 1;
   cursor: pointer;
@@ -444,7 +375,7 @@ const SaveAsDraft = styled.text`
 
 const DatePickerWrapper = styled.div`
   width: 0.1vw;
-  fontsize: 0.5vw;
+  font-size: 0.5vw;
   display: block;
 `
 
@@ -480,8 +411,6 @@ const LocationBox = styled.input`
 `
 
 const TagChosenWrapper = styled.div`
-  // width: 741px;
-  // height: 30px;
   text-align: left;
   font: Roman 16px/24px Avenir;
   letter-spacing: 0px;
@@ -494,7 +423,6 @@ const TagChosenWrapper = styled.div`
 `
 
 const TagChosen = styled.div`
-  //width: 124px;
   padding: 0px 10px 0px 5px;
   height: 24px;
   margin-left: 5px;
@@ -508,7 +436,6 @@ const TagChosen = styled.div`
   font: Heavy 14px/17px Avenir;
   letter-spacing: 0px;
   color: #ffffff;
-  opacity: 1;
   &:hover {
     background-color: red;
     opacity: 70%;
@@ -525,8 +452,8 @@ const TagCircle = styled.div`
 `
 
 const StyledLink = styled.a`
-  color: '#3b5998',
-  textDecoration: 'underline',
+  color: '#3b5998';
+  text-decoration: 'underline';
 `
 
 export {

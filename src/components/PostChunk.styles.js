@@ -1,11 +1,11 @@
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { Link } from 'react-router-dom'
 
 // note: PostFull.styles.js is based on this file
 // so please make relevant design updates to both places
 
+// Contains Discussion Box
 const DiscussionBoxSection = styled.section`
-  // contains DiscussionBox
   padding: 20px 70px;
   min-width: 55vw;
   max-width: 65vw;
@@ -20,8 +20,9 @@ const OriginalPoster = styled.div`
 
 const Time = styled.div``
 
+// contains LeftComponent, TopMiddleComponent, BottomComponent
+
 const DiscussionBox = styled.section`
-  // contains LeftComponent, TopMiddleComponent, BottomComponent
   padding: 5px;
   background: #ffffff;
   border-radius: 20px;
@@ -34,8 +35,9 @@ const DiscussionBox = styled.section`
     'left bottom';
 `
 
+// contains Upvote, Downvote, Likes
+
 const LeftComponent = styled.div`
-  // contains Upvote, Downvote, Likes
   display: grid;
   grid-template-rows: 20px 30px 40px 30px 1fr;
   grid-area: left;
@@ -55,8 +57,9 @@ const Downvote = styled.div`
   grid-row: 4/5;
 `
 
+// contains DiscussionTitle, MoreOptions, DiscussionBody
+
 const TopMiddleComponent = styled.div`
-  // contains DiscussionTitle, MoreOptions, DiscussionBody
   position: relative;
   grid-area: topmiddle;
   display: grid;
@@ -71,7 +74,7 @@ const TopMiddleComponent = styled.div`
 const DiscussionTitle = styled.text`
   grid-area: title;
   padding: 20px 0px 0px 0px;
-  font-family: avenir;
+  font-family: 'Avenir';
   font-size: 2.3vh;
   font-weight: bold;
   max-height: 50px;
@@ -126,17 +129,15 @@ const Delete = styled.button`
 const DiscussionBody = styled.text`
   grid-area: body;
   padding: 10px 0px;
-  // font-family: Avenir;
   font-size: 2vh;
   max-height: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  // word-wrap: break-word
 `
+// contains Tags, ShareFacebook, ShareTwitter, Share
 
 const BottomComponent = styled.div`
-  // contains Tags, ShareFacebook, ShareTwitter, Share
   grid-area: bottom;
   display: grid;
   grid-template-columns: 1fr 8vw 2.5vw 2.5vw 2.5vw 1vw;
@@ -145,8 +146,8 @@ const BottomComponent = styled.div`
   align-items: center;
 `
 
+// contains Tag, ViewTags
 const Tags = styled.div`
-  // contains Tag, ViewTags
   grid-area: tags;
   word-wrap: break-word;
 `

@@ -40,7 +40,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "intro": "node src/utils/introspection.js",
-    "lint": "prettier-standard --lint"
+    "lint": "prettier-standard --lint",
+    "lint:css": "stylelint './src/**/*.js'"
   },
   "browserslist": {
     "production": [
@@ -60,6 +61,10 @@
     "@types/react-html-parser": "^2.0.1",
     "@types/uuid": "^8.0.1",
     "prettier-standard": "^16.4.1",
+    "stylelint": "^13.7.0",
+    "stylelint-config-recommended": "^3.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.10.0",
     "typescript": "^4.0.2"
   }
 }
