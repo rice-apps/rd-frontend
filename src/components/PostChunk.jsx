@@ -39,6 +39,7 @@ import {
   Downvote,
   TopMiddleComponent,
   DiscussionTitle,
+  KindDiv,
   Kind,
   Tags,
   Tag,
@@ -240,8 +241,14 @@ function PostChunk (props) {
               >
                 {props.post.node.title}
               </Truncate>
-              <Kind>{props.post.node.kind}</Kind>
             </DiscussionTitle>
+
+            <KindDiv> 
+              <Kind>
+                {props.post.node.kind}
+              </Kind>
+            </KindDiv>
+            
             <MoreOptions className={classes.root}>
               <IconButton onClick={toggleDD}>
                 <MoreHorizIcon open={isDDOpen} />
@@ -316,23 +323,21 @@ function PostChunk (props) {
                 </DDMenu>
               )}
             </MoreOptions>
-            <TruncateMarkup
-              lines={4}
-              ellipsis={
-                <span>
-                  ...
-                  <FullPostLink to={myPostLink}>
-                    <ReadMore>(Read More)</ReadMore>
-                  </FullPostLink>
-                </span>
-              }
-            >
-              <DiscussionBody style={{ textAlign: props.post.node.text_align }}>
-                {/* <div> */}
-                {ReactHtmlParser(remarkable.render(props.post.node.body))}
-                {/* </div> */}
-              </DiscussionBody>
-            </TruncateMarkup>
+            <DiscussionBody style={{ textAlign: props.post.node.text_align }}>
+              <Truncate
+                lines={4}
+                ellipsis={
+                  <span>
+                    ...
+                    <FullPostLink to={myPostLink}>
+                      <ReadMore>(Read More)</ReadMore>
+                    </FullPostLink>
+                  </span>
+                }
+              >
+                  {ReactHtmlParser(remarkable.render(props.post.node.body))}
+              </Truncate>
+            </DiscussionBody>
             {oneImage}
           </TopMiddleComponent>
 

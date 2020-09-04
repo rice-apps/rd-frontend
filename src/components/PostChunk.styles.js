@@ -101,19 +101,20 @@ const TopMiddleComponent = styled.div`
   grid-area: topmiddle;
   display: grid;
   grid-template-areas:
-    'title moreoptions'
-    'body moreoptions'
-    'image moreoptions';
-  grid-template-columns: 1fr 60px;
-  grid-template-rows: 5vh auto auto;
+    'title kind moreoptions'
+    'body body moreoptions'
+    'image image moreoptions';
+  grid-template-columns: auto 1fr 60px;
+  grid-template-rows: auto auto auto;
 `
 
 const DiscussionTitle = styled.text`
   grid-area: title;
-  padding: 20px 0px 0px 0px;
+  padding: 3vh 0.1vw 0px 0px;
   font-family: 'Avenir';
   font-size: 2.3vh;
   font-weight: bold;
+  min-height: 4vh;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -123,6 +124,12 @@ const DiscussionTitle = styled.text`
 const FullPostLink = styled(Link)`
   color: black;
   text-decoration: none;
+`
+
+const KindDiv = styled.div`
+  grid-area: kind;
+  padding: 2vh 0px 0px 0px;
+  align-self: center;
 `
 
 const Kind = styled.text`
@@ -276,6 +283,7 @@ export {
   Downvote,
   TopMiddleComponent,
   DiscussionTitle,
+  KindDiv,
   Kind,
   Tags,
   Tag,
