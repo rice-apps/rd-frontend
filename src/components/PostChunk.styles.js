@@ -204,31 +204,23 @@ const CommentComponent = styled.div`
   grid-area: comments;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1vh 3vh 4vh 3vh auto;
+  grid-template-rows: 1vh 6vh auto auto;
   grid-template-areas: 'dividerbottom'
                        'showcomments'
-                       'newcomment'
-                       'postcomment'
-                       'commentsdiv';
+                       'commentinput'
+                       'commentbutton';
 `
 const DividerBottom = styled.div`
-  grid-area: dividerbottom
+  grid-area: dividerbottom;
 `
 const ShowCommentsDiv = styled.div`
-  grid-area: showcomments
-`
-const NewCommentDiv = styled.div`
-  grid-area: newcomment
-`
-const PostCommentDiv = styled.div`
-  grid-area: postcomment
-`
-const CommentsDiv = styled.div`
-  grid-area: commentsdiv
+  grid-area: showcomments;
+  padding: 1vh 0px;
 `
 
 // based off title box in WritePost styles
 const CommentInput = styled.div`
+  grid-area: commentinput;
   border: solid;
   width: 70%;
   height: 42px;
@@ -243,6 +235,7 @@ const CommentInput = styled.div`
 `
 // based off posting button in WritePost styles
 const CommentButton = styled.button`
+  grid-area: commentbutton;
   position: relative;
   // background-color: #fabed6; /* Light pink */
   border: none;
@@ -301,8 +294,6 @@ export {
   CommentComponent,
   DividerBottom,
   ShowCommentsDiv,
-  NewCommentDiv,
-  PostCommentDiv,  
   CommentInput,
   CommentButton
 }

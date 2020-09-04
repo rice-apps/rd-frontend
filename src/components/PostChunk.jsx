@@ -11,9 +11,6 @@ import Button from '@material-ui/core/Button'
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp'
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
 import ChatIcon from '@material-ui/icons/Chat'
-import FacebookIcon from '@material-ui/icons/Facebook'
-import TwitterIcon from '@material-ui/icons/Twitter'
-import ShareIcon from '@material-ui/icons/Share'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
 import ReactHtmlParser from 'react-html-parser'
@@ -22,7 +19,6 @@ import remarkable from '../utils/remarkable'
 import TimeAgo from 'react-timeago'
 
 import Truncate from 'react-truncate'
-import TruncateMarkup from 'react-truncate-markup'
 
 import { useLazyQuery } from '@apollo/client'
 import { FETCH_COMMENTS_POST } from '../graphql/Queries'
@@ -57,8 +53,6 @@ import {
   CommentComponent,
   DividerBottom,
   ShowCommentsDiv,
-  NewCommentDiv,
-  PostCommentDiv,  
   CommentInput,
   CommentButton
 } from './PostChunk.styles'
@@ -140,6 +134,8 @@ function PostChunk (props) {
     startTime: props.post.node.start ? props.post.node.start : '',
     endTime: props.post.node.end ? props.post.node.end : ''
   }
+
+  const checkComment = comment => comment.length <= 0
 
   return (
     <>
@@ -351,62 +347,56 @@ function PostChunk (props) {
 
             <ShowCommentsDiv>
               <Button 
-                  variant='contained'
-                  startIcon={<ChatIcon />}
-                  style={{
-                    backgroundColor: 'rgba(109, 200, 249, .3)',
-                    textTransform: 'none',
-                    maxWidth: '8vw',
-                    display: 'flex'
-                  }}
-                  onClick={toggleComment}
-                >
-                  {isCommentOpen ? (
-                      <text>Cancel</text>
-                    ) : (
-                      <text>Comment</text>
-                    )}
-                </Button>
-                
-              {isCommentOpen && 
-                (
-                  <CommentInput id='comment' contentEditable={true}>
-                    Enter Comment. . .
-                  </CommentInput>
-                )}
-              {isCommentOpen && 
-                (
-                  <CommentButton
-                    onClick={e => {
-                      e.preventDefault()
-                      const cmt = document.getElementById('comment').innerHTML
-                      if (props.checkComment(cmt)) return
-                      try {
-                        props.createComment({
-                          variables: {
-                            creator: props.userInfo.netID,
-                            post: props.post.node._id,
-                            parent: null,
-                            body: cmt
-                          }
-                        })
-                      } catch (error) {
-                        console.log.error(error)
-                      }
-                    }}
-                  >
-                    Post Comment
-                  </CommentButton>
-                )}
+
+                startIcon={<ChatIcon />}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  font: 'Avenir',
+                  textTransform: 'none',
+                  maxWidth: '12vw',
+                  display: 'flex'
+                }}
+                onClick={toggleComment}
+              >
+                {isCommentOpen ? (
+                    <text>Hide Comments</text>
+                  ) : (
+                    <text>Comments</text>
+                  )}
+              </Button>
             </ShowCommentsDiv>
-
-            <NewCommentDiv>
-              New Comment
-            </NewCommentDiv>
-
-            <PostCommentDiv>
-              Post Comment
-            </PostCommentDiv>
+                
+            {isCommentOpen && 
+              (
+                <CommentInput id='comment' contentEditable={true}>
+                  Enter Comment. . .
+                </CommentInput>
+              )}
+            {isCommentOpen && 
+              (
+                <CommentButton
+                  onClick={e => {
+                    e.preventDefault()
+                    const cmt = document.getElementById('comment').innerHTML
+                    if (checkComment(cmt)) return
+                    try {
+                      props.createComment({
+                        variables: {
+                          creator: props.userInfo.netID,
+                          post: props.post.node._id,
+                          parent: null,
+                          body: cmt
+                        }
+                      })
+                    } catch (error) {
+                      console.log.error(error)
+                    }
+                  }}
+                >
+                  Post Comment
+                </CommentButton>
+              )}
 
           </CommentComponent>
 
