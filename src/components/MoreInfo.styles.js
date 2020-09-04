@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 const FullGrid = styled.div`
   display: grid;
@@ -51,7 +51,6 @@ const TextField = styled.input`
   padding: 5px;
   width: 150px;
   margin: 5px 0;
-  border: 0;
   border-radius: 6vw;
   border: 1px solid rgb(223, 223, 223);
   background-color: white;
@@ -145,7 +144,6 @@ const DDList = styled.ul`
 
 const DDListItem = styled.li`
   display: inline;
-  width: 100%;
   font-size: 0.8rem;
   line-height: 1.4rem;
   white-space: nowrap;
@@ -162,8 +160,6 @@ const ArrowI = styled.i`
   margin-left: 13px;
 
   transform: ${props => (props.open ? 'rotate(-135deg)' : 'rotate(45deg)')};
-  -webkit-transform: ${props =>
-    props.open ? 'rotate(-135deg)' : 'rotate(45deg)'};
 `
 
 export {

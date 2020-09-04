@@ -1,9 +1,10 @@
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 import LoginBackground from '../images/backgroundLogin.svg'
 
+// Image at top
+
 const Banner = styled.div`
-  // Image at the top
   padding: 100px 100px;
   background: url(${LoginBackground});
   background-color: #fffdfd;
