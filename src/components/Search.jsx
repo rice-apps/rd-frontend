@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react'
 
-const SearchBar = ({ items, setList, setActive }) => {
+function SearchBar ({ items, setList, setActive }) {
   const [searchText, setSearchText] = useState('')
 
   useEffect(() => {

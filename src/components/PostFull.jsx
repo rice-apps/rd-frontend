@@ -127,6 +127,8 @@ function PostFull () {
     userObject => userObject.username
   )
 
+  const [comment, setComment] = useState('')
+
   const [isDDOpen, setDDOpen] = useState(false)
   const [isTagsOpen, setTagsOpen] = useState(false)
   const [isUpvoted, setUpvoted] = useState(
@@ -406,22 +408,22 @@ function PostFull () {
         </ul>
 
         <h3>-----------------------------------------------------------</h3>
-        <CommentInput id='comment' contentEditable>
-          Enter Comment. . .
-        </CommentInput>
+        <CommentInput
+          placeholder='Comment here...'
+          onChange={e => setComment(e.target.value)}
+        />
 
         {/* based on write post post creation button */}
         <CommentButton
           onClick={e => {
             e.preventDefault()
-            const cmt = document.getElementById('comment').innerHTML
-            if (checkComment(cmt)) return
+            if (checkComment(comment)) return
             try {
               createComment({
                 variables: {
                   post: postID,
                   parent: null,
-                  body: cmt
+                  body: comment
                 }
               })
             } catch (error) {

@@ -83,6 +83,8 @@ function PostChunk (props) {
     userObject => userObject.username
   )
 
+  const [comment, setComment] = useState('')
+
   const [isDDOpen, setDDOpen] = useState(false)
   const [isTagsOpen, setTagsOpen] = useState(false)
   const [isUpvoted, setUpvoted] = useState(
@@ -358,23 +360,20 @@ function PostChunk (props) {
             </ShowCommentsDiv>
 
             {isCommentOpen && (
-              <CommentInput id='comment' contentEditable>
-                Enter Comment. . .
-              </CommentInput>
+              <CommentInput onChange={e => setComment(e.target.value)} />
             )}
             {isCommentOpen && (
               <CommentButton
                 onClick={e => {
                   e.preventDefault()
-                  const cmt = document.getElementById('comment').innerHTML
-                  if (checkComment(cmt)) return
+                  if (checkComment(comment)) return
                   try {
                     props.createComment({
                       variables: {
                         creator: props.userInfo.netID,
                         post: props.post.node._id,
                         parent: null,
-                        body: cmt
+                        body: comment
                       }
                     })
                   } catch (error) {

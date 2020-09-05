@@ -94,7 +94,6 @@ function PostFeed (props) {
     posts = generatePosts(edges)
   } else if (sortByUpvotes.includes('hot')) {
     const sortedEdges = [...edges].sort(compareUpvoteLengths).reverse()
-    console.log(sortedEdges)
     posts = generatePosts(sortedEdges)
   } else if (sortByUpvotes.includes('cold')) {
     const sortedEdges = [...edges].sort(compareUpvoteLengths)

@@ -8,7 +8,7 @@ import { SvgIcon } from '@material-ui/core'
 import { Logo, NavList, NavElement } from './SideNav.styles'
 import { Link, useLocation } from 'react-router-dom'
 
-export const SideNav = () => {
+function SideNav () {
   const location = useLocation()
   const pages = ['/profile', '/feed', '/calendar', '/mail']
 
@@ -52,3 +52,5 @@ export const SideNav = () => {
     </div>
   )
 }
+
+export default SideNav

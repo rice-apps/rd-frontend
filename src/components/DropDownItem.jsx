@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-const DropDownItem = props => {
+function DropDownItem (props) {
   const { selectedItems, name } = props
 
   const [selected, setSelected] = useState(false)

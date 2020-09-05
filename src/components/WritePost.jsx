@@ -26,9 +26,7 @@ import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered'
 import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft'
 import FormatAlignCenterIcon from '@material-ui/icons/FormatAlignCenter'
 import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight'
-// import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
 import InsertLinkIcon from '@material-ui/icons/InsertLink'
-// import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
 import ImageIcon from '@material-ui/icons/Image'
 
 import { Navigate } from 'react-router-dom'
@@ -115,7 +113,6 @@ function WritePost (props) {
         url: absoluteLink
       }
     )
-    // console.log('here')
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
     const contentStateWithLink = Modifier.applyEntity(
       contentStateWithEntity,
@@ -131,6 +128,8 @@ function WritePost (props) {
     setEditorState(newEditorState)
   }
 
+  const [title, setTitle] = useState('')
+  const [tag, setTag] = useState('')
   const [startDate, setStart] = useState(new Date().getTime())
   const [endDate, setEnd] = useState(new Date().getTime())
   const [place, setPlace] = useState('')
@@ -141,13 +140,11 @@ function WritePost (props) {
   const editorRef = useRef(null)
 
   const Link = props => {
-    // console.log(props.entityKey)
     const [tooltipVisible, setTooltipVisible] = useState(false)
     const address = editorState
       .getCurrentContent()
       .getEntity(props.entityKey)
       .getData().url
-    // console.log(address)
     return (
       <StyledLink
         href={address}
@@ -268,7 +265,6 @@ function WritePost (props) {
   const changePostType = e => setPostType(e.target.id)
   const changeLocation = () => {
     const location = document.getElementById('location').value.trim()
-    // console.log(location)
     setPlace(location)
   }
 
@@ -290,9 +286,6 @@ function WritePost (props) {
     },
     Job: () => {
       if (!startDate || !endDate || place === '') {
-        // console.log(startDate)
-        // console.log(endDate)
-        // console.log(place)
         return true
       }
     },
@@ -308,17 +301,14 @@ function WritePost (props) {
   const toggleClosed = () => setClosed(!isClosed)
 
   function addTag (e) {
-    // console.log('tag')
-    // console.log(e.keyCode)
     e.preventDefault()
-    // adds new todo to beginning of todos array
+    // adds new tags to end of tags array
     if (e.keyCode === 13) {
-      // console.log('tag', e.target.value)
-      const text = document.getElementById('tag').value.trim()
-      if (!tags.includes(text)) {
-        setTags([...tags, text])
+      if (!tags.includes(tag)) {
+        setTags([...tags, tag])
       }
-      document.getElementById('tag').value = ''
+      setTag('')
+      e.target.value = ''
     }
   }
 
@@ -383,14 +373,14 @@ function WritePost (props) {
     Event: (
       <LocationJobInfoWrapper>
         Location:
-        <LocationBox id='location' contentEditable onChange={changeLocation} />
+        <LocationBox id='location' onChange={changeLocation} />
       </LocationJobInfoWrapper>
     ),
 
     Job: (
       <LocationJobInfoWrapper>
         Location:
-        <LocationBox id='location' contentEditable onKeyUp={changeLocation} />
+        <LocationBox id='location' onKeyUp={changeLocation} />
         Paid
         <Checkbox id='isPaid' onChange={togglePaid} color='dummy-color' />
         Closed
@@ -406,15 +396,10 @@ function WritePost (props) {
   const handleSubmit = e => {
     e.preventDefault()
 
-    const title = document.getElementById('title').innerHTML
-    // const body = stateToMarkdown(editorState.getCurrentContent())
     const body = draftToMarkdown(convertToRaw(editorState.getCurrentContent()))
-    const tagInput = document.getElementById('tag').value.trim()
-    // console.log('here1')
-    if (checkTitleBodyAndTag(title, body, tagInput)) return
-    // console.log('here2')
+
+    if (checkTitleBodyAndTag(title, body, tag)) return
     if (checkExtras[postType]()) return
-    // console.log('here3')
 
     const postToCreate = {
       Discussion: {
@@ -474,7 +459,6 @@ function WritePost (props) {
 
     try {
       postCreate(postToCreate[postType])
-      // console.log('made it here')
       setTags([])
       props.switchVisibility(false)
     } catch (error) {
@@ -553,7 +537,7 @@ function WritePost (props) {
           <Form>
             <TitleWrapper>
               Title:
-              <TitleBox id='title' contentEditable />
+              <TitleBox onChange={e => setTitle(e.target.value.trim())} />
               {datePossibilities[postType] || datePossibilities.default}
             </TitleWrapper>
             <BodyWrapper>
@@ -636,8 +620,7 @@ function WritePost (props) {
                 Add Tag (press enter after each tag)
               </t>
               <TagBox
-                id='tag'
-                contentEditable
+                onChange={e => setTag(e.target.value)}
                 onKeyUp={addTag}
                 placeholder='Ex. Internship, Externship, ...'
               />

@@ -175,7 +175,7 @@ const Share = styled.div`
   grid-area: share;
 `
 // based off title box in WritePost styles
-const CommentInput = styled.div`
+const CommentInput = styled.input`
   border: solid;
 
   width: 386px;

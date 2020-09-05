@@ -28,7 +28,7 @@ import {
 } from './MoreInfo.styles'
 import { currentUser } from '../utils/apollo'
 
-const MoreInfo = () => {
+function MoreInfo () {
   const navigator = useNavigate()
 
   const [userStatement, setStatement] = useState('Valid!')

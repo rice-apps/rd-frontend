@@ -16,7 +16,7 @@ import {
   NewPostButtonContainer
 } from './PostFeedWithData.styles'
 
-import { SideNav } from './SideNav'
+import SideNav from './SideNav'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import Button from '@material-ui/core/Button'
 
