@@ -221,7 +221,7 @@ const ShowCommentsDiv = styled.div`
 `
 
 // based off title box in WritePost styles
-const CommentInput = styled.div`
+const CommentInput = styled.input`
   grid-area: commentinput;
   border: solid;
   width: 70%;

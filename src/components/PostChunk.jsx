@@ -360,7 +360,10 @@ function PostChunk (props) {
             </ShowCommentsDiv>
 
             {isCommentOpen && (
-              <CommentInput onChange={e => setComment(e.target.value)} />
+              <CommentInput
+                placeholder='Comment here...'
+                onChange={e => setComment(e.target.value)}
+              />
             )}
             {isCommentOpen && (
               <CommentButton
