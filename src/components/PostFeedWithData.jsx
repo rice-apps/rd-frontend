@@ -73,8 +73,6 @@ function PostFeedWithData () {
 
   // get the post_ids
   useEffect(() => {
-    console.log('filter type: ', filterType)
-    console.log('kind of post: ', kindFilter)
     // just in case
     if (kindFilter === '') setKindFilter('Discussion')
     refetchFilter()
@@ -85,7 +83,6 @@ function PostFeedWithData () {
     if (filteredData) {
       const IDs = filteredData.getFilteredData.map(post => post._id)
       setPostIDs(IDs)
-      console.log('IDs that were retrieved', IDs)
     } else {
       setPostIDs(filteredData)
     }
@@ -93,7 +90,6 @@ function PostFeedWithData () {
 
   // get the actual data from the post_Id
   useEffect(() => {
-    console.log('Refetched for post data')
     refetch()
   }, [postIDs])
 
@@ -193,23 +189,12 @@ function PostFeedWithData () {
                               _id: subscriptionData.data.postCreated._id
                             })
                           ),
-                          node: {
-                            ...subscriptionData.data.postCreated,
-                            __typename: 'PostNode'
-                          },
+                          node: subscriptionData.data.postCreated,
                           __typename: 'PostEdge'
                         },
                         ...prev.postConnection.edges
                       ],
-                      pageInfo: {
-                        ...prev.postConnection.pageInfo,
-                        startCursor: window.btoa(
-                          JSON.stringify({
-                            _id: subscriptionData.data.postCreated._id
-                          })
-                        ),
-                        __typename: 'PageInfo'
-                      },
+                      pageInfo: prev.postConnection.pageInfo,
                       __typename: 'PostConnection'
                     }
                   }

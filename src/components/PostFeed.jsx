@@ -1,13 +1,9 @@
 import InfiniteScroll from 'react-infinite-scroller'
 import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
 import { useMutation, useLazyQuery } from '@apollo/client'
 
-import uuid from 'uuid/v4'
 import PostChunk from './PostChunk'
 import Filters from './Filters'
-import CommentChunk from './CommentChunk'
-import { TOKEN_NAME } from '../config'
 import {
   UPVOTE_POST,
   DOWNVOTE_POST,
@@ -16,21 +12,19 @@ import {
   SAVE_POST,
   CREATE_COMMENT
 } from '../graphql/Mutations'
-import { FETCH_COMMENTS_POST, FETCH_COMMENTS_PARENT } from '../graphql/Queries'
-import { COMMENT_CREATED, COMMENT_UPDATED } from '../graphql/Queries'
+import { FETCH_COMMENTS_POST } from '../graphql/Queries'
 import { currentUser } from '../utils/apollo'
 
 function PostFeed (props) {
   const date = new Date()
-
   const userInfo = currentUser()
   const [upvotePost] = useMutation(UPVOTE_POST)
   const [downvotePost] = useMutation(DOWNVOTE_POST)
   const [reportPost] = useMutation(REPORT_POST)
   const [removePost] = useMutation(REMOVE_POST)
   const [savePost] = useMutation(SAVE_POST)
-  const [createComment] = useMutation(CREATE_COMMENT)
-  const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
+  const [] = useMutation(CREATE_COMMENT)
+  const [] = useLazyQuery(
     FETCH_COMMENTS_POST
   )
 
@@ -60,8 +54,6 @@ function PostFeed (props) {
     }
   } = data
 
-  console.log('how many posts actually show up', edges.length)
-
   const processDateFilter = filter => {
     const today = props.currentDate
 
@@ -71,7 +63,6 @@ function PostFeed (props) {
       const yesterday = (d => new Date(d.setDate(yesterday_day)))(new Date())
       props.setEarlyDateBound(yesterday)
     } else if (filter.includes('week')) {
-      console.log('broken?')
       const weekAgoDay = today.getDate() - 7
       const weekAgo = (d => new Date(d.setDate(weekAgoDay)))(new Date())
       props.setEarlyDateBound(weekAgo)
@@ -85,30 +76,16 @@ function PostFeed (props) {
   const generatePosts = edges => {
     return edges.map((post, _i) => {
       return (
-        <>
-          <PostChunk
-            userInfo={userInfo}
-            upvotePost={upvotePost}
-            downvotePost={downvotePost}
-            reportPost={reportPost}
-            removePost={removePost}
-            savePost={savePost}
-            createComment={createComment}
-            post={post}
-            key={post.node._id}
-          />
-          {/* <button
-            onClick={() =>
-              getCommentsPost({
-                variables: { post_id: post.node._id }
-              })
-            }
-          >
-            Get Comments
-          </button>
-          <button onClick={() => refetch()}>Refresh Comments</button>
-          <CommentChunk {...result} /> */}
-        </>
+        <PostChunk
+          userInfo={userInfo}
+          upvotePost={upvotePost}
+          downvotePost={downvotePost}
+          reportPost={reportPost}
+          removePost={removePost}
+          savePost={savePost}
+          post={post}
+          key={post.node._id}
+        />
       )
     })
   }
@@ -131,7 +108,6 @@ function PostFeed (props) {
   }
   const formattedPosts = (
     <>
-      {/* <Banner /> */}
       <Filters
         processDate={processDateFilter}
         sort_by_upvotes={setSortByUpvotes}
@@ -151,7 +127,7 @@ function PostFeed (props) {
         pageStart={0}
         loadMore={() => onLoadMore()}
         hasMore={hasNextPage}
-        loader={<div key={uuid()}>Loading...</div>}
+        loader={<div key={date.getTime()}>Loading...</div>}
       >
         {posts}
       </InfiniteScroll>
@@ -160,11 +136,8 @@ function PostFeed (props) {
 
   if (formattedPosts.length === 0)
     return <h1>No posts oops... imma add a go-back to clear things</h1>
+    
   return formattedPosts
 }
-// PostFeed.propTypes = {
-//   onLoadMore: PropTypes.func.isRequired,
-//   subscribeToNewPosts: PropTypes.func.isRequired,
-//   subscribeToNewVotes: PropTypes.func.isRequired
-// };
+
 export default PostFeed
