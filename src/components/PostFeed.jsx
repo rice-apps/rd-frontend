@@ -1,26 +1,39 @@
 import InfiniteScroll from 'react-infinite-scroller'
 import React, { useEffect, useState } from 'react'
-import { useMutation } from '@apollo/client'
+import PropTypes from 'prop-types'
+import { useMutation, useLazyQuery } from '@apollo/client'
 
 import uuid from 'uuid/v4'
 import PostChunk from './PostChunk'
 import Filters from './Filters'
+import CommentChunk from './CommentChunk'
+import { TOKEN_NAME } from '../config'
 import {
   UPVOTE_POST,
   DOWNVOTE_POST,
   REPORT_POST,
   REMOVE_POST,
-  SAVE_POST
+  SAVE_POST,
+  CREATE_COMMENT
 } from '../graphql/Mutations'
+import { FETCH_COMMENTS_POST, FETCH_COMMENTS_PARENT } from '../graphql/Queries'
+import { COMMENT_CREATED, COMMENT_UPDATED } from '../graphql/Queries'
 import { currentUser } from '../utils/apollo'
 
 function PostFeed (props) {
+  const date = new Date()
+
   const userInfo = currentUser()
   const [upvotePost] = useMutation(UPVOTE_POST)
   const [downvotePost] = useMutation(DOWNVOTE_POST)
   const [reportPost] = useMutation(REPORT_POST)
   const [removePost] = useMutation(REMOVE_POST)
   const [savePost] = useMutation(SAVE_POST)
+  const [createComment] = useMutation(CREATE_COMMENT)
+  const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
+    FETCH_COMMENTS_POST
+  )
+
   const [sortByUpvotes, setSortByUpvotes] = useState('')
 
   const {
@@ -33,13 +46,8 @@ function PostFeed (props) {
   } = props
 
   useEffect(() => {
-    const unsubscribeFromPosts = subscribeToNewPosts()
-    const unsubscribeFromVotes = subscribeToNewVotes()
-
-    return () => {
-      unsubscribeFromPosts()
-      unsubscribeFromVotes()
-    }
+    subscribeToNewPosts()
+    subscribeToNewVotes()
   }, [])
 
   if (error) return <h1>Something went wrong...</h1>
@@ -57,10 +65,10 @@ function PostFeed (props) {
   const processDateFilter = filter => {
     const today = props.currentDate
 
-    if (filter.length === 0) return
+    if (filter.length == 0) return
     if (filter.includes('yesterday')) {
-      const yesterdayDay = today.getDate() - 1
-      const yesterday = (d => new Date(d.setDate(yesterdayDay)))(new Date())
+      const yesterday_day = today.getDate() - 1
+      const yesterday = (d => new Date(d.setDate(yesterday_day)))(new Date())
       props.setEarlyDateBound(yesterday)
     } else if (filter.includes('week')) {
       console.log('broken?')
@@ -68,9 +76,9 @@ function PostFeed (props) {
       const weekAgo = (d => new Date(d.setDate(weekAgoDay)))(new Date())
       props.setEarlyDateBound(weekAgo)
     } else if (filter.includes('month')) {
-      const monthAgoDay = today.getMonth() - 1
-      const monthAgo = (d => new Date(d.setMonth(monthAgoDay)))(new Date())
-      props.setEarlyDateBound(monthAgo)
+      const month_ago_day = today.getMonth() - 1
+      const month_ago = (d => new Date(d.setMonth(month_ago_day)))(new Date())
+      props.setEarlyDateBound(month_ago)
     }
   }
 
@@ -85,6 +93,7 @@ function PostFeed (props) {
             reportPost={reportPost}
             removePost={removePost}
             savePost={savePost}
+            createComment={createComment}
             post={post}
             key={post.node._id}
           />

@@ -256,7 +256,7 @@ function PostFull () {
             </Downvote>
           </LeftComponent>
           <OriginalPoster>
-            <a href='.'>
+            <a>
               {thePost.creator.username} -{' '}
               <TimeAgo date={thePost.date_created} />
             </a>
