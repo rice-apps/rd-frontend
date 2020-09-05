@@ -379,6 +379,8 @@ function PostChunk (props) {
                         body: comment
                       }
                     })
+                    setComment('')
+                    e.target.value = ''
                   } catch (error) {
                     console.error(error)
                   }

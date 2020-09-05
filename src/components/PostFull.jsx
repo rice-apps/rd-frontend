@@ -426,6 +426,8 @@ function PostFull () {
                   body: comment
                 }
               })
+              setComment('')
+              e.target.value = ''
             } catch (error) {
               log.error(error)
             }

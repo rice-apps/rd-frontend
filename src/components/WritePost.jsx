@@ -459,6 +459,7 @@ function WritePost (props) {
 
     try {
       postCreate(postToCreate[postType])
+      setEditorState(EditorState.createEmpty(decorator))
       setTags([])
       props.switchVisibility(false)
     } catch (error) {
