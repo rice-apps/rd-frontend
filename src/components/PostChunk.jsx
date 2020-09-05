@@ -20,9 +20,6 @@ import TimeAgo from 'react-timeago'
 
 import Truncate from 'react-truncate'
 
-import { useLazyQuery } from '@apollo/client'
-import { FETCH_COMMENTS_POST } from '../graphql/Queries'
-
 import {
   DiscussionBoxSection,
   OriginalPoster,
@@ -74,8 +71,6 @@ function PostChunk (props) {
       <img width={500} src={props.post.node.imageUrl} alt='Custom-thing' />
     )
   }
-
-  const [getCommentsPost] = useLazyQuery(FETCH_COMMENTS_POST)
 
   const myPostID = props.post.node._id
   const myPostLink = '/posts/' + String(myPostID) // forming the url
@@ -220,7 +215,6 @@ function PostChunk (props) {
                 style={{ width: '51.5vw', maxWidth: '92%', marginTop: '1vh' }}
               />
             </DividerTop>
-            
           </TopComponent>
           <TopMiddleComponent>
             <DiscussionTitle>
@@ -239,12 +233,10 @@ function PostChunk (props) {
               </Truncate>
             </DiscussionTitle>
 
-            <KindDiv> 
-              <Kind>
-                {props.post.node.kind}
-              </Kind>
+            <KindDiv>
+              <Kind>{props.post.node.kind}</Kind>
             </KindDiv>
-            
+
             <MoreOptions className={classes.root}>
               <IconButton onClick={toggleDD}>
                 <MoreHorizIcon open={isDDOpen} />
@@ -331,14 +323,13 @@ function PostChunk (props) {
                   </span>
                 }
               >
-                  {ReactHtmlParser(remarkable.render(props.post.node.body))}
+                {ReactHtmlParser(remarkable.render(props.post.node.body))}
               </Truncate>
             </DiscussionBody>
             {oneImage}
           </TopMiddleComponent>
 
           <CommentComponent>
-
             <DividerBottom>
               <Divider
                 style={{ width: '51.5vw', maxWidth: '92%', marginTop: '1vh' }}
@@ -346,8 +337,7 @@ function PostChunk (props) {
             </DividerBottom>
 
             <ShowCommentsDiv>
-              <Button 
-
+              <Button
                 startIcon={<ChatIcon />}
                 style={{
                   background: 'none',
@@ -360,46 +350,42 @@ function PostChunk (props) {
                 onClick={toggleComment}
               >
                 {isCommentOpen ? (
-                    <text>Hide Comments</text>
-                  ) : (
-                    <text>Comments</text>
-                  )}
+                  <text>Hide Comments</text>
+                ) : (
+                  <text>Comments</text>
+                )}
               </Button>
             </ShowCommentsDiv>
-                
-            {isCommentOpen && 
-              (
-                <CommentInput id='comment' contentEditable={true}>
-                  Enter Comment. . .
-                </CommentInput>
-              )}
-            {isCommentOpen && 
-              (
-                <CommentButton
-                  onClick={e => {
-                    e.preventDefault()
-                    const cmt = document.getElementById('comment').innerHTML
-                    if (checkComment(cmt)) return
-                    try {
-                      props.createComment({
-                        variables: {
-                          creator: props.userInfo.netID,
-                          post: props.post.node._id,
-                          parent: null,
-                          body: cmt
-                        }
-                      })
-                    } catch (error) {
-                      console.log.error(error)
-                    }
-                  }}
-                >
-                  Post Comment
-                </CommentButton>
-              )}
 
+            {isCommentOpen && (
+              <CommentInput id='comment' contentEditable>
+                Enter Comment. . .
+              </CommentInput>
+            )}
+            {isCommentOpen && (
+              <CommentButton
+                onClick={e => {
+                  e.preventDefault()
+                  const cmt = document.getElementById('comment').innerHTML
+                  if (checkComment(cmt)) return
+                  try {
+                    props.createComment({
+                      variables: {
+                        creator: props.userInfo.netID,
+                        post: props.post.node._id,
+                        parent: null,
+                        body: cmt
+                      }
+                    })
+                  } catch (error) {
+                    console.log.error(error)
+                  }
+                }}
+              >
+                Post Comment
+              </CommentButton>
+            )}
           </CommentComponent>
-
         </DiscussionBox>
       </DiscussionBoxSection>
     </>

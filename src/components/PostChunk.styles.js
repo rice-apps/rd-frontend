@@ -10,9 +10,6 @@ const DiscussionBoxSection = styled.section`
   min-width: 55vw;
   max-width: 65vw;
 `
-
-const Time = styled.div``
-
 // contains LeftComponent, TopMiddleComponent, BottomComponent
 
 const DiscussionBox = styled.section`
@@ -27,14 +24,17 @@ const DiscussionBox = styled.section`
     'left topmiddle'
     'left comments';
 `
+
+// contains OriginalPoster, Tags, DividerTop
+
 const TopComponent = styled.div`
-  // contains OriginalPoster, Tags, DividerTop
   grid-area: top;
   display: grid;
   grid-template-columns: auto auto;
   grid-template-rows: 3vh 1vh;
-  grid-template-areas: 'op tags'
-                       'line line';
+  grid-template-areas:
+    'op tags'
+    'line line';
   margin-top: 1vh;
 `
 const OriginalPoster = styled.div`
@@ -43,8 +43,9 @@ const OriginalPoster = styled.div`
   white-space: nowrap;
 `
 
+// contains Tag, ViewTags
+
 const Tags = styled.div`
-  // contains Tag, ViewTags
   grid-area: tags;
   word-wrap: break-word;
   text-align: right;
@@ -69,7 +70,7 @@ const ViewTags = styled.button`
 `
 
 const DividerTop = styled.div`
-  grid-area: line
+  grid-area: line;
 `
 
 // contains Upvote, Downvote, Likes
@@ -134,8 +135,8 @@ const KindDiv = styled.div`
 
 const Kind = styled.text`
   font: normal normal 900 15px/20px Avenir;
-  color: #7380FF;
-  border: 1px solid #7380FF;
+  color: #7380ff;
+  border: 1px solid #7380ff;
   border-radius: 5px;
   opacity: 1;
   font-size: 2vh;
@@ -192,23 +193,24 @@ const DiscussionBody = styled.text`
   white-space: nowrap;
 `
 
-
 const ReadMore = styled.text`
   color: #000080;
   font-size: 1.75vh;
   font-weight: normal;
 `
 
+// contains DividerBottom, ShowCommentsDiv, NewCommentDiv, PostCommentDiv, CommentsDiv
+
 const CommentComponent = styled.div`
-  // contains DividerBottom, ShowCommentsDiv, NewCommentDiv, PostCommentDiv, CommentsDiv
   grid-area: comments;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1vh 6vh auto auto;
-  grid-template-areas: 'dividerbottom'
-                       'showcomments'
-                       'commentinput'
-                       'commentbutton';
+  grid-template-areas:
+    'dividerbottom'
+    'showcomments'
+    'commentinput'
+    'commentbutton';
 `
 const DividerBottom = styled.div`
   grid-area: dividerbottom;
@@ -237,12 +239,8 @@ const CommentInput = styled.div`
 const CommentButton = styled.button`
   grid-area: commentbutton;
   position: relative;
-  // background-color: #fabed6; /* Light pink */
-  border: none;
-  // color: black;
   padding: 5px 10px;
   text-align: center;
-  // text-decoration: none;
   display: inline-block;
   cursor: pointer;
   z-index: 5;
@@ -251,8 +249,6 @@ const CommentButton = styled.button`
     background-color: #e7c6c6;
     opacity: 100%;
   }
-  //top: 849px;
-  //left: 1222px;
   width: 150px;
   height: 46px;
   background: #ffffff 0% 0% no-repeat padding-box;

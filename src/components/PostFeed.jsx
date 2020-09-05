@@ -1,6 +1,6 @@
 import InfiniteScroll from 'react-infinite-scroller'
 import React, { useEffect, useState } from 'react'
-import { useMutation, useLazyQuery } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 
 import PostChunk from './PostChunk'
 import Filters from './Filters'
@@ -9,10 +9,8 @@ import {
   DOWNVOTE_POST,
   REPORT_POST,
   REMOVE_POST,
-  SAVE_POST,
-  CREATE_COMMENT
+  SAVE_POST
 } from '../graphql/Mutations'
-import { FETCH_COMMENTS_POST } from '../graphql/Queries'
 import { currentUser } from '../utils/apollo'
 
 function PostFeed (props) {
@@ -23,10 +21,6 @@ function PostFeed (props) {
   const [reportPost] = useMutation(REPORT_POST)
   const [removePost] = useMutation(REMOVE_POST)
   const [savePost] = useMutation(SAVE_POST)
-  const [] = useMutation(CREATE_COMMENT)
-  const [] = useLazyQuery(
-    FETCH_COMMENTS_POST
-  )
 
   const [sortByUpvotes, setSortByUpvotes] = useState('')
 
@@ -57,19 +51,19 @@ function PostFeed (props) {
   const processDateFilter = filter => {
     const today = props.currentDate
 
-    if (filter.length == 0) return
+    if (filter.length === 0) return
     if (filter.includes('yesterday')) {
-      const yesterday_day = today.getDate() - 1
-      const yesterday = (d => new Date(d.setDate(yesterday_day)))(new Date())
+      const yesterdayDay = today.getDate() - 1
+      const yesterday = (d => new Date(d.setDate(yesterdayDay)))(new Date())
       props.setEarlyDateBound(yesterday)
     } else if (filter.includes('week')) {
       const weekAgoDay = today.getDate() - 7
       const weekAgo = (d => new Date(d.setDate(weekAgoDay)))(new Date())
       props.setEarlyDateBound(weekAgo)
     } else if (filter.includes('month')) {
-      const month_ago_day = today.getMonth() - 1
-      const month_ago = (d => new Date(d.setMonth(month_ago_day)))(new Date())
-      props.setEarlyDateBound(month_ago)
+      const monthAgoDay = today.getMonth() - 1
+      const monthAgo = (d => new Date(d.setMonth(monthAgoDay)))(new Date())
+      props.setEarlyDateBound(monthAgo)
     }
   }
 
@@ -136,7 +130,7 @@ function PostFeed (props) {
 
   if (formattedPosts.length === 0)
     return <h1>No posts oops... imma add a go-back to clear things</h1>
-    
+
   return formattedPosts
 }
 
