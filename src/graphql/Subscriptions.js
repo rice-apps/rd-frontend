@@ -76,8 +76,8 @@ const POST_REMOVED = gql`
 `
 
 const COMMENT_CREATED = gql`
-  subscription {
-    commentCreated {
+  subscription($post_id: ID!) {
+    commentCreated(postID: $post_id) {
       _id
       post {
         _id
@@ -95,6 +95,14 @@ const COMMENT_CREATED = gql`
       }
       reports {
         username
+      }
+      children {
+        _id
+        body
+        children {
+          _id
+          body
+        }
       }
     }
   }

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 const HorizontalDiv = styled.div`
   display: flex;
@@ -11,7 +11,6 @@ const TextField = styled.input`
   width: 10vw;
   margin: 1vw 0;
   border: 0;
-  // border-radius: 6vw;
   border: 1px solid rgb(223, 223, 223);
   background-color: white;
   line-height: 19px;
@@ -39,9 +38,7 @@ const MarginsForm = styled.form`
 `
 
 const SubmitButton = styled.button`
-  // padding: 10px;
   width: 50px;
-  // margin: 5px 5px;
   border: 0;
   background-color: rgb(129, 212, 45);
   opacity: 100%;
@@ -107,7 +104,6 @@ const DDList = styled.ul`
 
 const DDListItem = styled.li`
   display: inline;
-  width: 100%;
   font-size: 0.8rem;
   line-height: 1.4rem;
   white-space: nowrap;
@@ -124,8 +120,6 @@ const ArrowI = styled.i`
   margin-left: 13px;
 
   transform: ${props => (props.open ? 'rotate(-135deg)' : 'rotate(45deg)')};
-  -webkit-transform: ${props =>
-    props.open ? 'rotate(-135deg)' : 'rotate(45deg)'};
 `
 
 export {

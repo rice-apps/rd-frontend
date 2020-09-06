@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 import LoginBackground from '../images/backgroundLogin.svg'
 

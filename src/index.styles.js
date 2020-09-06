@@ -1,17 +1,21 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components/macro'
 
 const GlobalStyle = createGlobalStyle`
+  @font-face {
+    font-family: "Avenir";
+    src: 
+      local("Avenir") 
+      url("./fonts/AvenirLTStd-Book.otf") 
+      format("opentype");
+  }
+
   html {
     overflow-x: hidden;
   }
 
   body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-      "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-      "Helvetica Neue", sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+    font-family: "Avenir";
   }
 
   code {

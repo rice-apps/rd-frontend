@@ -11,9 +11,6 @@ import Button from '@material-ui/core/Button'
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp'
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
 import ChatIcon from '@material-ui/icons/Chat'
-import FacebookIcon from '@material-ui/icons/Facebook'
-import TwitterIcon from '@material-ui/icons/Twitter'
-import ShareIcon from '@material-ui/icons/Share'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
 import ReactHtmlParser from 'react-html-parser'
@@ -22,39 +19,39 @@ import remarkable from '../utils/remarkable'
 import TimeAgo from 'react-timeago'
 
 import Truncate from 'react-truncate'
-import TruncateMarkup from 'react-truncate-markup'
-
-import { useLazyQuery } from '@apollo/client'
-import { FETCH_COMMENTS_POST } from '../graphql/Queries'
 
 import {
   DiscussionBoxSection,
   OriginalPoster,
   DiscussionBox,
+  TopComponent,
+  DividerTop,
   LeftComponent,
   Likes,
   Upvote,
   Downvote,
   TopMiddleComponent,
   DiscussionTitle,
+  KindDiv,
+  Kind,
   Tags,
   Tag,
   ViewTags,
   MoreOptions,
   DDMenu,
   DiscussionBody,
-  BottomComponent,
   Save,
   AddTo,
   Report,
   Delete,
-  Comments,
-  ShareFacebook,
-  ShareTwitter,
-  Share,
   FullPostLink,
   Expand,
-  ReadMore
+  ReadMore,
+  CommentComponent,
+  DividerBottom,
+  ShowCommentsDiv,
+  CommentInput,
+  CommentButton
 } from './PostChunk.styles'
 
 const useStyles = makeStyles(theme => ({
@@ -75,8 +72,6 @@ function PostChunk (props) {
     )
   }
 
-  const [getCommentsPost] = useLazyQuery(FETCH_COMMENTS_POST)
-
   const myPostID = props.post.node._id
   const myPostLink = '/posts/' + String(myPostID) // forming the url
 
@@ -88,6 +83,8 @@ function PostChunk (props) {
     userObject => userObject.username
   )
 
+  const [comment, setComment] = useState('')
+
   const [isDDOpen, setDDOpen] = useState(false)
   const [isTagsOpen, setTagsOpen] = useState(false)
   const [isUpvoted, setUpvoted] = useState(
@@ -96,6 +93,7 @@ function PostChunk (props) {
   const [isDownvoted, setDownvoted] = useState(
     listOfDownvoters.includes(props.userInfo.username)
   )
+  const [isCommentOpen, setCommentOpen] = useState(false)
 
   const toggleDD = () => {
     setDDOpen(!isDDOpen)
@@ -115,6 +113,10 @@ function PostChunk (props) {
     setUpvoted(false)
   }
 
+  const toggleComment = () => {
+    setCommentOpen(!isCommentOpen)
+  }
+
   const calIcon = { 'calendar-plus-o': 'right' }
 
   const calDropDown = [
@@ -129,6 +131,8 @@ function PostChunk (props) {
     startTime: props.post.node.start ? props.post.node.start : '',
     endTime: props.post.node.end ? props.post.node.end : ''
   }
+
+  const checkComment = comment => comment.length <= 0
 
   return (
     <>
@@ -174,17 +178,50 @@ function PostChunk (props) {
               </IconButton>
             </Downvote>
           </LeftComponent>
-          <OriginalPoster>
-            {props.post.node.creator.username} -{' '}
-            <TimeAgo date={props.post.node.date_created} />
-            <Divider
-              style={{ width: '51.5vw', maxWidth: '97%', marginTop: '1vh' }}
-            />
-          </OriginalPoster>
+          <TopComponent>
+            <OriginalPoster>
+              <a>
+                {props.post.node.creator.username} |{' '}
+                <TimeAgo date={props.post.node.date_created} />
+              </a>
+            </OriginalPoster>
+
+            <Tags>
+              {props.post.node.tags.length > 0 && (
+                <Tag>{props.post.node.tags[0]}</Tag>
+              )}
+              {props.post.node.tags.length > 1 && (
+                <Tag>{props.post.node.tags[1]}</Tag>
+              )}
+              {props.post.node.tags.length > 2 && (
+                <Tag>{props.post.node.tags[2]}</Tag>
+              )}
+
+              {isTagsOpen &&
+                props.post.node.tags
+                  .slice(3)
+                  .map(tag => <Tag key={tag}>{tag}</Tag>)}
+
+              {props.post.node.tags.length > 3 && (
+                <ViewTags onClick={toggleTags}>
+                  {isTagsOpen ? (
+                    <text>(View Less)</text>
+                  ) : (
+                    <text>(View All)</text>
+                  )}
+                </ViewTags>
+              )}
+            </Tags>
+            <DividerTop>
+              <Divider
+                style={{ width: '51.5vw', maxWidth: '92%', marginTop: '1vh' }}
+              />
+            </DividerTop>
+          </TopComponent>
           <TopMiddleComponent>
             <DiscussionTitle>
               <Truncate
-                lines={2}
+                lines={1}
                 ellipsis={
                   <span>
                     ...
@@ -197,6 +234,11 @@ function PostChunk (props) {
                 {props.post.node.title}
               </Truncate>
             </DiscussionTitle>
+
+            <KindDiv>
+              <Kind>{props.post.node.kind}</Kind>
+            </KindDiv>
+
             <MoreOptions className={classes.root}>
               <IconButton onClick={toggleDD}>
                 <MoreHorizIcon open={isDDOpen} />
@@ -271,90 +313,83 @@ function PostChunk (props) {
                 </DDMenu>
               )}
             </MoreOptions>
-            <TruncateMarkup
-              lines={4}
-              ellipsis={
-                <span>
-                  ...
-                  <FullPostLink to={myPostLink}>
-                    <ReadMore>(Read More)</ReadMore>
-                  </FullPostLink>
-                </span>
-              }
-            >
-              <DiscussionBody style={{ textAlign: props.post.node.text_align }}>
-                {/* <div> */}
+            <DiscussionBody style={{ textAlign: props.post.node.text_align }}>
+              <Truncate
+                lines={4}
+                ellipsis={
+                  <span>
+                    ...
+                    <FullPostLink to={myPostLink}>
+                      <ReadMore>(Read More)</ReadMore>
+                    </FullPostLink>
+                  </span>
+                }
+              >
                 {ReactHtmlParser(remarkable.render(props.post.node.body))}
-                {/* </div> */}
-              </DiscussionBody>
-            </TruncateMarkup>
+              </Truncate>
+            </DiscussionBody>
             {oneImage}
           </TopMiddleComponent>
 
-          <BottomComponent>
-            <Tags>
-              <Tag>{props.post.node.kind}</Tag>
-              {props.post.node.tags.length > 0 && (
-                <Tag>{props.post.node.tags[0]}</Tag>
-              )}
-              {props.post.node.tags.length > 1 && (
-                <Tag>{props.post.node.tags[1]}</Tag>
-              )}
-              {props.post.node.tags.length > 2 && (
-                <Tag>{props.post.node.tags[2]}</Tag>
-              )}
+          <CommentComponent>
+            <DividerBottom>
+              <Divider
+                style={{ width: '51.5vw', maxWidth: '92%', marginTop: '1vh' }}
+              />
+            </DividerBottom>
 
-              {isTagsOpen &&
-                props.post.node.tags
-                  .slice(3)
-                  .map(tag => <Tag key={tag}>{tag}</Tag>)}
-
-              {props.post.node.tags.length > 3 && (
-                <ViewTags onClick={toggleTags}>
-                  {isTagsOpen ? (
-                    <text>(View Less)</text>
-                  ) : (
-                    <text>(View All)</text>
-                  )}
-                </ViewTags>
-              )}
-            </Tags>
-            {/* Insert Comments */}
-            <Comments>
+            <ShowCommentsDiv>
               <Button
-                variant='contained'
                 startIcon={<ChatIcon />}
                 style={{
-                  backgroundColor: 'rgba(109, 200, 249, .3)',
+                  background: 'none',
+                  border: 'none',
+                  font: 'Avenir',
                   textTransform: 'none',
-                  maxWidth: '8vw',
+                  maxWidth: '12vw',
                   display: 'flex'
                 }}
-                onClick={() =>
-                  getCommentsPost({
-                    variables: { post_id: props.post.node._id }
-                  })
-                }
+                onClick={toggleComment}
               >
-                Comments
+                {isCommentOpen ? (
+                  <text>Hide Comments</text>
+                ) : (
+                  <text>Comments</text>
+                )}
               </Button>
-            </Comments>
-            <ShareFacebook>
-              <IconButton>
-                <FacebookIcon />
-              </IconButton>
-            </ShareFacebook>
-            <ShareTwitter>
-              <IconButton>
-                <TwitterIcon />
-              </IconButton>
-            </ShareTwitter>
-            <Share>
-              <IconButton>
-                <ShareIcon />
-              </IconButton>
-            </Share>
-          </BottomComponent>
+            </ShowCommentsDiv>
+
+            {isCommentOpen && (
+              <CommentInput
+                placeholder='Comment here...'
+                onChange={e => setComment(e.target.value)}
+              />
+            )}
+            {isCommentOpen && (
+              <CommentButton
+                onClick={e => {
+                  e.preventDefault()
+                  if (checkComment(comment)) return
+                  try {
+                    props.createComment({
+                      variables: {
+                        creator: props.userInfo.netID,
+                        post: props.post.node._id,
+                        parent: null,
+                        body: comment
+                      }
+                    })
+                    setComment('')
+                    e.target.value = ''
+                  } catch (error) {
+                    console.error(error)
+                  }
+                }}
+              >
+                Post Comment
+              </CommentButton>
+            )}
+          </CommentComponent>
         </DiscussionBox>
       </DiscussionBoxSection>
     </>
