@@ -3,8 +3,8 @@ service: default
 handlers:
   # Serve all static files with urls ending with a file extension
   - url: /(.*\..+)$
-    static_files: src/\1
-    upload: src/(.*\..+)$
+    static_files: build/\1
+    upload: build/(.*\..+)$
     secure: always
     # catch all handlers to index.html
   - url: /.*
