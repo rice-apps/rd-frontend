@@ -410,11 +410,9 @@ function WritePost (props) {
     // const body = stateToMarkdown(editorState.getCurrentContent())
     const body = draftToMarkdown(convertToRaw(editorState.getCurrentContent()))
     const tagInput = document.getElementById('tag').value.trim()
-    // console.log('here1')
     if (checkTitleBodyAndTag(title, body, tagInput)) return
     // console.log('here2')
     if (checkExtras[postType]()) return
-    // console.log('here3')
 
     const postToCreate = {
       Discussion: {
