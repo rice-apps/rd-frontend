@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useMutation, useQuery } from '@apollo/client'
 import { GET_POST, FETCH_COMMENTS_NESTED } from '../graphql/Queries'
@@ -61,6 +61,7 @@ import {
   CommentInput,
   CommentButton
 } from './PostFull.styles'
+import { COMMENT_CREATED } from '../graphql/Subscriptions'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -73,6 +74,7 @@ const useStyles = makeStyles(theme => ({
 function PostFull () {
   // *********** post feed setup below
 
+  const [replyID, setReplyID] = useState(null)
   const userInfo = currentUser()
   const [upvotePost] = useMutation(UPVOTE_POST)
   const [downvotePost] = useMutation(DOWNVOTE_POST)
@@ -95,12 +97,43 @@ function PostFull () {
     fetchPolicy: 'network-only'
   })
 
-  const resultComments = useQuery(FETCH_COMMENTS_NESTED, {
-    variables: {
-      post_id: postID
-    },
-    fetchPolicy: 'network-only'
+  const { data, loading, error, subscribeToMore } = useQuery(
+    FETCH_COMMENTS_NESTED,
+    {
+      variables: {
+        post_id: postID
+      },
+      fetchPolicy: 'network-only'
+    }
+  )
+
+  useEffect(() => {
+    const unsubscribeToNewComments = subscribeToMore({
+      document: COMMENT_CREATED,
+      variables: { post_id: postID },
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev
+
+        console.log(prev)
+        console.log(subscriptionData)
+
+        const newFeedItem = subscriptionData.data.commentCreated
+
+        console.log(newFeedItem.parent)
+
+        if (typeof newFeedItem.parent === 'undefined') {
+          return {
+            commentByPost: [newFeedItem, ...prev.commentByPost]
+          }
+        }
+      }
+    })
+
+    return () => {
+      unsubscribeToNewComments()
+    }
   })
+
   // shouldn't need dummy data
 
   const dummyDataPost = {
@@ -168,17 +201,19 @@ function PostFull () {
     return <p>Error Fetching Post</p>
   }
 
-  if (resultComments.loading) {
+  if (loading) {
     return <p>Loading Comments</p>
   }
 
-  if (resultComments.error) {
+  if (error) {
     return <p>Error Fetching Comments</p>
   }
 
   thePost = resultPost.data.postById // real data
 
-  const theComments = resultComments.data.commentByPost // array
+  const theComments = data.commentByPost // array
+
+  console.log(theComments)
   // are there comments?
 
   // *********** post chunk things that require thePost below
@@ -384,17 +419,21 @@ function PostFull () {
         <ul>
           {/* level 1 */}
           {theComments.map(comment => (
-            <li key={comment.id}>
+            <li key={comment._id}>
               {comment.body}
+              <button onClick={() => setReplyID(comment._id)}>Reply</button>
               <ul>
                 {/* level 2 */}
                 {comment.children.map(child1 => (
-                  <li key={child1.id}>
+                  <li key={child1._id}>
                     {child1.body}
+                    <button onClick={() => setReplyID(child1._id)}>
+                      Reply
+                    </button>
                     <ul>
                       {/* level 3 */}
                       {child1.children.map(child2 => (
-                        <li key={child2.id}>
+                        <li key={child2._id}>
                           {child2.body}
                           {/* dont nest any further */}
                         </li>
@@ -419,15 +458,17 @@ function PostFull () {
             e.preventDefault()
             if (checkComment(comment)) return
             try {
+              console.log(replyID)
               createComment({
                 variables: {
                   post: postID,
-                  parent: null,
+                  parent: replyID,
                   body: comment
                 }
               })
               setComment('')
               e.target.value = ''
+              setReplyID(null)
             } catch (error) {
               log.error(error)
             }
@@ -435,6 +476,7 @@ function PostFull () {
         >
           Comment
         </CommentButton>
+        <button onClick={() => setReplyID(null)}>Reset reply</button>
       </DiscussionBoxSection>
     </>
   )
