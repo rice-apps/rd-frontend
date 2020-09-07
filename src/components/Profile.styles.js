@@ -17,12 +17,15 @@ export const DashboardContainer = styled.div`
 `
 
 export const RightSidebarContainer = styled.div`
-  position: sticky;
+  position: absolute;
   top: 0;
+  right: 0;
   // grid-column-start: 3;
   height: 100vh;
-  flex: 5;
+  // flex: 5;
   // width: 30vmax;
+  width: 50vh;
+  // flex: 3;
   
   background: #FFFFFF 0% 0% no-repeat padding-box;
   
@@ -30,6 +33,12 @@ export const RightSidebarContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+  
+  @media (max-aspect-ratio: 1/1) {
+    order: 2;
+    height: 90vh;
+    top: 10vh;
+  }
 `
 
 export const ProfileLogout = styled.div`
@@ -132,7 +141,7 @@ export const EditableTextBlock = styled.div`
 
 export const SaveButton = styled.div`
   height: 3vh;
-  width: 4vw;
+  width: 8vh;
   
   border-radius: 10%;
   cursor: pointer;

@@ -2,8 +2,8 @@ import React, {useState, useEffect, useCallback} from 'react'
 
 import {useLazyQuery, useMutation, useQuery} from '@apollo/client'
 
-import { Helmet } from 'react-helmet'
-import {FeedProfileContainer} from "./PostFeedWithData.styles";
+// import { Helmet } from 'react-helmet'
+// import {FeedProfileContainer} from "./PostFeedWithData.styles";
 import {
   Descriptor,
   LogoutButton,
@@ -18,15 +18,15 @@ import EditUrl from "../images/edit.svg"
 import {Navigate, useNavigate} from "react-router-dom";
 import {currentUser} from "../utils/apollo";
 import {SET_INFO} from "../graphql/Mutations";
-import {USER_EXISTS} from "../graphql/Queries";
+// import {USER_EXISTS} from "../graphql/Queries";
 import majorMinorJson from "../utils/MajorMinor.json";
 import {ArrowI, DDHeader, DDHeaderTitle, DDList, DDListItem, DDWrapper} from "./MoreInfo.styles";
 import DropDownItem from "./DropDownItem";
 
 const ProfilePane = props => {
   const navigate = useNavigate()
-  const [userStatement, setStatement] = useState('Valid!')
-  const [originalUsername, setOriginal] = useState('')
+  // const [userStatement, setStatement] = useState('Valid!')
+  // const [originalUsername, setOriginal] = useState('')
   const [username, setUsername] = useState('')
 
   // current major, minors, and college
@@ -204,7 +204,6 @@ const ProfilePane = props => {
 
   return props.show ?
   (
-    <>
       <RightSidebarContainer>
         <ProfileLogout>
           <b style={{fontSize: '1.5em'}}>Profile</b>
@@ -311,7 +310,6 @@ const ProfilePane = props => {
           {/*tags*/}
         </ProfileInner>
       </RightSidebarContainer>
-    </>
   ) : null
 }
 

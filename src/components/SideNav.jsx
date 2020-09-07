@@ -3,10 +3,9 @@ import ChatIcon from '@material-ui/icons/Chat'
 import MailOutlineIcon from '@material-ui/icons/MailOutline'
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import DateRangeIcon from '@material-ui/icons/DateRange'
-import { ReactComponent as ChatLogo } from '../images/RD_logo.svg'
 import { SvgIcon } from '@material-ui/core'
-import { Logo, NavList, NavElement } from './SideNav.styles'
-import { Link, useLocation } from 'react-router-dom'
+import {Logo, NavList, NavElement, NavWrapper, ChatLogo} from './SideNav.styles'
+// import { Link, useLocation } from 'react-router-dom'
 
 function SideNav (props) {
   // const location = useLocation()
@@ -40,10 +39,10 @@ function SideNav (props) {
   }
 
   return (
-    <div>
+    <NavWrapper>
       <Logo>
         {/* Replace icon with something more professional or customized */}
-        <ChatLogo style={{ width: '3.5vw', height: 'auto' }} />
+        <ChatLogo />
       </Logo>
       <NavList>
         {/*{pages.map((page, i) => {*/}
@@ -67,7 +66,7 @@ function SideNav (props) {
                         onClick={clickBehavior[page] || clickBehavior['default']} >
               <SvgIcon
                   htmlColor={selected[page] || selected[false] ? `#FFFFFF` : `#A9ABB4`}
-                  style={{ fontSize: '1.6vw' }}
+                  style={{ fontSize: '3.5vh' }}
               >
                 {getIcon(page)}
               </SvgIcon>
@@ -75,7 +74,7 @@ function SideNav (props) {
           )
         })}
       </NavList>
-    </div>
+    </NavWrapper>
   )
 }
 

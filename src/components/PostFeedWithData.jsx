@@ -127,7 +127,7 @@ function PostFeedWithData () {
                    handleFeed={() => setShowProfile(false)}
                    showProfile={showProfile} />
         </LeftSidebarContainer>
-        <FeedProfileContainer >
+        <FeedProfileContainer shrink={showProfile}>
           <PostFeedContainer>
             <NewPostButtonContainer>
               <Button
