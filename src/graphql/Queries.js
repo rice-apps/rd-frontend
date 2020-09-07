@@ -219,6 +219,8 @@ const VERIFY_USER = gql`
       major
       minor
       college
+      email
+      phone
     }
   }
 `

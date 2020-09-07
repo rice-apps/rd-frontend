@@ -8,8 +8,8 @@ import { SvgIcon } from '@material-ui/core'
 import { Logo, NavList, NavElement } from './SideNav.styles'
 import { Link, useLocation } from 'react-router-dom'
 
-function SideNav () {
-  const location = useLocation()
+function SideNav (props) {
+  // const location = useLocation()
   const pages = ['/profile', '/feed', '/calendar', '/mail']
 
   const getIcon = page => {
@@ -27,6 +27,18 @@ function SideNav () {
     }
   }
 
+  const clickBehavior = {
+    '/feed': props.handleFeed,
+    '/profile': props.handleProfile,
+    'default': null,
+  }
+
+  const selected = {
+    '/feed': !props.showProfile,
+    '/profile': props.showProfile,
+    'default': false,
+  }
+
   return (
     <div>
       <Logo>
@@ -34,18 +46,32 @@ function SideNav () {
         <ChatLogo style={{ width: '3.5vw', height: 'auto' }} />
       </Logo>
       <NavList>
+        {/*{pages.map((page, i) => {*/}
+        {/*  return (*/}
+        {/*    <Link key={window.btoa(page)} to={'/' + page}>*/}
+        {/*      <NavElement first={i === 0} selected={page === location.pathname}>*/}
+        {/*        <SvgIcon*/}
+        {/*          htmlColor={page === location.pathname ? `#FFFFFF` : `#A9ABB4`}*/}
+        {/*          style={{ fontSize: '1.6vw' }}*/}
+        {/*        >*/}
+        {/*          {getIcon(page)}*/}
+        {/*        </SvgIcon>*/}
+        {/*      </NavElement>*/}
+        {/*    </Link>*/}
+        {/*  )*/}
+        {/*})}*/}
+
         {pages.map((page, i) => {
           return (
-            <Link key={window.btoa(page)} to={'/' + page}>
-              <NavElement first={i === 0} selected={page === location.pathname}>
-                <SvgIcon
-                  htmlColor={page === location.pathname ? `#FFFFFF` : `#A9ABB4`}
+            <NavElement first={i === 0} selected={selected[page] || selected[false]}
+                        onClick={clickBehavior[page] || clickBehavior['default']} >
+              <SvgIcon
+                  htmlColor={selected[page] || selected[false] ? `#FFFFFF` : `#A9ABB4`}
                   style={{ fontSize: '1.6vw' }}
-                >
-                  {getIcon(page)}
-                </SvgIcon>
-              </NavElement>
-            </Link>
+              >
+                {getIcon(page)}
+              </SvgIcon>
+            </NavElement>
           )
         })}
       </NavList>

@@ -5,26 +5,30 @@ const ExitButton = styled.div`
   grid-row: 1/2;
   grid-column: 2/2;
 
-  border: 2px solid #cdced2;
-  opacity: 1;
+  // border: 2px solid #cdced2;
+  // opacity: 1;
+  
+  position: relative;
+  left: 2vw;
+  top: 3vh;
 
   width: 20px;
   height: 20px;
-  text-align: center;
+  // text-align: center;
   cursor: pointer;
-
-  &:hover {
-    background-color: red;
-    opacity: 70%;
-  }
 `
 
 const PostWrapper = styled.div`
   position: fixed;
-  left: 14.6vw;
-  top: 13vh;
+  // left: 14.6vw;
+  // top: 13vh;
+  
+  left: 55%;
+  top: 50%;
+  transform: translate(-55%, -50%);
 
   width: 51vw;
+  
   height: 75vh;
 
   background: #ffffffe8 0% 0% no-repeat padding-box;
@@ -360,9 +364,9 @@ const Tag = styled.text`
   color: white;
   background-color: gray;
   border: none;
-  border-radius: 5px;
+  border-radius: 0.4vw;
   margin-left: 0.5vw;
-  padding: 2px 5px;
+  padding: 0.4vh 0.5vw;
 `
 
 const SaveAsDraft = styled.text`
@@ -412,8 +416,8 @@ const LocationBox = styled.input`
 
 const TagChosenWrapper = styled.div`
   text-align: left;
-  font: Roman 16px/24px Avenir;
-  letter-spacing: 0px;
+  // font: Roman 16px/24px Avenir;
+  // letter-spacing: 0px;
   color: #a9abb4;
   opacity: 1;
   display: flex;

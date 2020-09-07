@@ -28,6 +28,7 @@ import FormatAlignCenterIcon from '@material-ui/icons/FormatAlignCenter'
 import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight'
 import InsertLinkIcon from '@material-ui/icons/InsertLink'
 import ImageIcon from '@material-ui/icons/Image'
+import CloseIcon from '@material-ui/icons/Close';
 
 import { Navigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
@@ -476,7 +477,7 @@ function WritePost (props) {
       <PostWrapper>
         <ModalTitle>Add New Post</ModalTitle>
 
-        <ExitButton onClick={closeModal}> X </ExitButton>
+        <ExitButton onClick={closeModal}> <CloseIcon /> </ExitButton>
 
         <FormWrapper>
           <SelectCategoryWrapper>
