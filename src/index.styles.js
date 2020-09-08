@@ -8,13 +8,14 @@ const GlobalStyle = createGlobalStyle`
       url("./fonts/AvenirLTStd-Book.otf") 
       format("opentype");
   }
+
   html {
     overflow-x: hidden;
   }
 
   body {
     margin: 0;
-    font-family: "Avenir", sans-serif;
+    font-family: "Avenir";
   }
 
   code {

@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/client'
 import { LOGIN } from '../graphql/Mutations'
 import { TOKEN_NAME } from '../config'
 
-const Auth = (successPath, errPath) => {
+function Auth (successPath, errPath) {
   const ticket = new URLSearchParams(window.location.search).get('ticket')
 
   const [login, { data, loading, error }] = useMutation(LOGIN, {

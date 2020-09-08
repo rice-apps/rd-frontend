@@ -31,7 +31,7 @@
     "react-truncate": "^2.4.0",
     "react-truncate-markup": "^5.0.0",
     "remarkable": "^2.0.1",
-    "styled-components": "^5.1.1",
+    "styled-components": "^5.2.0",
     "subscriptions-transport-ws": "^0.9.16"
   },
   "scripts": {
@@ -41,7 +41,7 @@
     "eject": "react-scripts eject",
     "intro": "node src/utils/introspection.js",
     "lint": "prettier-standard --lint",
-    "lint:css": "stylelint './src/**/*.js'"
+    "lint:css": "stylelint './src/**/*.(js|jsx|css)'"
   },
   "browserslist": {
     "production": [
@@ -54,6 +54,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   },
   "devDependencies": {
     "@types/react": "^16.9.49",

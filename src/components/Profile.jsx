@@ -20,9 +20,9 @@ import {
 import { PostingButton } from './WritePost.styles'
 import { currentUser } from '../utils/apollo'
 import { LeftSidebarContainer } from './PostFeedWithData.styles'
-import { SideNav } from './SideNav'
+import SideNav from './SideNav'
 
-const ProfilePage = () => {
+function ProfilePage () {
   const navigator = useNavigate()
   const [userStatement, setStatement] = useState('Valid!')
   const [originalUsername, setOriginal] = useState('')
@@ -147,7 +147,6 @@ const ProfilePage = () => {
     setCollege(indexOfCollege >= 0 ? '' : newValue)
   }, [])
 
-  console.log(major)
   const saveData = async () => {
     if (
       userExistLoading ||

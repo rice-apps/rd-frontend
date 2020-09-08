@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useQuery } from '@apollo/client'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { grey } from '@material-ui/core/colors'
@@ -17,11 +18,10 @@ import ReactHtmlParser from 'react-html-parser'
 import remarkable from '../utils/remarkable'
 
 import TimeAgo from 'react-timeago'
-
 import Truncate from 'react-truncate'
 
-import { useLazyQuery } from '@apollo/client'
-import { FETCH_COMMENTS_POST } from '../graphql/Queries'
+import { FETCH_COMMENTS_NESTED } from '../graphql/Queries'
+import { COMMENT_CREATED } from '../graphql/Subscriptions'
 
 import {
   DiscussionBoxSection,
@@ -66,6 +66,47 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function PostChunk (props) {
+  // Comments stuff starts
+
+  const { data, loading, error, subscribeToMore } = useQuery(
+    FETCH_COMMENTS_NESTED,
+    {
+      variables: {
+        post_id: props.post.node._id
+      },
+      fetchPolicy: 'network-only'
+    }
+  )
+
+  useEffect(() => {
+    const unsubscribeToNewComments = subscribeToMore({
+      document: COMMENT_CREATED,
+      variables: { post_id: props.post.node._id },
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev
+
+        console.log(prev)
+        console.log(subscriptionData)
+
+        const newFeedItem = subscriptionData.data.commentCreated
+
+        console.log(newFeedItem.parent)
+
+        if (typeof newFeedItem.parent === 'undefined') {
+          return {
+            commentByPost: [newFeedItem, ...prev.commentByPost]
+          }
+        }
+      }
+    })
+
+    return () => {
+      unsubscribeToNewComments()
+    }
+  })
+
+  // Comments stuff ends
+
   const classes = useStyles()
   let oneImage = <></>
 
@@ -74,8 +115,6 @@ function PostChunk (props) {
       <img width={500} src={props.post.node.imageUrl} alt='Custom-thing' />
     )
   }
-
-  const [getCommentsPost] = useLazyQuery(FETCH_COMMENTS_POST)
 
   const myPostID = props.post.node._id
   const myPostLink = '/posts/' + String(myPostID) // forming the url
@@ -88,6 +127,8 @@ function PostChunk (props) {
     userObject => userObject.username
   )
 
+  const [comment, setComment] = useState('')
+
   const [isDDOpen, setDDOpen] = useState(false)
   const [isTagsOpen, setTagsOpen] = useState(false)
   const [isUpvoted, setUpvoted] = useState(
@@ -97,6 +138,7 @@ function PostChunk (props) {
     listOfDownvoters.includes(props.userInfo.username)
   )
   const [isCommentOpen, setCommentOpen] = useState(false)
+  const [replyID, setReplyID] = useState(null)
 
   const toggleDD = () => {
     setDDOpen(!isDDOpen)
@@ -119,6 +161,16 @@ function PostChunk (props) {
   const toggleComment = () => {
     setCommentOpen(!isCommentOpen)
   }
+
+  if (loading) {
+    return <p>Loading Comments</p>
+  }
+
+  if (error) {
+    return <p>Error Fetching Comments</p>
+  }
+
+  const theComments = data.commentByPost // array
 
   const calIcon = { 'calendar-plus-o': 'right' }
 
@@ -220,7 +272,6 @@ function PostChunk (props) {
                 style={{ width: '51.5vw', maxWidth: '92%', marginTop: '1vh' }}
               />
             </DividerTop>
-            
           </TopComponent>
           <TopMiddleComponent>
             <DiscussionTitle>
@@ -239,12 +290,10 @@ function PostChunk (props) {
               </Truncate>
             </DiscussionTitle>
 
-            <KindDiv> 
-              <Kind>
-                {props.post.node.kind}
-              </Kind>
+            <KindDiv>
+              <Kind>{props.post.node.kind}</Kind>
             </KindDiv>
-            
+
             <MoreOptions className={classes.root}>
               <IconButton onClick={toggleDD}>
                 <MoreHorizIcon open={isDDOpen} />
@@ -331,14 +380,13 @@ function PostChunk (props) {
                   </span>
                 }
               >
-                  {ReactHtmlParser(remarkable.render(props.post.node.body))}
+                {ReactHtmlParser(remarkable.render(props.post.node.body))}
               </Truncate>
             </DiscussionBody>
             {oneImage}
           </TopMiddleComponent>
 
           <CommentComponent>
-
             <DividerBottom>
               <Divider
                 style={{ width: '51.5vw', maxWidth: '92%', marginTop: '1vh' }}
@@ -346,8 +394,7 @@ function PostChunk (props) {
             </DividerBottom>
 
             <ShowCommentsDiv>
-              <Button 
-
+              <Button
                 startIcon={<ChatIcon />}
                 style={{
                   background: 'none',
@@ -359,44 +406,76 @@ function PostChunk (props) {
                 onClick={toggleComment}
               >
                 {isCommentOpen ? (
-                    <text>Hide Comments</text>
-                  ) : (
+                  <text>Hide Comments</text>
+                ) : (
                   <text>Comments</text>
-                  )}
+                )}
               </Button>
             </ShowCommentsDiv>
-                
-            {isCommentOpen && 
-              (
-              <CommentInput placeholder="Type here to reply..." />
-              )}
-            {isCommentOpen && 
-              (
-                <CommentButton
-                  onClick={e => {
-                    e.preventDefault()
-                    const cmt = document.getElementById('comment').innerHTML
-                    if (checkComment(cmt)) return
-                    try {
-                      props.createComment({
-                        variables: {
-                          creator: props.userInfo.netID,
-                          post: props.post.node._id,
-                          parent: null,
-                          body: cmt
-                        }
-                      })
-                    } catch (error) {
-                      console.log.error(error)
-                    }
-                  }}
-                >
-                  Post Comment
-                </CommentButton>
-              )}
 
+            {isCommentOpen && (
+              <CommentInput
+                placeholder='Comment here...'
+                onChange={e => setComment(e.target.value)}
+              />
+            )}
+            {isCommentOpen && (
+              <CommentButton
+                onClick={e => {
+                  e.preventDefault()
+                  if (checkComment(comment)) return
+                  try {
+                    props.createComment({
+                      variables: {
+                        creator: props.userInfo.netID,
+                        post: props.post.node._id,
+                        parent: null,
+                        body: comment
+                      }
+                    })
+                    setComment('')
+                    e.target.value = ''
+                  } catch (error) {
+                    console.error(error)
+                  }
+                }}
+              >
+                Post Comment
+              </CommentButton>
+            )}
+
+            <div>
+              <ul>
+                {/* level 1 */}
+                {theComments.map(comment => (
+                  <li key={comment._id}>
+                    {comment.body}
+                    <button onClick={() => setReplyID(comment._id)}>Reply</button>
+                    <ul>
+                      {/* level 2 */}
+                      {comment.children.map(child1 => (
+                        <li key={child1._id}>
+                          {child1.body}
+                          <button onClick={() => setReplyID(child1._id)}>
+                            Reply
+                          </button>
+                          <ul>
+                            {/* level 3 */}
+                            {child1.children.map(child2 => (
+                              <li key={child2._id}>
+                                {child2.body}
+                                {/* dont nest any further */}
+                              </li>
+                            ))}
+                          </ul>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </CommentComponent>
-
         </DiscussionBox>
       </DiscussionBoxSection>
     </>

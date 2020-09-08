@@ -145,7 +145,7 @@ const TitleWrapper = styled.div`
   align-self: flex-end;
 `
 
-const TitleBox = styled.div`
+const TitleBox = styled.input`
   background: #f4f4f49a 0% 0% no-repeat padding-box;
   border-radius: 5px;
   opacity: 1;
