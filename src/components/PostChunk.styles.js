@@ -21,7 +21,7 @@ const DiscussionBox = styled.section`
   border-radius: 20px;
   display: grid;
   grid-template-rows: 4vh 1fr auto;
-  grid-template-columns: 65px 1fr;
+  grid-template-columns: 5vw 1fr;
   grid-template-areas:
     'owo top'
     'left topmiddle'
@@ -104,7 +104,7 @@ const TopMiddleComponent = styled.div`
     'title kind moreoptions'
     'body body moreoptions'
     'image image moreoptions';
-  grid-template-columns: auto 1fr 60px;
+  grid-template-columns: auto 1fr 5vw;
   grid-template-rows: auto auto auto;
 `
 
@@ -219,20 +219,42 @@ const ShowCommentsDiv = styled.div`
 `
 
 // based off title box in WritePost styles
-const CommentInput = styled.div`
+/*
+const CommentInput = styled.input`
   grid-area: commentinput;
   border: solid;
   width: 70%;
-  height: 42px;
+  height: auto;
   background: #f4f4f49a 0% 0% no-repeat padding-box;
   border-radius: 5px;
   opacity: 1;
   text-align: left;
   vertical-align: middle;
+  align-self: start;
   font: Roman 21px/24px Avenir;
   letter-spacing: 0px;
   color: #a9abb4;
 `
+*/
+const CommentInput = styled.input`
+  grid-area: commentinput;
+  background: #F8F8F8 0% 0% no-repeat padding-box;
+  border: none;
+
+  width: 40vw;
+  height: auto;
+
+  overflow-y: auto;
+
+  padding-left: 0.5vw;
+  padding-top: 0.5vh;
+
+  text-align: left;
+  font: normal normal medium 16px/22px Avenir;
+  letter-spacing: 0px;
+  opacity: 1;
+`
+
 // based off posting button in WritePost styles
 const CommentButton = styled.button`
   grid-area: commentbutton;
@@ -245,7 +267,6 @@ const CommentButton = styled.button`
   // text-decoration: none;
   display: inline-block;
   cursor: pointer;
-  z-index: 5;
   margin: 5px;
   &:hover {
     background-color: #e7c6c6;

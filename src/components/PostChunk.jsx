@@ -354,7 +354,6 @@ function PostChunk (props) {
                   border: 'none',
                   font: 'Avenir',
                   textTransform: 'none',
-                  maxWidth: '12vw',
                   display: 'flex'
                 }}
                 onClick={toggleComment}
@@ -362,16 +361,14 @@ function PostChunk (props) {
                 {isCommentOpen ? (
                     <text>Hide Comments</text>
                   ) : (
-                    <text>Comments</text>
+                  <text>Comments</text>
                   )}
               </Button>
             </ShowCommentsDiv>
                 
             {isCommentOpen && 
               (
-                <CommentInput id='comment' contentEditable={true}>
-                  Enter Comment. . .
-                </CommentInput>
+              <CommentInput placeholder="Type here to reply..." />
               )}
             {isCommentOpen && 
               (
