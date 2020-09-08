@@ -11842,7 +11842,7 @@ stylelint@^13.7.0:
     v8-compile-cache "^2.1.1"
     write-file-atomic "^3.0.3"
 
-subscriptions-transport-ws@^0.9.16:
+subscriptions-transport-ws@^0.9.18:
   version "0.9.18"
   resolved "https://registry.yarnpkg.com/subscriptions-transport-ws/-/subscriptions-transport-ws-0.9.18.tgz#bcf02320c911fbadb054f7f928e51c6041a37b97"
   integrity sha512-tztzcBTNoEbuErsVQpTN2xUNN/efAZXyCyL5m3x4t6SKrEiTL2N8SaKWBFWM4u56pL79ULif3zjyeq+oV+nOaA==
