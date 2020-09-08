@@ -205,12 +205,13 @@ const CommentComponent = styled.div`
   grid-area: comments;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1vh 6vh auto auto;
+  grid-template-rows: 1vh 6vh auto auto auto;
   grid-template-areas:
     'dividerbottom'
     'showcomments'
     'commentinput'
-    'commentbutton';
+    'commentbutton'
+    'commentsdiv';
 `
 const DividerBottom = styled.div`
   grid-area: dividerbottom;
@@ -280,6 +281,9 @@ const CommentButton = styled.button`
   border-radius: 20px;
   opacity: 1;
 `
+const CommentsDiv = styled.div`
+  grid-area: commentsdiv;
+`
 
 export {
   DiscussionBoxSection,
@@ -312,5 +316,6 @@ export {
   DividerBottom,
   ShowCommentsDiv,
   CommentInput,
-  CommentButton
+  CommentButton,
+  CommentsDiv
 }

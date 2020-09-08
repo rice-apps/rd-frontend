@@ -9,7 +9,8 @@ import {
   DOWNVOTE_POST,
   REPORT_POST,
   REMOVE_POST,
-  SAVE_POST
+  SAVE_POST,
+  CREATE_COMMENT
 } from '../graphql/Mutations'
 import { currentUser } from '../utils/apollo'
 
@@ -21,6 +22,7 @@ function PostFeed (props) {
   const [reportPost] = useMutation(REPORT_POST)
   const [removePost] = useMutation(REMOVE_POST)
   const [savePost] = useMutation(SAVE_POST)
+  const [createComment] = useMutation(CREATE_COMMENT)
 
   const [sortByUpvotes, setSortByUpvotes] = useState('')
 
@@ -77,6 +79,7 @@ function PostFeed (props) {
           reportPost={reportPost}
           removePost={removePost}
           savePost={savePost}
+          createComment={createComment}
           post={post}
           key={post.node._id}
         />

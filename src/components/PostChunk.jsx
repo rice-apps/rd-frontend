@@ -54,7 +54,8 @@ import {
   DividerBottom,
   ShowCommentsDiv,
   CommentInput,
-  CommentButton
+  CommentButton,
+  CommentsDiv
 } from './PostChunk.styles'
 
 const useStyles = makeStyles(theme => ({
@@ -443,38 +444,39 @@ function PostChunk (props) {
                 Post Comment
               </CommentButton>
             )}
-
-            <div>
-              <ul>
-                {/* level 1 */}
-                {theComments.map(comment => (
-                  <li key={comment._id}>
-                    {comment.body}
-                    <button onClick={() => setReplyID(comment._id)}>Reply</button>
-                    <ul>
-                      {/* level 2 */}
-                      {comment.children.map(child1 => (
-                        <li key={child1._id}>
-                          {child1.body}
-                          <button onClick={() => setReplyID(child1._id)}>
-                            Reply
-                          </button>
-                          <ul>
-                            {/* level 3 */}
-                            {child1.children.map(child2 => (
-                              <li key={child2._id}>
-                                {child2.body}
-                                {/* dont nest any further */}
-                              </li>
-                            ))}
-                          </ul>
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {isCommentOpen && (
+              <CommentsDiv>
+                <ul>
+                  {/* level 1 */}
+                  {theComments.map(comment => (
+                    <li key={comment._id}>
+                      {comment.body}
+                      <button onClick={() => setReplyID(comment._id)}>Reply</button>
+                      <ul>
+                        {/* level 2 */}
+                        {comment.children.map(child1 => (
+                          <li key={child1._id}>
+                            {child1.body}
+                            <button onClick={() => setReplyID(child1._id)}>
+                              Reply
+                            </button>
+                            <ul>
+                              {/* level 3 */}
+                              {child1.children.map(child2 => (
+                                <li key={child2._id}>
+                                  {child2.body}
+                                  {/* dont nest any further */}
+                                </li>
+                              ))}
+                            </ul>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                  ))}
+                </ul>
+              </CommentsDiv>
+            )}
           </CommentComponent>
         </DiscussionBox>
       </DiscussionBoxSection>
