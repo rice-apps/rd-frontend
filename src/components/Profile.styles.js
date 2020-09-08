@@ -34,7 +34,7 @@ export const RightSidebarContainer = styled.div`
   align-items: center;
   justify-content: space-evenly;
   
-  @media (max-aspect-ratio: 1/1) {
+  @media (max-aspect-ratio: 848/712) {
     order: 2;
     height: 90vh;
     top: 10vh;

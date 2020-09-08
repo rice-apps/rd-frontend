@@ -14,7 +14,7 @@ export const Background = styled.div`
   background-color: #eff0f8;
   // background-color: #bada55;
   
-  @media (max-aspect-ratio: 1/1) {
+  @media (max-aspect-ratio: 848/712) {
     flex-direction: column;
   }
   
@@ -38,7 +38,7 @@ export const FeedProfileContainer = styled.div`
       justify-self: center;
     `}
   
-  // @media (min-aspect-ratio: 1/1) {
+  // @media (min-aspect-ratio: 848/712) {
   //   background-color: red;
   // }
 `
@@ -59,7 +59,7 @@ export const PostFeedContainer = styled.div`
   
   /* -webkit-backdrop-filter: blur(30px); */
   
-  // @media (max-aspect-ratio: 1/1) {
+  // @media (max-aspect-ratio: 848/712) {
   //   // flex: 13;
   //   // display: none;
   // }
@@ -89,7 +89,7 @@ export const LeftSidebarContainer = styled.div`
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px); */
   
-  @media (max-aspect-ratio: 1/1) {
+  @media (max-aspect-ratio: 848/712) {
     height: 10vh;
     width: 100vw;
   }

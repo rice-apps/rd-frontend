@@ -23,13 +23,16 @@ const PostWrapper = styled.div`
   // left: 14.6vw;
   // top: 13vh;
   
-  left: 55%;
+  left: 70%;
   top: 50%;
-  transform: translate(-55%, -50%);
+  transform: translate(-70%, -50%);
 
-  width: 51vw;
+  width: 100vh;
+  // width: min(51vw, 92vh);
+  // width: clamp(10vw, 92vh, 91vw)
   
-  height: 75vh;
+  height: 85vh;
+  // height: max(42vw, 85vh);
 
   background: #ffffffe8 0% 0% no-repeat padding-box;
   opacity: 1;
@@ -41,6 +44,13 @@ const PostWrapper = styled.div`
   display: grid;
 
   z-index: 1;
+  
+  @media (max-aspect-ratio: 848/712) {
+    width: 91vw;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -90%);
+  }
 `
 
 const Button = styled.button`
@@ -232,10 +242,10 @@ const ModalTitle = styled.div`
 
   text-align: left;
   color: #272848;
-  font-size: 1.5vw;
+  font-size: 2.6vh;
 
   position: relative;
-  left: 4vw;
+  left: 7.1vh;
   top: 4.7vh;
 `
 
@@ -243,15 +253,15 @@ const FormWrapper = styled.div`
   grid-row: 2/2;
   grid-column: 1/2;
 
-  width: 42vw;
-  height: 58vh;
+  // width: 42vw;
+  // height: 58vh;
 
   position: relative;
   left: 4.5vw;
 
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
 `
 
@@ -260,7 +270,7 @@ const DatesWrapper = styled.div`
 `
 
 const TagWrapper = styled.div`
-  height: 14.5vh;
+  // height: 14.5vh;
   width: 43vw;
 
   background: #f5f7fc 0% 0% no-repeat padding-box;
@@ -273,7 +283,7 @@ const TagWrapper = styled.div`
 `
 
 const SelectCategoryWrapper = styled.div`
-  height: 3.2vh;
+  // height: 3.2vh;
   width: 43vw;
   line-height: 3.2vh;
 
@@ -281,12 +291,14 @@ const SelectCategoryWrapper = styled.div`
   justify-content: flex-start;
   align-items: baseline;
   margin-bottom: 2vh;
+  
+  flex-wrap: wrap;
 `
 
 const SuggestedTags = styled.div``
 
 const LocationJobInfoWrapper = styled.div`
-  height: 3.3vh;
+  // height: 3.3vh;
   width: 40.2vw;
 
   display: flex;
@@ -298,7 +310,7 @@ const LocationJobInfoWrapper = styled.div`
 `
 
 const DraftSubmitWrapper = styled.div`
-  height: 4.4vh;
+  // height: 4.4vh;
 
   display: flex;
   justify-content: flex-end;
@@ -336,7 +348,7 @@ const RichEditorWrapper = styled.div`
 `
 
 const SuggestedTagsWrapper = styled.div`
-  height: 2.9vh;
+  // height: 2.9vh;
 
   align-self: center;
   width: 40.2vw;

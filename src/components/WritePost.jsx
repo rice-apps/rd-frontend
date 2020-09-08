@@ -536,7 +536,7 @@ function WritePost (props) {
             </ButtonWrapper>
           </SelectCategoryWrapper>
 
-          <Form>
+          {/*<Form>*/}
             <TitleWrapper>
               Title:
               <TitleBox onChange={e => setTitle(e.target.value.trim())} />
@@ -661,7 +661,7 @@ function WritePost (props) {
               <SaveAsDraft onClick={null}>Save As Draft</SaveAsDraft>
               <PostingButton onClick={handleSubmit}>Submit</PostingButton>
             </DraftSubmitWrapper>
-          </Form>
+          {/*</Form>*/}
         </FormWrapper>
       </PostWrapper>
     </div>

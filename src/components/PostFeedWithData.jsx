@@ -107,7 +107,7 @@ function PostFeedWithData () {
 
   const [modalVisible, setVisibility] = useState(false)
   const openModal = () => {
-    setVisibility(true)
+    setVisibility(!modalVisible)
     setShowProfile(false)
   }
 
