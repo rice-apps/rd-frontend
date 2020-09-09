@@ -63,6 +63,7 @@ import {
 import { currentUser } from '../utils/apollo'
 import UploadToPost from './UploadToPost'
 import LinkAdder from './LinkAdder'
+import {tagColors} from "./tagColors";
 
 const styleMap = {
   STRIKETHROUGH: {
@@ -74,12 +75,6 @@ const richIconStyle = {
   width: '3.5vh',
   height: '3.5vh',
 }
-
-const tagColors = [
-  { backgroundColor: '#EAEAFA', color: '#6D71F9' },
-  { backgroundColor: '#E8F6FF', color: '#54C1FB' },
-  { backgroundColor: '#FEEFEF', color: '#FF7070' },
-]
 
 const suggestedTags = [
     'Rice',
