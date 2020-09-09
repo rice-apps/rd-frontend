@@ -221,7 +221,7 @@ const ShowCommentsDiv = styled.div`
   padding: 1vh 0px;
 `
 
-// based off title box in WritePost styles
+/*
 const CommentInput = styled.input`
   grid-area: commentinput;
   border: solid;
@@ -237,50 +237,61 @@ const CommentInput = styled.input`
   letter-spacing: 0px;
   color: #a9abb4;
 `
-/*
+*/
+
 const CommentInput = styled.input`
   grid-area: commentinput;
   background: #F8F8F8 0% 0% no-repeat padding-box;
   border: none;
+  border-radius: 20px;
 
   width: 40vw;
   height: auto;
+  min-height: 5vh;
 
   overflow-y: auto;
 
   padding-left: 0.5vw;
   padding-top: 0.5vh;
+  margin-left: 1vw;
 
   text-align: left;
   font: normal normal medium 16px/22px Avenir;
   letter-spacing: 0px;
   opacity: 1;
 `
-*/
+
 
 // based off posting button in WritePost styles
 const CommentButton = styled.button`
   grid-area: commentbutton;
   position: relative;
-  padding: 5px 10px;
+  padding: 0.5vh 1vw;
   text-align: center;
   display: inline-block;
   cursor: pointer;
-  margin: 5px;
+  margin: 1vh 0px 0px 2vw;
   &:hover {
     background-color: #e7c6c6;
     opacity: 100%;
   }
-  width: 150px;
-  height: 46px;
-  background: #ffffff 0% 0% no-repeat padding-box;
+  width: 10vw;
+  height: 4vh;
+  background: #7380FF 0% 0% no-repeat padding-box;
+  border-radius: 20px;
+  opacity: 1;
   font: Medium 20px/17px Avenir;
   letter-spacing: 0px;
   color: #747886;
-  border: 2px solid #cdced2;
-  border-radius: 20px;
+  border: none
+`
+const CommentButtonText = styled.text`
+  font: normal normal 700 15px/20px Avenir;
+  letter-spacing: 0px;
+  color: #FFFFFF;
   opacity: 1;
 `
+
 const CommentsDiv = styled.div`
   grid-area: commentsdiv;
 `
@@ -317,5 +328,6 @@ export {
   ShowCommentsDiv,
   CommentInput,
   CommentButton,
+  CommentButtonText,
   CommentsDiv
 }

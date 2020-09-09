@@ -55,6 +55,7 @@ import {
   ShowCommentsDiv,
   CommentInput,
   CommentButton,
+  CommentButtonText,
   CommentsDiv
 } from './PostChunk.styles'
 
@@ -163,6 +164,7 @@ function PostChunk (props) {
     setCommentOpen(!isCommentOpen)
   }
 
+  
   if (loading) {
     return <p>Loading Comments</p>
   }
@@ -170,6 +172,7 @@ function PostChunk (props) {
   if (error) {
     return <p>Error Fetching Comments</p>
   }
+  
 
   const theComments = data.commentByPost // array
 
@@ -409,7 +412,7 @@ function PostChunk (props) {
                 {isCommentOpen ? (
                   <text>Hide Comments</text>
                 ) : (
-                  <text>Comments</text>
+                  <text>Show Comments</text>
                 )}
               </Button>
             </ShowCommentsDiv>
@@ -441,7 +444,9 @@ function PostChunk (props) {
                   }
                 }}
               >
-                Post Comment
+                <CommentButtonText>
+                  Post Comment
+                </CommentButtonText>
               </CommentButton>
             )}
             {isCommentOpen && (
