@@ -4,7 +4,7 @@ steps:
     args: ['install']
   - name: node
     entrypoint: yarn
-    args: ['run', 'env']
+    args: ['run', 'create-env']
     env:
       - 'REACT_APP_SERVICE_URL=${_REACT_APP_SERVICE_URL}'
       - 'REACT_APP_CAS_AUTH_URL=${_REACT_APP_CAS_AUTH_URL}'

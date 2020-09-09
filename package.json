@@ -41,7 +41,8 @@
     "eject": "react-scripts eject",
     "intro": "node src/utils/introspection.js",
     "lint": "prettier-standard --lint",
-    "lint:css": "stylelint './src/**/*.(js|jsx|css)'"
+    "lint:css": "stylelint './src/**/*.(js|jsx|css)'",
+    "create-env": "printenv > .env"
   },
   "browserslist": {
     "production": [
