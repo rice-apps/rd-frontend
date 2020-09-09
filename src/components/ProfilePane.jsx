@@ -20,7 +20,7 @@ import {currentUser} from "../utils/apollo";
 import {SET_INFO} from "../graphql/Mutations";
 // import {USER_EXISTS} from "../graphql/Queries";
 import majorMinorJson from "../utils/MajorMinor.json";
-import {ArrowI, DDHeader, DDHeaderTitle, DDList, DDListItem, DDWrapper} from "./MoreInfo.styles";
+import {DDList, DDListItem} from "./MoreInfo.styles";
 import DropDownItem from "./DropDownItem";
 
 const ProfilePane = props => {
@@ -206,7 +206,7 @@ const ProfilePane = props => {
   (
       <RightSidebarContainer>
         <ProfileLogout>
-          <b style={{fontSize: '1.5em'}}>Profile</b>
+          <b style={{fontSize: '3.7vh'}}>Profile</b>
 
           <LogoutButton onClick={handleLogout} >Logout</LogoutButton>
         </ProfileLogout>

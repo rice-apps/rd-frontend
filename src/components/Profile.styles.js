@@ -54,9 +54,9 @@ export const ProfileLogout = styled.div`
 
 export const LogoutButton = styled.button`
   width: 27%;
-  border: 2px solid #9293A3;
+  border: 0.2vh solid #9293A3;
   color: #9293A3;
-  font-size: 90%;
+  font-size: 2vh;
   border-radius: 37% / 117%;
   display: flex;
   justify-content: center;
@@ -69,6 +69,8 @@ export const ProfileInner = styled.div`
   height: 72.7vh;
   width: 70%;
   
+  font-size: 2.2vh;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -78,9 +80,9 @@ export const ProfileInner = styled.div`
 `
 
 export const Divider = styled.div`
-  height: 0px;
+  height: 0.1vh;
   width: 100%;
-  border: 2px solid #CDCED241;
+  border: 0.2vh solid #CDCED241;
 `
 
 export const Descriptor = styled.div`
@@ -146,7 +148,7 @@ export const SaveButton = styled.div`
   border-radius: 10%;
   cursor: pointer;
   
-  border: 2px solid #9293A3;
+  border: 0.2vh solid #9293A3;
   display: flex;
   justify-content: center;
   align-items: center;

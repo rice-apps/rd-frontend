@@ -105,9 +105,9 @@ function PostFeedWithData () {
   // 6) Clear all filters --> refetch FILTER --> refetch POST_PAGE
   // ---
 
-  const [modalVisible, setVisibility] = useState(false)
+  const [showWritePost, setShowWritePost] = useState(false)
   const openModal = () => {
-    setVisibility(!modalVisible)
+    setShowWritePost(!showWritePost)
     setShowProfile(false)
   }
 
@@ -117,13 +117,13 @@ function PostFeedWithData () {
         <title>RiceDiscuss &middot; Your Feed</title>
       </Helmet>
       <WritePost
-          show={modalVisible}
-          switchVisibility={setVisibility}
+          show={showWritePost}
+          switchVisibility={setShowWritePost}
           style={{ position: 'fixed' }}
       />
       <Background>
         <LeftSidebarContainer>
-          <SideNav handleProfile={() => {setShowProfile(true); setVisibility(false)}}
+          <SideNav handleProfile={() => {setShowProfile(true); setShowWritePost(false)}}
                    handleFeed={() => setShowProfile(false)}
                    showProfile={showProfile} />
         </LeftSidebarContainer>
