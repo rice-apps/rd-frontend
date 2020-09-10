@@ -53,6 +53,7 @@ import {
   CommentInput,
   CommentButton
 } from './PostChunk.styles'
+import {tagColors} from "./tagColors";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -188,19 +189,32 @@ function PostChunk(props) {
 
             <Tags>
               {props.post.node.tags.length > 0 && (
-                <Tag>{props.post.node.tags[0]}</Tag>
+                <Tag
+                    style={tagColors[0 % tagColors.length]}
+                >{props.post.node.tags[0]}</Tag>
               )}
               {props.post.node.tags.length > 1 && (
-                <Tag>{props.post.node.tags[1]}</Tag>
+                <Tag
+                    style={tagColors[1 % tagColors.length]}
+                >{props.post.node.tags[1]}</Tag>
               )}
               {props.post.node.tags.length > 2 && (
-                <Tag>{props.post.node.tags[2]}</Tag>
+                <Tag
+                    style={tagColors[2 % tagColors.length]}
+                >{props.post.node.tags[2]}</Tag>
               )}
 
               {isTagsOpen &&
                 props.post.node.tags
                   .slice(3)
-                  .map(tag => <Tag key={tag}>{tag}</Tag>)}
+                  .map((tag, index) => (
+                      <Tag
+                          key={tag}
+                          style={tagColors[index % tagColors.length]}
+                      >
+                        {tag}
+                      </Tag>
+                  ))}
 
               {props.post.node.tags.length > 3 && (
                 <ViewTags onClick={toggleTags}>
