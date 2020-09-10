@@ -216,7 +216,7 @@ const Filters = props => {
           )}
         </DDWrapper>
 
-        <DDWrapper>
+        {/*         <DDWrapper>
           <DDHeader onClick={toggleUpvotes}>
             <DDHeaderTitle>
               {upvotes === '' ? 'By Popularity' : upvotes}
@@ -236,7 +236,7 @@ const Filters = props => {
               ))}
             </DDList>
           )}
-        </DDWrapper>
+        </DDWrapper>*/}
         <IconButton
           onClick={submitFilters}
           style={{
