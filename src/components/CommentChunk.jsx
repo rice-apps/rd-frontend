@@ -7,6 +7,7 @@ import {
   UPVOTE_COMMENT,
   DOWNVOTE_COMMENT,
   REPORT_COMMENT,
+  REMOVE_COMMENT
 } from "../graphql/Mutations";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -35,6 +36,7 @@ import {
   ReplyArea,
   ReplyInput,
   PostReplyButton,
+  DeleteButton,
 } from "./CommentChunk.styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -51,6 +53,7 @@ function CommentChunk(props) {
   const [upvoteComment] = useMutation(UPVOTE_COMMENT);
   const [downvoteComment] = useMutation(DOWNVOTE_COMMENT);
   const [reportComment] = useMutation(REPORT_COMMENT);
+  const [removeComment] = useMutation(REMOVE_COMMENT);
   const classes = useStyles();
 
   const [reply, setReply] = useState("");
@@ -164,6 +167,21 @@ function CommentChunk(props) {
         >
           Report
         </ReportButton>
+
+        {/* TODO delete top level comment -> delete its replies */}
+        <DeleteButton
+          onClick={e => {
+            e.preventDefault()
+            removeComment({
+              variables: {
+                _id: props.comment._id
+              }
+            });
+            window.location.reload(false)
+          }}
+        >
+          Delete
+        </DeleteButton>
 
         <TimestampDiv>
           <TimeAgo date={props.comment.date_created} />
