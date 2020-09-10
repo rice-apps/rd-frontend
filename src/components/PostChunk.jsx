@@ -22,6 +22,7 @@ import Truncate from 'react-truncate'
 
 import { FETCH_COMMENTS_NESTED } from '../graphql/Queries'
 import { COMMENT_CREATED } from '../graphql/Subscriptions'
+import CommentChunk from "./CommentChunk";
 
 import {
   DiscussionBoxSection,
@@ -453,23 +454,23 @@ function PostChunk (props) {
               <CommentsDiv>
                 <ul>
                   {/* level 1 */}
-                  {theComments.map(comment => (
+                  {theComments.map((comment) => (
                     <li key={comment._id}>
-                      {comment.body}
-                      <button onClick={() => setReplyID(comment._id)}>Reply</button>
+                      <CommentChunk comment={comment} postID={props.post.node._id} setParentID={setReplyID} isLeaf={false}></CommentChunk>
+                      {/* <button onClick={() => setReplyID(comment._id)}>Reply</button> */}
                       <ul>
                         {/* level 2 */}
-                        {comment.children.map(child1 => (
+                        {comment.children.map((child1) => (
                           <li key={child1._id}>
-                            {child1.body}
-                            <button onClick={() => setReplyID(child1._id)}>
+                            <CommentChunk comment={child1} postID={props.post.node._id} isLeaf={false}></CommentChunk>
+                            {/* <button onClick={() => setReplyID(child1._id)}>
                               Reply
-                            </button>
+                            </button> */}
                             <ul>
                               {/* level 3 */}
-                              {child1.children.map(child2 => (
+                              {child1.children.map((child2) => (
                                 <li key={child2._id}>
-                                  {child2.body}
+                                  <CommentChunk comment={child2} postID={props.post.node._id} isLeaf={true}></CommentChunk>
                                   {/* dont nest any further */}
                                 </li>
                               ))}

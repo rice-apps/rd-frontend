@@ -227,6 +227,45 @@ const COMMENT_CREATE = gql`
   }
 `
 
+const UPVOTE_COMMENT = gql`
+  mutation UpvoteComment($netID: String!, $_id: ID!) {
+    currentNetID @client @export(as: "netID")
+    upvoteCommentById(netID: $netID, _id: $_id) {
+      creator {
+        _id
+        username
+      }
+      _id
+    }
+  }
+`
+
+const DOWNVOTE_COMMENT = gql`
+  mutation DownvoteComment($netID: String!, $_id: ID!) {
+    currentNetID @client @export(as: "netID")
+    downvoteCommentById(netID: $netID, _id: $_id) {
+      creator {
+        _id
+        netID
+      }
+      _id
+    }
+  }
+`
+
+const REPORT_COMMENT = gql`
+  mutation ReportComment($netID: String!, $_id: ID!) {
+    currentNetID @client @export(as: "netID")
+    toggleCommentReport(netID: $netID, _id: $_id) {
+      creator {
+        _id
+        netID
+      }
+      _id
+    }
+  }
+`
+
 export {
   SET_INFO,
   POST_CREATE,
@@ -238,5 +277,8 @@ export {
   REPORT_POST,
   REMOVE_POST,
   SAVE_POST,
-  S3_SIGN
+  S3_SIGN,
+  UPVOTE_COMMENT,
+  DOWNVOTE_COMMENT,
+  REPORT_COMMENT,
 }
