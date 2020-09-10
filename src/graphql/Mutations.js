@@ -125,6 +125,7 @@ const DOWNVOTE_POST = gql`
 
 const REPORT_POST = gql`
   mutation ReportPost($netID: String!, $_id: ID!) {
+    currentNetID @client @export(as: "netID")
     togglePostReport(netID: $netID, _id: $_id) {
       creator {
         _id
@@ -167,6 +168,8 @@ const SET_INFO = gql`
   mutation SetInfo(
     $username: String!
     $college: EnumUserCollege
+    $email: String!
+    $phone: String!
     $major: [String]
     $minor: [String]
     $netID: String!
@@ -177,6 +180,8 @@ const SET_INFO = gql`
       record: {
         username: $username
         college: $college
+        email: $email
+        phone: $phone
         major: $major
         minor: $minor
         isNewUser: $isNewUser
@@ -187,6 +192,8 @@ const SET_INFO = gql`
         _id
         username
         college
+        email
+        phone
         major
         minor
         isNewUser
@@ -227,6 +234,56 @@ const COMMENT_CREATE = gql`
   }
 `
 
+const UPVOTE_COMMENT = gql`
+  mutation UpvoteComment($netID: String!, $_id: ID!) {
+    currentNetID @client @export(as: "netID")
+    upvoteCommentById(netID: $netID, _id: $_id) {
+      creator {
+        _id
+        username
+      }
+      _id
+    }
+  }
+`
+
+const DOWNVOTE_COMMENT = gql`
+  mutation DownvoteComment($netID: String!, $_id: ID!) {
+    currentNetID @client @export(as: "netID")
+    downvoteCommentById(netID: $netID, _id: $_id) {
+      creator {
+        _id
+        netID
+      }
+      _id
+    }
+  }
+`
+
+const REPORT_COMMENT = gql`
+  mutation ReportComment($netID: String!, $_id: ID!) {
+    currentNetID @client @export(as: "netID")
+    toggleCommentReport(netID: $netID, _id: $_id) {
+      creator {
+        _id
+        netID
+      }
+      _id
+    }
+  }
+`
+
+const REMOVE_COMMENT = gql`
+  mutation RemoveComment($_id: MongoID!) {
+    commentRemoveById(_id: $_id) {
+      record {
+        date_created
+        _id
+      }
+    }
+  }
+`
+
 export {
   SET_INFO,
   POST_CREATE,
@@ -238,5 +295,9 @@ export {
   REPORT_POST,
   REMOVE_POST,
   SAVE_POST,
-  S3_SIGN
+  S3_SIGN,
+  UPVOTE_COMMENT,
+  DOWNVOTE_COMMENT,
+  REPORT_COMMENT,
+  REMOVE_COMMENT,
 }

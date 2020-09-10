@@ -32,7 +32,7 @@
     "react-truncate-markup": "^5.0.0",
     "remarkable": "^2.0.1",
     "styled-components": "^5.2.0",
-    "subscriptions-transport-ws": "^0.9.16"
+    "subscriptions-transport-ws": "^0.9.18"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -41,7 +41,8 @@
     "eject": "react-scripts eject",
     "intro": "node src/utils/introspection.js",
     "lint": "prettier-standard --lint",
-    "lint:css": "stylelint './src/**/*.(js|jsx|css)'"
+    "lint:css": "stylelint './src/**/*.(js|jsx|css)'",
+    "create-env": "printenv > .env"
   },
   "browserslist": {
     "production": [

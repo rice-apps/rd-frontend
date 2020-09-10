@@ -53,6 +53,7 @@ import {
   CommentInput,
   CommentButton
 } from './PostChunk.styles'
+import {tagColors} from "./tagColors";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -62,7 +63,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function PostChunk (props) {
+function PostChunk(props) {
   const classes = useStyles()
   let oneImage = <></>
 
@@ -188,27 +189,40 @@ function PostChunk (props) {
 
             <Tags>
               {props.post.node.tags.length > 0 && (
-                <Tag>{props.post.node.tags[0]}</Tag>
+                <Tag
+                    style={tagColors[0 % tagColors.length]}
+                >{props.post.node.tags[0]}</Tag>
               )}
               {props.post.node.tags.length > 1 && (
-                <Tag>{props.post.node.tags[1]}</Tag>
+                <Tag
+                    style={tagColors[1 % tagColors.length]}
+                >{props.post.node.tags[1]}</Tag>
               )}
               {props.post.node.tags.length > 2 && (
-                <Tag>{props.post.node.tags[2]}</Tag>
+                <Tag
+                    style={tagColors[2 % tagColors.length]}
+                >{props.post.node.tags[2]}</Tag>
               )}
 
               {isTagsOpen &&
                 props.post.node.tags
                   .slice(3)
-                  .map(tag => <Tag key={tag}>{tag}</Tag>)}
+                  .map((tag, index) => (
+                      <Tag
+                          key={tag}
+                          style={tagColors[index % tagColors.length]}
+                      >
+                        {tag}
+                      </Tag>
+                  ))}
 
               {props.post.node.tags.length > 3 && (
                 <ViewTags onClick={toggleTags}>
                   {isTagsOpen ? (
                     <text>(View Less)</text>
                   ) : (
-                    <text>(View All)</text>
-                  )}
+                      <text>(View All)</text>
+                    )}
                 </ViewTags>
               )}
             </Tags>
@@ -266,15 +280,15 @@ function PostChunk (props) {
                   </Save>
                   {(props.post.node.kind === 'Event' ||
                     props.post.node.kind === 'Job') && (
-                    <AddTo>
-                      <AddToCalendar
-                        event={calEvent}
-                        buttonLabel='Add to '
-                        buttonTemplate={calIcon}
-                        listItems={calDropDown}
-                      />
-                    </AddTo>
-                  )}
+                      <AddTo>
+                        <AddToCalendar
+                          event={calEvent}
+                          buttonLabel='Add to '
+                          buttonTemplate={calIcon}
+                          listItems={calDropDown}
+                        />
+                      </AddTo>
+                    )}
 
                   <Expand>
                     <FullPostLink to={myPostLink}>Expand</FullPostLink>
@@ -296,20 +310,20 @@ function PostChunk (props) {
 
                   {props.post.node.creator.username ===
                     props.userInfo.username && (
-                    <Delete
-                      onClick={e => {
-                        e.preventDefault()
-                        window.location.reload(false)
-                        props.removePost({
-                          variables: {
-                            _id: props.post.node._id
-                          }
-                        })
-                      }}
-                    >
-                      Delete Post
-                    </Delete>
-                  )}
+                      <Delete
+                        onClick={e => {
+                          e.preventDefault()
+                          window.location.reload(false)
+                          props.removePost({
+                            variables: {
+                              _id: props.post.node._id
+                            }
+                          })
+                        }}
+                      >
+                        Delete Post
+                      </Delete>
+                    )}
                 </DDMenu>
               )}
             </MoreOptions>
@@ -354,8 +368,8 @@ function PostChunk (props) {
                 {isCommentOpen ? (
                   <text>Hide Comments</text>
                 ) : (
-                  <text>Comments</text>
-                )}
+                    <text>Comments</text>
+                  )}
               </Button>
             </ShowCommentsDiv>
 
