@@ -11,14 +11,14 @@ import WritePost from './WritePost'
 import {
   Background,
   PostFeedContainer,
-  RightSidebarContainer,
   LeftSidebarContainer,
-  NewPostButtonContainer
+  NewPostButtonContainer, FeedProfileContainer
 } from './PostFeedWithData.styles'
 
 import SideNav from './SideNav'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import Button from '@material-ui/core/Button'
+import ProfilePane from "./ProfilePane";
 
 function PostFeedWithData () {
   const [today, setToday] = useState(null)
@@ -36,6 +36,8 @@ function PostFeedWithData () {
   const [postIDs, setPostIDs] = useState([])
   const [filterType, setFilterType] = useState('')
   const [firstTime, setFirstTime] = useState(true)
+
+  const [showProfile, setShowProfile] = useState(false)
 
   const { subscribeToMore, fetchMore, refetch, ...result } = useQuery(
     POST_PAGE,
@@ -103,118 +105,125 @@ function PostFeedWithData () {
   // 6) Clear all filters --> refetch FILTER --> refetch POST_PAGE
   // ---
 
-  const [modalVisible, setVisibility] = useState(false)
-  const openModal = () => setVisibility(true)
+  const [showWritePost, setShowWritePost] = useState(false)
+  const openModal = () => {
+    setShowWritePost(!showWritePost)
+    setShowProfile(false)
+  }
 
   return (
     <>
       <Helmet>
         <title>RiceDiscuss &middot; Your Feed</title>
       </Helmet>
+      <WritePost
+          show={showWritePost}
+          switchVisibility={setShowWritePost}
+          style={{ position: 'fixed' }}
+      />
       <Background>
         <LeftSidebarContainer>
-          <SideNav />
+          <SideNav handleProfile={() => {setShowProfile(true); setShowWritePost(false)}}
+                   handleFeed={() => setShowProfile(false)}
+                   showProfile={showProfile} />
         </LeftSidebarContainer>
-        <PostFeedContainer>
-          <NewPostButtonContainer>
-            <Button
-              variant='contained'
-              onClick={openModal}
-              style={{
-                textTransform: 'none',
-                background: '#ffffff93 0% 0% no-repeat padding-box',
-                borderRadius: '0.7vw',
-                marginLeft: '-4.5vw',
-                marginTop: '3vw'
-              }}
-              startIcon={
+        <FeedProfileContainer shrink={showProfile}>
+          <PostFeedContainer>
+            <NewPostButtonContainer>
+              <Button
+                variant='contained'
+                onClick={openModal}
+                style={{
+                  textTransform: 'none',
+                  background: '#ffffff93 0% 0% no-repeat padding-box',
+                  borderRadius: '0.7vw',
+                  marginLeft: '-4.5vw',
+                  marginTop: '3vw'
+                }}
+                startIcon={
+                  <AddCircleIcon
+                    style={{ color: '#7380FF', width: '1.3vw', height: '1.3vw' }}
+                  />
+                }
+              >
+                Create Post
+              </Button>
+              {/* <NewPostButton onClick={openModal}>
                 <AddCircleIcon
                   style={{ color: '#7380FF', width: '1.3vw', height: '1.3vw' }}
                 />
-              }
-            >
-              Create Post
-            </Button>
-            {/* <NewPostButton onClick={openModal}>
-              <AddCircleIcon
-                style={{ color: '#7380FF', width: '1.3vw', height: '1.3vw' }}
-              />
-              <ButtonText>Create Post</ButtonText>
-            </NewPostButton> */}
-          </NewPostButtonContainer>
+                <ButtonText>Create Post</ButtonText>
+              </NewPostButton> */}
+            </NewPostButtonContainer>
 
-          {/* <BannerContainer>
-            <Banner />
-          </BannerContainer> */}
-          <PostFeed
-            {...result}
-            setEarlyDateBound={setEarlyDateBound}
-            currentDate={today}
-            setDateFilter={setDateFilter}
-            setUpvoteFilter={setUpvoteFilter}
-            setKindFilter={setKindFilter}
-            setTagFilter={setTagFilter}
-            dateFilter={dateFilter}
-            upvoteFilter={upvoteFilter}
-            kindFilter={kindFilter}
-            tagFilter={tagFilter}
-            setTypeofFilter={setFilterType}
-            refetch={refetchFilter}
-            firstTime={firstTime}
-            setFirstTime={setFirstTime}
-            post_ids={postIDs}
-            onLoadMore={() =>
-              fetchMore({
-                variables: {
-                  after: result.data.postConnection.pageInfo.endCursor
-                }
-              })
-            }
-            subscribeToNewPosts={() =>
-              subscribeToMore({
-                document: POST_CREATED,
-                updateQuery: (prev, { subscriptionData }) => {
-                  if (!subscriptionData) {
-                    return prev
+            {/* <BannerContainer>
+              <Banner />
+            </BannerContainer> */}
+            <PostFeed
+              {...result}
+              setEarlyDateBound={setEarlyDateBound}
+              currentDate={today}
+              setDateFilter={setDateFilter}
+              setUpvoteFilter={setUpvoteFilter}
+              setKindFilter={setKindFilter}
+              setTagFilter={setTagFilter}
+              dateFilter={dateFilter}
+              upvoteFilter={upvoteFilter}
+              kindFilter={kindFilter}
+              tagFilter={tagFilter}
+              setTypeofFilter={setFilterType}
+              refetch={refetchFilter}
+              firstTime={firstTime}
+              setFirstTime={setFirstTime}
+              post_ids={postIDs}
+              onLoadMore={() =>
+                fetchMore({
+                  variables: {
+                    after: result.data.postConnection.pageInfo.endCursor
                   }
+                })
+              }
+              subscribeToNewPosts={() =>
+                subscribeToMore({
+                  document: POST_CREATED,
+                  updateQuery: (prev, { subscriptionData }) => {
+                    if (!subscriptionData) {
+                      return prev
+                    }
 
-                  return {
-                    ...prev,
-                    postConnection: {
-                      count: prev.postConnection.count + 1,
-                      edges: [
-                        {
-                          cursor: window.btoa(
-                            JSON.stringify({
-                              _id: subscriptionData.data.postCreated._id
-                            })
-                          ),
-                          node: subscriptionData.data.postCreated,
-                          __typename: 'PostEdge'
-                        },
-                        ...prev.postConnection.edges
-                      ],
-                      pageInfo: prev.postConnection.pageInfo,
-                      __typename: 'PostConnection'
+                    return {
+                      ...prev,
+                      postConnection: {
+                        count: prev.postConnection.count + 1,
+                        edges: [
+                          {
+                            cursor: window.btoa(
+                              JSON.stringify({
+                                _id: subscriptionData.data.postCreated._id
+                              })
+                            ),
+                            node: subscriptionData.data.postCreated,
+                            __typename: 'PostEdge'
+                          },
+                          ...prev.postConnection.edges
+                        ],
+                        pageInfo: prev.postConnection.pageInfo,
+                        __typename: 'PostConnection'
+                      }
                     }
                   }
-                }
-              })
-            }
-            subscribeToNewVotes={() =>
-              subscribeToMore({
-                document: POST_VOTE_CHANGED
-              })
-            }
-          />
-        </PostFeedContainer>
-        <RightSidebarContainer />
+                })
+              }
+              subscribeToNewVotes={() =>
+                subscribeToMore({
+                  document: POST_VOTE_CHANGED
+                })
+              }
+            />
+          </PostFeedContainer>
+          <ProfilePane show={showProfile} />
+        </FeedProfileContainer>
       </Background>
-      <WritePost
-        show={modalVisible}
-        switchVisibility={setVisibility}
-        style={{ position: 'fixed' }}
-      />
     </>
   )
 }

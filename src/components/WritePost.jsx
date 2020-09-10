@@ -3,7 +3,6 @@ import DatePicker from 'react-datepicker'
 
 import { useMutation } from '@apollo/client'
 
-import { Checkbox } from '@material-ui/core'
 
 import {
   Editor,
@@ -28,6 +27,7 @@ import FormatAlignCenterIcon from '@material-ui/icons/FormatAlignCenter'
 import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight'
 import InsertLinkIcon from '@material-ui/icons/InsertLink'
 import ImageIcon from '@material-ui/icons/Image'
+import CloseIcon from '@material-ui/icons/Close'
 
 import { Navigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
@@ -38,7 +38,6 @@ import {
   PostWrapper,
   Button,
   ButtonWrapper,
-  Form,
   TitleWrapper,
   TitleBox,
   BodyWrapper,
@@ -54,20 +53,17 @@ import {
   RichIcons,
   IconButton,
   RichEditorWrapper,
-  SuggestedTagsWrapper,
+  TagsListWrapper,
   TagBox,
   Tag,
-  SaveAsDraft,
   DateBox,
   LocationBox,
-  TagChosenWrapper,
-  TagChosen,
-  TagCircle,
-  StyledLink
+  StyledLink, StereoButton, StereoButtonCheck
 } from './WritePost.styles'
 import { currentUser } from '../utils/apollo'
 import UploadToPost from './UploadToPost'
 import LinkAdder from './LinkAdder'
+import {tagColors} from "./tagColors";
 
 const styleMap = {
   STRIKETHROUGH: {
@@ -75,8 +71,22 @@ const styleMap = {
   }
 }
 
+const richIconStyle = {
+  width: '3.5vh',
+  height: '3.5vh',
+}
+
+const suggestedTags = [
+    'Rice',
+    'CS',
+    'Engineering',
+    'STEM',
+    'Career Fair',
+]
+
 const numToDateString = num => {
   const newDate = new Date(num)
+  newDate.setTime( newDate.getTime() - newDate.getTimezoneOffset()*60*1000 );
   const fullString = newDate.toUTCString()
   return (
     fullString.slice(8, 11) +
@@ -382,9 +392,19 @@ function WritePost (props) {
         Location:
         <LocationBox id='location' onKeyUp={changeLocation} />
         Paid
-        <Checkbox id='isPaid' onChange={togglePaid} color='dummy-color' />
+        <StereoButton onClick={togglePaid}>
+          {
+            isPaid ? <StereoButtonCheck /> :
+                null
+          }
+        </StereoButton>
         Closed
-        <Checkbox id='isClosed' onChange={toggleClosed} color='dummy-color' />
+        <StereoButton onClick={toggleClosed}>
+          {
+            isClosed ? <StereoButtonCheck /> :
+                null
+          }
+        </StereoButton>
       </LocationJobInfoWrapper>
     ),
 
@@ -474,9 +494,13 @@ function WritePost (props) {
       </Helmet>
 
       <PostWrapper>
-        <ModalTitle>Add New Post</ModalTitle>
+        <ModalTitle>
+          <t style={{position: 'relative', top: '3vh', left: '7vh'}}>Add New Post</t>
+          <ExitButton onClick={closeModal}>
+            <CloseIcon style={{width: '5vh', height: '5vh'}}/>
+          </ExitButton>
+        </ModalTitle>
 
-        <ExitButton onClick={closeModal}> X </ExitButton>
 
         <FormWrapper>
           <SelectCategoryWrapper>
@@ -535,132 +559,142 @@ function WritePost (props) {
             </ButtonWrapper>
           </SelectCategoryWrapper>
 
-          <Form>
-            <TitleWrapper>
-              Title:
-              <TitleBox onChange={e => setTitle(e.target.value.trim())} />
-              {datePossibilities[postType] || datePossibilities.default}
-            </TitleWrapper>
-            <BodyWrapper>
-              <RichIcons>
-                <RichButton icon={<FormatBoldIcon />} type='style' op='BOLD' />
-                <RichButton
-                  icon={<FormatItalicIcon />}
+          <TitleWrapper>
+            Title:
+            <TitleBox onChange={e => setTitle(e.target.value.trim())} />
+            {datePossibilities[postType] || datePossibilities.default}
+          </TitleWrapper>
+          <BodyWrapper>
+            <RichIcons>
+              <RichButton
+                  icon={<FormatBoldIcon style={richIconStyle}/>}
                   type='style'
-                  op='ITALIC'
-                />
-                <RichButton
-                  icon={<FormatUnderlinedIcon />}
-                  type='style'
-                  op='UNDERLINE'
-                />
-                <RichButton
-                  icon={<StrikethroughSIcon />}
-                  type='style'
-                  op='STRIKETHROUGH'
-                />
-                <RichButton
-                  icon={<FormatListBulletedIcon />}
-                  type='list'
-                  op='unordered-list-item'
-                />
-                <RichButton
-                  icon={<FormatListNumberedIcon />}
-                  type='list'
-                  op='ordered-list-item'
-                />
-                <RichButton
-                  icon={<FormatAlignLeftIcon />}
-                  type='align'
-                  op='left'
-                />
-                <RichButton
-                  icon={<FormatAlignCenterIcon />}
-                  type='align'
-                  op='center'
-                />
-                <RichButton
-                  icon={<FormatAlignRightIcon />}
-                  type='align'
-                  op='right'
-                />
-                <RichButton icon={<InsertLinkIcon />} type='link' op='LINK' />
-                {/* <RichButton icon={<VideoLibraryIcon />} type='video' op='VIDEO' /> */}
-                <RichButton icon={<ImageIcon />} type='image' op='IMAGE' />
-              </RichIcons>
-              <UploadToPost
-                parentUrlCallback={callbackURL}
-                show={imgUploaderVisible}
-                handleDismissSelf={() => {
-                  setImgUploaderVisible(false)
+                  op='BOLD' />
+              <RichButton
+                icon={<FormatItalicIcon style={richIconStyle}/>}
+                type='style'
+                op='ITALIC'
+              />
+              <RichButton
+                icon={<FormatUnderlinedIcon style={richIconStyle}/>}
+                type='style'
+                op='UNDERLINE'
+              />
+              <RichButton
+                icon={<StrikethroughSIcon style={richIconStyle}/>}
+                type='style'
+                op='STRIKETHROUGH'
+              />
+              <RichButton
+                icon={<FormatListBulletedIcon style={richIconStyle}/>}
+                type='list'
+                op='unordered-list-item'
+              />
+              <RichButton
+                icon={<FormatListNumberedIcon style={richIconStyle}/>}
+                type='list'
+                op='ordered-list-item'
+              />
+              <RichButton
+                icon={<FormatAlignLeftIcon style={richIconStyle}/>}
+                type='align'
+                op='left'
+              />
+              <RichButton
+                icon={<FormatAlignCenterIcon style={richIconStyle}/>}
+                type='align'
+                op='center'
+              />
+              <RichButton
+                icon={<FormatAlignRightIcon style={richIconStyle}/>}
+                type='align'
+                op='right'
+              />
+              <RichButton
+                  icon={<InsertLinkIcon style={richIconStyle}/>}
+                  type='link'
+                  op='LINK'
+              />
+              {/* <RichButton icon={<VideoLibraryIcon />} type='video' op='VIDEO' /> */}
+              <RichButton
+                  icon={<ImageIcon style={richIconStyle}/>}
+                  type='image'
+                  op='IMAGE'
+              />
+            </RichIcons>
+            <UploadToPost
+              parentUrlCallback={callbackURL}
+              show={imgUploaderVisible}
+              handleDismissSelf={() => {
+                setImgUploaderVisible(false)
+              }}
+            />
+            <LinkAdder
+              callback={linkAdderCallback}
+              show={linkAdderVisible}
+              handleDismissSelf={() => {
+                setLinkAdderVisible(false)
+              }}
+            />
+            <RichEditorWrapper>
+              <Editor
+                placeholder='Enter description...'
+                editorState={editorState}
+                onChange={editorState => {
+                  setEditorState(editorState)
                 }}
+                handleKeyCommand={handleKeyCommand}
+                ref={editorRef}
+                customStyleMap={styleMap}
+                textAlignment={textAlignment}
               />
-              <LinkAdder
-                callback={linkAdderCallback}
-                show={linkAdderVisible}
-                handleDismissSelf={() => {
-                  setLinkAdderVisible(false)
-                }}
-              />
-              <RichEditorWrapper>
-                <Editor
-                  placeholder='Enter description...'
-                  editorState={editorState}
-                  onChange={editorState => {
-                    setEditorState(editorState)
-                  }}
-                  handleKeyCommand={handleKeyCommand}
-                  ref={editorRef}
-                  customStyleMap={styleMap}
-                  textAlignment={textAlignment}
-                />
-              </RichEditorWrapper>
-            </BodyWrapper>
-            <TagWrapper>
-              <t style={{ position: 'relative', bottom: '1vh', left: '1.8vw' }}>
-                Add Tag (press enter after each tag)
-              </t>
-              <TagBox
-                onChange={e => setTag(e.target.value)}
-                onKeyUp={addTag}
-                placeholder='Ex. Internship, Externship, ...'
-              />
-              <TagChosenWrapper>
-                Your tags:
-                {tags.map(tag => (
-                  <TagChosen key={tag} onClick={() => removeTag(tag)}>
-                    <TagCircle />
-                    {tag}
-                  </TagChosen>
+            </RichEditorWrapper>
+          </BodyWrapper>
+          <TagWrapper>
+            <t style={{paddingLeft: '3.3vh'}}>
+              Add Tags
+            </t>
+            <TagBox
+              onChange={e => setTag(e.target.value.trim())}
+              onKeyUp={addTag}
+              placeholder='Ex. Internship, Externship, ...'
+            />
+          </TagWrapper>
+          {
+          tags.length === 0 ?
+              <TagsListWrapper>
+                Suggested:
+                {suggestedTags.map((tag, index) => (
+                    <Tag
+                        key={tag}
+                        onClick={() => setTags([tag])}
+                        style={tagColors[index % tagColors.length]}
+                    >
+                      {tag}
+                    </Tag>
                 ))}
-              </TagChosenWrapper>
-            </TagWrapper>
-            <SuggestedTagsWrapper>
-              Suggested:
-              <Tag style={{ backgroundColor: '#EAEAFA', color: '#6D71F9' }}>
-                Rice
-              </Tag>
-              <Tag style={{ backgroundColor: '#E8F6FF', color: '#54C1FB' }}>
-                CS
-              </Tag>
-              <Tag style={{ backgroundColor: '#FEEFEF', color: '#FF7070' }}>
-                Engineering
-              </Tag>
-              <Tag style={{ backgroundColor: '#EAEAFA', color: '#6D71F9' }}>
-                STEM
-              </Tag>
-              <Tag style={{ backgroundColor: '#E8F6FF', color: '#54C1FB' }}>
-                Career Fair
-              </Tag>
-            </SuggestedTagsWrapper>
+              </TagsListWrapper>
+              :
+              <TagsListWrapper>
+                Your tags:
+                {tags.map((tag, index) => (
+                    <Tag
+                        key={tag}
+                        onClick={() => removeTag(tag)}
+                        style={tagColors[index % 3]}
+                    >
+                      {tag}
+                    </Tag>
+                ))}
+              </TagsListWrapper>
+          }
 
-            {locationJobInfo[postType] || locationJobInfo.default}
+          {locationJobInfo[postType] || locationJobInfo.default}
 
-            <DraftSubmitWrapper>
-              <SaveAsDraft onClick={null}>Save As Draft</SaveAsDraft>
-              <PostingButton onClick={handleSubmit}>Submit</PostingButton>
-            </DraftSubmitWrapper>
-          </Form>
+          <DraftSubmitWrapper>
+            {/*<SaveAsDraft onClick={null}>Save As Draft</SaveAsDraft>*/}
+            <PostingButton onClick={handleSubmit}>Submit</PostingButton>
+          </DraftSubmitWrapper>
         </FormWrapper>
       </PostWrapper>
     </div>
