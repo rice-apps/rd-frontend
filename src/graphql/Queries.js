@@ -1,4 +1,4 @@
-import gql from 'graphql-tag.macro'
+import gql from "graphql-tag.macro";
 
 // sort the iDs
 const POST_PAGE = gql`
@@ -57,7 +57,7 @@ const POST_PAGE = gql`
       }
     }
   }
-`
+`;
 
 const GET_FILTERED_IDS = gql`
   query GetFilteredIDs(
@@ -79,7 +79,7 @@ const GET_FILTERED_IDS = gql`
       _id
     }
   }
-`
+`;
 
 const FILTER_KIND = gql`
   query FilterKind($kind: EnumDKeyPostKind) {
@@ -99,7 +99,7 @@ const FILTER_KIND = gql`
       }
     }
   }
-`
+`;
 const FILTER_DATES = gql`
   query FilterKind($today: Date!, $ealryDateBound: Date!) {
     postConnection(
@@ -118,7 +118,7 @@ const FILTER_DATES = gql`
       }
     }
   }
-`
+`;
 
 const FILTER_TAGS = gql`
   query FilterTags($tags: [String]!) {
@@ -131,19 +131,19 @@ const FILTER_TAGS = gql`
       }
     }
   }
-`
+`;
 
 const USER_EXISTS = gql`
   query GetData($username: String!) {
     doesUsernameExist(username: $username)
   }
-`
+`;
 
 const GET_TAGS = gql`
   query GetTags {
     getAllTags
   }
-`
+`;
 
 const FETCH_COMMENTS_POST = gql`
   query FetchCommentsPost($post_id: ID!) {
@@ -165,7 +165,7 @@ const FETCH_COMMENTS_POST = gql`
       }
     }
   }
-`
+`;
 
 const FETCH_COMMENTS_PARENT = gql`
   query FetchCommentsParent($parent_id: ID!) {
@@ -187,24 +187,63 @@ const FETCH_COMMENTS_PARENT = gql`
       }
     }
   }
-`
+`;
 
 const FETCH_COMMENTS_NESTED = gql`
   query FetchCommentsNested($post_id: ID!) {
     commentByPost(postID: $post_id) {
       _id
+      creator {
+        username
+      }
+      date_created
+      upvotes {
+        username
+      }
+      downvotes {
+        username
+      }
+      reports {
+        username
+      }
       body
       children {
         _id
+        creator {
+          username
+        }
+        date_created
+        upvotes {
+          username
+        }
+        downvotes {
+          username
+        }
+        reports {
+          username
+        }
         body
         children {
           _id
+          creator {
+            username
+          }
+          date_created
+          upvotes {
+            username
+          }
+          downvotes {
+            username
+          }
+          reports {
+            username
+          }
           body
         }
       }
     }
   }
-`
+`;
 
 const VERIFY_USER = gql`
   query VerifyUser($token: String!) {
@@ -221,7 +260,7 @@ const VERIFY_USER = gql`
       college
     }
   }
-`
+`;
 
 const GET_POST = gql`
   query GetPostById($id: MongoID!) {
@@ -313,7 +352,7 @@ const GET_POST = gql`
       text_align
     }
   }
-`
+`;
 
 export {
   POST_PAGE,
@@ -327,5 +366,5 @@ export {
   FILTER_TAGS,
   FILTER_KIND,
   GET_FILTERED_IDS,
-  GET_POST
-}
+  GET_POST,
+};
