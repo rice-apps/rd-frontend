@@ -139,15 +139,19 @@ function CommentChunk(props) {
       <CommentMenu>
         {/* TODO deleting comments */}
         {/* TODO ************************************************** */}
-        <ReplyStart
-          onClick={e => {
-            e.preventDefault()
 
-            switchModal();
-          }}
-        >
-          Reply
-        </ReplyStart>
+        {/* only want this reply button to show up on non leaf comments */}
+        {/* might need to adapt design/css based on this functionality */}
+        {!props.isLeaf && (
+          <ReplyStart
+            onClick={e => {
+              e.preventDefault()
+              switchModal();
+            }}
+          >
+            Reply
+          </ReplyStart>
+        )}
 
         <CountDiv>{props.comment.upvotes.length -
           props.comment.downvotes.length} Votes</CountDiv>
@@ -169,6 +173,7 @@ function CommentChunk(props) {
         </ReportButton>
 
         {/* TODO delete top level comment -> delete its replies */}
+        {/* sometimesssss the refresh still doesnt delete */}
         <DeleteButton
           onClick={e => {
             e.preventDefault()
