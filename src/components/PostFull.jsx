@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
 function PostFull() {
   // *********** post feed setup below
 
-  const [replyID, setReplyID] = useState(null);
+  // const [replyID, setReplyID] = useState(null);
   const userInfo = currentUser();
   const [upvotePost] = useMutation(UPVOTE_POST);
   const [downvotePost] = useMutation(DOWNVOTE_POST);
@@ -423,16 +423,12 @@ function PostFull() {
           {/* level 1 */}
           {theComments.map((comment) => (
             <li key={comment._id}>
-              <CommentChunk comment={comment} postID={postID} setParentID={setReplyID} isLeaf={false}></CommentChunk>
-              {/* <button onClick={() => setReplyID(comment._id)}>Reply</button> */}
+              <CommentChunk comment={comment} postID={postID} isLeaf={false}></CommentChunk>
               <ul>
                 {/* level 2 */}
                 {comment.children.map((child1) => (
                   <li key={child1._id}>
                     <CommentChunk comment={child1} postID={postID} isLeaf={false}></CommentChunk>
-                    {/* <button onClick={() => setReplyID(child1._id)}>
-                      Reply
-                    </button> */}
                     <ul>
                       {/* level 3 */}
                       {child1.children.map((child2) => (
@@ -451,6 +447,7 @@ function PostFull() {
 
         <h3>-----------------------------------------------------------</h3>
         <CommentInput
+          id={'commentinput'}
           placeholder="Comment here..."
           onChange={(e) => setComment(e.target.value)}
         />
@@ -461,17 +458,15 @@ function PostFull() {
             e.preventDefault();
             if (checkComment(comment)) return;
             try {
-              console.log(replyID);
               createComment({
                 variables: {
                   post: postID,
-                  parent: replyID,
+                  parent: null,
                   body: comment,
                 },
               });
               setComment("");
-              e.target.value = "";
-              setReplyID(null);
+              document.getElementById("commentinput").value = "";
             } catch (error) {
               log.error(error);
             }
@@ -479,7 +474,6 @@ function PostFull() {
         >
           Comment
         </CommentButton>
-        <button onClick={() => setReplyID(null)}>Reset reply</button>
       </DiscussionBoxSection>
     </>
   );

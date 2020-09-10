@@ -25,7 +25,7 @@ import {
   CommentWhole,
   CommentDiv,
   CommentMenu,
-  ReplyButton,
+  ReplyStart,
   ReportButton,
   TimestampDiv,
   CountDiv,
@@ -54,6 +54,9 @@ function CommentChunk(props) {
   const classes = useStyles();
 
   const [reply, setReply] = useState("");
+
+  const [replyAreaVisible, setVisibility] = useState(false)
+  const switchModal = () => setVisibility(!replyAreaVisible)
 
   let listOfUpvoters = props.comment.upvotes.map((userObject) => userObject.username);
 
@@ -131,7 +134,17 @@ function CommentChunk(props) {
       </CommentDiv>
 
       <CommentMenu>
+        {/* TODO deleting comments */}
         {/* TODO ************************************************** */}
+        <ReplyStart
+          onClick={e => {
+            e.preventDefault()
+
+            switchModal();
+          }}
+        >
+          Reply
+        </ReplyStart>
 
         <CountDiv>{props.comment.upvotes.length -
           props.comment.downvotes.length} Votes</CountDiv>
@@ -158,40 +171,44 @@ function CommentChunk(props) {
 
       </CommentMenu>
 
-      <ReplyArea>
-        <ReplyInput
-          placeholder="Reply here..."
-          onChange={(e) => setReply(e.target.value)}
-        />
 
-        <PostReplyButton
-          // onClick={e => {
-          //   e.preventDefault()
-          //   // get an input field to show up
-          // }}
-          onClick={e => {
-            e.preventDefault()
-            if (checkComment(reply)) return
-            try {
-              createComment({
-                variables: {
-                  post: props.postID,
-                  parent: props.comment._id,
-                  body: reply,
-                },
-              });
-              setReply("");
-              e.target.value = "";
-              // setParentID(null);
-            } catch (error) {
-              log.error(error);
-            }
-          }}
-        >
-          Post Reply
+
+      {!props.isLeaf && replyAreaVisible && (
+        <ReplyArea>
+          <ReplyInput
+            id={String(props.comment._id)}
+            placeholder="Reply here..."
+            onChange={(e) => setReply(e.target.value)}
+          />
+
+          <PostReplyButton
+            // onClick={e => {
+            //   e.preventDefault()
+            //   // get an input field to show up
+            // }}
+            onClick={e => {
+              e.preventDefault()
+              if (checkComment(reply)) return
+              try {
+                createComment({
+                  variables: {
+                    post: props.postID,
+                    parent: props.comment._id,
+                    body: reply,
+                  },
+                });
+                setReply("");
+                document.getElementById(String(props.comment._id)).value = "";
+              } catch (error) {
+                log.error(error);
+              }
+            }}
+          >
+            Post Reply
         </PostReplyButton>
 
-      </ReplyArea>
+        </ReplyArea>
+      )}
 
 
 
