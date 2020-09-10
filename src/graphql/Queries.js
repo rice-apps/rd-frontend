@@ -203,6 +203,9 @@ const FETCH_COMMENTS_NESTED = gql`
       downvotes {
         username
       }
+      reports {
+        username
+      }
       body
       children {
         _id
@@ -216,6 +219,9 @@ const FETCH_COMMENTS_NESTED = gql`
         downvotes {
           username
         }
+        reports {
+          username
+        }
         body
         children {
           _id
@@ -227,6 +233,9 @@ const FETCH_COMMENTS_NESTED = gql`
             username
           }
           downvotes {
+            username
+          }
+          reports {
             username
           }
           body

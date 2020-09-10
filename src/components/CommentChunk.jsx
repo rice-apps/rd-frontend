@@ -1,5 +1,12 @@
 import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
 import { currentUser } from "../utils/apollo";
+
+import {
+  UPVOTE_COMMENT,
+  DOWNVOTE_COMMENT,
+  REPORT_COMMENT,
+} from "../graphql/Mutations";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
@@ -38,9 +45,35 @@ const useStyles = makeStyles((theme) => ({
 
 function CommentChunk(props) {
   const userInfo = currentUser();
+  const [upvoteComment] = useMutation(UPVOTE_COMMENT);
+  const [downvoteComment] = useMutation(DOWNVOTE_COMMENT);
+  const [reportComment] = useMutation(REPORT_COMMENT);
   const classes = useStyles();
 
-  const [comment, setComment] = useState("");
+  // const [comment, setComment] = useState("");
+
+  let listOfUpvoters = props.comment.upvotes.map((userObject) => userObject.username);
+
+  let listOfDownvoters = props.comment.downvotes.map(
+    (userObject) => userObject.username
+  );
+
+  const [isUpvoted, setUpvoted] = useState(
+    listOfUpvoters.includes(userInfo.username)
+  );
+  const [isDownvoted, setDownvoted] = useState(
+    listOfDownvoters.includes(userInfo.username)
+  );
+
+  const toggleUpvoted = () => {
+    setUpvoted(!isUpvoted);
+    setDownvoted(false);
+  };
+
+  const toggleDownvoted = () => {
+    setDownvoted(!isDownvoted);
+    setUpvoted(false);
+  };
 
   console.log(props);
 
@@ -48,38 +81,38 @@ function CommentChunk(props) {
   // ^ resolve whether this should be used or PostFull's li should be used 
 
   return (
-    < CommentWhole >
+    <CommentWhole>
       <CommentVotes>
         <CommentUpvote className={classes.root}>
           <IconButton
-          // style={isUpvoted ? { color: '#7380FF' } : { color: grey[700] }}
-          // onClick={e => {
-          //   e.preventDefault()
-          //   toggleUpvoted()
-          //   upvoteComment({
-          //     variables: {
-          //       netID: userInfo.netID,
-          //       _id: thePost._id
-          //     }
-          //   })
-          // }}
+            style={isUpvoted ? { color: '#7380FF' } : { color: grey[700] }}
+            onClick={e => {
+              e.preventDefault()
+              toggleUpvoted()
+              upvoteComment({
+                variables: {
+                  // netID: userInfo.netID,
+                  _id: props.comment._id
+                }
+              })
+            }}
           >
             <ArrowDropUp fontSize="large" />
           </IconButton>
         </CommentUpvote>
         <CommentDownvote className={classes.root}>
           <IconButton
-          // style={isDownvoted ? { color: '#7380FF' } : { color: grey[800] }}
-          // onClick={e => {
-          //   e.preventDefault()
-          //   // toggleDownvoted()
-          //   // downvotePost({
-          //   //   variables: {
-          //   //     netID: userInfo.netID,
-          //   //     _id: thePost._id
-          //   //   }
-          //   // })
-          // }}
+            style={isDownvoted ? { color: '#7380FF' } : { color: grey[800] }}
+            onClick={e => {
+              e.preventDefault()
+              toggleDownvoted()
+              downvoteComment({
+                variables: {
+                  // netID: userInfo.netID,
+                  _id: props.comment._id
+                }
+              })
+            }}
           >
             <ArrowDropDown fontSize="large" />
           </IconButton>
@@ -125,21 +158,30 @@ function CommentChunk(props) {
             Post Reply
           </ReplyButton> */}
 
-        <CountDiv>2 Likes</CountDiv>
+        <CountDiv>{props.comment.upvotes.length -
+          props.comment.downvotes.length} Votes</CountDiv>
 
         <ReportButton
-        // onClick={e => {
-        //   e.preventDefault()
-        // }}
+          onClick={e => {
+            e.preventDefault()
+
+            reportComment({
+              variables: {
+                // netID: userInfo.netID,
+                _id: props.comment._id
+              }
+            });
+          }}
         >
           Report
-          </ReportButton>
+        </ReportButton>
 
         <TimestampDiv>
           <TimeAgo date={props.comment.date_created} />
         </TimestampDiv>
+
       </CommentMenu>
-    </CommentWhole >
+    </CommentWhole>
   );
 }
 
