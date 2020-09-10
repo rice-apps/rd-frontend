@@ -1,6 +1,6 @@
-import React, {useState, useEffect, useCallback} from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 
-import {useLazyQuery, useMutation, useQuery} from '@apollo/client'
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
 
 // import { Helmet } from 'react-helmet'
 // import {FeedProfileContainer} from "./PostFeedWithData.styles";
@@ -11,17 +11,22 @@ import {
   ProfileLogout,
   Divider,
   RightSidebarContainer,
-  Headshot, EditButton, BlockyText, TextBlock, SaveButton, EditableTextBlock
-} from "./Profile.styles";
+  Headshot,
+  EditButton,
+  BlockyText,
+  TextBlock,
+  SaveButton,
+  EditableTextBlock
+} from './Profile.styles'
 
-import EditUrl from "../images/edit.svg"
-import {Navigate, useNavigate} from "react-router-dom";
-import {currentUser} from "../utils/apollo";
-import {SET_INFO} from "../graphql/Mutations";
+import EditUrl from '../images/edit.svg'
+import { Navigate, useNavigate } from 'react-router-dom'
+import { currentUser } from '../utils/apollo'
+import { SET_INFO } from '../graphql/Mutations'
 // import {USER_EXISTS} from "../graphql/Queries";
-import majorMinorJson from "../utils/MajorMinor.json";
-import {DDList, DDListItem} from "./MoreInfo.styles";
-import DropDownItem from "./DropDownItem";
+import majorMinorJson from '../utils/MajorMinor.json'
+import { DDList, DDListItem } from './MoreInfo.styles'
+import DropDownItem from './DropDownItem'
 
 const ProfilePane = props => {
   const navigate = useNavigate()
@@ -143,18 +148,18 @@ const ProfilePane = props => {
   const handleMajorChange = newValue => {
     const indexOfMajor = major.indexOf(newValue)
     setMajor(
-        indexOfMajor >= 0
-            ? major.filter(maj => newValue !== maj)
-            : [...major, newValue]
+      indexOfMajor >= 0
+        ? major.filter(maj => newValue !== maj)
+        : [...major, newValue]
     )
   }
 
   const handleMinorChange = newValue => {
     const indexOfMinor = minor.indexOf(newValue)
     setMinor(
-        indexOfMinor >= 0
-            ? minor.filter(maj => newValue !== maj)
-            : [...minor, newValue]
+      indexOfMinor >= 0
+        ? minor.filter(maj => newValue !== maj)
+        : [...minor, newValue]
     )
   }
 
@@ -183,13 +188,13 @@ const ProfilePane = props => {
           netID,
           email: document.getElementById('email').innerText.trim(),
           phone: document.getElementById('phone').innerText.trim(),
-          isNewUser: false,
+          isNewUser: false
         }
       })
       setShowSaveButton(false)
       setBeingEdited('none')
     } catch (error) {
-      console.log('The big error we don\'t like')
+      console.log("The big error we don't like")
     }
   }
 
@@ -202,114 +207,123 @@ const ProfilePane = props => {
     navigate('/login')
   }
 
-  return props.show ?
-  (
-      <RightSidebarContainer>
-        <ProfileLogout>
-          <b style={{fontSize: '3.7vh'}}>Profile</b>
+  return props.show ? (
+    <RightSidebarContainer>
+      <ProfileLogout>
+        <b style={{ fontSize: '3.7vh' }}>Profile</b>
 
-          <LogoutButton onClick={handleLogout} >Logout</LogoutButton>
-        </ProfileLogout>
-        <ProfileInner>
-          <Headshot />
-          <b>{username}</b>
-          <Divider />
-          <Descriptor>
-            <BlockyText>
+        <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
+      </ProfileLogout>
+      <ProfileInner>
+        <Headshot />
+        <b>{username}</b>
+        <Divider />
+        <Descriptor>
+          <BlockyText>
             <b> Major: </b>
             <TextBlock>{major.join(', ')}</TextBlock>
-            </BlockyText>
-            <EditButton src={EditUrl} onClick={() => handleEditClick('major')}/>
-              {beingEdited === 'major'  && (
-                  <DDList>
-                    {finalizedMajors.map(item => (
-                        <DDListItem key={item}>
-                          <DropDownItem
-                              name={item}
-                              setInfo={handleMajorChange}
-                              selectedItems={major}
-                          />
-                        </DDListItem>
-                    ))}
-                  </DDList>
-              )}
-          </Descriptor>
-          <Descriptor>
-            <BlockyText>
-              <b> Minor: </b>
-              <TextBlock> {minor.join(', ')} </TextBlock>
-            </BlockyText>
-            <EditButton src={EditUrl} onClick={() => handleEditClick('minor')}/>
-            {beingEdited === 'minor'  && (
-                <DDList>
-                  {finalizedMinors.map(item => (
-                      <DDListItem key={item}>
-                        <DropDownItem
-                            name={item}
-                            setInfo={handleMinorChange}
-                            selectedItems={minor}
-                        />
-                      </DDListItem>
-                  ))}
-                </DDList>
-            )}
-          </Descriptor>
-          <Descriptor>
-            <BlockyText>
-              <b> College: </b>
-              <TextBlock> {college} </TextBlock>
-            </BlockyText>
-            <EditButton src={EditUrl} onClick={() => handleEditClick('college')} />
-            {beingEdited === 'college'  && (
-                <DDList>
-                  {colleges.map(item => (
-                      <DDListItem key={item}>
-                        <DropDownItem
-                            name={item}
-                            setInfo={handleCollegeChange}
-                            selectedItems={college}
-                        />
-                      </DDListItem>
-                  ))}
-                </DDList>
-            )}
-          </Descriptor>
-          <Divider />
-          <Descriptor>
-            <BlockyText>
-              <b> Email: </b>
-                <EditableTextBlock contentEditable={beingEdited === 'email'} id={'email'}
-                                   onChange={text => setEmail(text)}
-                           style={beingEdited === 'email' ?
-                               {backgroundColor: '#FCE8DA'} : null} onKeyDown={checkForEnter}>
-                  <a href={beingEdited === 'email' ? null : 'mailto:' + email} >
-                    {email}
-                  </a>
-                </EditableTextBlock>
-            </BlockyText>
-            <EditButton src={EditUrl} onClick={() => handleEditClick('email')}/>
-          </Descriptor>
-          <Descriptor>
-            <BlockyText>
-              <b> Phone: </b>
-              <EditableTextBlock contentEditable={beingEdited === 'phone'} id={'phone'} value={phone}
-                                 style={beingEdited === 'phone' ?
-                                     {backgroundColor: '#FCE8DA'} : null} onKeyDown={checkForEnter}>
-                {phone}
-              </EditableTextBlock>
-            </BlockyText>
-            <EditButton src={EditUrl} onClick={() => handleEditClick('phone')}/>
-          </Descriptor>
-          <Divider />
-          {showSaveButton &&
-            <SaveButton onClick={saveData}>
-              Save
-            </SaveButton>
-          }
-          {/*<Divider />*/}
-          {/*tags*/}
-        </ProfileInner>
-      </RightSidebarContainer>
+          </BlockyText>
+          <EditButton src={EditUrl} onClick={() => handleEditClick('major')} />
+          {beingEdited === 'major' && (
+            <DDList>
+              {finalizedMajors.map(item => (
+                <DDListItem key={item}>
+                  <DropDownItem
+                    name={item}
+                    setInfo={handleMajorChange}
+                    selectedItems={major}
+                  />
+                </DDListItem>
+              ))}
+            </DDList>
+          )}
+        </Descriptor>
+        <Descriptor>
+          <BlockyText>
+            <b> Minor: </b>
+            <TextBlock> {minor.join(', ')} </TextBlock>
+          </BlockyText>
+          <EditButton src={EditUrl} onClick={() => handleEditClick('minor')} />
+          {beingEdited === 'minor' && (
+            <DDList>
+              {finalizedMinors.map(item => (
+                <DDListItem key={item}>
+                  <DropDownItem
+                    name={item}
+                    setInfo={handleMinorChange}
+                    selectedItems={minor}
+                  />
+                </DDListItem>
+              ))}
+            </DDList>
+          )}
+        </Descriptor>
+        <Descriptor>
+          <BlockyText>
+            <b> College: </b>
+            <TextBlock> {college} </TextBlock>
+          </BlockyText>
+          <EditButton
+            src={EditUrl}
+            onClick={() => handleEditClick('college')}
+          />
+          {beingEdited === 'college' && (
+            <DDList>
+              {colleges.map(item => (
+                <DDListItem key={item}>
+                  <DropDownItem
+                    name={item}
+                    setInfo={handleCollegeChange}
+                    selectedItems={college}
+                  />
+                </DDListItem>
+              ))}
+            </DDList>
+          )}
+        </Descriptor>
+        <Divider />
+        <Descriptor>
+          <BlockyText>
+            <b> Email: </b>
+            <EditableTextBlock
+              contentEditable={beingEdited === 'email'}
+              id={'email'}
+              onChange={text => setEmail(text)}
+              style={
+                beingEdited === 'email' ? { backgroundColor: '#FCE8DA' } : null
+              }
+              onKeyDown={checkForEnter}
+            >
+              <a href={beingEdited === 'email' ? null : 'mailto:' + email}>
+                {email}
+              </a>
+            </EditableTextBlock>
+          </BlockyText>
+          <EditButton src={EditUrl} onClick={() => handleEditClick('email')} />
+        </Descriptor>
+        <Descriptor>
+          <BlockyText>
+            <b> Phone: </b>
+            <EditableTextBlock
+              contentEditable={beingEdited === 'phone'}
+              id={'phone'}
+              value={phone}
+              style={
+                beingEdited === 'phone' ? { backgroundColor: '#FCE8DA' } : null
+              }
+              onKeyDown={checkForEnter}
+            >
+              {phone}
+            </EditableTextBlock>
+          </BlockyText>
+          <EditButton src={EditUrl} onClick={() => handleEditClick('phone')} />
+        </Descriptor>
+        <Divider />
+        {showSaveButton && <SaveButton onClick={saveData}>Save</SaveButton>}
+        {/*<Divider />*/}
+        {/*tags*/}
+      </ProfileInner>
+    </RightSidebarContainer>
   ) : null
 }
 

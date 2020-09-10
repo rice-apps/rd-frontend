@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 // based off title box in WritePost styles
 const CommentInput = styled.div`
@@ -16,7 +16,7 @@ const CommentInput = styled.div`
   font: Roman 21px/24px Avenir;
   letter-spacing: 0px;
   color: #a9abb4;
-`;
+`
 // based off posting button in WritePost styles
 const CommentButton = styled.button`
   position: relative;
@@ -46,22 +46,22 @@ const CommentButton = styled.button`
   border: 2px solid #cdced2;
   border-radius: 20px;
   opacity: 1;
-`;
+`
 
 const CommentListItem = styled.li`
   list-style-type: none;
-`;
+`
 
 const CommentWhole = styled.div`
   // single comment area
   display: grid;
   grid-template-areas:
-    "votes comment"
-    "votes commentmenu"
-    "replyarea replyarea";
+    'votes comment'
+    'votes commentmenu'
+    'replyarea replyarea';
   grid-template-columns: auto 1fr;
   grid-template-rows: 1fr 1fr 1fr;
-`;
+`
 
 const CommentDiv = styled.div`
   position: relative;
@@ -74,7 +74,7 @@ const CommentDiv = styled.div`
   // overflow: hidden;
   // text-overflow: ellipsis;
   // white-space: nowrap;
-`;
+`
 
 // const CommenterDiv = styled.div`
 //   grid-area: commentauthor;
@@ -100,11 +100,11 @@ const CommentVotes = styled.div`
   grid-template-rows: 1fr 30px 30px 1fr; // add another for number if needed
   justify-items: center;
   align-items: center;
-`;
+`
 
 const CommentUpvote = styled.div`
   grid-row: 2/3;
-`;
+`
 
 // unused
 // const CommentLikes = styled.div`
@@ -113,26 +113,26 @@ const CommentUpvote = styled.div`
 
 const CommentDownvote = styled.div`
   grid-row: 3/4;
-`;
+`
 
 const CommentMenu = styled.div`
   // comment menu of options
   // position: relative;
   grid-area: commentmenu;
   display: grid;
-  grid-template-areas: "commentoption1 commentoption2 commentoption3 commentoption4 commentoption5 space";
+  grid-template-areas: 'commentoption1 commentoption2 commentoption3 commentoption4 commentoption5 space';
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 15%;
   grid-template-rows: 1fr;
-`;
+`
 
 const ReplyArea = styled.div`
   // contains things to reply to comment
   grid-area: replyarea;
   display: grid;
-  grid-template-areas: "replyinput postreplybutton";
+  grid-template-areas: 'replyinput postreplybutton';
   grid-template-columns: 50% 1fr;
   grid-template-rows: 1fr;
-`;
+`
 
 const ReplyStart = styled.button`
   grid-area: commentoption1
@@ -141,7 +141,7 @@ const ReplyStart = styled.button`
   text-decoration: underline;
   border: none;
   // background-color:
-`;
+`
 
 const ReportButton = styled.button`
   grid-area: commentoption3
@@ -149,23 +149,23 @@ const ReportButton = styled.button`
   // margin: 0 10px;
   text-decoration: underline;
   border: none;
-`;
+`
 
 const DeleteButton = styled.button`
   grid-area: commentoption4
   text-decoration: underline;
   border: none;
-`;
+`
 
 const TimestampDiv = styled.div`
   grid-area: commentoption5;
   // padding: 5px;
-`;
+`
 
 const CountDiv = styled.div`
   grid-area: commentoption2;
   // padding: 5px;
-`;
+`
 
 const ReplyInput = styled.input`
   grid-area: replyinput;
@@ -209,7 +209,6 @@ const PostReplyButton = styled.button`
   opacity: 1;
 `
 
-
 export {
   CommentInput,
   CommentButton,
@@ -230,5 +229,5 @@ export {
   ReplyArea,
   ReplyInput,
   PostReplyButton,
-  DeleteButton,
-};
+  DeleteButton
+}

@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro'
-import HeadshotUrl from "../images/headshot.svg";
+import HeadshotUrl from '../images/headshot.svg'
 
 export const DashboardContainer = styled.div`
   display: flex;
@@ -26,14 +26,14 @@ export const RightSidebarContainer = styled.div`
   // width: 30vmax;
   width: 50vh;
   // flex: 3;
-  
-  background: #FFFFFF 0% 0% no-repeat padding-box;
-  
+
+  background: #ffffff 0% 0% no-repeat padding-box;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  
+
   @media (max-aspect-ratio: 848/712) {
     order: 2;
     height: 90vh;
@@ -44,7 +44,7 @@ export const RightSidebarContainer = styled.div`
 export const ProfileLogout = styled.div`
   height: 3.2vh;
   width: 80%;
-  
+
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -54,8 +54,8 @@ export const ProfileLogout = styled.div`
 
 export const LogoutButton = styled.button`
   width: 27%;
-  border: 0.2vh solid #9293A3;
-  color: #9293A3;
+  border: 0.2vh solid #9293a3;
+  color: #9293a3;
   font-size: 2vh;
   border-radius: 37% / 117%;
   display: flex;
@@ -68,27 +68,27 @@ export const LogoutButton = styled.button`
 export const ProfileInner = styled.div`
   height: 72.7vh;
   width: 70%;
-  
+
   font-size: 2.2vh;
-  
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  
+
   // background-color: #bada55
 `
 
 export const Divider = styled.div`
   height: 0.1vh;
   width: 100%;
-  border: 0.2vh solid #CDCED241;
+  border: 0.2vh solid #cdced241;
 `
 
 export const Descriptor = styled.div`
   // height: 4vh;
   width: 100%;
-  
+
   display: flex;
   justify-content: space-between;
 `
@@ -102,21 +102,20 @@ export const Headshot = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100%;
-  
+
   // background-color: red;
 `
-
 
 export const EditButton = styled.img`
   height: 1em;
   width: 1em;
-  
+
   cursor: pointer;
 `
 
 export const BlockyText = styled.text`
   width: 100%;
-  
+
   display: flex;
   justify-content: flex-start;
 `
@@ -133,22 +132,21 @@ export const EditableTextBlock = styled.div`
   margin-right: 0.25em;
   padding-left: 0.25em;
   padding-right: 0.25em;
-  
+
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
   width: 10em;
-  
 `
 
 export const SaveButton = styled.div`
   height: 3vh;
   width: 8vh;
-  
+
   border-radius: 10%;
   cursor: pointer;
-  
-  border: 0.2vh solid #9293A3;
+
+  border: 0.2vh solid #9293a3;
   display: flex;
   justify-content: center;
   align-items: center;

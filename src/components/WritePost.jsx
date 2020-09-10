@@ -3,7 +3,6 @@ import DatePicker from 'react-datepicker'
 
 import { useMutation } from '@apollo/client'
 
-
 import {
   Editor,
   EditorState,
@@ -58,12 +57,14 @@ import {
   Tag,
   DateBox,
   LocationBox,
-  StyledLink, StereoButton, StereoButtonCheck
+  StyledLink,
+  StereoButton,
+  StereoButtonCheck
 } from './WritePost.styles'
 import { currentUser } from '../utils/apollo'
 import UploadToPost from './UploadToPost'
 import LinkAdder from './LinkAdder'
-import {tagColors} from "./tagColors";
+import { tagColors } from './tagColors'
 
 const styleMap = {
   STRIKETHROUGH: {
@@ -73,20 +74,14 @@ const styleMap = {
 
 const richIconStyle = {
   width: '3.5vh',
-  height: '3.5vh',
+  height: '3.5vh'
 }
 
-const suggestedTags = [
-    'Rice',
-    'CS',
-    'Engineering',
-    'STEM',
-    'Career Fair',
-]
+const suggestedTags = ['Rice', 'CS', 'Engineering', 'STEM', 'Career Fair']
 
 const numToDateString = num => {
   const newDate = new Date(num)
-  newDate.setTime( newDate.getTime() - newDate.getTimezoneOffset()*60*1000 );
+  newDate.setTime(newDate.getTime() - newDate.getTimezoneOffset() * 60 * 1000)
   const fullString = newDate.toUTCString()
   return (
     fullString.slice(8, 11) +
@@ -393,17 +388,11 @@ function WritePost (props) {
         <LocationBox id='location' onKeyUp={changeLocation} />
         Paid
         <StereoButton onClick={togglePaid}>
-          {
-            isPaid ? <StereoButtonCheck /> :
-                null
-          }
+          {isPaid ? <StereoButtonCheck /> : null}
         </StereoButton>
         Closed
         <StereoButton onClick={toggleClosed}>
-          {
-            isClosed ? <StereoButtonCheck /> :
-                null
-          }
+          {isClosed ? <StereoButtonCheck /> : null}
         </StereoButton>
       </LocationJobInfoWrapper>
     ),
@@ -495,12 +484,13 @@ function WritePost (props) {
 
       <PostWrapper>
         <ModalTitle>
-          <t style={{position: 'relative', top: '3vh', left: '7vh'}}>Add New Post</t>
+          <t style={{ position: 'relative', top: '3vh', left: '7vh' }}>
+            Add New Post
+          </t>
           <ExitButton onClick={closeModal}>
-            <CloseIcon style={{width: '5vh', height: '5vh'}}/>
+            <CloseIcon style={{ width: '5vh', height: '5vh' }} />
           </ExitButton>
         </ModalTitle>
-
 
         <FormWrapper>
           <SelectCategoryWrapper>
@@ -567,59 +557,60 @@ function WritePost (props) {
           <BodyWrapper>
             <RichIcons>
               <RichButton
-                  icon={<FormatBoldIcon style={richIconStyle}/>}
-                  type='style'
-                  op='BOLD' />
+                icon={<FormatBoldIcon style={richIconStyle} />}
+                type='style'
+                op='BOLD'
+              />
               <RichButton
-                icon={<FormatItalicIcon style={richIconStyle}/>}
+                icon={<FormatItalicIcon style={richIconStyle} />}
                 type='style'
                 op='ITALIC'
               />
               <RichButton
-                icon={<FormatUnderlinedIcon style={richIconStyle}/>}
+                icon={<FormatUnderlinedIcon style={richIconStyle} />}
                 type='style'
                 op='UNDERLINE'
               />
               <RichButton
-                icon={<StrikethroughSIcon style={richIconStyle}/>}
+                icon={<StrikethroughSIcon style={richIconStyle} />}
                 type='style'
                 op='STRIKETHROUGH'
               />
               <RichButton
-                icon={<FormatListBulletedIcon style={richIconStyle}/>}
+                icon={<FormatListBulletedIcon style={richIconStyle} />}
                 type='list'
                 op='unordered-list-item'
               />
               <RichButton
-                icon={<FormatListNumberedIcon style={richIconStyle}/>}
+                icon={<FormatListNumberedIcon style={richIconStyle} />}
                 type='list'
                 op='ordered-list-item'
               />
               <RichButton
-                icon={<FormatAlignLeftIcon style={richIconStyle}/>}
+                icon={<FormatAlignLeftIcon style={richIconStyle} />}
                 type='align'
                 op='left'
               />
               <RichButton
-                icon={<FormatAlignCenterIcon style={richIconStyle}/>}
+                icon={<FormatAlignCenterIcon style={richIconStyle} />}
                 type='align'
                 op='center'
               />
               <RichButton
-                icon={<FormatAlignRightIcon style={richIconStyle}/>}
+                icon={<FormatAlignRightIcon style={richIconStyle} />}
                 type='align'
                 op='right'
               />
               <RichButton
-                  icon={<InsertLinkIcon style={richIconStyle}/>}
-                  type='link'
-                  op='LINK'
+                icon={<InsertLinkIcon style={richIconStyle} />}
+                type='link'
+                op='LINK'
               />
               {/* <RichButton icon={<VideoLibraryIcon />} type='video' op='VIDEO' /> */}
               <RichButton
-                  icon={<ImageIcon style={richIconStyle}/>}
-                  type='image'
-                  op='IMAGE'
+                icon={<ImageIcon style={richIconStyle} />}
+                type='image'
+                op='IMAGE'
               />
             </RichIcons>
             <UploadToPost
@@ -651,43 +642,40 @@ function WritePost (props) {
             </RichEditorWrapper>
           </BodyWrapper>
           <TagWrapper>
-            <t style={{paddingLeft: '3.3vh'}}>
-              Add Tags
-            </t>
+            <t style={{ paddingLeft: '3.3vh' }}>Add Tags</t>
             <TagBox
               onChange={e => setTag(e.target.value.trim())}
               onKeyUp={addTag}
               placeholder='Ex. Internship, Externship, ...'
             />
           </TagWrapper>
-          {
-          tags.length === 0 ?
-              <TagsListWrapper>
-                Suggested:
-                {suggestedTags.map((tag, index) => (
-                    <Tag
-                        key={tag}
-                        onClick={() => setTags([tag])}
-                        style={tagColors[index % tagColors.length]}
-                    >
-                      {tag}
-                    </Tag>
-                ))}
-              </TagsListWrapper>
-              :
-              <TagsListWrapper>
-                Your tags:
-                {tags.map((tag, index) => (
-                    <Tag
-                        key={tag}
-                        onClick={() => removeTag(tag)}
-                        style={tagColors[index % 3]}
-                    >
-                      {tag}
-                    </Tag>
-                ))}
-              </TagsListWrapper>
-          }
+          {tags.length === 0 ? (
+            <TagsListWrapper>
+              Suggested:
+              {suggestedTags.map((tag, index) => (
+                <Tag
+                  key={tag}
+                  onClick={() => setTags([tag])}
+                  style={tagColors[index % tagColors.length]}
+                >
+                  {tag}
+                </Tag>
+              ))}
+            </TagsListWrapper>
+          ) : (
+            <TagsListWrapper>
+              Your tags:
+              {tags.map((tag, index) => (
+                <Tag
+                  key={tag}
+                  onClick={() => removeTag(tag)}
+                  style={tagColors[index % 3]}
+                >
+                  {tag}
+                </Tag>
+              ))}
+            </TagsListWrapper>
+          )}
 
           {locationJobInfo[postType] || locationJobInfo.default}
 
