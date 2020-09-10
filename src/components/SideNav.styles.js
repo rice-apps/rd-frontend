@@ -1,40 +1,71 @@
 import styled, { css } from 'styled-components/macro'
+import LogoUrl from '../images/RD_logo.svg'
+
+export const ChatLogo = styled.div`
+  width: 9vh;
+  height: 8vh;
+  background-image: url(${LogoUrl});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 95%;
+  
+  // background-color: red;
+  
+  // @media (max-aspect-ratio: 848/712) {
+  //   width: 13vw;
+  //   height: 11vw
+  // }
+`
 
 export const Logo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 7vh;
-  padding-bottom: 10vh;
+  justify-content: center;
+  // background-color: green;
+  // width: 100%;
+  @media (min-aspect-ratio: 848/712) {
+    padding-top: 7vh;
+    padding-bottom: 10vh;
+  }
+  
+  @media (max-aspect-ratio: 848/712) {
+    width: 25vw;
+  }
 `
 
 export const NavList = styled.div`
   display: flex;
   flex-direction: column;
+  // background-color: pink;
 
   justify-content: space-evenly;
   align-items: center;
+  
+  @media (max-aspect-ratio: 848/712) {
+    flex-direction: row;
+    width: 100%;
+  }
+  
+  @media (min-aspect-ratio: 848/712) {
+    height: 45vh;
+  }
 `
 
 export const NavElement = styled.div`
-  height: 2.6vw;
-  width: 2.6vw;
+  height: 5.6vh;
+  width: 5.6vh;
 
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 0.8vw;
+  border-radius: 1.72vh;
   border: 2px solid transparent;
 
   cursor: pointer;
 
-  margin-bottom: 1.5vw;
+  // margin-bottom: 3.3vh;
 
-  ${props =>
-    props.first &&
-    css`
-      margin-top: 1.5vw;
-    `}
 
   ${props =>
     !props.selected &&
@@ -55,4 +86,19 @@ export const NavElement = styled.div`
       background-color: #7380ff;
       box-shadow: 0 0.7vh 1vh -1vh black;
     `}
+`
+
+export const NavWrapper = styled.div`
+
+  // background-color: #bada55;
+  height: 100%;
+  
+  @media (max-aspect-ratio: 848/712) {
+    height: 10vh;
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    justify-content: space-evenly;
+    // background-color: red;
+  }
 `
