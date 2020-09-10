@@ -423,21 +423,21 @@ function PostFull() {
           {/* level 1 */}
           {theComments.map((comment) => (
             <li key={comment._id}>
-              <CommentChunk comment={comment} postID={postID}></CommentChunk>
+              <CommentChunk comment={comment} postID={postID} setParentID={setReplyID} isLeaf={false}></CommentChunk>
               {/* <button onClick={() => setReplyID(comment._id)}>Reply</button> */}
               <ul>
                 {/* level 2 */}
                 {comment.children.map((child1) => (
                   <li key={child1._id}>
-                    {child1.body}
-                    <button onClick={() => setReplyID(child1._id)}>
+                    <CommentChunk comment={child1} postID={postID} isLeaf={false}></CommentChunk>
+                    {/* <button onClick={() => setReplyID(child1._id)}>
                       Reply
-                    </button>
+                    </button> */}
                     <ul>
                       {/* level 3 */}
                       {child1.children.map((child2) => (
                         <li key={child2._id}>
-                          {child2.body}
+                          <CommentChunk comment={child2} postID={postID} isLeaf={true}></CommentChunk>
                           {/* dont nest any further */}
                         </li>
                       ))}

@@ -48,22 +48,6 @@ const CommentButton = styled.button`
   opacity: 1;
 `;
 
-const ReplyInput = styled.div`
-  border: solid;
-
-  width: 300px;
-  height: 42px;
-  background: #f4f4f49a 0% 0% no-repeat padding-box;
-  border-radius: 5px;
-  opacity: 1;
-
-  text-align: left;
-  vertical-align: middle;
-  font: Roman 21px/24px Avenir;
-  letter-spacing: 0px;
-  color: #a9abb4;
-`;
-
 const CommentListItem = styled.li`
   list-style-type: none;
 `;
@@ -73,9 +57,10 @@ const CommentWhole = styled.div`
   display: grid;
   grid-template-areas:
     "votes comment"
-    "votes commentmenu";
+    "votes commentmenu"
+    "replyarea replyarea";
   grid-template-columns: auto 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
 `;
 
 const CommentDiv = styled.div`
@@ -140,7 +125,16 @@ const CommentMenu = styled.div`
   grid-template-rows: 1fr;
 `;
 
-const ReplyButton = styled.button`
+const ReplyArea = styled.div`
+  // contains things to reply to comment
+  grid-area: replyarea;
+  display: grid;
+  grid-template-areas: "replyinput postreplybutton";
+  grid-template-columns: 50% 1fr;
+  grid-template-rows: 1fr;
+`;
+
+const ReplyStart = styled.button`
   grid-area: commentoption1
   // padding: 5px;
   // margin: 0 10px;
@@ -167,10 +161,11 @@ const CountDiv = styled.div`
   // padding: 5px;
 `;
 
-const ReplyInputForNow = styled.div`
-  grid-area: replyfornow
+const ReplyInput = styled.input`
+  grid-area: replyinput;
   border: solid;
 
+  width: 386px;
   height: 42px;
   background: #f4f4f49a 0% 0% no-repeat padding-box;
   border-radius: 5px;
@@ -181,19 +176,44 @@ const ReplyInputForNow = styled.div`
   font: Roman 21px/24px Avenir;
   letter-spacing: 0px;
   color: #a9abb4;
-`;
+`
+
+const PostReplyButton = styled.button`
+  grid-area: postreplybutton;
+  position: relative;
+  padding: 15px 32px;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+  z-index: 5;
+  margin: 5px;
+  &:hover {
+    background-color: #e7c6c6;
+    opacity: 100%;
+  }
+
+  width: 114px;
+  height: 46px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  font: Medium 20px/17px Avenir;
+  letter-spacing: 0px;
+  color: #747886;
+  border: 2px solid #cdced2;
+  border-radius: 20px;
+  opacity: 1;
+`
+
 
 export {
   CommentInput,
   CommentButton,
-  ReplyInput,
   CommentListItem,
   CommentWhole,
   CommentDiv,
   // CommenterDiv,
   // CommentContentDiv,
   CommentMenu,
-  ReplyButton,
+  ReplyStart,
   ReportButton,
   TimestampDiv,
   CountDiv,
@@ -201,5 +221,7 @@ export {
   CommentUpvote,
   // CommentLikes,
   CommentDownvote,
-  ReplyInputForNow,
+  ReplyArea,
+  ReplyInput,
+  PostReplyButton,
 };

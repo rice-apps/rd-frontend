@@ -3,6 +3,7 @@ import { useMutation } from "@apollo/client";
 import { currentUser } from "../utils/apollo";
 
 import {
+  CREATE_COMMENT,
   UPVOTE_COMMENT,
   DOWNVOTE_COMMENT,
   REPORT_COMMENT,
@@ -20,7 +21,6 @@ import log from "loglevel";
 import {
   // CommentInput,
   // CommentButton,
-  // ReplyInput,
   CommentListItem,
   CommentWhole,
   CommentDiv,
@@ -32,7 +32,9 @@ import {
   CommentVotes,
   CommentUpvote,
   CommentDownvote,
-  ReplyInputForNow,
+  ReplyArea,
+  ReplyInput,
+  PostReplyButton,
 } from "./CommentChunk.styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -45,12 +47,13 @@ const useStyles = makeStyles((theme) => ({
 
 function CommentChunk(props) {
   const userInfo = currentUser();
+  const [createComment] = useMutation(CREATE_COMMENT);
   const [upvoteComment] = useMutation(UPVOTE_COMMENT);
   const [downvoteComment] = useMutation(DOWNVOTE_COMMENT);
   const [reportComment] = useMutation(REPORT_COMMENT);
   const classes = useStyles();
 
-  // const [comment, setComment] = useState("");
+  const [reply, setReply] = useState("");
 
   let listOfUpvoters = props.comment.upvotes.map((userObject) => userObject.username);
 
@@ -74,6 +77,8 @@ function CommentChunk(props) {
     setDownvoted(!isDownvoted);
     setUpvoted(false);
   };
+
+  const checkComment = (comment) => comment.length <= 0;
 
   console.log(props);
 
@@ -127,36 +132,6 @@ function CommentChunk(props) {
 
       <CommentMenu>
         {/* TODO ************************************************** */}
-        {/* <ReplyInput
-            placeholder="Reply here..."
-            onChange={(e) => setReply1(e.target.value)}
-          /> */}
-
-        {/* <ReplyButton
-            // onClick={e => {
-            //   e.preventDefault()
-            //   // get an input field to show up
-            // }}
-            onClick={e => {
-              e.preventDefault()
-              const cmt = document.getElementById('reply1').innerHTML
-              if (checkComment(cmt)) return
-              try {
-                createComment({
-                  variables: {
-                    post: props.postID,
-                    parent: props.comment._id,
-                    body: cmt
-                  }
-                })
-              } catch (error) {
-                log.error(error)
-                // console.log(error)
-              }
-            }}
-          >
-            Post Reply
-          </ReplyButton> */}
 
         <CountDiv>{props.comment.upvotes.length -
           props.comment.downvotes.length} Votes</CountDiv>
@@ -165,6 +140,7 @@ function CommentChunk(props) {
           onClick={e => {
             e.preventDefault()
 
+            // TODO doesn't work yet (bad request errors)
             reportComment({
               variables: {
                 // netID: userInfo.netID,
@@ -181,6 +157,45 @@ function CommentChunk(props) {
         </TimestampDiv>
 
       </CommentMenu>
+
+      <ReplyArea>
+        <ReplyInput
+          placeholder="Reply here..."
+          onChange={(e) => setReply(e.target.value)}
+        />
+
+        <PostReplyButton
+          // onClick={e => {
+          //   e.preventDefault()
+          //   // get an input field to show up
+          // }}
+          onClick={e => {
+            e.preventDefault()
+            if (checkComment(reply)) return
+            try {
+              createComment({
+                variables: {
+                  post: props.postID,
+                  parent: props.comment._id,
+                  body: reply,
+                },
+              });
+              setReply("");
+              e.target.value = "";
+              // setParentID(null);
+            } catch (error) {
+              log.error(error);
+            }
+          }}
+        >
+          Post Reply
+        </PostReplyButton>
+
+      </ReplyArea>
+
+
+
+
     </CommentWhole>
   );
 }
