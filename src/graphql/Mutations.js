@@ -125,6 +125,7 @@ const DOWNVOTE_POST = gql`
 
 const REPORT_POST = gql`
   mutation ReportPost($netID: String!, $_id: ID!) {
+    currentNetID @client @export(as: "netID")
     togglePostReport(netID: $netID, _id: $_id) {
       creator {
         _id
@@ -272,6 +273,17 @@ const REPORT_COMMENT = gql`
   }
 `
 
+const REMOVE_COMMENT = gql`
+  mutation RemoveComment($_id: MongoID!) {
+    commentRemoveById(_id: $_id) {
+      record {
+        date_created
+        _id
+      }
+    }
+  }
+`
+
 export {
   SET_INFO,
   POST_CREATE,
@@ -287,4 +299,5 @@ export {
   UPVOTE_COMMENT,
   DOWNVOTE_COMMENT,
   REPORT_COMMENT,
+  REMOVE_COMMENT,
 }

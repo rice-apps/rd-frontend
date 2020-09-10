@@ -120,8 +120,8 @@ const CommentMenu = styled.div`
   // position: relative;
   grid-area: commentmenu;
   display: grid;
-  grid-template-areas: "replyfornow commentoption1 commentoption2 commentoption3 commentoption4 space";
-  grid-template-columns: 20% 1fr 1fr 1fr 1fr 15%;
+  grid-template-areas: "commentoption1 commentoption2 commentoption3 commentoption4 commentoption5 space";
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 15%;
   grid-template-rows: 1fr;
 `;
 
@@ -151,8 +151,14 @@ const ReportButton = styled.button`
   border: none;
 `;
 
+const DeleteButton = styled.button`
+  grid-area: commentoption4
+  text-decoration: underline;
+  border: none;
+`;
+
 const TimestampDiv = styled.div`
-  grid-area: commentoption4;
+  grid-area: commentoption5;
   // padding: 5px;
 `;
 
@@ -224,4 +230,5 @@ export {
   ReplyArea,
   ReplyInput,
   PostReplyButton,
+  DeleteButton,
 };

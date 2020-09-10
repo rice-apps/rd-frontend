@@ -7,6 +7,7 @@ import {
   UPVOTE_COMMENT,
   DOWNVOTE_COMMENT,
   REPORT_COMMENT,
+  REMOVE_COMMENT
 } from "../graphql/Mutations";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -35,6 +36,7 @@ import {
   ReplyArea,
   ReplyInput,
   PostReplyButton,
+  DeleteButton,
 } from "./CommentChunk.styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -51,6 +53,7 @@ function CommentChunk(props) {
   const [upvoteComment] = useMutation(UPVOTE_COMMENT);
   const [downvoteComment] = useMutation(DOWNVOTE_COMMENT);
   const [reportComment] = useMutation(REPORT_COMMENT);
+  const [removeComment] = useMutation(REMOVE_COMMENT);
   const classes = useStyles();
 
   const [reply, setReply] = useState("");
@@ -136,15 +139,19 @@ function CommentChunk(props) {
       <CommentMenu>
         {/* TODO deleting comments */}
         {/* TODO ************************************************** */}
-        <ReplyStart
-          onClick={e => {
-            e.preventDefault()
 
-            switchModal();
-          }}
-        >
-          Reply
-        </ReplyStart>
+        {/* only want this reply button to show up on non leaf comments */}
+        {/* might need to adapt design/css based on this functionality */}
+        {!props.isLeaf && (
+          <ReplyStart
+            onClick={e => {
+              e.preventDefault()
+              switchModal();
+            }}
+          >
+            Reply
+          </ReplyStart>
+        )}
 
         <CountDiv>{props.comment.upvotes.length -
           props.comment.downvotes.length} Votes</CountDiv>
@@ -164,6 +171,22 @@ function CommentChunk(props) {
         >
           Report
         </ReportButton>
+
+        {/* TODO delete top level comment -> delete its replies */}
+        {/* sometimesssss the refresh still doesnt delete */}
+        <DeleteButton
+          onClick={e => {
+            e.preventDefault()
+            removeComment({
+              variables: {
+                _id: props.comment._id
+              }
+            });
+            window.location.reload(false)
+          }}
+        >
+          Delete
+        </DeleteButton>
 
         <TimestampDiv>
           <TimeAgo date={props.comment.date_created} />
