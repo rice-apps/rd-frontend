@@ -17,3 +17,5 @@ steps:
     args: ['run', 'build']
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['app', 'deploy', '--version=1']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['app', 'deploy', 'dispatch.yaml', '--version=1']
