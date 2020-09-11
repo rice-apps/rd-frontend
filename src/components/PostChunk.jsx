@@ -178,6 +178,17 @@ function PostChunk (props) {
 
   const theComments = data.commentByPost // array
 
+  var numComments = theComments.length;
+
+  theComments.map(comment => {
+    numComments += comment.children.length
+    if (comment.children) {
+      comment.children.map(child => {
+        numComments += child.children.length
+      })
+    }
+  });
+
   const calIcon = { 'calendar-plus-o': 'right' }
 
   const calDropDown = [
@@ -420,9 +431,9 @@ function PostChunk (props) {
                 onClick={toggleComment}
               >
                 {isCommentOpen ? (
-                  <text>Hide Comments</text>
+                  <text>Hide Comments ({numComments})</text>
                 ) : (
-                  <text>Show Comments</text>
+                  <text>Show Comments ({numComments})</text>
                 )}
               </Button>
             </ShowCommentsDiv>
