@@ -12,13 +12,14 @@ import {
   Background,
   PostFeedContainer,
   LeftSidebarContainer,
-  NewPostButtonContainer, FeedProfileContainer
+  NewPostButtonContainer,
+  FeedProfileContainer
 } from './PostFeedWithData.styles'
 
 import SideNav from './SideNav'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import Button from '@material-ui/core/Button'
-import ProfilePane from "./ProfilePane";
+import ProfilePane from './ProfilePane'
 
 function PostFeedWithData () {
   const [today, setToday] = useState(null)
@@ -117,15 +118,20 @@ function PostFeedWithData () {
         <title>RiceDiscuss &middot; Your Feed</title>
       </Helmet>
       <WritePost
-          show={showWritePost}
-          switchVisibility={setShowWritePost}
-          style={{ position: 'fixed' }}
+        show={showWritePost}
+        switchVisibility={setShowWritePost}
+        style={{ position: 'fixed' }}
       />
       <Background>
         <LeftSidebarContainer>
-          <SideNav handleProfile={() => {setShowProfile(true); setShowWritePost(false)}}
-                   handleFeed={() => setShowProfile(false)}
-                   showProfile={showProfile} />
+          <SideNav
+            handleProfile={() => {
+              setShowProfile(true)
+              setShowWritePost(false)
+            }}
+            handleFeed={() => setShowProfile(false)}
+            showProfile={showProfile}
+          />
         </LeftSidebarContainer>
         <FeedProfileContainer shrink={showProfile}>
           <PostFeedContainer>
@@ -142,7 +148,11 @@ function PostFeedWithData () {
                 }}
                 startIcon={
                   <AddCircleIcon
-                    style={{ color: '#7380FF', width: '1.3vw', height: '1.3vw' }}
+                    style={{
+                      color: '#7380FF',
+                      width: '1.3vw',
+                      height: '1.3vw'
+                    }}
                   />
                 }
               >

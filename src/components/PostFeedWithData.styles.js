@@ -4,7 +4,7 @@ export const Background = styled.div`
   // display: grid;
   display: flex;
   flex-direction: row;
-  
+
   // grid-template-columns: 1fr 16fr;
 
   /* grid-template-columns: 1.2fr 1.75fr 2.25fr 1fr 1fr 1fr 0.5fr; */
@@ -13,11 +13,10 @@ export const Background = styled.div`
   // background-color: #f4efef;
   background-color: #eff0f8;
   // background-color: #bada55;
-  
+
   @media (max-aspect-ratio: 848/712) {
     flex-direction: column;
   }
-  
 `
 
 export const FeedProfileContainer = styled.div`
@@ -26,18 +25,14 @@ export const FeedProfileContainer = styled.div`
   // order: 3;
 
   // grid-column-start: 2;
-  flex: 16
-  
-  // background-color: green;
-  
-    
+  flex: 16 // background-color: green;
     ${props =>
-    props.shrink &&
-    css`
-      // width: 10%;
-      justify-self: center;
-    `}
-  
+      props.shrink &&
+      css`
+        // width: 10%;
+        justify-self: center;
+      `};
+
   // @media (min-aspect-ratio: 848/712) {
   //   background-color: red;
   // }
@@ -45,8 +40,7 @@ export const FeedProfileContainer = styled.div`
 
 export const PostFeedContainer = styled.div`
   /* margin-top: 8.6vh; */
-  
-  
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -56,9 +50,9 @@ export const PostFeedContainer = styled.div`
   /* border: 0.16vw solid #ffffff;
   border-radius: 1.6vw;
   backdrop-filter: blur(30px); */
-  
+
   /* -webkit-backdrop-filter: blur(30px); */
-  
+
   // @media (max-aspect-ratio: 848/712) {
   //   // flex: 13;
   //   // display: none;
@@ -88,7 +82,7 @@ export const LeftSidebarContainer = styled.div`
   /* border-right: 0.16vw solid #ffffff; 
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px); */
-  
+
   @media (max-aspect-ratio: 848/712) {
     height: 10vh;
     width: 100vw;
@@ -98,7 +92,7 @@ export const LeftSidebarContainer = styled.div`
 export const RightSidebarContainer = styled.div`
   position: sticky;
   top: 0;
-  
+
   // flex: 5vh/vw;
 
   justify-self: center;

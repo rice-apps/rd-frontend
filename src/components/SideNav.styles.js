@@ -8,9 +8,9 @@ export const ChatLogo = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-size: 95%;
-  
+
   // background-color: red;
-  
+
   // @media (max-aspect-ratio: 848/712) {
   //   width: 13vw;
   //   height: 11vw
@@ -28,7 +28,7 @@ export const Logo = styled.div`
     padding-top: 7vh;
     padding-bottom: 10vh;
   }
-  
+
   @media (max-aspect-ratio: 848/712) {
     width: 25vw;
   }
@@ -41,12 +41,12 @@ export const NavList = styled.div`
 
   justify-content: space-evenly;
   align-items: center;
-  
+
   @media (max-aspect-ratio: 848/712) {
     flex-direction: row;
     width: 100%;
   }
-  
+
   @media (min-aspect-ratio: 848/712) {
     height: 45vh;
   }
@@ -65,7 +65,6 @@ export const NavElement = styled.div`
   cursor: pointer;
 
   // margin-bottom: 3.3vh;
-
 
   ${props =>
     !props.selected &&
@@ -89,10 +88,9 @@ export const NavElement = styled.div`
 `
 
 export const NavWrapper = styled.div`
-
   // background-color: #bada55;
   height: 100%;
-  
+
   @media (max-aspect-ratio: 848/712) {
     height: 10vh;
     display: flex;
