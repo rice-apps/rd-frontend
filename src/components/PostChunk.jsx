@@ -373,12 +373,12 @@ function PostChunk (props) {
                       <Delete
                         onClick={e => {
                           e.preventDefault()
-                          window.location.reload(false)
                           props.removePost({
                             variables: {
                               _id: props.post.node._id
                             }
                           })
+                          window.location.reload(false)
                         }}
                       >
                         Delete Post
