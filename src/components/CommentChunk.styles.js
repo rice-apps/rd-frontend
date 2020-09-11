@@ -56,16 +56,16 @@ const CommentWhole = styled.div`
   // single comment area
   display: grid;
   grid-template-areas:
-    'votes comment'
+    'votes commentbody'
     'votes commentmenu'
     'replyarea replyarea';
-  grid-template-columns: auto 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 4vw 1fr;
+  grid-template-rows: auto 4vh auto;
 `
 
 const CommentDiv = styled.div`
   position: relative;
-  grid-area: comment;
+  grid-area: commentbody;
   display: grid;
   grid-template-areas:
     'commentauthor commentcontent'
@@ -120,9 +120,10 @@ const CommentMenu = styled.div`
   // position: relative;
   grid-area: commentmenu;
   display: grid;
-  grid-template-areas: 'commentoption1 commentoption2 commentoption3 commentoption4 commentoption5 space';
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 15%;
-  grid-template-rows: 1fr;
+  grid-template-areas: 'reply hoots report time delete .';
+  grid-template-columns: auto auto auto auto auto 1fr;
+  align-items: center;
+  grid-column-gap: 1vw;
 `
 
 const ReplyArea = styled.div`
@@ -135,7 +136,7 @@ const ReplyArea = styled.div`
 `
 
 const ReplyStart = styled.button`
-  grid-area: commentoption1
+  grid-area: reply
   // padding: 5px;
   // margin: 0 10px;
   text-decoration: underline;
@@ -143,8 +144,13 @@ const ReplyStart = styled.button`
   // background-color:
 `
 
+const CountDiv = styled.div`
+  grid-area: hoots
+  // padding: 5px;
+`
+
 const ReportButton = styled.button`
-  grid-area: commentoption3
+  grid-area: report
   // padding: 5px;
   // margin: 0 10px;
   text-decoration: underline;
@@ -152,20 +158,16 @@ const ReportButton = styled.button`
 `
 
 const DeleteButton = styled.button`
-  grid-area: commentoption4
+  grid-area: delete
   text-decoration: underline;
   border: none;
 `
 
 const TimestampDiv = styled.div`
-  grid-area: commentoption5;
+  grid-area: time
   // padding: 5px;
 `
 
-const CountDiv = styled.div`
-  grid-area: commentoption2;
-  // padding: 5px;
-`
 
 const ReplyInput = styled.input`
   grid-area: replyinput;

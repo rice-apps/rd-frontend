@@ -110,7 +110,7 @@ function CommentChunk (props) {
               })
             }}
           >
-            <ArrowDropUp fontSize='large' />
+            <ArrowDropUp fontSize='normal' />
           </IconButton>
         </CommentUpvote>
         <CommentDownvote className={classes.root}>
@@ -127,7 +127,7 @@ function CommentChunk (props) {
               })
             }}
           >
-            <ArrowDropDown fontSize='large' />
+            <ArrowDropDown fontSize='normal' />
           </IconButton>
         </CommentDownvote>
       </CommentVotes>
