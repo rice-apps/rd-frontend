@@ -11,7 +11,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp'
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
-import ChatIcon from '@material-ui/icons/Chat'
+import CommentOutlinedIcon from '@material-ui/icons/CommentOutlined';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
 import ReactHtmlParser from 'react-html-parser'
@@ -427,7 +427,7 @@ function PostChunk (props) {
 
             <ShowCommentsDiv>
               <Button
-                startIcon={<ChatIcon />}
+                startIcon={<CommentOutlinedIcon fontSize="large"/>}
                 style={{
                   background: 'none',
                   border: 'none',
@@ -438,9 +438,9 @@ function PostChunk (props) {
                 onClick={toggleComment}
               >
                 {isCommentOpen ? (
-                  <text>Hide Comments ({numComments})</text>
+                  <text style={{color: '#67687E'}}>Hide Comments ({numComments})</text>
                 ) : (
-                  <text>Show Comments ({numComments})</text>
+                  <text style={{color: '#67687E'}}>Show Comments ({numComments})</text>
                 )}
               </Button>
             </ShowCommentsDiv>
