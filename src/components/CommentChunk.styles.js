@@ -116,7 +116,7 @@ const CommentMenu = styled.div`
   grid-area: commentmenu;
   display: grid;
   grid-template-areas: 'reply hoots report time delete .';
-  grid-template-columns: auto auto auto auto auto 1fr;
+  grid-template-columns: 3vw auto auto auto auto 1fr;
   align-items: center;
   justify-items: start;
   grid-column-gap: 1vw;
@@ -126,9 +126,11 @@ const ReplyArea = styled.div`
   // contains things to reply to comment
   grid-area: replyarea;
   display: grid;
-  grid-template-areas: 'replyinput postreplybutton';
-  grid-template-columns: 50% 1fr;
-  grid-template-rows: 1fr;
+  padding: 1vh 0px;
+  justify-items: start;
+  grid-template-areas: 'replyinput'
+                       'replybutton';
+  grid-template-rows: auto auto;
 `
 
 /* const ReplyStart = styled.button`
@@ -144,12 +146,17 @@ const ReplyArea = styled.div`
 
 const ReplyStart = styled.button`
   grid-area: reply;
+  margin-left: -0.8vh;
   text-decoration: none;
   border: none;
   background: none;
   font-size: 1.7vh;
   color: #A9ABB4;
   opacity: 1;
+  cursor: pointer;
+  &:hover {
+    color: #e7c6c6;
+  }
 `
 
 
@@ -158,6 +165,7 @@ const CountDiv = styled.text`
   font-size: 1.7vh;
   color: #A9ABB4;
   opacity: 1;
+  min-width: 4vw;
   // padding: 5px;
 `
 
@@ -171,6 +179,10 @@ const ReportButton = styled.button`
   font-size: 1.7vh;
   color: #A9ABB4;
   opacity: 1;
+  cursor: pointer;
+  &:hover {
+    color: #e7c6c6;
+  }
 `
 
 const DeleteButton = styled.button`
@@ -182,6 +194,10 @@ const DeleteButton = styled.button`
   text-align: left;
   color: #A9ABB4;
   opacity: 1;
+  cursor: pointer;
+  &:hover {
+    color: #e7c6c6;
+  }
 `
 
 const TimestampDiv = styled.text`
@@ -195,43 +211,52 @@ const TimestampDiv = styled.text`
 
 const ReplyInput = styled.input`
   grid-area: replyinput;
-  border: solid;
+  background: #F8F8F8 0% 0% no-repeat padding-box;
+  border: none;
+  border-radius: 20px;
 
-  width: 386px;
-  height: 42px;
-  background: #f4f4f49a 0% 0% no-repeat padding-box;
-  border-radius: 5px;
-  opacity: 1;
+  width: 40vw;
+  height: auto;
+  min-height: 5vh;
+
+  overflow-y: auto;
+
+  padding-left: 0.5vw;
+  padding-top: 0.5vh;
+  margin-left: 4vw;
 
   text-align: left;
-  vertical-align: middle;
-  font: Roman 21px/24px Avenir;
+  font: normal normal medium 16px/22px Avenir;
   letter-spacing: 0px;
-  color: #a9abb4;
+  opacity: 1;
 `
 
 const PostReplyButton = styled.button`
-  grid-area: postreplybutton;
+  grid-area: replybutton;
   position: relative;
-  padding: 15px 32px;
+  padding: 0.5vh 1vw;
   text-align: center;
   display: inline-block;
   cursor: pointer;
-  z-index: 5;
-  margin: 5px;
+  margin: 1vh 0px 0px 5vw;
   &:hover {
     background-color: #e7c6c6;
     opacity: 100%;
   }
-
-  width: 114px;
-  height: 46px;
-  background: #ffffff 0% 0% no-repeat padding-box;
+  width: 10vw;
+  height: 4vh;
+  background: #7380FF 0% 0% no-repeat padding-box;
+  border-radius: 20px;
+  opacity: 1;
   font: Medium 20px/17px Avenir;
   letter-spacing: 0px;
   color: #747886;
-  border: 2px solid #cdced2;
-  border-radius: 20px;
+  border: none
+`
+const ReplyButtonText = styled.text`
+  font: normal normal 700 15px/20px Avenir;
+  letter-spacing: 0px;
+  color: #FFFFFF;
   opacity: 1;
 `
 
@@ -255,5 +280,6 @@ export {
   ReplyArea,
   ReplyInput,
   PostReplyButton,
+  ReplyButtonText,
   DeleteButton
 }

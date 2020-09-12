@@ -415,7 +415,7 @@ function PostChunk (props) {
             <ImageDiv>
               {oneImage}
             </ImageDiv>
-            
+
           </TopMiddleComponent>
 
           <CommentComponent>
@@ -433,7 +433,7 @@ function PostChunk (props) {
                   border: 'none',
                   font: 'Avenir',
                   textTransform: 'none',
-                  display: 'flex'
+                  display: 'flex',
                 }}
                 onClick={toggleComment}
               >

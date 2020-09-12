@@ -49,7 +49,7 @@ const Tags = styled.div`
   grid-area: tags;
   word-wrap: break-word;
   text-align: right;
-  margin-right: 60px;
+  margin-right: 4vw;
 `
 
 const Tag = styled.text`
@@ -149,7 +149,7 @@ const MoreOptions = styled.div`
   position: relative;
   grid-area: moreoptions;
   align-self: start;
-  justify-self: start;
+  justify-self: center;
   margin-top: -4.5vh;
 `
 

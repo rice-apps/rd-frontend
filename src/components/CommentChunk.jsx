@@ -36,6 +36,7 @@ import {
   ReplyArea,
   ReplyInput,
   PostReplyButton,
+  ReplyButtonText,
   DeleteButton
 } from './CommentChunk.styles'
 
@@ -75,6 +76,7 @@ function CommentChunk (props) {
   const [isDownvoted, setDownvoted] = useState(
     listOfDownvoters.includes(userInfo.username)
   )
+  const [isReplyOpen, setReplyOpen] = useState(false)
 
   const toggleUpvoted = () => {
     setUpvoted(!isUpvoted)
@@ -84,6 +86,10 @@ function CommentChunk (props) {
   const toggleDownvoted = () => {
     setDownvoted(!isDownvoted)
     setUpvoted(false)
+  }
+
+  const toggleReply = () => {
+    setReplyOpen(!isReplyOpen)
   }
 
   const checkComment = comment => comment.length <= 0
@@ -146,15 +152,25 @@ function CommentChunk (props) {
           <ReplyStart
             onClick={e => {
               e.preventDefault()
+              toggleReply();
               switchModal()
             }}
           >
-            Reply
+            {isReplyOpen ? (
+              <text>Cancel</text>
+            ) : (
+              <text>Reply</text>
+            )}
           </ReplyStart>
         )}
 
         <CountDiv style={{fontSize:"1.8vh"}}>
-          {props.comment.upvotes.length - props.comment.downvotes.length} hoots
+          {props.comment.upvotes.length - props.comment.downvotes.length}
+          {props.comment.upvotes.length - props.comment.downvotes.length === 1 ? (
+            <text> hoot</text>
+          ) : (
+            <text> hoots</text>
+          )}
         </CountDiv>
 
         <ReportButton
@@ -225,7 +241,9 @@ function CommentChunk (props) {
               }
             }}
           >
-            Post Reply
+            <ReplyButtonText>
+              Post Reply
+            </ReplyButtonText>
           </PostReplyButton>
         </ReplyArea>
       )}
