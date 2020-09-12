@@ -112,6 +112,10 @@ function PostFeedWithData () {
     setShowProfile(false)
   }
 
+  const closeModal = () => {
+    setShowProfile(false);
+  }
+
   return (
     <>
       <Helmet>
@@ -231,7 +235,7 @@ function PostFeedWithData () {
               }
             />
           </PostFeedContainer>
-          <ProfilePane show={showProfile} />
+          <ProfilePane show={showProfile} closeModal = {closeModal}/>
         </FeedProfileContainer>
       </Background>
     </>

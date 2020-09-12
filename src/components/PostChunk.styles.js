@@ -297,6 +297,14 @@ const CommentButtonText = styled.text`
   color: #FFFFFF;
   opacity: 1;
 `
+const BoldedSpan = styled.span`
+  font-weight: 600;
+`
+
+const NormalSpan = styled.span`
+  font-size: 2vh;
+  margin-right: 0.7rem;
+`
 
 const CommentsDiv = styled.div`
   grid-area: commentsdiv;
@@ -343,8 +351,6 @@ export {
   ShowCommentsDiv,
   CommentInput,
   CommentButton,
-  CommentButtonText,
-  CommentsDiv,
-  Commentul,
-  Commentli
+  BoldedSpan,
+  NormalSpan
 }
