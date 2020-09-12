@@ -18,7 +18,7 @@ const DiscussionBox = styled.section`
   border-radius: 20px;
   display: grid;
   grid-template-rows: 4vh 1fr auto;
-  grid-template-columns: 65px 1fr;
+  grid-template-columns: 5vw 1fr;
   grid-template-areas:
     'owo top'
     'left topmiddle'
@@ -49,7 +49,7 @@ const Tags = styled.div`
   grid-area: tags;
   word-wrap: break-word;
   text-align: right;
-  margin-right: 60px;
+  margin-right: 4vw;
 `
 
 const Tag = styled.text`
@@ -105,7 +105,7 @@ const TopMiddleComponent = styled.div`
     'title kind moreoptions'
     'body body moreoptions'
     'image image moreoptions';
-  grid-template-columns: auto 1fr 60px;
+  grid-template-columns: auto 1fr 5vw;
   grid-template-rows: auto auto auto;
 `
 
@@ -149,7 +149,7 @@ const MoreOptions = styled.div`
   position: relative;
   grid-area: moreoptions;
   align-self: start;
-  justify-self: start;
+  justify-self: center;
   margin-top: -4.5vh;
 `
 
@@ -194,9 +194,15 @@ const DiscussionBody = styled.text`
 `
 
 const ReadMore = styled.text`
-  color: #000080;
-  font-size: 1.75vh;
-  font-weight: normal;
+  font: normal normal normal 1.75vh Avenir;
+  letter-spacing: 0px;
+  color: #9293A3;
+  text-align: right;
+  text-decoration: underline;
+`
+
+const ImageDiv = styled.div`
+  grid-area: image
 `
 
 // contains DividerBottom, ShowCommentsDiv, NewCommentDiv, PostCommentDiv, CommentsDiv
@@ -205,12 +211,13 @@ const CommentComponent = styled.div`
   grid-area: comments;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1vh 6vh auto auto;
+  grid-template-rows: 1vh 6vh auto auto auto;
   grid-template-areas:
     'dividerbottom'
     'showcomments'
     'commentinput'
-    'commentbutton';
+    'commentbutton'
+    'commentsdiv';
 `
 const DividerBottom = styled.div`
   grid-area: dividerbottom;
@@ -220,44 +227,87 @@ const ShowCommentsDiv = styled.div`
   padding: 1vh 0px;
 `
 
-// based off title box in WritePost styles
+/*
 const CommentInput = styled.input`
   grid-area: commentinput;
   border: solid;
   width: 70%;
-  height: 42px;
+  height: auto;
   background: #f4f4f49a 0% 0% no-repeat padding-box;
   border-radius: 5px;
   opacity: 1;
   text-align: left;
   vertical-align: middle;
+  align-self: start;
   font: Roman 21px/24px Avenir;
   letter-spacing: 0px;
   color: #a9abb4;
 `
+*/
+
+const CommentInput = styled.input`
+  grid-area: commentinput;
+  background: #F8F8F8 0% 0% no-repeat padding-box;
+  border: none;
+  border-radius: 20px;
+
+  width: 40vw;
+  height: auto;
+  min-height: 5vh;
+
+  overflow-y: auto;
+
+  padding-left: 0.5vw;
+  padding-top: 0.5vh;
+  margin-left: 1vw;
+
+  text-align: left;
+  font: normal normal medium 16px/22px Avenir;
+  letter-spacing: 0px;
+  opacity: 1;
+`
+
+
 // based off posting button in WritePost styles
 const CommentButton = styled.button`
   grid-area: commentbutton;
   position: relative;
-  padding: 5px 10px;
+  padding: 0.5vh 1vw;
   text-align: center;
   display: inline-block;
   cursor: pointer;
-  z-index: 5;
-  margin: 5px;
+  margin: 1vh 0px 0px 2vw;
   &:hover {
     background-color: #e7c6c6;
     opacity: 100%;
   }
-  width: 150px;
-  height: 46px;
-  background: #ffffff 0% 0% no-repeat padding-box;
+  width: 10vw;
+  height: 4vh;
+  background: #7380FF 0% 0% no-repeat padding-box;
+  border-radius: 20px;
+  opacity: 1;
   font: Medium 20px/17px Avenir;
   letter-spacing: 0px;
   color: #747886;
-  border: 2px solid #cdced2;
-  border-radius: 20px;
+  border: none
+`
+const CommentButtonText = styled.text`
+  font: normal normal 700 15px/20px Avenir;
+  letter-spacing: 0px;
+  color: #FFFFFF;
   opacity: 1;
+`
+
+const CommentsDiv = styled.div`
+  grid-area: commentsdiv;
+`
+
+const Commentul = styled.ul`
+  list-style-type: none;
+`
+
+const Commentli = styled.li`
+  list-style-type: none;
 `
 
 export {
@@ -287,9 +337,14 @@ export {
   FullPostLink,
   Expand,
   ReadMore,
+  ImageDiv,
   CommentComponent,
   DividerBottom,
   ShowCommentsDiv,
   CommentInput,
-  CommentButton
+  CommentButton,
+  CommentButtonText,
+  CommentsDiv,
+  Commentul,
+  Commentli
 }
