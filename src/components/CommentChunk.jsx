@@ -132,10 +132,8 @@ function CommentChunk (props) {
         </CommentDownvote>
       </CommentVotes>
       <CommentDiv>
-        <p>
-          <strong>{props.comment.creator.username}: </strong>
-          {props.comment.body}
-        </p>
+        <strong>{props.comment.creator.username}: </strong>
+        {props.comment.body}
       </CommentDiv>
 
       <CommentMenu>
@@ -155,8 +153,8 @@ function CommentChunk (props) {
           </ReplyStart>
         )}
 
-        <CountDiv>
-          {props.comment.upvotes.length - props.comment.downvotes.length} Votes
+        <CountDiv style={{fontSize:"1.8vh"}}>
+          {props.comment.upvotes.length - props.comment.downvotes.length} hoots
         </CountDiv>
 
         <ReportButton
@@ -192,7 +190,7 @@ function CommentChunk (props) {
         </DeleteButton>
 
         <TimestampDiv>
-          <TimeAgo date={props.comment.date_created} />
+          <TimeAgo date={props.comment.date_created} style={{fontSize:"1.8vh"}}/>
         </TimestampDiv>
       </CommentMenu>
 

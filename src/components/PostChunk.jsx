@@ -57,7 +57,9 @@ import {
   CommentInput,
   CommentButton,
   CommentButtonText,
-  CommentsDiv
+  CommentsDiv,
+  Commentli,
+  Commentul
 } from './PostChunk.styles'
 import { tagColors } from './tagColors'
 
@@ -306,7 +308,7 @@ function PostChunk (props) {
                   <span>
                     ...
                     <FullPostLink to={myPostLink}>
-                      <ReadMore>(Read More)</ReadMore>
+                      <ReadMore>Read More</ReadMore>
                     </FullPostLink>
                   </span>
                 }
@@ -400,7 +402,7 @@ function PostChunk (props) {
                   <span>
                     ...
                     <FullPostLink to={myPostLink}>
-                      <ReadMore>(Read More)</ReadMore>
+                      <ReadMore>Read More</ReadMore>
                     </FullPostLink>
                   </span>
                 }
@@ -472,24 +474,24 @@ function PostChunk (props) {
             )}
             {isCommentOpen && (
               <CommentsDiv>
-                <ul>
+                <ul style={{listStyleType:"none", paddingLeft:"0px"}}>
                   {/* level 1 */}
                   {theComments.map((comment) => (
-                    <li key={comment._id}>
+                    <li key={comment._id} style={{listStyleType:"none"}}>
                       <CommentChunk comment={comment} postID={props.post.node._id} setParentID={setReplyID} isLeaf={false}></CommentChunk>
                       {/* <button onClick={() => setReplyID(comment._id)}>Reply</button> */}
-                      <ul>
+                      <ul style={{listStyleType:"none"}}>
                         {/* level 2 */}
                         {comment.children.map((child1) => (
-                          <li key={child1._id}>
+                          <li key={child1._id} style={{listStyleType:"none"}}>
                             <CommentChunk comment={child1} postID={props.post.node._id} isLeaf={false}></CommentChunk>
                             {/* <button onClick={() => setReplyID(child1._id)}>
                               Reply
                             </button> */}
-                            <ul>
+                            <ul style={{listStyleType:"none"}}>
                               {/* level 3 */}
                               {child1.children.map((child2) => (
-                                <li key={child2._id}>
+                                <li key={child2._id} style={{listStyleType:"none"}}>
                                   <CommentChunk comment={child2} postID={props.post.node._id} isLeaf={true}></CommentChunk>
                                   {/* dont nest any further */}
                                 </li>

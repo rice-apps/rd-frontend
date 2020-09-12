@@ -66,11 +66,7 @@ const CommentWhole = styled.div`
 const CommentDiv = styled.div`
   position: relative;
   grid-area: commentbody;
-  display: grid;
-  grid-template-areas:
-    'commentauthor commentcontent'
-  grid-template-columns: auto 1fr;
-  // padding: 5px 0px;
+  padding: 1vh 0px;
   // overflow: hidden;
   // text-overflow: ellipsis;
   // white-space: nowrap;
@@ -97,22 +93,21 @@ const CommentDiv = styled.div`
 const CommentVotes = styled.div`
   grid-area: votes;
   display: grid;
-  grid-template-rows: 1fr 30px 30px 1fr; // add another for number if needed
+  grid-template-rows: 1vh 3vh 3.5vh 1fr;
+  grid-template-areas: '.'
+                       'upvote'
+                       'downvote';
+                       '.';
   justify-items: center;
   align-items: center;
 `
 
 const CommentUpvote = styled.div`
-  grid-row: 2/3;
+  grid-area: upvote
 `
 
-// unused
-// const CommentLikes = styled.div`
-//   grid-row: 3/4;
-// `
-
 const CommentDownvote = styled.div`
-  grid-row: 3/4;
+  grid-area: downvote;
 `
 
 const CommentMenu = styled.div`
@@ -123,6 +118,7 @@ const CommentMenu = styled.div`
   grid-template-areas: 'reply hoots report time delete .';
   grid-template-columns: auto auto auto auto auto 1fr;
   align-items: center;
+  justify-items: start;
   grid-column-gap: 1vw;
 `
 
@@ -135,36 +131,64 @@ const ReplyArea = styled.div`
   grid-template-rows: 1fr;
 `
 
-const ReplyStart = styled.button`
+/* const ReplyStart = styled.button`
   grid-area: reply
-  // padding: 5px;
-  // margin: 0 10px;
   text-decoration: underline;
   border: none;
-  // background-color:
+  background: none;
+  font-size: 1.7vh;
+  text-align: left;
+  color: #A9ABB4;
+  opacity: 1;
+` */
+
+const ReplyStart = styled.button`
+  grid-area: reply;
+  text-decoration: none;
+  border: none;
+  background: none;
+  font-size: 1.7vh;
+  color: #A9ABB4;
+  opacity: 1;
 `
 
-const CountDiv = styled.div`
+
+const CountDiv = styled.text`
   grid-area: hoots
+  font-size: 1.7vh;
+  color: #A9ABB4;
+  opacity: 1;
   // padding: 5px;
 `
 
 const ReportButton = styled.button`
-  grid-area: report
+  grid-area: report;
   // padding: 5px;
   // margin: 0 10px;
-  text-decoration: underline;
+  text-decoration: none;
   border: none;
+  background: none;
+  font-size: 1.7vh;
+  color: #A9ABB4;
+  opacity: 1;
 `
 
 const DeleteButton = styled.button`
   grid-area: delete
-  text-decoration: underline;
+  text-decoration: none;
   border: none;
+  background: none;
+  font-size: 1.7vh;
+  text-align: left;
+  color: #A9ABB4;
+  opacity: 1;
 `
 
-const TimestampDiv = styled.div`
+const TimestampDiv = styled.text`
   grid-area: time
+  font-size: 1.7vh;
+  color: #A9ABB4;
+  opacity: 1;
   // padding: 5px;
 `
 

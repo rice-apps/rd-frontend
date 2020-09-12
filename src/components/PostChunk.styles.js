@@ -194,9 +194,11 @@ const DiscussionBody = styled.text`
 `
 
 const ReadMore = styled.text`
-  color: #000080;
-  font-size: 1.75vh;
-  font-weight: normal;
+  font: normal normal normal 1.75vh Avenir;
+  letter-spacing: 0px;
+  color: #9293A3;
+  text-align: right;
+  text-decoration: underline;
 `
 
 // contains DividerBottom, ShowCommentsDiv, NewCommentDiv, PostCommentDiv, CommentsDiv
@@ -296,6 +298,14 @@ const CommentsDiv = styled.div`
   grid-area: commentsdiv;
 `
 
+const Commentul = styled.ul`
+  list-style-type: none;
+`
+
+const Commentli = styled.li`
+  list-style-type: none;
+`
+
 export {
   DiscussionBoxSection,
   OriginalPoster,
@@ -329,5 +339,7 @@ export {
   CommentInput,
   CommentButton,
   CommentButtonText,
-  CommentsDiv
+  CommentsDiv,
+  Commentul,
+  Commentli
 }
