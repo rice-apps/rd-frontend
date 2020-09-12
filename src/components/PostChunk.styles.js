@@ -259,6 +259,14 @@ const CommentButton = styled.button`
   border-radius: 20px;
   opacity: 1;
 `
+const BoldedSpan = styled.span`
+  font-weight: 600;
+`
+
+const NormalSpan = styled.span`
+  font-size: 2vh;
+  margin-right: 0.7rem;
+`
 
 export {
   DiscussionBoxSection,
@@ -291,5 +299,7 @@ export {
   DividerBottom,
   ShowCommentsDiv,
   CommentInput,
-  CommentButton
+  CommentButton,
+  BoldedSpan,
+  NormalSpan
 }
