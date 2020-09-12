@@ -56,21 +56,17 @@ const CommentWhole = styled.div`
   // single comment area
   display: grid;
   grid-template-areas:
-    'votes comment'
+    'votes commentbody'
     'votes commentmenu'
     'replyarea replyarea';
-  grid-template-columns: auto 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 4vw 1fr;
+  grid-template-rows: auto 4vh auto;
 `
 
 const CommentDiv = styled.div`
   position: relative;
-  grid-area: comment;
-  display: grid;
-  grid-template-areas:
-    'commentauthor commentcontent'
-  grid-template-columns: auto 1fr;
-  // padding: 5px 0px;
+  grid-area: commentbody;
+  padding: 1vh 0px;
   // overflow: hidden;
   // text-overflow: ellipsis;
   // white-space: nowrap;
@@ -97,22 +93,21 @@ const CommentDiv = styled.div`
 const CommentVotes = styled.div`
   grid-area: votes;
   display: grid;
-  grid-template-rows: 1fr 30px 30px 1fr; // add another for number if needed
+  grid-template-rows: 1vh 3vh 3.5vh 1fr;
+  grid-template-areas: '.'
+                       'upvote'
+                       'downvote';
+                       '.';
   justify-items: center;
   align-items: center;
 `
 
 const CommentUpvote = styled.div`
-  grid-row: 2/3;
+  grid-area: upvote
 `
 
-// unused
-// const CommentLikes = styled.div`
-//   grid-row: 3/4;
-// `
-
 const CommentDownvote = styled.div`
-  grid-row: 3/4;
+  grid-area: downvote;
 `
 
 const CommentMenu = styled.div`
@@ -120,92 +115,148 @@ const CommentMenu = styled.div`
   // position: relative;
   grid-area: commentmenu;
   display: grid;
-  grid-template-areas: 'commentoption1 commentoption2 commentoption3 commentoption4 commentoption5 space';
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 15%;
-  grid-template-rows: 1fr;
+  grid-template-areas: 'reply hoots report time delete .';
+  grid-template-columns: 3vw auto auto auto auto 1fr;
+  align-items: center;
+  justify-items: start;
+  grid-column-gap: 1vw;
 `
 
 const ReplyArea = styled.div`
   // contains things to reply to comment
   grid-area: replyarea;
   display: grid;
-  grid-template-areas: 'replyinput postreplybutton';
-  grid-template-columns: 50% 1fr;
-  grid-template-rows: 1fr;
+  padding: 1vh 0px;
+  justify-items: start;
+  grid-template-areas: 'replyinput'
+                       'replybutton';
+  grid-template-rows: auto auto;
 `
 
-const ReplyStart = styled.button`
-  grid-area: commentoption1
-  // padding: 5px;
-  // margin: 0 10px;
+/* const ReplyStart = styled.button`
+  grid-area: reply
   text-decoration: underline;
   border: none;
-  // background-color:
+  background: none;
+  font-size: 1.7vh;
+  text-align: left;
+  color: #A9ABB4;
+  opacity: 1;
+` */
+
+const ReplyStart = styled.button`
+  grid-area: reply;
+  margin-left: -0.8vh;
+  text-decoration: none;
+  border: none;
+  background: none;
+  font-size: 1.7vh;
+  color: #A9ABB4;
+  opacity: 1;
+  cursor: pointer;
+  &:hover {
+    color: #e7c6c6;
+  }
+`
+
+
+const CountDiv = styled.text`
+  grid-area: hoots
+  font-size: 1.7vh;
+  color: #A9ABB4;
+  opacity: 1;
+  min-width: 4vw;
+  // padding: 5px;
 `
 
 const ReportButton = styled.button`
-  grid-area: commentoption3
+  grid-area: report;
   // padding: 5px;
   // margin: 0 10px;
-  text-decoration: underline;
+  text-decoration: none;
   border: none;
+  background: none;
+  font-size: 1.7vh;
+  color: #A9ABB4;
+  opacity: 1;
+  cursor: pointer;
+  &:hover {
+    color: #e7c6c6;
+  }
 `
 
 const DeleteButton = styled.button`
-  grid-area: commentoption4
-  text-decoration: underline;
+  grid-area: delete
+  text-decoration: none;
   border: none;
+  background: none;
+  font-size: 1.7vh;
+  text-align: left;
+  color: #A9ABB4;
+  opacity: 1;
+  cursor: pointer;
+  &:hover {
+    color: #e7c6c6;
+  }
 `
 
-const TimestampDiv = styled.div`
-  grid-area: commentoption5;
+const TimestampDiv = styled.text`
+  grid-area: time
+  font-size: 1.7vh;
+  color: #A9ABB4;
+  opacity: 1;
   // padding: 5px;
 `
 
-const CountDiv = styled.div`
-  grid-area: commentoption2;
-  // padding: 5px;
-`
 
 const ReplyInput = styled.input`
   grid-area: replyinput;
-  border: solid;
+  background: #F8F8F8 0% 0% no-repeat padding-box;
+  border: none;
+  border-radius: 20px;
 
-  width: 386px;
-  height: 42px;
-  background: #f4f4f49a 0% 0% no-repeat padding-box;
-  border-radius: 5px;
-  opacity: 1;
+  width: 40vw;
+  height: auto;
+  min-height: 5vh;
+
+  overflow-y: auto;
+
+  padding-left: 0.5vw;
+  padding-top: 0.5vh;
+  margin-left: 4vw;
 
   text-align: left;
-  vertical-align: middle;
-  font: Roman 21px/24px Avenir;
+  font: normal normal medium 16px/22px Avenir;
   letter-spacing: 0px;
-  color: #a9abb4;
+  opacity: 1;
 `
 
 const PostReplyButton = styled.button`
-  grid-area: postreplybutton;
+  grid-area: replybutton;
   position: relative;
-  padding: 15px 32px;
+  padding: 0.5vh 1vw;
   text-align: center;
   display: inline-block;
   cursor: pointer;
-  z-index: 5;
-  margin: 5px;
+  margin: 1vh 0px 0px 5vw;
   &:hover {
     background-color: #e7c6c6;
     opacity: 100%;
   }
-
-  width: 114px;
-  height: 46px;
-  background: #ffffff 0% 0% no-repeat padding-box;
+  width: 10vw;
+  height: 4vh;
+  background: #7380FF 0% 0% no-repeat padding-box;
+  border-radius: 20px;
+  opacity: 1;
   font: Medium 20px/17px Avenir;
   letter-spacing: 0px;
   color: #747886;
-  border: 2px solid #cdced2;
-  border-radius: 20px;
+  border: none
+`
+const ReplyButtonText = styled.text`
+  font: normal normal 700 15px/20px Avenir;
+  letter-spacing: 0px;
+  color: #FFFFFF;
   opacity: 1;
 `
 
@@ -229,5 +280,6 @@ export {
   ReplyArea,
   ReplyInput,
   PostReplyButton,
+  ReplyButtonText,
   DeleteButton
 }
