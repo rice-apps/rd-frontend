@@ -42,6 +42,8 @@ export const NavList = styled.div`
   justify-content: space-evenly;
   align-items: center;
   
+  z-index: 12;
+  
   @media (max-aspect-ratio: 848/712) {
     flex-direction: row;
     width: 100%;
@@ -61,6 +63,8 @@ export const NavElement = styled.div`
   align-items: center;
   border-radius: 1.72vh;
   border: 2px solid transparent;
+  
+  z-index: 13;
 
   cursor: pointer;
 
@@ -90,8 +94,10 @@ export const NavElement = styled.div`
 
 export const NavWrapper = styled.div`
 
-  // background-color: #bada55;
+  background-color: #FFFFFF;
   height: 100%;
+  
+  z-index: 11;
   
   @media (max-aspect-ratio: 848/712) {
     height: 10vh;

@@ -167,12 +167,13 @@ const SAVE_POST = gql`
 const SET_INFO = gql`
   mutation SetInfo(
     $username: String!
-    $college: EnumUserCollege
+    $college: String!
     $email: String!
     $phone: String!
     $major: [String]
     $minor: [String]
     $netID: String!
+    $imageUrl: String!
     $isNewUser: Boolean!
   ) {
     currentNetID @client @export(as: "netID")
@@ -184,6 +185,7 @@ const SET_INFO = gql`
         phone: $phone
         major: $major
         minor: $minor
+        imageUrl: $imageUrl
         isNewUser: $isNewUser
       }
       filter: { netID: $netID }

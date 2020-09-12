@@ -123,8 +123,8 @@ function PostFeedWithData () {
       />
       <Background>
         <LeftSidebarContainer>
-          <SideNav handleProfile={() => {setShowProfile(true); setShowWritePost(false)}}
-                   handleFeed={() => setShowProfile(false)}
+          <SideNav handleProfile={() => { setShowProfile(!showProfile); setShowWritePost(false) }}
+                   handleFeed={() => { setShowProfile(!showProfile); }}
                    showProfile={showProfile} />
         </LeftSidebarContainer>
         <FeedProfileContainer shrink={showProfile}>
@@ -221,7 +221,7 @@ function PostFeedWithData () {
               }
             />
           </PostFeedContainer>
-          <ProfilePane show={showProfile} />
+          {showProfile && <ProfilePane close={() => setShowProfile(false)}/>}
         </FeedProfileContainer>
       </Background>
     </>

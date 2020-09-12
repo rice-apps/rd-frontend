@@ -33,7 +33,7 @@ import { Navigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import log from 'loglevel'
 import { POST_CREATE } from '../graphql/Mutations'
-// import UploadToPost from './UploadToPost'
+// import ImageUploader from './ImageUploader'
 import {
   PostWrapper,
   Button,
@@ -61,7 +61,7 @@ import {
   StyledLink, StereoButton, StereoButtonCheck
 } from './WritePost.styles'
 import { currentUser } from '../utils/apollo'
-import UploadToPost from './UploadToPost'
+import ImageUploader from './ImageUploader'
 import LinkAdder from './LinkAdder'
 import {tagColors} from "./tagColors";
 
@@ -622,7 +622,7 @@ function WritePost (props) {
                   op='IMAGE'
               />
             </RichIcons>
-            <UploadToPost
+            <ImageUploader
               parentUrlCallback={callbackURL}
               show={imgUploaderVisible}
               handleDismissSelf={() => {

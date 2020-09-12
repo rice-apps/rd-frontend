@@ -1,9 +1,9 @@
-import React, {useState, useEffect, useCallback} from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 
-import {useLazyQuery, useMutation, useQuery} from '@apollo/client'
+import { useLazyQuery, useMutation } from '@apollo/client'
 
 // import { Helmet } from 'react-helmet'
-// import {FeedProfileContainer} from "./PostFeedWithData.styles";
+// import { FeedProfileContainer } from "./PostFeedWithData.styles";
 import {
   Descriptor,
   LogoutButton,
@@ -11,23 +11,41 @@ import {
   ProfileLogout,
   Divider,
   RightSidebarContainer,
-  Headshot, EditButton, BlockyText, TextBlock, SaveButton, EditableTextBlock
+  Headshot,
+  EditButton,
+  BlockyText,
+  TextBlock,
+  SaveButton,
+  EditableTextBlock,
+  CloseButton,
+  RightSidebar,
+  DDList,
+  DDListItem, UsernameEditable, AddPhotoButton
 } from "./Profile.styles";
 
 import EditUrl from "../images/edit.svg"
-import {Navigate, useNavigate} from "react-router-dom";
-import {currentUser} from "../utils/apollo";
-import {SET_INFO} from "../graphql/Mutations";
-// import {USER_EXISTS} from "../graphql/Queries";
+import HeadshotUrl from "../images/headshot.svg";
+import { Navigate, useNavigate } from "react-router-dom";
+import { currentUser } from "../utils/apollo";
+import { SET_INFO } from "../graphql/Mutations";
+import { USER_EXISTS } from "../graphql/Queries";
 import majorMinorJson from "../utils/MajorMinor.json";
-import {DDList, DDListItem} from "./MoreInfo.styles";
 import DropDownItem from "./DropDownItem";
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import AddIcon from '@material-ui/icons/Add';
+import SearchBar from "./Search";
+// import {FieldSetStyle, TextField} from "./MoreInfo.styles";
+import ImageUploader from "./ImageUploader";
+// import {BodyWrapper} from "./WritePost.styles";
 
 const ProfilePane = props => {
   const navigate = useNavigate()
-  // const [userStatement, setStatement] = useState('Valid!')
-  // const [originalUsername, setOriginal] = useState('')
+  const [userStatement, setStatement] = useState('Valid!')
+  const [originalUsername, setOriginal] = useState('')
   const [username, setUsername] = useState('')
+
+  const [imgUploaderVisible, setImgUploaderVisible] = useState(false)
+  const [imageUrl, setImageUrl] = useState(HeadshotUrl)
 
   // current major, minors, and college
   const [major, setMajor] = useState([])
@@ -39,6 +57,7 @@ const ProfilePane = props => {
   // if the drop_down is open
   const [beingEdited, setBeingEdited] = useState('none')
   const [showSaveButton, setShowSaveButton] = useState(false)
+  const [showStatement, setShowStatement] = useState(false)
 
   const [majorSearchActivated, setMajorsActive] = useState(false)
   const [minorSearchActivated, setMinorsActive] = useState(false)
@@ -48,54 +67,63 @@ const ProfilePane = props => {
   const { netID } = currentUser()
   const [addInfo] = useMutation(SET_INFO)
 
-  const {
-    username: currentUsername,
-    major: currentMajor,
-    minor: currentMinor,
-    college: currentCollege,
-    email: currentEmail,
-    phone: currentPhone,
-    savedPosts
-  } = currentUser()
-
-  // const [
-  //   checkUser,
-  //   { data: userExists, loading: userExistLoading }
-  // ] = useLazyQuery(USER_EXISTS)
+  const [
+    checkUser,
+    { data: userExists, loading: userExistLoading }
+  ] = useLazyQuery(USER_EXISTS)
 
   useEffect(() => {
-    // const newUsername = username.length === 0 ? currentUsername : username
-    // setOriginal(newUsername)
+    const {
+      username: currentUsername,
+      major: currentMajor,
+      minor: currentMinor,
+      college: currentCollege,
+      email: currentEmail,
+      phone: currentPhone,
+      imageUrl: currentUrl,
+      savedPosts
+    } = currentUser()
+    const newUsername = username.length === 0 ? currentUsername : username
+    setOriginal(newUsername)
     setUsername(currentUsername)
     setMajor(currentMajor)
     setMinor(currentMinor)
     setCollege(currentCollege)
     setEmail(currentEmail)
     setPhone(currentPhone)
+    setImageUrl(currentUrl)
+    console.log('db url:', currentUrl)
+    // if (currentUrl) {
+    //   // console.log('hello?', currentUrl)
+    // }
+    // if (currentUrl && HeadshotUrl && currentUrl.toString() !== HeadshotUrl.toString()) {
+    //   // console.log('here')
+    //   setImageUrl(currentUrl)
+    // }
   }, [])
 
-  // useEffect(() => {
-  //   checkUser({
-  //     variables: {
-  //       username
-  //     }
-  //   })
-  // }, [username])
+  useEffect(() => {
+    checkUser({
+      variables: {
+        username
+      }
+    })
+  }, [username])
 
-  // useEffect(() => {
-  //   const isMyUsernameTaken = userExists?.doesUsernameExist
-  //   setStatement('valid username!')
-  //   if (isMyUsernameTaken) {
-  //     setStatement('somebody already took username that lol')
-  //   }
-  //   if (originalUsername === username) {
-  //     setStatement('this is your current username')
-  //   }
-  // }, [userExists?.doesUsernameExist])
+  useEffect(() => {
+    saveData()
+  }, [imageUrl])
 
-  // useEffect(() => {
-  //   document.getElementById('email').focus()
-  // }, [])
+  useEffect(() => {
+    const isMyUsernameTaken = userExists?.doesUsernameExist
+    setStatement('valid username!')
+    if (isMyUsernameTaken) {
+      setStatement('somebody already took that username')
+    }
+    if (originalUsername === username) {
+      setStatement('this is your current username')
+    }
+  }, [userExists])
 
   const majors = majorMinorJson.majors.split(';')
 
@@ -115,24 +143,42 @@ const ProfilePane = props => {
     }
     setShowSaveButton(true)
 
-    setEmail(document.getElementById('email').innerText)
-    // saveData()
+    if (beingEdited ==='username') {
+        setShowStatement(true)
+    }
+
+    switch(source) {
+      case 'email':
+        setEmail(document.getElementById('email').innerText)
+        break
+      case 'username':
+        setUsername(document.getElementById('username').innerText)
+        break
+    }
+
   }
 
   const checkForEnter = e => {
     if (e.keyCode === 13) {
       e.preventDefault()
+
+      switch(beingEdited) {
+        case 'email':
+          setEmail(document.getElementById('email').innerText)
+          break
+        case 'username':
+          setUsername(document.getElementById('username').innerText)
+          setShowStatement(true)
+          break
+      }
+
       setBeingEdited('none')
       e.target.value = ''
-
-      setEmail(document.getElementById('email').innerText)
     }
   }
 
-  console.log(email)
-
   // const handleUserChange = useCallback(e => {
-  //   setUsername(e.target.value)
+  //   setUsername(document.getElementById('username').innerText)
   // }, [])
 
   // const handleBack = () => {
@@ -160,20 +206,27 @@ const ProfilePane = props => {
 
   const handleCollegeChange = useCallback(newValue => {
     const indexOfCollege = college.indexOf(newValue)
+    // console.log('here', indexOfCollege, newValue)
     setCollege(indexOfCollege >= 0 ? '' : newValue)
   }, [])
 
   const saveData = async () => {
-    // if (
-    //     userExistLoading ||
-    //     (userExists?.doesUsernameExist && originalUsername !== username)
-    // ) {
-    //   return
-    // }
+    const typedUsername = document.getElementById('username').innerText
+
+    if (username !== typedUsername) {
+      setUsername(typedUsername)
+      return;
+    }
+
+    if (
+        userExistLoading ||
+        (userExists?.doesUsernameExist && originalUsername !== username)
+    ) {
+      return;
+    }
 
     try {
-      console.log('Email')
-      console.log(email)
+      console.log('Saving', imageUrl)
       await addInfo({
         variables: {
           username,
@@ -184,12 +237,14 @@ const ProfilePane = props => {
           email: document.getElementById('email').innerText.trim(),
           phone: document.getElementById('phone').innerText.trim(),
           isNewUser: false,
+          imageUrl,
         }
       })
       setShowSaveButton(false)
+      setShowStatement(false)
       setBeingEdited('none')
     } catch (error) {
-      console.log('The big error we don\'t like')
+      console.log('HELP,', error)
     }
   }
 
@@ -202,17 +257,57 @@ const ProfilePane = props => {
     navigate('/login')
   }
 
-  return props.show ?
-  (
-      <RightSidebarContainer>
+  // console.log('imageUrl:', imageUrl)
+
+  return (
+    <RightSidebarContainer>
+      <CloseButton onClick={props.close}>
+        <ChevronRightIcon style={{width: '4vh', height: '4vh'}}/>
+      </CloseButton>
+      <RightSidebar>
         <ProfileLogout>
           <b style={{fontSize: '3.7vh'}}>Profile</b>
 
           <LogoutButton onClick={handleLogout} >Logout</LogoutButton>
         </ProfileLogout>
         <ProfileInner>
-          <Headshot />
-          <b>{username}</b>
+          <Headshot src={imageUrl}>
+            <AddPhotoButton onClick={() => setImgUploaderVisible(!imgUploaderVisible)}>
+              <AddIcon style={{width: '2.7vh', height: '2.7vh', color: 'white'}} />
+            </AddPhotoButton>
+          </Headshot>
+          <ImageUploader
+              parentUrlCallback={url => { if (url) { setImageUrl(url) }}}
+              show={imgUploaderVisible}
+              handleDismissSelf={() => {
+                setImgUploaderVisible(false)
+              }}
+          />
+          {/*<b>{username}</b>*/}
+          {/*<FieldSetStyle>*/}
+          {/*  <TextField*/}
+          {/*      type='text'*/}
+          {/*      placeholder='username'*/}
+          {/*      value={username}*/}
+          {/*      onChange={handleUserChange}*/}
+          {/*  />*/}
+          <Descriptor style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+            <UsernameEditable contentEditable={beingEdited === 'username'} id={'username'}
+                               // onChange={text => handleUserChange(text)}
+                               style={beingEdited === 'username' ?
+                                   {backgroundColor: '#FCE8DA'} : {fontWeight: 'bold'}}
+                               onKeyDown={checkForEnter}>
+              {username}
+            </UsernameEditable>
+            <EditButton src={EditUrl} onClick={() => handleEditClick('username')}/>
+            {showStatement &&
+              <div style={{position: 'absolute', top: '3vh', backgroundColor: '#F5F7FC',
+                    paddingLeft: '0.25em', paddingRight: '0.25em', borderRadius: '0.5vh',
+                    zIndex: '30'}}>
+                {userStatement}
+              </div>
+            }
+          </Descriptor>
           <Divider />
           <Descriptor>
             <BlockyText>
@@ -220,19 +315,33 @@ const ProfilePane = props => {
             <TextBlock>{major.join(', ')}</TextBlock>
             </BlockyText>
             <EditButton src={EditUrl} onClick={() => handleEditClick('major')}/>
-              {beingEdited === 'major'  && (
-                  <DDList>
-                    {finalizedMajors.map(item => (
-                        <DDListItem key={item}>
-                          <DropDownItem
-                              name={item}
-                              setInfo={handleMajorChange}
-                              selectedItems={major}
-                          />
-                        </DDListItem>
-                    ))}
-                  </DDList>
-              )}
+            {beingEdited === 'major'  && (
+              <div style={{width: 'calc(35vh - 1.2em)', position: 'fixed',
+                           display: 'flex', flexDirection: 'column', zIndex: '30'}}>
+                <SearchBar
+                  style={{width: '23.5vh',
+                    // maxWidth: '23.5vh', maxHeight: '2vh', lineHeight: '2vh',
+                    padding: '0.4vh 0.4vh',
+                    fontSize: '2vh', alignSelf: 'flex-end'}}
+                  items={majors}
+                  setList={setFilteredMajors}
+                  setActive={setMajorsActive}
+                />
+                <DDList
+                  style={{position: 'relative', top: '-2.2vh'}}
+                >
+                  {finalizedMajors.map(item => (
+                    <DDListItem key={item}>
+                      <DropDownItem
+                          name={item}
+                          setInfo={handleMajorChange}
+                          selectedItems={major}
+                      />
+                    </DDListItem>
+                  ))}
+                </DDList>
+              </div>
+            )}
           </Descriptor>
           <Descriptor>
             <BlockyText>
@@ -241,17 +350,31 @@ const ProfilePane = props => {
             </BlockyText>
             <EditButton src={EditUrl} onClick={() => handleEditClick('minor')}/>
             {beingEdited === 'minor'  && (
-                <DDList>
+              <div style={{width: 'calc(35vh - 1.2em)', position: 'fixed',
+                display: 'flex', flexDirection: 'column', zIndex: '30'}}>
+                <SearchBar
+                  style={{width: '23.5vh',
+                    // maxWidth: '23.5vh', maxHeight: '2vh', lineHeight: '2vh',
+                    padding: '0.4vh 0.4vh',
+                    fontSize: '2vh', alignSelf: 'flex-end'}}
+                  items={minors}
+                  setList={setFilteredMinors}
+                  setActive={setMinorsActive}
+                />
+                <DDList
+                  style={{position: 'relative', top: '-2.2vh'}}
+                >
                   {finalizedMinors.map(item => (
-                      <DDListItem key={item}>
-                        <DropDownItem
-                            name={item}
-                            setInfo={handleMinorChange}
-                            selectedItems={minor}
-                        />
-                      </DDListItem>
+                    <DDListItem key={item}>
+                      <DropDownItem
+                        name={item}
+                        setInfo={handleMinorChange}
+                        selectedItems={minor}
+                      />
+                    </DDListItem>
                   ))}
                 </DDList>
+              </div>
             )}
           </Descriptor>
           <Descriptor>
@@ -261,17 +384,23 @@ const ProfilePane = props => {
             </BlockyText>
             <EditButton src={EditUrl} onClick={() => handleEditClick('college')} />
             {beingEdited === 'college'  && (
-                <DDList>
+              <div style={{width: 'calc(35vh - 1.2em)', position: 'fixed',
+                           display: 'flex', flexDirection: 'column', zIndex: '30',
+                           paddingTop: '1vh' }}>
+                <DDList
+                  // style={{position: 'relative', top: '1vh'}}
+                >
                   {colleges.map(item => (
-                      <DDListItem key={item}>
-                        <DropDownItem
-                            name={item}
-                            setInfo={handleCollegeChange}
-                            selectedItems={college}
-                        />
-                      </DDListItem>
+                    <DDListItem key={item}>
+                      <DropDownItem
+                          name={item}
+                          setInfo={handleCollegeChange}
+                          selectedItems={college}
+                      />
+                    </DDListItem>
                   ))}
                 </DDList>
+              </div>
             )}
           </Descriptor>
           <Divider />
@@ -309,8 +438,9 @@ const ProfilePane = props => {
           {/*<Divider />*/}
           {/*tags*/}
         </ProfileInner>
-      </RightSidebarContainer>
-  ) : null
+      </RightSidebar>
+    </RightSidebarContainer>
+  )
 }
 
 export default ProfilePane
