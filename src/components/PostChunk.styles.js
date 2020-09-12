@@ -201,6 +201,10 @@ const ReadMore = styled.text`
   text-decoration: underline;
 `
 
+const ImageDiv = styled.div`
+  grid-area: image
+`
+
 // contains DividerBottom, ShowCommentsDiv, NewCommentDiv, PostCommentDiv, CommentsDiv
 
 const CommentComponent = styled.div`
@@ -333,6 +337,7 @@ export {
   FullPostLink,
   Expand,
   ReadMore,
+  ImageDiv,
   CommentComponent,
   DividerBottom,
   ShowCommentsDiv,

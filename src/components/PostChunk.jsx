@@ -51,6 +51,7 @@ import {
   FullPostLink,
   Expand,
   ReadMore,
+  ImageDiv,
   CommentComponent,
   DividerBottom,
   ShowCommentsDiv,
@@ -410,7 +411,11 @@ function PostChunk (props) {
                 {ReactHtmlParser(remarkable.render(props.post.node.body))}
               </Truncate>
             </DiscussionBody>
-            {oneImage}
+
+            <ImageDiv>
+              {oneImage}
+            </ImageDiv>
+            
           </TopMiddleComponent>
 
           <CommentComponent>
