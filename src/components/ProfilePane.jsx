@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
+import CloseIcon from '@material-ui/icons/Close'
 
 // import { Helmet } from 'react-helmet'
 // import {FeedProfileContainer} from "./PostFeedWithData.styles";
@@ -18,6 +19,10 @@ import {
   SaveButton,
   EditableTextBlock
 } from './Profile.styles'
+
+import {
+  ExitButton,
+} from './WritePost.styles'
 
 import EditUrl from '../images/edit.svg'
 import { Navigate, useNavigate } from 'react-router-dom'
@@ -209,6 +214,9 @@ const ProfilePane = props => {
 
   return props.show ? (
     <RightSidebarContainer>
+      <ExitButton onClick={props.closeModal}>
+        <CloseIcon style={{ width: '5vh', height: '5vh' }} />
+      </ExitButton>
       <ProfileLogout>
         <b style={{ fontSize: '3.7vh' }}>Profile</b>
 
