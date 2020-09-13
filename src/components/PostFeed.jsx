@@ -36,8 +36,13 @@ function PostFeed (props) {
   } = props
 
   useEffect(() => {
-    subscribeToNewPosts()
-    subscribeToNewVotes()
+    const unsubscribePosts = subscribeToNewPosts()
+    const unsubscribeVotes = subscribeToNewVotes()
+
+    return () => {
+      unsubscribePosts()
+      unsubscribeVotes()
+    }
   }, [])
 
   if (error) return <h1>Something went wrong...</h1>

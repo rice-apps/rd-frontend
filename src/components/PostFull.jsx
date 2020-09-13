@@ -137,7 +137,7 @@ function PostFull () {
     return () => {
       unsubscribeToNewComments()
     }
-  })
+  }, [])
 
   // shouldn't need dummy data
 
