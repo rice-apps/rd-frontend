@@ -1,0 +1,4 @@
+dispatch:
+    # Send all trafic on /graphql to api service.
+    - url: '*/graphql*'
+      service: api

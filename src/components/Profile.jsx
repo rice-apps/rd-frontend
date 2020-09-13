@@ -173,7 +173,6 @@ function ProfilePage () {
     return <Navigate to='/login' />
   }
 
-  // known bug, data won't save if we change the drop-downs
   return (
     <>
       <LeftSidebarContainer>

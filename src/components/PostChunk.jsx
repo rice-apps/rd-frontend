@@ -57,10 +57,8 @@ import {
   ShowCommentsDiv,
   CommentInput,
   CommentButton,
-  CommentButtonText,
-  CommentsDiv,
-  Commentli,
-  Commentul
+  BoldedSpan,
+  NormalSpan
 } from './PostChunk.styles'
 import { tagColors } from './tagColors'
 
@@ -202,9 +200,68 @@ function PostChunk (props) {
   const calEvent = {
     title: props.post.node.title ? props.post.node.title : '',
     description: props.post.node.body ? props.post.node.body : '',
-    location: props.post.node.place ? props.post.node.place : '',
+    location: props.post.node.location ? props.post.node.location : '',
+    workplace: props.post.node.workplace ? props.post.node.workplace : '',
     startTime: props.post.node.start ? props.post.node.start : '',
-    endTime: props.post.node.end ? props.post.node.end : ''
+    endTime: props.post.node.end ? props.post.node.end : '',
+    deadline: props.post.node.deadline ? props.post.node.deadline: ''
+  }
+
+  const isPaid = props.post.node.isPaid;
+  let paidString = ""
+  if (typeof isPaid === 'boolean'){
+    paidString = isPaid === true ? "Yes" : "No"
+  }
+  const isClosed = props.post.node.isClosed;
+  let closedString = ""
+  if (typeof isClosed === 'boolean'){
+    closedString = isClosed === true ? "Yes" : "No"
+  }
+
+  const jobSpecifics = {
+    isPaid: paidString,
+    isClosed: closedString
+  }
+
+  //maybe we should put N/A if it wasn't specified hmm...
+  const months = [ "January", "February", "March", "April", "May", "June", 
+  "July", "August", "September", "October", "November", "December" ];
+
+  console.log(props.post.node)
+
+  let postDescriptor = [];
+  if (calEvent.startTime.length > 0){
+    const startDate = calEvent.startTime.split('T')[0];
+    const formattedDate = startDate.split('-')
+    const month = months[parseInt(formattedDate[1], 10) - 1];
+    postDescriptor.push(
+      <NormalSpan><BoldedSpan>From: </BoldedSpan>{month + ' ' + formattedDate[2] + ", " + formattedDate[0] + `      `}</NormalSpan>
+    )
+  }
+  if (calEvent.endTime.length > 0 || calEvent.deadline.length > 0){
+    const until = calEvent.endTime.length > 0 ? calEvent.endTime : calEvent.deadline;
+    const endDate = until.split('T')[0];
+    const formattedDate = endDate.split('-')
+    const month = months[parseInt(formattedDate[1], 10) - 1];
+    postDescriptor.push(
+      <NormalSpan><BoldedSpan>End: </BoldedSpan>{month + ' ' + formattedDate[2] + ", " + formattedDate[0] + `      `}</NormalSpan>
+    )
+  }
+  if (calEvent.location.length > 0 || calEvent.workplace.length > 0){
+    const place = calEvent.location.length > 0 ? calEvent.location : calEvent.workplace;
+    postDescriptor.push(
+      <NormalSpan><BoldedSpan>Location: </BoldedSpan>{place}</NormalSpan>
+    )
+  }
+  if (jobSpecifics.isPaid.length > 0){
+    postDescriptor.push(
+      <NormalSpan><BoldedSpan>Paid: </BoldedSpan>{jobSpecifics.isPaid}</NormalSpan>
+    )
+  }
+  if (jobSpecifics.isClosed.length > 0){
+    postDescriptor.push(
+      <NormalSpan><BoldedSpan>Closed: </BoldedSpan>{jobSpecifics.isClosed}</NormalSpan>
+    )
   }
 
   const checkComment = comment => comment.length <= 0
@@ -411,11 +468,10 @@ function PostChunk (props) {
                 {ReactHtmlParser(remarkable.render(props.post.node.body))}
               </Truncate>
             </DiscussionBody>
-
-            <ImageDiv>
+            <div>
               {oneImage}
-            </ImageDiv>
-
+              <div>{postDescriptor}</div>
+            </div>
           </TopMiddleComponent>
 
           <CommentComponent>
