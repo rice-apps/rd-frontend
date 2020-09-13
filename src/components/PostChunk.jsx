@@ -52,11 +52,14 @@ import {
   Expand,
   ReadMore,
   ImageDiv,
+  DescriptorDiv,
   CommentComponent,
   DividerBottom,
   ShowCommentsDiv,
   CommentInput,
   CommentButton,
+  CommentButtonText,
+  CommentsDiv,
   BoldedSpan,
   NormalSpan
 } from './PostChunk.styles'
@@ -468,10 +471,12 @@ function PostChunk (props) {
                 {ReactHtmlParser(remarkable.render(props.post.node.body))}
               </Truncate>
             </DiscussionBody>
-            <div>
+            <ImageDiv>
               {oneImage}
-              <div>{postDescriptor}</div>
-            </div>
+            </ImageDiv>
+            <DescriptorDiv>
+              {postDescriptor}
+            </DescriptorDiv>
           </TopMiddleComponent>
 
           <CommentComponent>
