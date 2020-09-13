@@ -94,8 +94,6 @@ function CommentChunk (props) {
 
   const checkComment = comment => comment.length <= 0
 
-  console.log(props)
-
   // <CommentListItem key={props.comment._id}>
   // ^ resolve whether this should be used or PostFull's li should be used
 
@@ -191,19 +189,22 @@ function CommentChunk (props) {
 
         {/* TODO delete top level comment -> delete its replies */}
         {/* sometimesssss the refresh still doesnt delete */}
-        <DeleteButton
-          onClick={e => {
-            e.preventDefault()
-            removeComment({
-              variables: {
-                _id: props.comment._id
-              }
-            })
-            window.location.reload(false)
-          }}
-        >
-          Delete
-        </DeleteButton>
+
+        {(props.comment.creator.username === userInfo.username) && (
+          <DeleteButton
+            onClick={e => {
+              e.preventDefault()
+              removeComment({
+                variables: {
+                  _id: props.comment._id
+                }
+              })
+              window.location.reload(false)
+            }}
+          >
+            Delete
+          </DeleteButton>
+        )}
 
         <TimestampDiv>
           <TimeAgo date={props.comment.date_created} style={{fontSize:"1.8vh"}}/>

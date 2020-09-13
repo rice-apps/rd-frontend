@@ -292,7 +292,7 @@ const CommentButton = styled.button`
   border: none
 `
 const CommentButtonText = styled.text`
-  font: normal normal 700 15px/20px Avenir;
+  font: normal normal 700 1.1vw Avenir;
   letter-spacing: 0px;
   color: #FFFFFF;
   opacity: 1;
