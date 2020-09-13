@@ -33,6 +33,7 @@ const Filters = props => {
   const DATES = ['yesterday', 'in the last week', 'in the last month']
   const UPVOTES = ['hot', 'cold']
 
+  // must set up tag subscription
   const { data, loading, error } = useQuery(GET_TAGS)
 
   useEffect(() => {
