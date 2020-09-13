@@ -533,13 +533,13 @@ function PostChunk (props) {
                   }
                 }}
               >
-                {/* <CommentButtonText> */}
-                  {/* Post Comment */}
-                {/* </CommentButtonText> */}
+                <CommentButtonText>
+                  Post Comment
+                </CommentButtonText>
               </CommentButton>
             )}
             {isCommentOpen && (
-              // <CommentsDiv>
+              <CommentsDiv>
                 <ul style={{listStyleType:"none", paddingLeft:"0px"}}>
                   {/* level 1 */}
                   {theComments.map((comment) => (
@@ -569,7 +569,7 @@ function PostChunk (props) {
                     </li>
                   ))}
                 </ul>
-              // </CommentsDiv>
+              </CommentsDiv>
             )}
           </CommentComponent>
         </DiscussionBox>
