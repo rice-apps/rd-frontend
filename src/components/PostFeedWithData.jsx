@@ -221,7 +221,7 @@ function PostFeedWithData () {
               }
             />
           </PostFeedContainer>
-          {showProfile && <ProfilePane close={() => setShowProfile(false)}/>}
+          <ProfilePane show={showProfile} close={() => setShowProfile(false)}/>
         </FeedProfileContainer>
       </Background>
     </>

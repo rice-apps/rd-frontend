@@ -38,6 +38,16 @@ import SearchBar from "./Search";
 import ImageUploader from "./ImageUploader";
 // import {BodyWrapper} from "./WritePost.styles";
 
+// const assignWithoutAdding = (obj1, obj2) => {
+//   Object.keys(obj1).forEach(key => {
+//
+//     }
+//
+//   )
+//
+//   }
+// }
+
 const ProfilePane = props => {
   const navigate = useNavigate()
   const [userStatement, setStatement] = useState('Valid!')
@@ -72,7 +82,7 @@ const ProfilePane = props => {
     { data: userExists, loading: userExistLoading }
   ] = useLazyQuery(USER_EXISTS)
 
-  useEffect(() => {
+  const getData = () => {
     const {
       username: currentUsername,
       major: currentMajor,
@@ -92,7 +102,6 @@ const ProfilePane = props => {
     setEmail(currentEmail)
     setPhone(currentPhone)
     setImageUrl(currentUrl)
-    console.log('db url:', currentUrl)
     // if (currentUrl) {
     //   // console.log('hello?', currentUrl)
     // }
@@ -100,7 +109,9 @@ const ProfilePane = props => {
     //   // console.log('here')
     //   setImageUrl(currentUrl)
     // }
-  }, [])
+  }
+
+  useEffect(getData, [currentUser()])
 
   useEffect(() => {
     checkUser({
@@ -111,7 +122,7 @@ const ProfilePane = props => {
   }, [username])
 
   useEffect(() => {
-    saveData()
+    // saveData()
   }, [imageUrl])
 
   useEffect(() => {
@@ -206,11 +217,10 @@ const ProfilePane = props => {
 
   const handleCollegeChange = useCallback(newValue => {
     const indexOfCollege = college.indexOf(newValue)
-    // console.log('here', indexOfCollege, newValue)
     setCollege(indexOfCollege >= 0 ? '' : newValue)
   }, [])
 
-  const saveData = async () => {
+  const saveData = () => {
     const typedUsername = document.getElementById('username').innerText
 
     if (username !== typedUsername) {
@@ -226,8 +236,7 @@ const ProfilePane = props => {
     }
 
     try {
-      console.log('Saving', imageUrl)
-      await addInfo({
+      addInfo({
         variables: {
           username,
           college,
@@ -239,12 +248,19 @@ const ProfilePane = props => {
           isNewUser: false,
           imageUrl,
         }
-      })
-      setShowSaveButton(false)
-      setShowStatement(false)
-      setBeingEdited('none')
+      }).then(() => {
+              // setCollege(returned.data.userUpdateOne.record.college)
+              // setEmail(returned.data.userUpdateOne.record.email)
+              // setPhone(returned.data.userUpdateOne.record.phone)
+              // setMajor(returned.data.userUpdateOne.record.major)
+              // setMinor(returned.data.userUpdateOne.record.minor)
+              // setImageUrl(returned.data.userUpdateOne.record.imageUrl)
+              setShowSaveButton(false)
+              setShowStatement(false)
+              setBeingEdited('none')
+            })
     } catch (error) {
-      console.log('HELP,', error)
+      error.log(error)
     }
   }
 
@@ -257,9 +273,7 @@ const ProfilePane = props => {
     navigate('/login')
   }
 
-  // console.log('imageUrl:', imageUrl)
-
-  return (
+  return props.show ? (
     <RightSidebarContainer>
       <CloseButton onClick={props.close}>
         <ChevronRightIcon style={{width: '4vh', height: '4vh'}}/>
@@ -272,7 +286,7 @@ const ProfilePane = props => {
         </ProfileLogout>
         <ProfileInner>
           <Headshot src={imageUrl}>
-            <AddPhotoButton onClick={() => setImgUploaderVisible(!imgUploaderVisible)}>
+            <AddPhotoButton onClick={() => { setImgUploaderVisible(!imgUploaderVisible); setShowSaveButton(true) }}>
               <AddIcon style={{width: '2.7vh', height: '2.7vh', color: 'white'}} />
             </AddPhotoButton>
           </Headshot>
@@ -431,7 +445,7 @@ const ProfilePane = props => {
           </Descriptor>
           <Divider />
           {showSaveButton &&
-            <SaveButton onClick={saveData}>
+            <SaveButton onClick={() => saveData()}>
               Save
             </SaveButton>
           }
@@ -440,7 +454,7 @@ const ProfilePane = props => {
         </ProfileInner>
       </RightSidebar>
     </RightSidebarContainer>
-  )
+  ) : null
 }
 
 export default ProfilePane
