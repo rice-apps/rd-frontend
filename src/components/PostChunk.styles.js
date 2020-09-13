@@ -39,6 +39,7 @@ const TopComponent = styled.div`
 `
 const OriginalPoster = styled.div`
   display: grid;
+  font-size: 2vh;
   grid-area: op;
   white-space: nowrap;
 `
@@ -104,9 +105,10 @@ const TopMiddleComponent = styled.div`
   grid-template-areas:
     'title kind moreoptions'
     'body body moreoptions'
-    'image image moreoptions';
+    'image image moreoptions'
+    'desc desc moreoptions';
   grid-template-columns: auto 1fr 5vw;
-  grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto auto auto;
 `
 
 const DiscussionTitle = styled.text`
@@ -202,7 +204,10 @@ const ReadMore = styled.text`
 `
 
 const ImageDiv = styled.div`
-  grid-area: image
+  grid-area: image;
+`
+const DescriptorDiv = styled.div`
+  grid-area: desc;
 `
 
 // contains DividerBottom, ShowCommentsDiv, NewCommentDiv, PostCommentDiv, CommentsDiv
@@ -292,7 +297,7 @@ const CommentButton = styled.button`
   border: none
 `
 const CommentButtonText = styled.text`
-  font: normal normal 700 15px/20px Avenir;
+  font: normal normal 700 1.1vw Avenir;
   letter-spacing: 0px;
   color: #FFFFFF;
   opacity: 1;
@@ -346,11 +351,14 @@ export {
   Expand,
   ReadMore,
   ImageDiv,
+  DescriptorDiv,
   CommentComponent,
   DividerBottom,
   ShowCommentsDiv,
   CommentInput,
   CommentButton,
+  CommentButtonText,
+  CommentsDiv,
   BoldedSpan,
   NormalSpan
 }
