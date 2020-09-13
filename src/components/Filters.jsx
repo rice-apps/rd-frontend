@@ -69,12 +69,12 @@ const Filters = props => {
     setUpvotesOpen(false)
   }
 
-  const toggleUpvotes = () => {
-    setUpvotesOpen(!isUpvotesOpen)
-    setPostMenuOpen(false)
-    setDateOpen(false)
-    setTagOpen(false)
-  }
+  // const toggleUpvotes = () => {
+  //   setUpvotesOpen(!isUpvotesOpen)
+  //   setPostMenuOpen(false)
+  //   setDateOpen(false)
+  //   setTagOpen(false)
+  // }
 
   const handlePostTypeChange = newValue => {
     const indexOfPostType = postType.indexOf(newValue)

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom"
 import { useQuery } from '@apollo/client'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -72,6 +73,7 @@ const useStyles = makeStyles(theme => ({
 
 function PostChunk (props) {
   // Comments stuff starts
+  const navigate = useNavigate()
 
   const { data, loading, error, subscribeToMore } = useQuery(
     FETCH_COMMENTS_NESTED,
@@ -83,32 +85,32 @@ function PostChunk (props) {
     }
   )
 
-  useEffect(() => {
-    const unsubscribeToNewComments = subscribeToMore({
-      document: COMMENT_CREATED,
-      variables: { post_id: props.post.node._id },
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev
+  // useEffect(() => {
+  //   const unsubscribeToNewComments = subscribeToMore({
+  //     document: COMMENT_CREATED,
+  //     variables: { post_id: props.post.node._id },
+  //     updateQuery: (prev, { subscriptionData }) => {
+  //       if (!subscriptionData.data) return prev
 
-        console.log(prev)
-        console.log(subscriptionData)
+  //       console.log(prev)
+  //       console.log(subscriptionData)
 
-        const newFeedItem = subscriptionData.data.commentCreated
+  //       const newFeedItem = subscriptionData.data.commentCreated
 
-        console.log(newFeedItem.parent)
+  //       console.log(newFeedItem.parent)
 
-        if (typeof newFeedItem.parent === 'undefined') {
-          return {
-            commentByPost: [newFeedItem, ...prev.commentByPost]
-          }
-        }
-      }
-    })
+  //       if (typeof newFeedItem.parent === 'undefined') {
+  //         return {
+  //           commentByPost: [newFeedItem, ...prev.commentByPost]
+  //         }
+  //       }
+  //     }
+  //   })
 
-    return () => {
-      unsubscribeToNewComments()
-    }
-  })
+  //   return () => {
+  //     unsubscribeToNewComments()
+  //   }
+  // }, [])
 
   // Comments stuff ends
 
@@ -169,7 +171,8 @@ function PostChunk (props) {
 
   
   if (loading) {
-    return <p>Loading Comments</p>
+    // return <p>Loading Comments</p>
+    return <div></div>
   }
 
   if (error) {
@@ -226,8 +229,6 @@ function PostChunk (props) {
   //maybe we should put N/A if it wasn't specified hmm...
   const months = [ "January", "February", "March", "April", "May", "June", 
   "July", "August", "September", "October", "November", "December" ];
-
-  console.log(props.post.node)
 
   let postDescriptor = [];
   if (calEvent.startTime.length > 0){
@@ -491,7 +492,8 @@ function PostChunk (props) {
                   textTransform: 'none',
                   display: 'flex',
                 }}
-                onClick={toggleComment}
+                // onClick={toggleComment}
+                onClick = {()=> { navigate(myPostLink) }}
               >
                 {isCommentOpen ? (
                   <text style={{color: '#67687E'}}>Hide Comments ({numComments})</text>

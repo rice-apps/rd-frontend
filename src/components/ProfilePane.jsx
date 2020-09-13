@@ -139,7 +139,6 @@ const ProfilePane = props => {
     }
   }
 
-  console.log(email)
 
   // const handleUserChange = useCallback(e => {
   //   setUsername(e.target.value)
