@@ -213,7 +213,6 @@ const ProfilePane = props => {
     navigate('/login')
   }
 
-  console.log(colleges);
   return props.show ? (
     <RightSidebarContainer>
       <ExitButton onClick={props.closeModal}>
