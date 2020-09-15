@@ -8,9 +8,9 @@ export const ChatLogo = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-size: 95%;
-  
+
   // background-color: red;
-  
+
   // @media (max-aspect-ratio: 848/712) {
   //   width: 13vw;
   //   height: 11vw
@@ -43,7 +43,7 @@ export const NavList = styled.div`
 
   justify-content: space-evenly;
   align-items: center;
-  
+
   z-index: 12;
   
   height: 45vh;
@@ -70,7 +70,6 @@ export const NavElement = styled.div`
   cursor: pointer;
 
   // margin-bottom: 3.3vh;
-
 
   ${props =>
     !props.selected &&

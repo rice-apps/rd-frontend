@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useMutation } from "@apollo/client";
-import { currentUser } from "../utils/apollo";
+import React, { useState } from 'react'
+import { useMutation } from '@apollo/client'
+import { currentUser } from '../utils/apollo'
 
 import {
   CREATE_COMMENT,
@@ -8,16 +8,16 @@ import {
   DOWNVOTE_COMMENT,
   REPORT_COMMENT,
   REMOVE_COMMENT
-} from "../graphql/Mutations";
+} from '../graphql/Mutations'
 
-import { makeStyles } from "@material-ui/core/styles";
-import { grey } from "@material-ui/core/colors";
-import IconButton from "@material-ui/core/IconButton";
-import Button from "@material-ui/core/Button";
-import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
-import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
-import TimeAgo from "react-timeago";
-import log from "loglevel";
+import { makeStyles } from '@material-ui/core/styles'
+import { grey } from '@material-ui/core/colors'
+import IconButton from '@material-ui/core/IconButton'
+import Button from '@material-ui/core/Button'
+import ArrowDropUp from '@material-ui/icons/ArrowDropUp'
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
+import TimeAgo from 'react-timeago'
+import log from 'loglevel'
 
 import {
   // CommentInput,
@@ -36,60 +36,66 @@ import {
   ReplyArea,
   ReplyInput,
   PostReplyButton,
-  DeleteButton,
-} from "./CommentChunk.styles";
+  ReplyButtonText,
+  DeleteButton
+} from './CommentChunk.styles'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    "& > *": {
-      margin: theme.spacing(1),
-    },
-  },
-}));
+    '& > *': {
+      margin: theme.spacing(1)
+    }
+  }
+}))
 
-function CommentChunk(props) {
-  const userInfo = currentUser();
-  const [createComment] = useMutation(CREATE_COMMENT);
-  const [upvoteComment] = useMutation(UPVOTE_COMMENT);
-  const [downvoteComment] = useMutation(DOWNVOTE_COMMENT);
-  const [reportComment] = useMutation(REPORT_COMMENT);
-  const [removeComment] = useMutation(REMOVE_COMMENT);
-  const classes = useStyles();
+function CommentChunk (props) {
+  const userInfo = currentUser()
+  const [createComment] = useMutation(CREATE_COMMENT)
+  const [upvoteComment] = useMutation(UPVOTE_COMMENT)
+  const [downvoteComment] = useMutation(DOWNVOTE_COMMENT)
+  const [reportComment] = useMutation(REPORT_COMMENT)
+  const [removeComment] = useMutation(REMOVE_COMMENT)
+  const classes = useStyles()
 
-  const [reply, setReply] = useState("");
+  const [reply, setReply] = useState('')
 
   const [replyAreaVisible, setVisibility] = useState(false)
   const switchModal = () => setVisibility(!replyAreaVisible)
 
-  let listOfUpvoters = props.comment.upvotes.map((userObject) => userObject.username);
+  let listOfUpvoters = props.comment.upvotes.map(
+    userObject => userObject.username
+  )
 
   let listOfDownvoters = props.comment.downvotes.map(
-    (userObject) => userObject.username
-  );
+    userObject => userObject.username
+  )
 
   const [isUpvoted, setUpvoted] = useState(
     listOfUpvoters.includes(userInfo.username)
-  );
+  )
   const [isDownvoted, setDownvoted] = useState(
     listOfDownvoters.includes(userInfo.username)
-  );
+  )
+  const [isReplyOpen, setReplyOpen] = useState(false)
 
   const toggleUpvoted = () => {
-    setUpvoted(!isUpvoted);
-    setDownvoted(false);
-  };
+    setUpvoted(!isUpvoted)
+    setDownvoted(false)
+  }
 
   const toggleDownvoted = () => {
-    setDownvoted(!isDownvoted);
-    setUpvoted(false);
-  };
+    setDownvoted(!isDownvoted)
+    setUpvoted(false)
+  }
 
-  const checkComment = (comment) => comment.length <= 0;
+  const toggleReply = () => {
+    setReplyOpen(!isReplyOpen)
+  }
 
-  console.log(props);
+  const checkComment = comment => comment.length <= 0
 
   // <CommentListItem key={props.comment._id}>
-  // ^ resolve whether this should be used or PostFull's li should be used 
+  // ^ resolve whether this should be used or PostFull's li should be used
 
   return (
     <CommentWhole>
@@ -108,7 +114,7 @@ function CommentChunk(props) {
               })
             }}
           >
-            <ArrowDropUp fontSize="large" />
+            <ArrowDropUp fontSize='normal' />
           </IconButton>
         </CommentUpvote>
         <CommentDownvote className={classes.root}>
@@ -125,15 +131,13 @@ function CommentChunk(props) {
               })
             }}
           >
-            <ArrowDropDown fontSize="large" />
+            <ArrowDropDown fontSize='normal' />
           </IconButton>
         </CommentDownvote>
       </CommentVotes>
       <CommentDiv>
-        <p>
-          <strong>{props.comment.creator.username}: </strong>
-          {props.comment.body}
-        </p>
+        <strong>{props.comment.creator.username}: </strong>
+        {props.comment.body}
       </CommentDiv>
 
       <CommentMenu>
@@ -146,15 +150,26 @@ function CommentChunk(props) {
           <ReplyStart
             onClick={e => {
               e.preventDefault()
-              switchModal();
+              toggleReply();
+              switchModal()
             }}
           >
-            Reply
+            {isReplyOpen ? (
+              <text>Cancel</text>
+            ) : (
+              <text>Reply</text>
+            )}
           </ReplyStart>
         )}
 
-        <CountDiv>{props.comment.upvotes.length -
-          props.comment.downvotes.length} Votes</CountDiv>
+        <CountDiv style={{fontSize:"1.8vh"}}>
+          {props.comment.upvotes.length - props.comment.downvotes.length}
+          {props.comment.upvotes.length - props.comment.downvotes.length === 1 ? (
+            <text> hoot</text>
+          ) : (
+            <text> hoots</text>
+          )}
+        </CountDiv>
 
         <ReportButton
           onClick={e => {
@@ -166,7 +181,7 @@ function CommentChunk(props) {
                 // netID: userInfo.netID,
                 _id: props.comment._id
               }
-            });
+            })
           }}
         >
           Report
@@ -174,34 +189,34 @@ function CommentChunk(props) {
 
         {/* TODO delete top level comment -> delete its replies */}
         {/* sometimesssss the refresh still doesnt delete */}
-        <DeleteButton
-          onClick={e => {
-            e.preventDefault()
-            removeComment({
-              variables: {
-                _id: props.comment._id
-              }
-            });
-            window.location.reload(false)
-          }}
-        >
-          Delete
-        </DeleteButton>
+
+        {(props.comment.creator.username === userInfo.username) && (
+          <DeleteButton
+            onClick={e => {
+              e.preventDefault()
+              removeComment({
+                variables: {
+                  _id: props.comment._id
+                }
+              })
+              window.location.reload(false)
+            }}
+          >
+            Delete
+          </DeleteButton>
+        )}
 
         <TimestampDiv>
-          <TimeAgo date={props.comment.date_created} />
+          <TimeAgo date={props.comment.date_created} style={{fontSize:"1.8vh"}}/>
         </TimestampDiv>
-
       </CommentMenu>
-
-
 
       {!props.isLeaf && replyAreaVisible && (
         <ReplyArea>
           <ReplyInput
             id={String(props.comment._id)}
-            placeholder="Reply here..."
-            onChange={(e) => setReply(e.target.value)}
+            placeholder='Reply here...'
+            onChange={e => setReply(e.target.value)}
           />
 
           <PostReplyButton
@@ -217,27 +232,24 @@ function CommentChunk(props) {
                   variables: {
                     post: props.postID,
                     parent: props.comment._id,
-                    body: reply,
-                  },
-                });
-                setReply("");
-                document.getElementById(String(props.comment._id)).value = "";
+                    body: reply
+                  }
+                })
+                setReply('')
+                document.getElementById(String(props.comment._id)).value = ''
               } catch (error) {
-                log.error(error);
+                log.error(error)
               }
             }}
           >
-            Post Reply
-        </PostReplyButton>
-
+            <ReplyButtonText>
+              Post Reply
+            </ReplyButtonText>
+          </PostReplyButton>
         </ReplyArea>
       )}
-
-
-
-
     </CommentWhole>
-  );
+  )
 }
 
-export default CommentChunk;
+export default CommentChunk

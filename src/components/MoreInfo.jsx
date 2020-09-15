@@ -46,7 +46,7 @@ function MoreInfo () {
   const [filteredMajors, setFilteredMajors] = useState([])
   const [filteredMinors, setFilteredMinors] = useState([])
 
-  const [addInfo] = useMutation(SET_INFO)
+  const [addInfo, {data : USER_DATA_L}] = useMutation(SET_INFO)
   const [
     checkUser,
     { data: userExists, loading: userExistLoading }
@@ -74,6 +74,9 @@ function MoreInfo () {
   useEffect(() => {
     const isMyUsernameTaken = userExists?.doesUsernameExist
     setStatement('valid username!')
+    if (username === ''){
+      setStatement("you need a username");
+    }
     if (isMyUsernameTaken) {
       setStatement('somebody already took that username lol')
     }
@@ -90,6 +93,7 @@ function MoreInfo () {
         ? major.filter(maj => newValue !== maj)
         : [...major, newValue]
     )
+    setMajorOpen(false);
   }
 
   const handleMinorChange = newValue => {
@@ -99,11 +103,13 @@ function MoreInfo () {
         ? minor.filter(maj => newValue !== maj)
         : [...minor, newValue]
     )
+    setMinorOpen(false)
   }
 
   const handleCollegeChange = newValue => {
     const indexOfCollege = college.indexOf(newValue)
     setCollege(indexOfCollege >= 0 ? '' : newValue)
+    setCollegeOpen(false)
   }
 
   const toggleMajor = () => {
@@ -148,7 +154,6 @@ function MoreInfo () {
       }
 
       currentUser({ ...data, isNewUser: false })
-
       try {
         await addInfo({
           variables: {
@@ -160,7 +165,7 @@ function MoreInfo () {
           }
         })
       } catch (error) {
-        return
+        return;
       }
       navigator('/feed')
     } catch (error) {
@@ -194,7 +199,7 @@ function MoreInfo () {
                   onChange={handleUserChange}
                 />
               </FieldSetStyle>
-
+              {"Current majors: " + major}
               <SearchBar
                 items={majors}
                 setList={setFilteredMajors}
@@ -222,6 +227,7 @@ function MoreInfo () {
                 )}
               </DDWrapper>
 
+              {"Current minors: " + minor}
               <SearchBar
                 items={minors}
                 setList={setFilteredMinors}

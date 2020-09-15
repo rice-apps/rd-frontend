@@ -4,7 +4,13 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline'
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import DateRangeIcon from '@material-ui/icons/DateRange'
 import { SvgIcon } from '@material-ui/core'
-import {Logo, NavList, NavElement, NavWrapper, ChatLogo} from './SideNav.styles'
+import {
+  Logo,
+  NavList,
+  NavElement,
+  NavWrapper,
+  ChatLogo
+} from './SideNav.styles'
 // import { Link, useLocation } from 'react-router-dom'
 
 function SideNav (props) {
@@ -29,13 +35,13 @@ function SideNav (props) {
   const clickBehavior = {
     '/feed': props.handleFeed,
     '/profile': props.handleProfile,
-    'default': null,
+    default: null
   }
 
   const selected = {
     '/feed': !props.showProfile,
     '/profile': props.showProfile,
-    'default': false,
+    default: false
   }
 
   return (
@@ -62,11 +68,16 @@ function SideNav (props) {
 
         {pages.map((page, i) => {
           return (
-            <NavElement first={i === 0} selected={selected[page] || selected[false]}
-                        onClick={clickBehavior[page] || clickBehavior['default']} >
+            <NavElement
+              first={i === 0}
+              selected={selected[page] || selected[false]}
+              onClick={clickBehavior[page] || clickBehavior['default']}
+            >
               <SvgIcon
-                  htmlColor={selected[page] || selected[false] ? `#FFFFFF` : `#A9ABB4`}
-                  style={{ fontSize: '3.5vh' }}
+                htmlColor={
+                  selected[page] || selected[false] ? `#FFFFFF` : `#A9ABB4`
+                }
+                style={{ fontSize: '3.5vh' }}
               >
                 {getIcon(page)}
               </SvgIcon>

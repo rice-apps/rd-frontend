@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 
-import { useLazyQuery, useMutation } from '@apollo/client'
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
+// import CloseIcon from '@material-ui/icons/Close'
 
 // import { Helmet } from 'react-helmet'
 // import { FeedProfileContainer } from "./PostFeedWithData.styles";
@@ -20,7 +21,10 @@ import {
   CloseButton,
   RightSidebar,
   DDList,
-  DDListItem, UsernameEditable, AddPhotoButton, SavedPostsContainer
+  DDListItem,
+  UsernameEditable,
+  AddPhotoButton,
+  SavedPostsContainer
 } from "./Profile.styles";
 
 import EditUrl from "../images/edit.svg"
@@ -47,6 +51,18 @@ import ImageUploader from "./ImageUploader";
 //
 //   }
 // }
+// import {
+//   ExitButton,
+// } from './WritePost.styles'
+
+import EditUrl from '../images/edit.svg'
+import { Navigate, useNavigate } from 'react-router-dom'
+import { currentUser } from '../utils/apollo'
+import { SET_INFO } from '../graphql/Mutations'
+// import {USER_EXISTS} from "../graphql/Queries";
+import majorMinorJson from '../utils/MajorMinor.json'
+import { DDList, DDListItem } from './MoreInfo.styles'
+import DropDownItem from './DropDownItem'
 
 const ProfilePane = props => {
   const navigate = useNavigate()
@@ -60,7 +76,7 @@ const ProfilePane = props => {
   // current major, minors, and college
   const [major, setMajor] = useState([])
   const [minor, setMinor] = useState([])
-  const [college, setCollege] = useState('')
+  const [college, setCollege] = useState("")
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
 
@@ -189,8 +205,11 @@ const ProfilePane = props => {
 
       setBeingEdited('none')
       e.target.value = ''
+
+      setEmail(document.getElementById('email').innerText)
     }
   }
+
 
   // const handleUserChange = useCallback(e => {
   //   setUsername(document.getElementById('username').innerText)
@@ -204,18 +223,18 @@ const ProfilePane = props => {
   const handleMajorChange = newValue => {
     const indexOfMajor = major.indexOf(newValue)
     setMajor(
-        indexOfMajor >= 0
-            ? major.filter(maj => newValue !== maj)
-            : [...major, newValue]
+      indexOfMajor >= 0
+        ? major.filter(maj => newValue !== maj)
+        : [...major, newValue]
     )
   }
 
   const handleMinorChange = newValue => {
     const indexOfMinor = minor.indexOf(newValue)
     setMinor(
-        indexOfMinor >= 0
-            ? minor.filter(maj => newValue !== maj)
-            : [...minor, newValue]
+      indexOfMinor >= 0
+        ? minor.filter(maj => newValue !== maj)
+        : [...minor, newValue]
     )
   }
 

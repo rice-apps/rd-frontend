@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom"
+import { useQuery } from '@apollo/client'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { grey } from '@material-ui/core/colors'
@@ -10,15 +12,18 @@ import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp'
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
-import ChatIcon from '@material-ui/icons/Chat'
+import CommentOutlinedIcon from '@material-ui/icons/CommentOutlined';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
 import ReactHtmlParser from 'react-html-parser'
 import remarkable from '../utils/remarkable'
 
 import TimeAgo from 'react-timeago'
-
 import Truncate from 'react-truncate'
+
+import { FETCH_COMMENTS_NESTED } from '../graphql/Queries'
+import { COMMENT_CREATED } from '../graphql/Subscriptions'
+import CommentChunk from "./CommentChunk";
 
 import {
   DiscussionBoxSection,
@@ -47,13 +52,19 @@ import {
   FullPostLink,
   Expand,
   ReadMore,
+  ImageDiv,
+  DescriptorDiv,
   CommentComponent,
   DividerBottom,
   ShowCommentsDiv,
   CommentInput,
-  CommentButton
+  CommentButton,
+  CommentButtonText,
+  CommentsDiv,
+  BoldedSpan,
+  NormalSpan
 } from './PostChunk.styles'
-import {tagColors} from "./tagColors";
+import { tagColors } from './tagColors'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -63,7 +74,49 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function PostChunk(props) {
+function PostChunk (props) {
+  // Comments stuff starts
+  const navigate = useNavigate()
+
+  const { data, loading, error, subscribeToMore } = useQuery(
+    FETCH_COMMENTS_NESTED,
+    {
+      variables: {
+        post_id: props.post.node._id
+      },
+      fetchPolicy: 'network-only'
+    }
+  )
+
+  // useEffect(() => {
+  //   const unsubscribeToNewComments = subscribeToMore({
+  //     document: COMMENT_CREATED,
+  //     variables: { post_id: props.post.node._id },
+  //     updateQuery: (prev, { subscriptionData }) => {
+  //       if (!subscriptionData.data) return prev
+
+  //       console.log(prev)
+  //       console.log(subscriptionData)
+
+  //       const newFeedItem = subscriptionData.data.commentCreated
+
+  //       console.log(newFeedItem.parent)
+
+  //       if (typeof newFeedItem.parent === 'undefined') {
+  //         return {
+  //           commentByPost: [newFeedItem, ...prev.commentByPost]
+  //         }
+  //       }
+  //     }
+  //   })
+
+  //   return () => {
+  //     unsubscribeToNewComments()
+  //   }
+  // }, [])
+
+  // Comments stuff ends
+
   const classes = useStyles()
   let oneImage = <></>
 
@@ -95,6 +148,7 @@ function PostChunk(props) {
     listOfDownvoters.includes(props.userInfo.username)
   )
   const [isCommentOpen, setCommentOpen] = useState(false)
+  const [replyID, setReplyID] = useState(null)
 
   const toggleDD = () => {
     setDDOpen(!isDDOpen)
@@ -118,6 +172,30 @@ function PostChunk(props) {
     setCommentOpen(!isCommentOpen)
   }
 
+  
+  if (loading) {
+    // return <p>Loading Comments</p>
+    return <div></div>
+  }
+
+  if (error) {
+    return <p>Error Fetching Comments</p>
+  }
+  
+
+  const theComments = data.commentByPost // array
+
+  var numComments = theComments.length;
+
+  theComments.map(comment => {
+    numComments += comment.children.length
+    if (comment.children) {
+      comment.children.map(child => {
+        numComments += child.children.length
+      })
+    }
+  });
+
   const calIcon = { 'calendar-plus-o': 'right' }
 
   const calDropDown = [
@@ -128,9 +206,66 @@ function PostChunk(props) {
   const calEvent = {
     title: props.post.node.title ? props.post.node.title : '',
     description: props.post.node.body ? props.post.node.body : '',
-    location: props.post.node.place ? props.post.node.place : '',
+    location: props.post.node.location ? props.post.node.location : '',
+    workplace: props.post.node.workplace ? props.post.node.workplace : '',
     startTime: props.post.node.start ? props.post.node.start : '',
-    endTime: props.post.node.end ? props.post.node.end : ''
+    endTime: props.post.node.end ? props.post.node.end : '',
+    deadline: props.post.node.deadline ? props.post.node.deadline: ''
+  }
+
+  const isPaid = props.post.node.isPaid;
+  let paidString = ""
+  if (typeof isPaid === 'boolean'){
+    paidString = isPaid === true ? "Yes" : "No"
+  }
+  const isClosed = props.post.node.isClosed;
+  let closedString = ""
+  if (typeof isClosed === 'boolean'){
+    closedString = isClosed === true ? "Yes" : "No"
+  }
+
+  const jobSpecifics = {
+    isPaid: paidString,
+    isClosed: closedString
+  }
+
+  //maybe we should put N/A if it wasn't specified hmm...
+  const months = [ "January", "February", "March", "April", "May", "June", 
+  "July", "August", "September", "October", "November", "December" ];
+
+  let postDescriptor = [];
+  if (calEvent.startTime.length > 0){
+    const startDate = calEvent.startTime.split('T')[0];
+    const formattedDate = startDate.split('-')
+    const month = months[parseInt(formattedDate[1], 10) - 1];
+    postDescriptor.push(
+      <NormalSpan><BoldedSpan>From: </BoldedSpan>{month + ' ' + formattedDate[2] + ", " + formattedDate[0] + `      `}</NormalSpan>
+    )
+  }
+  if (calEvent.endTime.length > 0 || calEvent.deadline.length > 0){
+    const until = calEvent.endTime.length > 0 ? calEvent.endTime : calEvent.deadline;
+    const endDate = until.split('T')[0];
+    const formattedDate = endDate.split('-')
+    const month = months[parseInt(formattedDate[1], 10) - 1];
+    postDescriptor.push(
+      <NormalSpan><BoldedSpan>End: </BoldedSpan>{month + ' ' + formattedDate[2] + ", " + formattedDate[0] + `      `}</NormalSpan>
+    )
+  }
+  if (calEvent.location.length > 0 || calEvent.workplace.length > 0){
+    const place = calEvent.location.length > 0 ? calEvent.location : calEvent.workplace;
+    postDescriptor.push(
+      <NormalSpan><BoldedSpan>Location: </BoldedSpan>{place}</NormalSpan>
+    )
+  }
+  if (jobSpecifics.isPaid.length > 0){
+    postDescriptor.push(
+      <NormalSpan><BoldedSpan>Paid: </BoldedSpan>{jobSpecifics.isPaid}</NormalSpan>
+    )
+  }
+  if (jobSpecifics.isClosed.length > 0){
+    postDescriptor.push(
+      <NormalSpan><BoldedSpan>Closed: </BoldedSpan>{jobSpecifics.isClosed}</NormalSpan>
+    )
   }
 
   const checkComment = comment => comment.length <= 0
@@ -189,40 +324,35 @@ function PostChunk(props) {
 
             <Tags>
               {props.post.node.tags.length > 0 && (
-                <Tag
-                    style={tagColors[0 % tagColors.length]}
-                >{props.post.node.tags[0]}</Tag>
+                <Tag style={tagColors[0 % tagColors.length]}>
+                  {props.post.node.tags[0]}
+                </Tag>
               )}
               {props.post.node.tags.length > 1 && (
-                <Tag
-                    style={tagColors[1 % tagColors.length]}
-                >{props.post.node.tags[1]}</Tag>
+                <Tag style={tagColors[1 % tagColors.length]}>
+                  {props.post.node.tags[1]}
+                </Tag>
               )}
               {props.post.node.tags.length > 2 && (
-                <Tag
-                    style={tagColors[2 % tagColors.length]}
-                >{props.post.node.tags[2]}</Tag>
+                <Tag style={tagColors[2 % tagColors.length]}>
+                  {props.post.node.tags[2]}
+                </Tag>
               )}
 
               {isTagsOpen &&
-                props.post.node.tags
-                  .slice(3)
-                  .map((tag, index) => (
-                      <Tag
-                          key={tag}
-                          style={tagColors[index % tagColors.length]}
-                      >
-                        {tag}
-                      </Tag>
-                  ))}
+                props.post.node.tags.slice(3).map((tag, index) => (
+                  <Tag key={tag} style={tagColors[index % tagColors.length]}>
+                    {tag}
+                  </Tag>
+                ))}
 
               {props.post.node.tags.length > 3 && (
                 <ViewTags onClick={toggleTags}>
                   {isTagsOpen ? (
                     <text>(View Less)</text>
                   ) : (
-                      <text>(View All)</text>
-                    )}
+                    <text>(View All)</text>
+                  )}
                 </ViewTags>
               )}
             </Tags>
@@ -240,7 +370,7 @@ function PostChunk(props) {
                   <span>
                     ...
                     <FullPostLink to={myPostLink}>
-                      <ReadMore>(Read More)</ReadMore>
+                      <ReadMore>Read More</ReadMore>
                     </FullPostLink>
                   </span>
                 }
@@ -280,15 +410,15 @@ function PostChunk(props) {
                   </Save>
                   {(props.post.node.kind === 'Event' ||
                     props.post.node.kind === 'Job') && (
-                      <AddTo>
-                        <AddToCalendar
-                          event={calEvent}
-                          buttonLabel='Add to '
-                          buttonTemplate={calIcon}
-                          listItems={calDropDown}
-                        />
-                      </AddTo>
-                    )}
+                    <AddTo>
+                      <AddToCalendar
+                        event={calEvent}
+                        buttonLabel='Add to '
+                        buttonTemplate={calIcon}
+                        listItems={calDropDown}
+                      />
+                    </AddTo>
+                  )}
 
                   <Expand>
                     <FullPostLink to={myPostLink}>Expand</FullPostLink>
@@ -313,12 +443,12 @@ function PostChunk(props) {
                       <Delete
                         onClick={e => {
                           e.preventDefault()
-                          window.location.reload(false)
                           props.removePost({
                             variables: {
                               _id: props.post.node._id
                             }
                           })
+                          window.location.reload(false)
                         }}
                       >
                         Delete Post
@@ -334,7 +464,7 @@ function PostChunk(props) {
                   <span>
                     ...
                     <FullPostLink to={myPostLink}>
-                      <ReadMore>(Read More)</ReadMore>
+                      <ReadMore>Read More</ReadMore>
                     </FullPostLink>
                   </span>
                 }
@@ -342,7 +472,12 @@ function PostChunk(props) {
                 {ReactHtmlParser(remarkable.render(props.post.node.body))}
               </Truncate>
             </DiscussionBody>
-            {oneImage}
+            <ImageDiv>
+              {oneImage}
+            </ImageDiv>
+            <DescriptorDiv>
+              {postDescriptor}
+            </DescriptorDiv>
           </TopMiddleComponent>
 
           <CommentComponent>
@@ -354,22 +489,22 @@ function PostChunk(props) {
 
             <ShowCommentsDiv>
               <Button
-                startIcon={<ChatIcon />}
+                startIcon={<CommentOutlinedIcon fontSize="large"/>}
                 style={{
                   background: 'none',
                   border: 'none',
                   font: 'Avenir',
                   textTransform: 'none',
-                  maxWidth: '12vw',
-                  display: 'flex'
+                  display: 'flex',
                 }}
-                onClick={toggleComment}
+                // onClick={toggleComment}
+                onClick = {()=> { navigate(myPostLink) }}
               >
                 {isCommentOpen ? (
-                  <text>Hide Comments</text>
+                  <text style={{color: '#67687E'}}>Hide Comments ({numComments})</text>
                 ) : (
-                    <text>Comments</text>
-                  )}
+                  <text style={{color: '#67687E'}}>Show Comments ({numComments})</text>
+                )}
               </Button>
             </ShowCommentsDiv>
 
@@ -400,8 +535,43 @@ function PostChunk(props) {
                   }
                 }}
               >
-                Post Comment
+                <CommentButtonText>
+                  Post Comment
+                </CommentButtonText>
               </CommentButton>
+            )}
+            {isCommentOpen && (
+              <CommentsDiv>
+                <ul style={{listStyleType:"none", paddingLeft:"0px"}}>
+                  {/* level 1 */}
+                  {theComments.map((comment) => (
+                    <li key={comment._id} style={{listStyleType:"none"}}>
+                      <CommentChunk comment={comment} postID={props.post.node._id} setParentID={setReplyID} isLeaf={false}></CommentChunk>
+                      {/* <button onClick={() => setReplyID(comment._id)}>Reply</button> */}
+                      <ul style={{listStyleType:"none"}}>
+                        {/* level 2 */}
+                        {comment.children.map((child1) => (
+                          <li key={child1._id} style={{listStyleType:"none"}}>
+                            <CommentChunk comment={child1} postID={props.post.node._id} isLeaf={false}></CommentChunk>
+                            {/* <button onClick={() => setReplyID(child1._id)}>
+                              Reply
+                            </button> */}
+                            <ul style={{listStyleType:"none"}}>
+                              {/* level 3 */}
+                              {child1.children.map((child2) => (
+                                <li key={child2._id} style={{listStyleType:"none"}}>
+                                  <CommentChunk comment={child2} postID={props.post.node._id} isLeaf={true}></CommentChunk>
+                                  {/* dont nest any further */}
+                                </li>
+                              ))}
+                            </ul>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                  ))}
+                </ul>
+              </CommentsDiv>
             )}
           </CommentComponent>
         </DiscussionBox>

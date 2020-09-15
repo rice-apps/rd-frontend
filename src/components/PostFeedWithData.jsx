@@ -12,13 +12,14 @@ import {
   Background,
   PostFeedContainer,
   LeftSidebarContainer,
-  NewPostButtonContainer, FeedProfileContainer
+  NewPostButtonContainer,
+  FeedProfileContainer
 } from './PostFeedWithData.styles'
 
 import SideNav from './SideNav'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import Button from '@material-ui/core/Button'
-import ProfilePane from "./ProfilePane";
+import ProfilePane from './ProfilePane'
 
 function PostFeedWithData () {
   const [today, setToday] = useState(null)
@@ -28,6 +29,7 @@ function PostFeedWithData () {
   const [upvoteFilter, setUpvoteFilter] = useState('')
   const [dateFilter, setDateFilter] = useState('')
   const [tagFilter, setTagFilter] = useState([])
+  const [areFiltersClosed, setFiltersClosed] = useState(false);
 
   // when we clear filter, this gets set to empty string and it will cause
   // a graphql bug within our GET_FILTER_ID query because "" is not a valid EnumPostKey
@@ -107,9 +109,14 @@ function PostFeedWithData () {
 
   const [showWritePost, setShowWritePost] = useState(false)
   const openModal = () => {
-    setShowWritePost(!showWritePost)
-    setShowProfile(false)
+    setShowWritePost(!showWritePost);
+    setFiltersClosed(true);
+    setShowProfile(false);
   }
+
+  // const closeModal = () => {
+  //   setShowProfile(false);
+  // }
 
   return (
     <>
@@ -117,15 +124,20 @@ function PostFeedWithData () {
         <title>RiceDiscuss &middot; Your Feed</title>
       </Helmet>
       <WritePost
-          show={showWritePost}
-          switchVisibility={setShowWritePost}
-          style={{ position: 'fixed' }}
+        show={showWritePost}
+        switchVisibility={setShowWritePost}
+        style={{ position: 'fixed' }}
       />
       <Background>
         <LeftSidebarContainer>
-          <SideNav handleProfile={() => { setShowProfile(!showProfile); setShowWritePost(false) }}
-                   handleFeed={() => { setShowProfile(!showProfile); }}
-                   showProfile={showProfile} />
+          <SideNav
+            handleProfile={() => {
+              setShowProfile(!showProfile)
+              setShowWritePost(false)
+            }}
+            handleFeed={() => setShowProfile(!showProfile)}
+            showProfile={showProfile}
+          />
         </LeftSidebarContainer>
         <FeedProfileContainer shrink={showProfile}>
           <PostFeedContainer>
@@ -142,7 +154,11 @@ function PostFeedWithData () {
                 }}
                 startIcon={
                   <AddCircleIcon
-                    style={{ color: '#7380FF', width: '1.3vw', height: '1.3vw' }}
+                    style={{
+                      color: '#7380FF',
+                      width: '1.3vw',
+                      height: '1.3vw'
+                    }}
                   />
                 }
               >
@@ -176,6 +192,9 @@ function PostFeedWithData () {
               firstTime={firstTime}
               setFirstTime={setFirstTime}
               post_ids={postIDs}
+
+              filtersClosed = {areFiltersClosed}
+              setFiltersClosed = {setFiltersClosed}
               onLoadMore={() =>
                 fetchMore({
                   variables: {
