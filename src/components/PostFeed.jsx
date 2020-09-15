@@ -123,6 +123,9 @@ function PostFeed (props) {
         setTypeofFilter={props.setTypeofFilter}
         kindInactive={props.firstTime}
         kindFilterActive={props.setFirstTime}
+        
+        filtersClosed = {props.filtersClosed}
+        setFiltersClosed = {props.setFiltersClosed}
       />
       <InfiniteScroll
         pageStart={0}

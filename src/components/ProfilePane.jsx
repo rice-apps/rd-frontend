@@ -42,7 +42,7 @@ const ProfilePane = props => {
   // current major, minors, and college
   const [major, setMajor] = useState([])
   const [minor, setMinor] = useState([])
-  const [college, setCollege] = useState('')
+  const [college, setCollege] = useState("")
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
 
@@ -156,6 +156,7 @@ const ProfilePane = props => {
         ? major.filter(maj => newValue !== maj)
         : [...major, newValue]
     )
+    setBeingEdited('none')
   }
 
   const handleMinorChange = newValue => {
@@ -165,6 +166,7 @@ const ProfilePane = props => {
         ? minor.filter(maj => newValue !== maj)
         : [...minor, newValue]
     )
+    setBeingEdited('none')
   }
 
   const handleCollegeChange = useCallback(newValue => {
@@ -211,6 +213,7 @@ const ProfilePane = props => {
     navigate('/login')
   }
 
+  console.log(colleges);
   return props.show ? (
     <RightSidebarContainer>
       <ExitButton onClick={props.closeModal}>
