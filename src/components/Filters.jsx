@@ -31,7 +31,7 @@ const Filters = props => {
   const [filteredTags, setFilteredTags] = useState([])
 
   const POST_TYPES = ['Discussion', 'Event', 'Notice', 'Job']
-  const DATES = ['yesterday', 'in the last week', 'in the last month']
+  const DATES = ['yesterday', 'last week', 'last month']
   const UPVOTES = ['hot', 'cold']
 
   // must set up tag subscription
