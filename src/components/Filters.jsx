@@ -33,6 +33,7 @@ const Filters = props => {
   const DATES = ['yesterday', 'in the last week', 'in the last month']
   const UPVOTES = ['hot', 'cold']
 
+  // must set up tag subscription
   const { data, loading, error } = useQuery(GET_TAGS)
 
   useEffect(() => {
@@ -42,13 +43,25 @@ const Filters = props => {
     if (!props.kindInactive) setPostType(props.kindFilter)
   }, [])
 
+  useEffect(() => {
+    if (props.filtersClosed){
+      setPostMenuOpen(false);
+      setTagOpen(false);
+      setDateOpen(false);
+      setUpvotes(false);
+    }
+  }, [props.filtersClosed])
+
   if (loading) return <h1>Your tags are loading.</h1>
   if (error) return <h1>oshit(git) MY FILTERS ARE DUCKED</h1>
 
   const tagList = data.getAllTags
   const finalizedTags = searchActivated ? filteredTags : tagList
 
+  
+
   const togglePost = () => {
+    props.setFiltersClosed(false);
     setPostMenuOpen(!isPostTypeOpen)
     setTagOpen(false)
     setDateOpen(false)
@@ -56,6 +69,7 @@ const Filters = props => {
   }
 
   const toggleTag = () => {
+    props.setFiltersClosed(false);
     setTagOpen(!isTagOpen)
     setPostMenuOpen(false)
     setDateOpen(false)
@@ -63,6 +77,7 @@ const Filters = props => {
   }
 
   const toggleDate = () => {
+    props.setFiltersClosed(false);
     setDateOpen(!isDateOpen)
     setPostMenuOpen(false)
     setTagOpen(false)

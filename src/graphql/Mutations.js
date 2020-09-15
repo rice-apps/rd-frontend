@@ -168,8 +168,8 @@ const SET_INFO = gql`
   mutation SetInfo(
     $username: String!
     $college: EnumUserCollege
-    $email: String!
-    $phone: String!
+    $email: String
+    $phone: String
     $major: [String]
     $minor: [String]
     $netID: String!

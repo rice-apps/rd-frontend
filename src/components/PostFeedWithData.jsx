@@ -29,6 +29,7 @@ function PostFeedWithData () {
   const [upvoteFilter, setUpvoteFilter] = useState('')
   const [dateFilter, setDateFilter] = useState('')
   const [tagFilter, setTagFilter] = useState([])
+  const [areFiltersClosed, setFiltersClosed] = useState(false);
 
   // when we clear filter, this gets set to empty string and it will cause
   // a graphql bug within our GET_FILTER_ID query because "" is not a valid EnumPostKey
@@ -108,8 +109,9 @@ function PostFeedWithData () {
 
   const [showWritePost, setShowWritePost] = useState(false)
   const openModal = () => {
-    setShowWritePost(!showWritePost)
-    setShowProfile(false)
+    setShowWritePost(!showWritePost);
+    setFiltersClosed(true);
+    setShowProfile(false);
   }
 
   const closeModal = () => {
@@ -190,6 +192,9 @@ function PostFeedWithData () {
               firstTime={firstTime}
               setFirstTime={setFirstTime}
               post_ids={postIDs}
+
+              filtersClosed = {areFiltersClosed}
+              setFiltersClosed = {setFiltersClosed}
               onLoadMore={() =>
                 fetchMore({
                   variables: {
