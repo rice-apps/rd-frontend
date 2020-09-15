@@ -24,13 +24,15 @@ export const Logo = styled.div`
   justify-content: center;
   // background-color: green;
   // width: 100%;
-  @media (min-aspect-ratio: 848/712) {
+  // @media (min-aspect-ratio: 848/712) {
     padding-top: 7vh;
     padding-bottom: 10vh;
-  }
+  // }
   
   @media (max-aspect-ratio: 848/712) {
     width: 25vw;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 `
 
@@ -44,13 +46,12 @@ export const NavList = styled.div`
   
   z-index: 12;
   
+  height: 45vh;
+  
   @media (max-aspect-ratio: 848/712) {
     flex-direction: row;
     width: 100%;
-  }
-  
-  @media (min-aspect-ratio: 848/712) {
-    height: 45vh;
+    height: inherit;
   }
 `
 

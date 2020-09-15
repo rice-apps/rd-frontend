@@ -492,10 +492,9 @@ function WritePost (props) {
     }
 
     try {
-      postCreate(postToCreate[postType])
-      setEditorState(EditorState.createEmpty(decorator))
-      setTags([])
-      props.switchVisibility(false)
+      postCreate(postToCreate[postType]).then(() => {
+        window.location.reload()
+      })
     } catch (error) {
       log.error('error', error)
     }

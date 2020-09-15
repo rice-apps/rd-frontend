@@ -20,13 +20,13 @@ import {
   CloseButton,
   RightSidebar,
   DDList,
-  DDListItem, UsernameEditable, AddPhotoButton
+  DDListItem, UsernameEditable, AddPhotoButton, SavedPostsContainer
 } from "./Profile.styles";
 
 import EditUrl from "../images/edit.svg"
 import HeadshotUrl from "../images/headshot.svg";
 import { Navigate, useNavigate } from "react-router-dom";
-import { currentUser } from "../utils/apollo";
+import { currentUser, mainClient } from "../utils/apollo";
 import { SET_INFO } from "../graphql/Mutations";
 import { USER_EXISTS } from "../graphql/Queries";
 import majorMinorJson from "../utils/MajorMinor.json";
@@ -64,6 +64,8 @@ const ProfilePane = props => {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
 
+  const [savedPosts, setSavedPosts] = useState([])
+
   // if the drop_down is open
   const [beingEdited, setBeingEdited] = useState('none')
   const [showSaveButton, setShowSaveButton] = useState(false)
@@ -91,7 +93,7 @@ const ProfilePane = props => {
       email: currentEmail,
       phone: currentPhone,
       imageUrl: currentUrl,
-      savedPosts
+      savedPosts: currentSavedPosts,
     } = currentUser()
     const newUsername = username.length === 0 ? currentUsername : username
     setOriginal(newUsername)
@@ -102,6 +104,8 @@ const ProfilePane = props => {
     setEmail(currentEmail)
     setPhone(currentPhone)
     setImageUrl(currentUrl)
+    setSavedPosts(currentSavedPosts)
+    console.log(currentSavedPosts)
     // if (currentUrl) {
     //   // console.log('hello?', currentUrl)
     // }
@@ -268,15 +272,14 @@ const ProfilePane = props => {
     return <Navigate to='/login' />
   }
 
-  const handleLogout = () => {
-    // FIXME: logout tasks here
-    navigate('/login')
+  const handleLogout = async () => {
+    mainClient.resetStore().then(() => navigate('/login'))
   }
 
   return props.show ? (
     <RightSidebarContainer>
       <CloseButton onClick={props.close}>
-        <ChevronRightIcon style={{width: '4vh', height: '4vh'}}/>
+        <ChevronRightIcon style={{width: '4.5vh', height: '4.5vh', color: '#FFFFFF'}}/>
       </CloseButton>
       <RightSidebar>
         <ProfileLogout>
@@ -394,7 +397,7 @@ const ProfilePane = props => {
           <Descriptor>
             <BlockyText>
               <b> College: </b>
-              <TextBlock> {college} </TextBlock>
+              <TextBlock> {college.replace("_", " ")} </TextBlock>
             </BlockyText>
             <EditButton src={EditUrl} onClick={() => handleEditClick('college')} />
             {beingEdited === 'college'  && (
@@ -407,7 +410,7 @@ const ProfilePane = props => {
                   {colleges.map(item => (
                     <DDListItem key={item}>
                       <DropDownItem
-                          name={item}
+                          name={item} alias={item.replace("_", " ")}
                           setInfo={handleCollegeChange}
                           selectedItems={college}
                       />
@@ -447,11 +450,24 @@ const ProfilePane = props => {
           {showSaveButton &&
             <SaveButton onClick={() => saveData()}>
               Save
-            </SaveButton>
-          }
-          {/*<Divider />*/}
-          {/*tags*/}
+            </SaveButton>}
+          {showSaveButton && <Divider />}
         </ProfileInner>
+          <b>Saved posts:</b>
+        {savedPosts.length &&
+          <SavedPostsContainer>
+            {savedPosts.map(post => (
+                <div key={post._id} style={{fontSize: 'inherit'}}>
+                  <a href={'/posts/' + post._id} target={'_blank'}
+                     style={{fontSize: 'inherit'}}
+                  >
+                    {post._id}
+                  </a>
+                </div>
+              ))
+            }
+          </SavedPostsContainer>
+        }
       </RightSidebar>
     </RightSidebarContainer>
   ) : null

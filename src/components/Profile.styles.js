@@ -108,7 +108,7 @@ export const LogoutButton = styled.button`
 `
 
 export const ProfileInner = styled.div`
-  height: 72.7vh;
+  height: 65vh;
   width: 35vh;
   
   font-size: 2.2vh;
@@ -264,4 +264,13 @@ export const DDListItem = styled.li`
   cursor: pointer;
   
   // padding-left: 0;
+`
+
+export const SavedPostsContainer = styled.div`
+  height: 10vh;
+  overflow-x: visible;
+  overflow-y: auto;
+  
+  padding: 1vh;
+  justify-self: center;
 `

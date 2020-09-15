@@ -22,7 +22,8 @@ function DropDownItem (props) {
   return (
     <div onClick={toggleSelected} style={{ background: color, paddingBottom: '0.1em', paddingTop: '0.1em' }}>
       {selected && '✔  '}
-      {props.name}
+
+      {props.alias ? props.alias : props.name}
     </div>
   )
 }
