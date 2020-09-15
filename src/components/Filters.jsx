@@ -262,7 +262,7 @@ const Filters = props => {
           <TuneIcon />
         </IconButton>
         {/* <SubmitButton onClick={submitFilters}> Filter! </SubmitButton> */}
-        <ClearFilter onClick={clearFilters}>Clear filters</ClearFilter>
+        <ClearFilter onClick={clearFilters}>Clear</ClearFilter>
       </HorizontalDiv>
       {isTagOpen && <SearchBar
         items={tagList}

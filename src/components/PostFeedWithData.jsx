@@ -185,7 +185,7 @@ function PostFeedWithData () {
                   />
                 }
               >
-                Create Post
+                Create a Hoot
               </Button>
               
               {/* <NewPostButton onClick={openModal}>
