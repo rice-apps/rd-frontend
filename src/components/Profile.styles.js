@@ -45,7 +45,7 @@ export const CloseButton = styled.div`
   width: 5vh;
   
   // background: #FFFFFF 0% 0% no-repeat padding-box;
-  background-color: #FCE8DA;
+  background-color: #7380FF;
   
   display: flex;
   flex-direction: column;
@@ -61,7 +61,7 @@ export const CloseButton = styled.div`
   }
   
   &:hover {
-    background-color: #FCBD6F;
+    background-color: #333B8B;
   }
 `
 

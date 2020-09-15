@@ -282,26 +282,40 @@ function WritePost (props) {
     props.switchVisibility(false)
   }
 
-  const checkTitleBodyAndTag = (title, body, tagInput) =>
-    title.length <= 0 || body.length <= 0 || tagInput.length > 0
+  // const checkTitleBody = (title, body) =>
+  //   title.length <= 0 || body.length <= 0
 
-  const checkExtras = {
-    Discussion: () => {
-      return false
-    },
-    Event: () => {
-      if (!startDate || !endDate || place === '') {
+  const checkPost = {
+    Discussion: body => {
+      if (title.length > 0 && body.length > 0) {
         return true
+      } else {
+        alert('"Title" and "body" fields cannot be left blank.')
+        return false
       }
     },
-    Job: () => {
-      if (!startDate || !endDate || place === '') {
+    Event: body => {
+      if (title.length > 0 && body.length > 0 && place !== '') {
         return true
+      } else {
+        alert('"Title," "body," and "location" fields cannot be left blank.')
+        return false
       }
     },
-    Notice: () => {
-      if (!endDate) {
+    Job: body => {
+      if (title.length > 0 && body.length > 0 && place !== '') {
         return true
+      } else {
+        alert('"Title," "body," and "location" fields cannot be left blank.')
+        return false
+      }
+    },
+    Notice: body => {
+      if (title.length > 0 && body.length > 0) {
+        return true
+      } else {
+        alert('"Title" and "body" fields cannot be left blank.')
+        return false
       }
     }
   }
@@ -418,8 +432,8 @@ function WritePost (props) {
 
     const body = draftToMarkdown(convertToRaw(editorState.getCurrentContent()))
 
-    if (checkTitleBodyAndTag(title, body, tag)) return
-    if (checkExtras[postType]()) return
+    // if (checkTitleBody(title, body)) return
+    if (!checkPost[postType](body)) return
 
     const postToCreate = {
       Discussion: {
