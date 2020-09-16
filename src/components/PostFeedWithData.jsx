@@ -118,9 +118,9 @@ function PostFeedWithData () {
     setShowProfile(false);
   }
 
-  const closeModal = () => {
-    setShowProfile(false);
-  }
+  // const closeModal = () => {
+  //   setShowProfile(false);
+  // }
 
   
   const processDateFilter = filter => {
@@ -154,10 +154,10 @@ function PostFeedWithData () {
         <LeftSidebarContainer>
           <SideNav
             handleProfile={() => {
-              setShowProfile(true)
+              setShowProfile(!showProfile)
               setShowWritePost(false)
             }}
-            handleFeed={() => setShowProfile(false)}
+            handleFeed={() => setShowProfile(!showProfile)}
             showProfile={showProfile}
           />
         </LeftSidebarContainer>
@@ -292,7 +292,7 @@ function PostFeedWithData () {
               }
             />
           </PostFeedContainer>
-          <ProfilePane show={showProfile} closeModal = {closeModal}/>
+          <ProfilePane show={showProfile} close={() => setShowProfile(false)}/>
         </FeedProfileContainer>
       </Background>
     </>

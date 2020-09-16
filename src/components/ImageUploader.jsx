@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/client'
 
 import { S3_SIGN } from '../graphql/Mutations'
 
-function UploadToPost (props) {
+function ImageUploader (props) {
   const [file, setFile] = useState(null)
   const [s3Sign] = useMutation(S3_SIGN)
 
@@ -43,18 +43,20 @@ function UploadToPost (props) {
 
   const submit = async e => {
     e.preventDefault()
-    const response = await s3Sign({
-      variables: {
-        filename: formatFilename(file.name),
-        filetype: file.type
-      }
-    })
+    if (file) {
+      const response = await s3Sign({
+        variables: {
+          filename: formatFilename(file.name),
+          filetype: file.type
+        }
+      })
 
-    const { signedRequest, url } = response.data.signS3Url
+      const { signedRequest, url } = response.data.signS3Url
 
-    uploadToS3(file, signedRequest)
-    sendData(url) // make accessible to WritePost
-    props.handleDismissSelf()
+      await uploadToS3(file, signedRequest)
+      sendData(url) // make accessible to WritePost
+      props.handleDismissSelf()
+    }
   }
 
   const handleCancel = () => {
@@ -78,4 +80,4 @@ function UploadToPost (props) {
   ) : null
 }
 
-export default UploadToPost
+export default ImageUploader

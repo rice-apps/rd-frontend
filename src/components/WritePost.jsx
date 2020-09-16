@@ -32,7 +32,7 @@ import { Navigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import log from 'loglevel'
 import { POST_CREATE } from '../graphql/Mutations'
-// import UploadToPost from './UploadToPost'
+// import ImageUploader from './ImageUploader'
 import {
   PostWrapper,
   Button,
@@ -62,7 +62,7 @@ import {
   StereoButtonCheck
 } from './WritePost.styles'
 import { currentUser } from '../utils/apollo'
-import UploadToPost from './UploadToPost'
+import ImageUploader from './ImageUploader'
 import LinkAdder from './LinkAdder'
 import { tagColors } from './tagColors'
 
@@ -277,26 +277,40 @@ function WritePost (props) {
     props.switchVisibility(false)
   }
 
-  const checkTitleBodyAndTag = (title, body, tagInput) =>
-    title.length <= 0 || body.length <= 0 || tagInput.length > 0
+  // const checkTitleBody = (title, body) =>
+  //   title.length <= 0 || body.length <= 0
 
-  const checkExtras = {
-    Discussion: () => {
-      return false
-    },
-    Event: () => {
-      if (!startDate || !endDate || place === '') {
+  const checkPost = {
+    Discussion: body => {
+      if (title.length > 0 && body.length > 0) {
         return true
+      } else {
+        alert('"Title" and "body" fields cannot be left blank.')
+        return false
       }
     },
-    Job: () => {
-      if (!startDate || !endDate || place === '') {
+    Event: body => {
+      if (title.length > 0 && body.length > 0 && place !== '') {
         return true
+      } else {
+        alert('"Title," "body," and "location" fields cannot be left blank.')
+        return false
       }
     },
-    Notice: () => {
-      if (!endDate) {
+    Job: body => {
+      if (title.length > 0 && body.length > 0 && place !== '') {
         return true
+      } else {
+        alert('"Title," "body," and "location" fields cannot be left blank.')
+        return false
+      }
+    },
+    Notice: body => {
+      if (title.length > 0 && body.length > 0) {
+        return true
+      } else {
+        alert('"Title" and "body" fields cannot be left blank.')
+        return false
       }
     }
   }
@@ -407,8 +421,8 @@ function WritePost (props) {
 
     const body = draftToMarkdown(convertToRaw(editorState.getCurrentContent()))
 
-    if (checkTitleBodyAndTag(title, body, tag)) return
-    if (checkExtras[postType]()) return
+    // if (checkTitleBody(title, body)) return
+    if (!checkPost[postType](body)) return
 
     const postToCreate = {
       Discussion: {
@@ -467,10 +481,9 @@ function WritePost (props) {
     }
 
     try {
-      postCreate(postToCreate[postType])
-      setEditorState(EditorState.createEmpty(decorator))
-      setTags([])
-      props.switchVisibility(false)
+      postCreate(postToCreate[postType]).then(() => {
+        window.location.reload()
+      })
     } catch (error) {
       log.error('error', error)
     }
@@ -614,7 +627,7 @@ function WritePost (props) {
                 op='IMAGE'
               />
             </RichIcons>
-            <UploadToPost
+            <ImageUploader
               parentUrlCallback={callbackURL}
               show={imgUploaderVisible}
               handleDismissSelf={() => {

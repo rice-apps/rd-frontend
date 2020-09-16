@@ -260,6 +260,7 @@ const VERIFY_USER = gql`
       college
       email
       phone
+      imageUrl
     }
   }
 `

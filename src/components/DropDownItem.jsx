@@ -11,7 +11,7 @@ function DropDownItem (props) {
   }, [selectedItems, name])
 
   useEffect(() => {
-    setColored(selected ? 'lightblue' : 'white')
+    setColored(selected ? '#54C1FB4D' : 'white')
   }, [selected])
 
   const toggleSelected = () => {
@@ -20,9 +20,10 @@ function DropDownItem (props) {
   }
 
   return (
-    <div onClick={toggleSelected} style={{ background: color, width: '300px' }}>
-      {props.name}
-      {selected && '✔'}
+    <div onClick={toggleSelected} style={{ background: color, paddingBottom: '0.1em', paddingTop: '0.1em' }}>
+      {selected && '✔  '}
+
+      {props.alias ? props.alias : props.name}
     </div>
   )
 }
