@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
+import {Search} from "./Search.styles"
 
-function SearchBar ({ items, setList, setActive }) {
+function SearchBar ({ items, setList, setActive, placeholder }) {
   const [searchText, setSearchText] = useState('')
 
   useEffect(() => {
@@ -22,9 +23,9 @@ function SearchBar ({ items, setList, setActive }) {
   }, [])
 
   return (
-    <input
+    <Search
       type='text'
-      placeholder='search'
+      placeholder={placeholder}
       value={searchText}
       onChange={updateSearchText}
     />

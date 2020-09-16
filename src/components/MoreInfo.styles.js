@@ -43,15 +43,19 @@ const LaptopGirl = styled.img`
 const AboutMyself = styled.p`
   transform: rotate(38deg);
   position: relative;
-  top: 32vh;
-  left: 11vw;
+  top: 28vh;
+  left: 12vw;
+`
+
+const Statements = styled.p`
+  margin: 5px;
 `
 
 const TextField = styled.input`
   padding: 5px;
-  width: 150px;
-  margin: 5px 0;
-  border-radius: 6vw;
+  width: 170px;
+  margin: 0px 0;
+  border-radius: 0.5vw;
   border: 1px solid rgb(223, 223, 223);
   background-color: white;
   line-height: 19px;
@@ -61,7 +65,7 @@ const FieldSetStyle = styled.fieldset`
   position: relative;
   bottom: 0px;
   border: 0;
-  left: 0px;
+  left: -15px;
 `
 
 const TotalForm = styled.fieldset`
@@ -69,7 +73,7 @@ const TotalForm = styled.fieldset`
   height: 75vh;
   transform: rotate(38deg);
   position: relative;
-  top: -26vh;
+  top: -27vh;
   left: -8vw;
   border-color: transparent;
 `
@@ -112,10 +116,10 @@ const DDHeader = styled.div`
   line-height: 38px;
   cursor: default;
   cursor: pointer;
-  border-radius: 20px;
-  margin-left: 12px;
+  border-radius: 5px;
+  margin-left: 0px;
   width: 16vw;
-  height: 5vh;
+  height: 4vh;
 `
 
 const DDHeaderTitle = styled.div`
@@ -177,5 +181,6 @@ export {
   DDHeaderTitle,
   DDList,
   DDListItem,
-  ArrowI
+  ArrowI,
+  Statements
 }

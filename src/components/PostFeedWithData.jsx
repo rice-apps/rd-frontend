@@ -7,6 +7,7 @@ import PostFeed from './PostFeed'
 import { POST_PAGE, GET_FILTERED_IDS } from '../graphql/Queries'
 import { POST_CREATED, POST_VOTE_CHANGED } from '../graphql/Subscriptions'
 import WritePost from './WritePost'
+import Filters from './Filters'
 
 import {
   Background,
@@ -107,6 +108,9 @@ function PostFeedWithData () {
   // 6) Clear all filters --> refetch FILTER --> refetch POST_PAGE
   // ---
 
+  console.log("type", filterType);
+  console.log("kind", kindFilter);
+  console.log("Data", filteredData);
   const [showWritePost, setShowWritePost] = useState(false)
   const openModal = () => {
     setShowWritePost(!showWritePost);
@@ -116,6 +120,24 @@ function PostFeedWithData () {
 
   const closeModal = () => {
     setShowProfile(false);
+  }
+
+  
+  const processDateFilter = filter => {
+    if (filter.length === 0) return
+    if (filter.includes('yesterday')) {
+      const yesterdayDay = today.getDate() - 1
+      const yesterday = (d => new Date(d.setDate(yesterdayDay)))(new Date())
+      setEarlyDateBound(yesterday)
+    } else if (filter.includes('week')) {
+      const weekAgoDay = today.getDate() - 7
+      const weekAgo = (d => new Date(d.setDate(weekAgoDay)))(new Date())
+      setEarlyDateBound(weekAgo)
+    } else if (filter.includes('month')) {
+      const monthAgoDay = today.getMonth() - 1
+      const monthAgo = (d => new Date(d.setMonth(monthAgoDay)))(new Date())
+      setEarlyDateBound(monthAgo)
+    }
   }
 
   return (
@@ -141,6 +163,7 @@ function PostFeedWithData () {
         </LeftSidebarContainer>
         <FeedProfileContainer shrink={showProfile}>
           <PostFeedContainer>
+            <div>
             <NewPostButtonContainer>
               <Button
                 variant='contained'
@@ -149,7 +172,7 @@ function PostFeedWithData () {
                   textTransform: 'none',
                   background: '#ffffff93 0% 0% no-repeat padding-box',
                   borderRadius: '0.7vw',
-                  marginLeft: '-4.5vw',
+                  marginLeft: '-4.8vw',
                   marginTop: '3vw'
                 }}
                 startIcon={
@@ -162,8 +185,9 @@ function PostFeedWithData () {
                   />
                 }
               >
-                Create Post
+                Create a Hoot
               </Button>
+              
               {/* <NewPostButton onClick={openModal}>
                 <AddCircleIcon
                   style={{ color: '#7380FF', width: '1.3vw', height: '1.3vw' }}
@@ -172,11 +196,9 @@ function PostFeedWithData () {
               </NewPostButton> */}
             </NewPostButtonContainer>
 
-            {/* <BannerContainer>
-              <Banner />
-            </BannerContainer> */}
-            <PostFeed
-              {...result}
+            <Filters
+              processDate={processDateFilter}
+
               setEarlyDateBound={setEarlyDateBound}
               currentDate={today}
               setDateFilter={setDateFilter}
@@ -189,12 +211,42 @@ function PostFeedWithData () {
               tagFilter={tagFilter}
               setTypeofFilter={setFilterType}
               refetch={refetchFilter}
-              firstTime={firstTime}
-              setFirstTime={setFirstTime}
               post_ids={postIDs}
+
+              kindInactive={firstTime}
+              kindFilterActive={setFirstTime}
 
               filtersClosed = {areFiltersClosed}
               setFiltersClosed = {setFiltersClosed}
+
+              style = {{"position": "relative",
+                        "margin-top": "300px"}}
+            />
+            </div>
+
+            {/* <BannerContainer>
+              <Banner />
+            </BannerContainer> */}
+            <PostFeed
+              {...result}
+              // setEarlyDateBound={setEarlyDateBound}
+              // currentDate={today}
+              // setDateFilter={setDateFilter}
+              // setUpvoteFilter={setUpvoteFilter}
+              // setKindFilter={setKindFilter}
+              // setTagFilter={setTagFilter}
+              // dateFilter={dateFilter}
+              // upvoteFilter={upvoteFilter}
+              // kindFilter={kindFilter}
+              // tagFilter={tagFilter}
+              // setTypeofFilter={setFilterType}
+              // refetch={refetchFilter}
+              // firstTime={firstTime}
+              // setFirstTime={setFirstTime}
+              // post_ids={postIDs}
+
+              // filtersClosed = {areFiltersClosed}
+              // setFiltersClosed = {setFiltersClosed}
               onLoadMore={() =>
                 fetchMore({
                   variables: {

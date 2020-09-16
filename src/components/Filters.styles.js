@@ -3,7 +3,8 @@ import styled from 'styled-components/macro'
 const HorizontalDiv = styled.div`
   display: flex;
   justify-content: flex-end;
-  padding-right: 70px;
+  padding-right: 0px;
+  left: 100px;
 `
 
 const TextField = styled.input`
@@ -55,7 +56,7 @@ const DDWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   position: relative;
-  max-width: 10vw;
+  max-width: 15vw;
   font-size: 1rem;
   user-select: none;
   margin-bottom: 15px;
@@ -72,9 +73,9 @@ const DDHeader = styled.div`
   line-height: 5vh;
   cursor: default;
   cursor: pointer;
-  border-radius: 2vw;
-  margin-left: 1vw;
-  max-width: 15em;
+  border-radius: 1vw;
+  margin-left: 0.75vw;
+  max-width: 20em;
   max-height: 2.5em;
 `
 
@@ -95,8 +96,9 @@ const DDList = styled.ul`
   border-top: none;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
-  box-shadow: 0 2px 5px -1px rgb(232, 232, 232);
+  box-shadow: 0 2px 5px -1px rgb(230, 230, 230);
   background-color: white;
+  top: 16px;
   font-weight: 700;
   text-align: left;
   -webkit-overflow-scrolling: touch;
@@ -109,6 +111,7 @@ const DDListItem = styled.li`
   white-space: nowrap;
   text-overflow: ellipsis;
   cursor: pointer;
+  left: -100px;
 `
 
 const ArrowI = styled.i`
@@ -120,6 +123,15 @@ const ArrowI = styled.i`
   margin-left: 13px;
 
   transform: ${props => (props.open ? 'rotate(-135deg)' : 'rotate(45deg)')};
+`
+
+const ClearFilter = styled.button`
+  line-height: 5vh;
+  max-height: 2.25em;
+  background-color: #e5daf5;
+  border-color: white;
+  font-weight: 600;
+  margin-left: 10px;
 `
 
 export {
@@ -134,5 +146,6 @@ export {
   DDList,
   DDListItem,
   ArrowI,
-  HorizontalDiv
+  HorizontalDiv,
+  ClearFilter
 }
