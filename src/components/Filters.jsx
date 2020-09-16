@@ -13,7 +13,8 @@ import {
   DDHeaderTitle,
   DDList,
   DDListItem,
-  ArrowI
+  ArrowI,
+  ClearFilter
 } from './Filters.styles'
 
 const Filters = props => {
@@ -30,7 +31,7 @@ const Filters = props => {
   const [filteredTags, setFilteredTags] = useState([])
 
   const POST_TYPES = ['Discussion', 'Event', 'Notice', 'Job']
-  const DATES = ['yesterday', 'in the last week', 'in the last month']
+  const DATES = ['yesterday', 'last week', 'last month']
   const UPVOTES = ['hot', 'cold']
 
   // must set up tag subscription
@@ -159,11 +160,7 @@ const Filters = props => {
 
   return (
     <>
-      <SearchBar
-        items={tagList}
-        setList={setFilteredTags}
-        setActive={setActive}
-      />
+    <div style = {{}}>
       <HorizontalDiv>
         <DDWrapper>
           <DDHeader onClick={togglePost}>
@@ -265,8 +262,16 @@ const Filters = props => {
           <TuneIcon />
         </IconButton>
         {/* <SubmitButton onClick={submitFilters}> Filter! </SubmitButton> */}
-        <button onClick={clearFilters}>Clear filters</button>
+        <ClearFilter onClick={clearFilters}>Clear</ClearFilter>
       </HorizontalDiv>
+      {isTagOpen && <SearchBar
+        items={tagList}
+        setList={setFilteredTags}
+        setActive={setActive}
+        placeholder={"search tags"}
+        style = {{}}
+      />}
+      </div>
     </>
   )
 }

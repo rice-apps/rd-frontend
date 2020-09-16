@@ -24,7 +24,8 @@ import {
   DDHeaderTitle,
   DDList,
   DDListItem,
-  ArrowI
+  ArrowI,
+  Statements
 } from './MoreInfo.styles'
 import { currentUser } from '../utils/apollo'
 
@@ -72,6 +73,7 @@ function MoreInfo () {
   }, [username])
 
   useEffect(() => {
+    console.log(username);
     const isMyUsernameTaken = userExists?.doesUsernameExist
     setStatement('valid username!')
     if (username === ''){
@@ -190,20 +192,25 @@ function MoreInfo () {
 
           <MarginsForm onSubmit={handleSubmit}>
             <TotalForm>
-              <p>{userStatement}</p>
-              <FieldSetStyle>
-                <TextField
-                  type='text'
-                  placeholder='username'
-                  value={username}
-                  onChange={handleUserChange}
-                />
-              </FieldSetStyle>
-              {"Current majors: " + major}
+              <div style={{"display":"flex",
+                          "flex-direction": "column",
+                          "align-items": "flex-start"}}>
+                <p>{userStatement}</p>
+                <FieldSetStyle>
+                  <TextField
+                    type='text'
+                    placeholder='username'
+                    value={username}
+                    onChange={handleUserChange}
+                  />
+                </FieldSetStyle>
+              </div>
+              <p>current majors: {major.toString()}</p>
               <SearchBar
                 items={majors}
                 setList={setFilteredMajors}
                 setActive={setMajorsActive}
+                placeholder={"search majors"}
               />
               <DDWrapper>
                 <DDHeader onClick={toggleMajor}>
@@ -227,11 +234,12 @@ function MoreInfo () {
                 )}
               </DDWrapper>
 
-              {"Current minors: " + minor}
+              <p>current minors: {minor.toString()}</p>
               <SearchBar
                 items={minors}
                 setList={setFilteredMinors}
                 setActive={setMinorsActive}
+                placeholder={"search minors"}
               />
               <DDWrapper>
                 <DDHeader onClick={toggleMinor}>

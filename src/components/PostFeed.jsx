@@ -55,6 +55,8 @@ function PostFeed (props) {
     }
   } = data
 
+  console.log("POSTS", data);
+
   const processDateFilter = filter => {
     const today = props.currentDate
 
@@ -97,19 +99,22 @@ function PostFeed (props) {
       ? -1
       : 1
   }
-  let posts
-  if (sortByUpvotes.length === 0) {
-    posts = generatePosts(edges)
-  } else if (sortByUpvotes.includes('hot')) {
-    const sortedEdges = [...edges].sort(compareUpvoteLengths).reverse()
-    posts = generatePosts(sortedEdges)
-  } else if (sortByUpvotes.includes('cold')) {
-    const sortedEdges = [...edges].sort(compareUpvoteLengths)
-    posts = generatePosts(sortedEdges)
-  }
+
+  const posts = generatePosts(edges)
+  // let posts
+  // if (sortByUpvotes.length === 0) {
+  //   posts = generatePosts(edges)
+  // } else if (sortByUpvotes.includes('hot')) {
+  //   const sortedEdges = [...edges].sort(compareUpvoteLengths).reverse()
+  //   posts = generatePosts(sortedEdges)
+  // } else if (sortByUpvotes.includes('cold')) {
+  //   const sortedEdges = [...edges].sort(compareUpvoteLengths)
+  //   posts = generatePosts(sortedEdges)
+  // }
+
   const formattedPosts = (
     <>
-      <Filters
+      {/* <Filters
         processDate={processDateFilter}
         sort_by_upvotes={setSortByUpvotes}
         setDateFilter={props.setDateFilter}
@@ -123,10 +128,12 @@ function PostFeed (props) {
         setTypeofFilter={props.setTypeofFilter}
         kindInactive={props.firstTime}
         kindFilterActive={props.setFirstTime}
-        
+
         filtersClosed = {props.filtersClosed}
         setFiltersClosed = {props.setFiltersClosed}
-      />
+
+        style = {{"position": "absolute"}}
+      /> */}
       <InfiniteScroll
         pageStart={0}
         loadMore={() => onLoadMore()}
