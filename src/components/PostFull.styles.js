@@ -140,6 +140,8 @@ const BottomComponent = styled.div`
 const Tags = styled.div`
   grid-area: tags;
   word-wrap: break-word;
+  text-align: right;
+  margin-right: 8vw;
 `
 
 const Tag = styled.text`

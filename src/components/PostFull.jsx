@@ -20,11 +20,10 @@ import Divider from '@material-ui/core/Divider'
 import AddToCalendar from 'react-add-to-calendar'
 
 import IconButton from '@material-ui/core/IconButton'
+import Button from '@material-ui/core/Button'
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp'
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown'
-import FacebookIcon from '@material-ui/icons/Facebook'
-import TwitterIcon from '@material-ui/icons/Twitter'
-import ShareIcon from '@material-ui/icons/Share'
+import CommentOutlinedIcon from '@material-ui/icons/CommentOutlined';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import log from 'loglevel'
 
@@ -37,34 +36,45 @@ import {
   DiscussionBoxSection,
   OriginalPoster,
   DiscussionBox,
+  TopComponent,
+  DividerTop,
   LeftComponent,
   Likes,
   Upvote,
   Downvote,
   TopMiddleComponent,
   DiscussionTitle,
-  Tags,
+  KindDiv,
+  Kind,
   Tag,
   ViewTags,
   MoreOptions,
   DDMenu,
   DiscussionBody,
-  BottomComponent,
   Save,
   AddTo,
   Report,
   Delete,
-  ShareFacebook,
-  ShareTwitter,
-  Share,
-  BackToFeed,
+  FullPostLink,
+  Expand,
+  ReadMore,
+  ImageDiv,
+  DescriptorDiv,
+  CommentComponent,
+  DividerBottom,
+  ShowCommentsDiv,
   CommentInput,
-  CommentButton
-} from './PostFull.styles'
-import {
+  CommentButton,
+  CommentButtonText,
+  CommentsDiv,
   BoldedSpan,
   NormalSpan
 } from './PostChunk.styles'
+import {
+  BackToFeed,
+  Tags
+} from './PostFull.styles'
+import { tagColors } from './tagColors'
 import { COMMENT_CREATED } from '../graphql/Subscriptions'
 import CommentChunk from './CommentChunk'
 
@@ -87,6 +97,7 @@ function PostFull () {
   const [removePost] = useMutation(REMOVE_POST)
   const [savePost] = useMutation(SAVE_POST)
   const [createComment] = useMutation(CREATE_COMMENT)
+  
   // const [getCommentsPost, { refetch, ...result }] = useLazyQuery(
   //   FETCH_COMMENTS_POST
   // )
@@ -175,6 +186,8 @@ function PostFull () {
   const [isDownvoted, setDownvoted] = useState(
     listOfDownvoters.includes(userInfo.username)
   )
+  const [isCommentOpen, setCommentOpen] = useState(true)
+  const [replyID, setReplyID] = useState(null)
 
   // *********** post chunk setup below
 
@@ -196,6 +209,10 @@ function PostFull () {
     setUpvoted(false)
   }
 
+  const toggleComment = () => {
+    setCommentOpen(!isCommentOpen)
+  }
+
   // *********** post full below
 
   if (resultPost.loading) {
@@ -214,16 +231,21 @@ function PostFull () {
     return <p>Error Fetching Comments</p>
   }
 
-  // console.log(resultPost);
-  thePost = resultPost.data.postById // real data
 
-  const theComments = data.commentByPost // array
+  thePost = resultPost.data.postById
 
-  console.log(theComments)
-  // are there comments?
+  const theComments = data.commentByPost
 
-  // *********** post chunk things that require thePost below
-  // change to real data now that its available
+  var numComments = theComments.length;
+
+  theComments.map(comment => {
+    numComments += comment.children.length
+    if (comment.children) {
+      comment.children.map(child => {
+        numComments += child.children.length
+      })
+    }
+  });
 
   if (thePost.imageUrl) {
     oneImage = <img width={500} src={thePost.imageUrl} alt='Custom-thing' />
@@ -312,10 +334,6 @@ function PostFull () {
     <>
       <BackToFeed to='/feed'>Back To Feed</BackToFeed>
       <DiscussionBoxSection>
-        {/* <OriginalPoster>
-          {thePost.creator.username} -{' '}
-          <TimeAgo date={thePost.date_created} />
-        </OriginalPoster> */}
         <DiscussionBox>
           <LeftComponent>
             <Upvote className={classes.root}>
@@ -326,7 +344,7 @@ function PostFull () {
                   toggleUpvoted()
                   upvotePost({
                     variables: {
-                      _id: thePost._id
+                      _id: postID
                     }
                   })
                 }}
@@ -334,7 +352,9 @@ function PostFull () {
                 <ArrowDropUp fontSize='large' />
               </IconButton>
             </Upvote>
-            <Likes>{thePost.upvotes.length - thePost.downvotes.length}</Likes>
+            <Likes>
+              {thePost.upvotes.length - thePost.downvotes.length}
+            </Likes>
             <Downvote className={classes.root}>
               <IconButton
                 style={
@@ -345,7 +365,7 @@ function PostFull () {
                   toggleDownvoted()
                   downvotePost({
                     variables: {
-                      _id: thePost._id
+                      _id: postID
                     }
                   })
                 }}
@@ -354,17 +374,61 @@ function PostFull () {
               </IconButton>
             </Downvote>
           </LeftComponent>
-          <OriginalPoster>
-            <a>
-              {thePost.creator.username} -{' '}
-              <TimeAgo date={thePost.date_created} />
-            </a>
-            <Divider
-              style={{ width: '51.5vw', maxWidth: '97%', marginTop: '1vh' }}
-            />
-          </OriginalPoster>
+          <TopComponent>
+            <OriginalPoster>
+              <a>
+                {thePost.creator.username} -{' '}
+                <TimeAgo date={thePost.date_created} />
+              </a>
+            </OriginalPoster>
+
+            <Tags>
+              {thePost.tags.length > 0 && (
+                <Tag style={tagColors[0 % tagColors.length]}>
+                  {thePost.tags[0]}
+                </Tag>
+              )}
+              {thePost.tags.length > 1 && (
+                <Tag style={tagColors[1 % tagColors.length]}>
+                  {thePost.tags[1]}
+                </Tag>
+              )}
+              {thePost.tags.length > 2 && (
+                <Tag style={tagColors[2 % tagColors.length]}>
+                  {thePost.tags[2]}
+                </Tag>
+              )}
+
+              {isTagsOpen &&
+                thePost.tags.slice(3).map((tag, index) => (
+                  <Tag key={tag} style={tagColors[index % tagColors.length]}>
+                    {tag}
+                  </Tag>
+                ))}
+
+              {thePost.tags.length > 3 && (
+                <ViewTags onClick={toggleTags}>
+                  {isTagsOpen ? (
+                    <text>(View Less)</text>
+                  ) : (
+                    <text>(View All)</text>
+                  )}
+                </ViewTags>
+              )}
+            </Tags>
+            <DividerTop>
+              <Divider
+                style={{ width: '51.5vw', maxWidth: '92%', marginTop: '1vh' }}
+              />
+            </DividerTop>
+          </TopComponent>
           <TopMiddleComponent>
             <DiscussionTitle>{thePost.title}</DiscussionTitle>
+
+            <KindDiv>
+              <Kind>{thePost.kind}</Kind>
+            </KindDiv>
+
             <MoreOptions className={classes.root}>
               <IconButton onClick={toggleDD}>
                 <MoreHorizIcon open={isDDOpen} />
@@ -380,14 +444,18 @@ function PostFull () {
                       )
                       savePost({
                         variables: {
-                          savedPosts: [...currentSavedPosts, thePost._id]
+                          savedPosts: [
+                            ...currentSavedPosts,
+                            thePost._id
+                          ]
                         }
                       })
                     }}
                   >
                     Save Post
                   </Save>
-                  {(thePost.kind === 'Event' || thePost.kind === 'Job') && (
+                  {(thePost.kind === 'Event' ||
+                    thePost.kind === 'Job') && (
                     <AddTo>
                       <AddToCalendar
                         event={calEvent}
@@ -412,143 +480,130 @@ function PostFull () {
                     Report Post
                   </Report>
 
-                  {thePost.creator.username === userInfo.username && (
-                    <Delete
-                      onClick={e => {
-                        e.preventDefault()
-                        window.location.reload(false)
-                        removePost({
-                          variables: {
-                            _id: thePost._id
-                          }
-                        })
-                      }}
-                    >
-                      Delete Post
-                    </Delete>
-                  )}
+                  {thePost.creator.username ===
+                    userInfo.username && (
+                      <Delete
+                        onClick={e => {
+                          e.preventDefault()
+                          removePost({
+                            variables: {
+                              _id: thePost._id
+                            }
+                          })
+                          window.location.reload(false)
+                        }}
+                      >
+                        Delete Post
+                      </Delete>
+                    )}
                 </DDMenu>
               )}
             </MoreOptions>
-
-            <DiscussionBody>
+            <DiscussionBody style={{ textAlign: thePost.text_align }}>
               {ReactHtmlParser(remarkable.render(thePost.body))}
             </DiscussionBody>
-
-            <div>
+            <ImageDiv>
               {oneImage}
-              <div>{postDescriptor}</div>
-            </div>
+            </ImageDiv>
+            <DescriptorDiv>
+              {postDescriptor}
+            </DescriptorDiv>
           </TopMiddleComponent>
 
-          <BottomComponent>
-            <Tags>
-              <Tag>{thePost.kind}</Tag>
-              {thePost.tags.length > 0 && <Tag>{thePost.tags[0]}</Tag>}
-              {thePost.tags.length > 1 && <Tag>{thePost.tags[1]}</Tag>}
-              {thePost.tags.length > 2 && <Tag>{thePost.tags[2]}</Tag>}
+          <CommentComponent>
+            <DividerBottom>
+              <Divider
+                style={{ width: '51.5vw', maxWidth: '92%', marginTop: '1vh' }}
+              />
+            </DividerBottom>
 
-              {isTagsOpen &&
-                thePost.tags.slice(3).map(tag => <Tag key={tag}>{tag}</Tag>)}
-              {thePost.tags.length > 3 && (
-                <ViewTags onClick={toggleTags}>
-                  {isTagsOpen ? (
-                    <text>(View Less)</text>
-                  ) : (
-                    <text>(View All)</text>
-                  )}
-                </ViewTags>
-              )}
-            </Tags>
+            <ShowCommentsDiv>
+              <Button
+                startIcon={<CommentOutlinedIcon fontSize="large"/>}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  font: 'Avenir',
+                  textTransform: 'none',
+                  display: 'flex',
+                }}
+                onClick={toggleComment}
+              >
+                {isCommentOpen ? (
+                  <text style={{color: '#67687E'}}>Hide Comments ({numComments})</text>
+                ) : (
+                  <text style={{color: '#67687E'}}>Show Comments ({numComments})</text>
+                )}
+              </Button>
+            </ShowCommentsDiv>
 
-            {/* Location of Comments Button */}
-
-            <ShareFacebook>
-              <IconButton>
-                <FacebookIcon />
-              </IconButton>
-            </ShareFacebook>
-            <ShareTwitter>
-              <IconButton>
-                <TwitterIcon />
-              </IconButton>
-            </ShareTwitter>
-            <Share>
-              <IconButton>
-                <ShareIcon />
-              </IconButton>
-            </Share>
-          </BottomComponent>
+            {isCommentOpen && (
+              <CommentInput
+                placeholder='Comment here...'
+                onChange={e => setComment(e.target.value)}
+              />
+            )}
+            {isCommentOpen && (
+              <CommentButton
+                onClick={e => {
+                  e.preventDefault()
+                  if (checkComment(comment)) return
+                  try {
+                    createComment({
+                      variables: {
+                        creator: userInfo.netID,
+                        post: thePost._id,
+                        parent: null,
+                        body: comment
+                      }
+                    })
+                    setComment('')
+                    e.target.value = ''
+                  } catch (error) {
+                    console.error(error)
+                  }
+                }}
+              >
+                <CommentButtonText>
+                  Post Comment
+                </CommentButtonText>
+              </CommentButton>
+            )}
+            {isCommentOpen && (
+              <CommentsDiv>
+                <ul style={{listStyleType:"none", paddingLeft:"0px"}}>
+                  {/* level 1 */}
+                  {theComments.map((comment) => (
+                    <li key={comment._id} style={{listStyleType:"none"}}>
+                      <CommentChunk comment={comment} postID={thePost._id} setParentID={setReplyID} isLeaf={false}></CommentChunk>
+                      {/* <button onClick={() => setReplyID(comment._id)}>Reply</button> */}
+                      <ul style={{listStyleType:"none"}}>
+                        {/* level 2 */}
+                        {comment.children.map((child1) => (
+                          <li key={child1._id} style={{listStyleType:"none"}}>
+                            <CommentChunk comment={child1} postID={thePost._id} isLeaf={false}></CommentChunk>
+                            {/* <button onClick={() => setReplyID(child1._id)}>
+                              Reply
+                            </button> */}
+                            <ul style={{listStyleType:"none"}}>
+                              {/* level 3 */}
+                              {child1.children.map((child2) => (
+                                <li key={child2._id} style={{listStyleType:"none"}}>
+                                  <CommentChunk comment={child2} postID={thePost._id} isLeaf={true}></CommentChunk>
+                                  {/* dont nest any further */}
+                                </li>
+                              ))}
+                            </ul>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                  ))}
+                </ul>
+              </CommentsDiv>
+            )}
+          </CommentComponent>
         </DiscussionBox>
-
-        <h3>Comments:</h3>
-        <ul>
-          {/* level 1 */}
-          {theComments.map(comment => (
-            <li key={comment._id}>
-              <CommentChunk
-                comment={comment}
-                postID={postID}
-                isLeaf={false}
-              ></CommentChunk>
-              <ul>
-                {/* level 2 */}
-                {comment.children.map(child1 => (
-                  <li key={child1._id}>
-                    <CommentChunk
-                      comment={child1}
-                      postID={postID}
-                      isLeaf={false}
-                    ></CommentChunk>
-                    <ul>
-                      {/* level 3 */}
-                      {child1.children.map(child2 => (
-                        <li key={child2._id}>
-                          <CommentChunk
-                            comment={child2}
-                            postID={postID}
-                            isLeaf={true}
-                          ></CommentChunk>
-                          {/* dont nest any further */}
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-
-        <h3>-----------------------------------------------------------</h3>
-        <CommentInput
-          id={'commentinput'}
-          placeholder='Comment here...'
-          onChange={e => setComment(e.target.value)}
-        />
-
-        {/* based on write post post creation button */}
-        <CommentButton
-          onClick={e => {
-            e.preventDefault()
-            if (checkComment(comment)) return
-            try {
-              createComment({
-                variables: {
-                  post: postID,
-                  parent: null,
-                  body: comment
-                }
-              })
-              setComment('')
-              document.getElementById('commentinput').value = ''
-            } catch (error) {
-              log.error(error)
-            }
-          }}
-        >
-          Comment
-        </CommentButton>
       </DiscussionBoxSection>
     </>
   )
