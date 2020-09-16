@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 
-import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
+import { useLazyQuery, useMutation } from '@apollo/client'
 // import CloseIcon from '@material-ui/icons/Close'
 
 // import { Helmet } from 'react-helmet'
@@ -40,29 +40,6 @@ import AddIcon from '@material-ui/icons/Add';
 import SearchBar from "./Search";
 // import {FieldSetStyle, TextField} from "./MoreInfo.styles";
 import ImageUploader from "./ImageUploader";
-// import {BodyWrapper} from "./WritePost.styles";
-
-// const assignWithoutAdding = (obj1, obj2) => {
-//   Object.keys(obj1).forEach(key => {
-//
-//     }
-//
-//   )
-//
-//   }
-// }
-// import {
-//   ExitButton,
-// } from './WritePost.styles'
-
-import EditUrl from '../images/edit.svg'
-import { Navigate, useNavigate } from 'react-router-dom'
-import { currentUser } from '../utils/apollo'
-import { SET_INFO } from '../graphql/Mutations'
-// import {USER_EXISTS} from "../graphql/Queries";
-import majorMinorJson from '../utils/MajorMinor.json'
-import { DDList, DDListItem } from './MoreInfo.styles'
-import DropDownItem from './DropDownItem'
 
 const ProfilePane = props => {
   const navigate = useNavigate()
