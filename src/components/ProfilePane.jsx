@@ -232,6 +232,8 @@ const ProfilePane = props => {
         userExistLoading ||
         (userExists?.doesUsernameExist && originalUsername !== username)
     ) {
+      setStatement("someone got this name before you :(");
+      setShowStatement(true); 
       return;
     }
 
