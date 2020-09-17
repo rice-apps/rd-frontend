@@ -127,11 +127,15 @@ const ArrowI = styled.i`
 
 const ClearFilter = styled.button`
   line-height: 5vh;
-  max-height: 2.25em;
+  max-height: 2.16em;
   background-color: #e5daf5;
   border-color: white;
   font-weight: 600;
   margin-left: 10px;
+  padding: 0px;
+  padding-right: 3px;
+  padding-left: 3px;
+
 `
 
 export {

@@ -54,7 +54,7 @@ const Filters = props => {
   }, [props.filtersClosed])
 
   if (loading) return <h1>Your tags are loading.</h1>
-  if (error) return <h1>oshit(git) MY FILTERS ARE DUCKED</h1>
+  if (error) return <h1>The filters broke... sorry try refreshing :\. if still broken, report to dev team</h1>
 
   const tagList = data.getAllTags
   const finalizedTags = searchActivated ? filteredTags : tagList
