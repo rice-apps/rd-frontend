@@ -231,6 +231,11 @@ export const SaveButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &:hover {
+    color: black;
+    background-color: #66ccff; 
+  }
 `
 
 export const DDList = styled.ul`
